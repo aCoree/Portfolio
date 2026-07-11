@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUN – Kurzfilm | Aurelio Zingarello</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html#home" class="logo">
+                <span class="logo-mark">
+                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
+                </span>
+            </a>
+        </div>
+        <nav class="nav-center">
+            <a href="index.html#home">Home</a>
+            <a href="index.html#projekte">Projekte</a>
+            <a href="#grading">Color Grading</a>
+            <a href="index.html#ueber-mich">Über mich</a>
+            <a href="index.html#kontakt">Kontakt</a>
+        </nav>
+        <div class="nav-right">
+            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </header>
+
+    <section class="section project-detail-page">
+        <div class="container">
+            <a href="index.html#projekte" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Zurück zur Übersicht</a>
+            
+            <div class="project-header">
+                <h1>RUN - Ein Action Kurzfilm</h1>
+                <p class="tagline">Ein cinematischer Action Kurfilm im Seeland der Schweiz.</p>
+            </div>
+
+            
+
+            <!-- ─── VIDEO PLAYER ─── -->
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/fetBu3gqFOM"
+                    title="RUN – Kurzfilm"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="project-info-grid">
+                <div class="info-content">
+                    <h2>Das Projekt & Die Vision</h2>
+                    <p>„RUN“ ist mein bisher intensivstes und technisch anspruchsvollstes Projekt. Der Film bricht mit den klassischen, statischen Kameraführungen und setzt voll auf Bewegung, Tempo und unbarmherzige Spannung. Jede Szene wurde strategisch geplant, um den Zuschauer direkt in die Flucht des Protagonisten hineinzuziehen.</p>
+                    
+                    <h3 style="margin-top: 25px; margin-bottom: 10px; color: var(--accent-violet);">Behind the Scenes</h3>
+                    <p>Gedreht unter extremen Lichtbedingungen, boten vor allem die düsteren Kulissen eine perfekte Grundlage für mein 10-bit Apple Log-Workflow Setup. Dadurch konnte im Post-Production-Prozess genau die kühle, kontrastreiche Stimmung erzeugt werden, die den Film ausmacht.</p>
+                </div>
+                
+                <div class="info-sidebar">
+                    <h3>Projektdetails</h3>
+                    <ul>
+                        <li><strong>Regie & Kamera:</strong> Aurelio Zingarello</li>
+                        <li><strong>Genre:</strong> Action </li>
+                        <li><strong>Kamera-Setup:</strong> iPhone 16 Pro / Apple Log</li>
+                        <li><strong>Drohne:</strong> DJI Air 3S / D-Log M</li>
+                        <li><strong>Release Jahr:</strong> 2026</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ─── COLOR GRADING SLIDER ─── -->
+            <div id="grading" class="grading-section">
+                <h2 class="section-title">Color Grading</h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 50px auto; color: #cccccc;">
+                    Vom flachen Log-Footage zur fertigen Stimmung – ein Beispiel aus „RUN“.
+                </p>
+                <div class="grading-slider" id="gradingSlider">
+                    <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-base">
+                    <div class="grading-clip" id="gradingClip">
+                        <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN">
+                    </div>
+                    <span class="grading-label grading-label-before">VORHER</span>
+                    <span class="grading-label grading-label-after">NACHHER</span>
+                    <div class="grading-handle" id="gradingHandle">
+                        <i class="fa-solid fa-arrows-left-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+    </footer>
+
+    <script>
+        const slider = document.getElementById('gradingSlider');
+        const clip = document.getElementById('gradingClip');
+        const clipImg = clip.querySelector('img');
+        const handle = document.getElementById('gradingHandle');
+        let isDragging = false;
+
+        function syncClipImgWidth() {
+            clipImg.style.width = slider.getBoundingClientRect().width + 'px';
+        }
+
+        function setSlider(x) {
+            const rect = slider.getBoundingClientRect();
+            let percent = ((x - rect.left) / rect.width) * 100;
+            percent = Math.max(0, Math.min(100, percent));
+            clip.style.width = percent + '%';
+            handle.style.left = percent + '%';
+        }
+
+        syncClipImgWidth();
+        window.addEventListener('resize', syncClipImgWidth);
+
+        handle.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging) setSlider(e.clientX);
+        });
+
+        handle.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); }, { passive: false });
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (isDragging) setSlider(e.touches[0].clientX);
+        });
+
+        slider.addEventListener('click', (e) => {
+            setSlider(e.clientX);
+        });
+    </script>
+
+</body>
+</html>
