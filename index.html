@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- NEU: Optimierter Titel, der "Aurelio" und deinen vollen Namen abdeckt -->
-    <title>Aurelio | Portfolio & Filmprojekte – Aurelio Zingarello</title>
-    
-    <!-- NEU: Beschreibung für die Google-Suchergebnisse -->
-    <meta name="description" content="Das offizielle Portfolio von Aurelio (Aurelio Zingarello). Entdecke meine Kurzfilme, Video-Produktionen und kreativen Arbeiten aus der Schweiz.">
-    <meta name="keywords" content="Aurelio, Aurelio Zingarello, Portfolio, Film, Video, Schweiz, Bern">
-    
+    <title>Aurelio Zingarello | Filmmaker & Cinematographer</title>
     <link rel="stylesheet" href="style.css">
     <!-- FontAwesome für Social Media Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -41,7 +34,29 @@
             <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
         </div>
+
+        <!-- Hamburger Button (nur Mobile) -->
+        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#home" class="mobile-nav-link">Home</a>
+            <a href="#projekte" class="mobile-nav-link">Projekte</a>
+            <a href="#ueber-mich" class="mobile-nav-link">Über mich</a>
+            <a href="#kontakt" class="mobile-nav-link">Kontakt</a>
+        </nav>
+        <div class="mobile-social">
+            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </div>
 
     <!-- ─── HERO SECTION (HOME) ─── -->
     <section id="home" class="hero">
@@ -105,7 +120,7 @@
         <div class="container">
             <h2 class="section-title">Kontakt</h2>
             <p style="text-align: center; margin-bottom: 30px;">Lust auf eine Zusammenarbeit oder hast du Fragen zu meinen Projekten? Schreib mir!</p>
-            <form class="contact-form" action="https://formspree.io/f/xojowqvy" method="POST">
+            <form class="contact-form" action="https://formspree.io/f/DEINE_FORM_ID" method="POST">
                 <input type="text" name="name" placeholder="Dein Name" required>
                 <input type="email" name="email" placeholder="Deine E-Mail" required>
                 <textarea name="message" placeholder="Deine Nachricht..." rows="5" required></textarea>
@@ -116,8 +131,27 @@
 
     <!-- ─── FOOTER ─── -->
     <footer>
-        <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+        <p>&copy; 2026 Aurelio Zingarello. All rights reserved.</p>
     </footer>
 
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            document.body.classList.toggle('menu-open');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    </script>
 </body>
 </html>

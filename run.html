@@ -29,18 +29,42 @@
             <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
         </div>
+
+        <!-- Hamburger Button (nur Mobile) -->
+        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="index.html#home" class="mobile-nav-link">Home</a>
+            <a href="index.html#projekte" class="mobile-nav-link">Projekte</a>
+            <a href="#grading" class="mobile-nav-link">Color Grading</a>
+            <a href="index.html#ueber-mich" class="mobile-nav-link">Über mich</a>
+            <a href="index.html#kontakt" class="mobile-nav-link">Kontakt</a>
+        </nav>
+        <div class="mobile-social">
+            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </div>
 
     <section class="section project-detail-page">
         <div class="container">
             <a href="index.html#projekte" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Zurück zur Übersicht</a>
             
             <div class="project-header">
-                <h1>RUN - Ein Action Kurzfilm</h1>
-                <p class="tagline">Ein cinematischer Action Kurfilm im Seeland der Schweiz.</p>
+                <h1>KURZFILM „RUN“</h1>
+                <p class="tagline">Ein kinetischer Action-Thriller in den Tiefen der Schweiz.</p>
             </div>
 
-            
+            <div class="project-large-banner" style="background-image: url('images/run-banner.jpg');">
+            </div>
 
             <!-- ─── VIDEO PLAYER ─── -->
             <div class="video-wrapper">
@@ -66,9 +90,9 @@
                     <h3>Projektdetails</h3>
                     <ul>
                         <li><strong>Regie & Kamera:</strong> Aurelio Zingarello</li>
-                        <li><strong>Genre:</strong> Action </li>
-                        <li><strong>Kamera-Setup:</strong> iPhone 16 Pro / Apple Log</li>
-                        <li><strong>Drohne:</strong> DJI Air 3S / D-Log M</li>
+                        <li><strong>Genre:</strong> Action / Thriller</li>
+                        <li><strong>Kamera-Setup:</strong> Mobile Log Setup / Apple Log</li>
+                        <li><strong>Drohne:</strong> DJI Air 3S</li>
                         <li><strong>Release Jahr:</strong> 2026</li>
                     </ul>
                 </div>
@@ -98,6 +122,26 @@
     <footer>
         <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
     </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            document.body.classList.toggle('menu-open');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+        });
+    </script>
 
     <script>
         const slider = document.getElementById('gradingSlider');
