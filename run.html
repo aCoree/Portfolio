@@ -181,6 +181,21 @@
             setSlider(e.clientX);
         });
     </script>
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, {
+    threshold: 0.15 
+  });
 
+  // Holt sich automatisch alle <section>-Tags deiner Website!
+  document.querySelectorAll('section').forEach((element) => {
+    observer.observe(element);
+  });
+</script>
 </body>
 </html>

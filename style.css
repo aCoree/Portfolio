@@ -720,3 +720,16 @@ body.menu-open {
         width: 65px;
     }
 }
+/* Betrifft automatisch JEDE Section auf deiner Website */
+section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Wird vom JavaScript aktiviert, sobald man hinscrollt */
+section.active {
+  opacity: 1;
+  transform: translateY(0);
+}
