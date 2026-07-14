@@ -299,6 +299,12 @@ a {
 .contact-form textarea:focus {
     outline: 1px solid #ffffff;
 }
+.contact-form textarea {
+    field-sizing: content; /* Lässt das Feld automatisch mitwachsen */
+    min-height: 120px;     /* Deine Standardgröße am Anfang */
+    max-height: 300px;     /* Verhindert, dass das Feld unendlich lang wird (danach scrollt es) */
+    resize: none;          /* Deaktiviert die manuelle Ziehecke komplett */
+}
 
 /* ─── FOOTER ─── */
 footer {
