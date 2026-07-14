@@ -305,6 +305,13 @@ a {
     max-height: 300px;     /* Verhindert, dass das Feld unendlich lang wird (danach scrollt es) */
     resize: none;          /* Deaktiviert die manuelle Ziehecke komplett */
 }
+/* Verhindert den automatischen Zoom auf iPhones */
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+    font-size: 16px !important;
+}
 
 /* ─── FOOTER ─── */
 footer {
