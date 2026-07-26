@@ -12,6 +12,7 @@ html {
 body {
     --accent-blue: #4aa8ff;
     --accent-violet: #8b7bd8;
+    --accent-gradient: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
     font-family: 'Inter', sans-serif;
     background-color: #0d0d0d;
     color: #ffffff;
@@ -23,7 +24,7 @@ a {
     color: inherit;
 }
 
-/* ─── NAVBAR (PERFEKT AUFGETEILT) ─── */
+/* ─── NAVBAR ─── */
 .navbar {
     position: fixed;
     top: 0;
@@ -33,7 +34,7 @@ a {
     background-color: rgba(13, 13, 13, 0.9);
     backdrop-filter: blur(10px);
     display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Teilt die Leiste in 3 exakte Bereiche */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     padding: 0 40px;
     z-index: 1000;
@@ -76,42 +77,91 @@ a {
     width: 75px;
 }
 
-/* Mittlere Seite: Menüpunkte (Kein Equipment mehr) */
+/* Mittlere Seite: Navigations-Links */
 .nav-center {
     display: flex;
-    gap: 35px; /* Perfekter Abstand, nicht gequetscht */
+    gap: 35px;
 }
 
 .nav-center a {
+    position: relative;
+    padding: 8px 0;
     font-size: 0.95rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #b3b3b3;
-    transition: color 0.3s, transform 0.3s;
+    color: #ffffff;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* Der Farbverlaufs-Strich unter den Links */
+.nav-center a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-gradient);
+    border-radius: 2px;
+    opacity: 0;
+    transform: scaleX(0.5);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .nav-center a:hover {
-    color: var(--accent-violet);
-    transform: translateY(-2px);
+    opacity: 1;
 }
 
-/* Rechte Seite: Social Media */
+.nav-center a:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+/* STATISCH AKTIV: Bleibt bombenfest auf dem aktiven Link stehen */
+.nav-center a.active {
+    opacity: 1 !important;
+    font-weight: 600;
+}
+
+.nav-center a.active::after {
+    content: '' !important;
+    display: block !important;
+    opacity: 1 !important;
+    transform: scaleX(1) !important;
+}
+
+/* Rechte Seite: Social Media mit GRADIENT-RAHMEN (nicht ausgefüllt) */
 .nav-right {
     display: flex;
     justify-content: flex-end;
-    gap: 20px;
+    gap: 12px;
 }
 
 .social-icon {
-    font-size: 1.2rem;
-    color: #b3b3b3;
-    transition: color 0.3s, transform 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    opacity: 0.8;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
 .social-icon:hover {
-    color: var(--accent-violet);
-    transform: scale(1.1);
+    opacity: 1;
+    background-image: linear-gradient(#0d0d0d, #0d0d0d), var(--accent-gradient);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border: 1px solid transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 123, 216, 0.2);
 }
 
 /* ─── HERO SECTION ─── */
@@ -187,30 +237,65 @@ a {
 
 .project-card {
     background-color: #141414;
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     padding: 25px;
-    transition: transform 0.3s;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
     display: block;
     cursor: pointer;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .project-img-placeholder {
+    position: relative;
     height: 200px;
     background-color: #222;
     background-size: cover;
     background-position: center;
     border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.project-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    color: #444;
-    margin-bottom: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    color: #0d0d0d;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    padding-left: 3px;
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.project-card:hover .play-icon {
+    transform: scale(1.1);
 }
 
 .project-card h3 {
@@ -221,6 +306,29 @@ a {
 .project-card p {
     color: #a7a7a7;
     font-size: 0.95rem;
+}
+
+/* Call-To-Action Text mit Logo-Farbverlauf */
+.project-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 15px;
+    font-weight: 600;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 0.95rem;
+}
+
+.arrow {
+    display: inline-block;
+    color: var(--accent-violet);
+    transition: transform 0.2s ease;
+}
+
+.project-card:hover .arrow {
+    transform: translateX(5px);
 }
 
 /* ─── ÜBER MICH & EQUIPMENT ─── */
@@ -293,19 +401,27 @@ a {
     border-radius: 4px;
     color: #fff;
     font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Bei Fokus: GRADIENT-RAHMEN (nicht ausgefüllt!) */
 .contact-form input:focus, 
 .contact-form textarea:focus {
-    outline: 1px solid #ffffff;
+    outline: none;
+    background-image: linear-gradient(#141414, #141414), var(--accent-gradient);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 0 12px rgba(139, 123, 216, 0.2);
 }
+
 .contact-form textarea {
-    field-sizing: content; /* Lässt das Feld automatisch mitwachsen */
-    min-height: 120px;     /* Deine Standardgröße am Anfang */
-    max-height: 300px;     /* Verhindert, dass das Feld unendlich lang wird (danach scrollt es) */
-    resize: none;          /* Deaktiviert die manuelle Ziehecke komplett */
+    field-sizing: content;
+    min-height: 120px;
+    max-height: 300px;
+    resize: none;
 }
-/* Verhindert den automatischen Zoom auf iPhones */
+
 input[type="text"],
 input[type="email"],
 textarea,
@@ -329,7 +445,7 @@ footer {
     width: 100%;
     margin: 0 auto;
     height: 0;
-    padding-bottom: 56.25%; /* 16:9 Verhältnis, funktioniert in jedem Browser */
+    padding-bottom: 56.25%;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.08);
@@ -548,7 +664,7 @@ footer {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--accent-blue, #4aa8ff);
+    color: var(--accent-blue);
     margin-bottom: 2px;
 }
 
@@ -575,14 +691,15 @@ footer {
     transform-origin: center;
 }
 
-/* X-Animation beim Öffnen */
 .hamburger.open span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
 }
+
 .hamburger.open span:nth-child(2) {
     opacity: 0;
     transform: scaleX(0);
 }
+
 .hamburger.open span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
 }
@@ -627,22 +744,20 @@ footer {
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #b3b3b3;
-    transition: color 0.3s;
+    color: #ffffff;
+    opacity: 0.8;
+    transition: color 0.3s, opacity 0.3s;
 }
 
 .mobile-nav-link:hover,
 .mobile-nav-link:active {
+    opacity: 1;
     color: var(--accent-violet);
 }
 
 .mobile-social {
     display: flex;
-    gap: 35px;
-}
-
-.mobile-social .social-icon {
-    font-size: 1.6rem;
+    gap: 20px;
 }
 
 body.menu-open {
@@ -651,7 +766,6 @@ body.menu-open {
 
 /* ─── RESPONSIVE DESIGN ─── */
 @media (max-width: 768px) {
-    /* Navbar: nur Logo + Hamburger */
     .navbar {
         grid-template-columns: 1fr auto;
         height: 65px;
@@ -668,7 +782,6 @@ body.menu-open {
         display: flex;
     }
 
-    /* Hero */
     .hero-content h1 {
         font-size: 2rem;
         letter-spacing: 2px;
@@ -677,7 +790,6 @@ body.menu-open {
         font-size: 1rem;
     }
 
-    /* Sections */
     .section {
         padding: 70px 16px;
     }
@@ -686,7 +798,6 @@ body.menu-open {
         margin-bottom: 35px;
     }
 
-    /* Projekt-Detail */
     .project-detail-page {
         padding-top: 100px;
     }
@@ -705,13 +816,11 @@ body.menu-open {
         margin-bottom: 40px;
     }
 
-    /* Color Grading */
     .grading-section {
         margin-top: 40px;
         padding-top: 40px;
     }
 
-    /* Logo */
     .logo-mark {
         height: 36px;
         width: 36px;
@@ -720,7 +829,8 @@ body.menu-open {
         width: 65px;
     }
 }
-/* Betrifft automatisch JEDE Section auf deiner Website */
+
+/* Scroll-Fade für Sections */
 section {
   opacity: 0;
   transform: translateY(40px);
@@ -728,7 +838,6 @@ section {
   will-change: opacity, transform;
 }
 
-/* Wird vom JavaScript aktiviert, sobald man hinscrollt */
 section.active {
   opacity: 1;
   transform: translateY(0);

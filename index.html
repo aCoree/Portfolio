@@ -26,16 +26,14 @@
         </div>
         
         <nav class="nav-center">
-            <a href="#home">Home</a>
+            <a href="#home" class="active">Home</a>
             <a href="#projekte">Projekte</a>
             <a href="#ueber-mich">Über mich</a>
             <a href="#kontakt">Kontakt</a>
         </nav>
         
         <div class="nav-right">
-            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
         </div>
 
         <!-- Hamburger Button (nur Mobile) -->
@@ -55,9 +53,7 @@
             <a href="#kontakt" class="mobile-nav-link">Kontakt</a>
         </nav>
         <div class="mobile-social">
-            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
             <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
         </div>
     </div>
 
@@ -70,17 +66,29 @@
         </div>
     </section>
 
-    <!-- ─── PROJEKTE SECTION ─── -->
+   <!-- ─── PROJEKTE SECTION ─── -->
     <section id="projekte" class="section">
         <div class="container">
             <h2 class="section-title">Meine Projekte</h2>
             <div class="projects-grid">
+                
                 <a href="run.html" class="project-card">
                     <div class="project-img-placeholder" style="background-image: url('images/run-banner.jpg');">
+                        <!-- Hover-Overlay mit Play-Icon -->
+                        <div class="project-overlay">
+                            <span class="play-icon">▶</span>
+                        </div>
                     </div>
-                    <h3>„RUN“ – Kurzfilm</h3>
-                    <p>Ein kinetischer Action-Thriller in den Tiefen der Schweiz, mit intensiven Verfolgungsjagden, cineastischen Drohnen-Aufnahmen und atmosphärischem Color Grading.</p>
+                    
+                    <div class="project-content">
+                        <h3>„RUN“ – Kurzfilm</h3>
+                        <p>Ein kinetischer Action-Thriller in den Tiefen der Schweiz, mit intensiven Verfolgungsjagden, cineastischen Drohnen-Aufnahmen und atmosphärischem Color Grading.</p>
+                        
+                        <!-- Expliziter Hinweis zum Anklicken -->
+                        <span class="project-cta">Projekt ansehen <span class="arrow">→</span></span>
+                    </div>
                 </a>
+
                 <!-- Hier können später weitere Projekt-Karten hin -->
             </div>
         </div>
@@ -91,22 +99,22 @@
         <div class="container">
             <h2 class="section-title">Über mich</h2>
             <div class="about-text">
-                <p>Hi, ich bin Aurelio. Meine Leidenschaft ist es, Geschichten durch dynamische Bilder und präzises Timing zum Leben zu erwecken. Ich fokussiere mich auf hochwertige Videoproduktion, kreatives Color Grading und moderne Kamera- und Drohnen-Workflows.</p>
+                <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese dannach als cinematischesn Kurzfilm zu produzieren. </p>
             </div>
 
-            <!-- Aus dem Menü hierher verschoben: Equipment Gear Grid -->
+            <!-- Equipment Gear Grid -->
             <div class="equipment-container">
                 <h3>Mein Equipment</h3>
                 <div class="gear-grid">
                     <div class="gear-item">
                         <i class="fa-solid fa-drone"></i>
                         <h4>DJI Air 3S</h4>
-                        <p>Für epische Overviews und dynamische Verfolgungsjagden aus der Luft.</p>
+                        <p>Für epische Luftaufnahmen und Verfolgungsjagden.</p>
                     </div>
                     <div class="gear-item">
                         <i class="fa-solid fa-mobile-screen-button"></i>
-                        <h4>Mobile Setup</h4>
-                        <p>Professionelle Mobile-Production im Apple Log-Format für maximale Flexibilität und cinematic Look.</p>
+                        <h4>iPhone 16 Pro</h4>
+                        <p>Als Hauptkamera für hochwertige.</p>
                     </div>
                     <div class="gear-item">
                         <i class="fa-solid fa-microphone"></i>
@@ -123,7 +131,7 @@
         <div class="container">
             <h2 class="section-title">Kontakt</h2>
             <p style="text-align: center; margin-bottom: 30px;">Lust auf eine Zusammenarbeit oder hast du Fragen zu meinen Projekten? Schreib mir!</p>
-            <form class="contact-form" action="https://formspree.io/f/DEINE_FORM_ID" method="POST">
+            <form class="contact-form" action="https://formspree.io/f/xojowqvy" method="POST">
                 <input type="text" name="name" placeholder="Dein Name" required>
                 <input type="email" name="email" placeholder="Deine E-Mail" required>
                 <textarea name="message" placeholder="Deine Nachricht..." rows="5" required></textarea>
@@ -134,10 +142,12 @@
 
     <!-- ─── FOOTER ─── -->
     <footer>
-        <p>&copy; 2026 Aurelio Zingarello. All rights reserved.</p>
+        <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
     </footer>
 
+    <!-- ─── JAVASCRIPT ─── -->
     <script>
+        // 1. Mobile Menü Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -155,22 +165,46 @@
                 document.body.classList.remove('menu-open');
             });
         });
-    </script>
-    <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      }
-    });
-  }, {
-    threshold: 0.15 
-  });
 
-  // Holt sich automatisch alle <section>-Tags deiner Website!
-  document.querySelectorAll('section').forEach((element) => {
-    observer.observe(element);
-  });
-</script>
+        // 2. Fade-In Animation für Sections beim Scrollen
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.15 
+        });
+
+        document.querySelectorAll('section').forEach((element) => {
+            fadeObserver.observe(element);
+        });
+
+        // 3. Scrollspy: Setzt .active Klasse dynamisch auf den aktuellen Nav-Link
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-center a');
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, {
+            threshold: 0.4 // Aktiviert den Link sobald die Section zu 40% im Bild ist
+        });
+
+        sections.forEach(section => {
+            navObserver.observe(section);
+        });
+    </script>
 </body>
 </html>
