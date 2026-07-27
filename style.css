@@ -437,62 +437,120 @@ footer {
     color: #666;
     font-size: 0.85rem;
 }
+/* ─── TOP LABELS (STRIKT AUF BILD-BREITE BEGRENZT) ─── */
+.grading-labels-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 900px; /* Zwingt die Überschriften auf exakt dieselbe Breite wie das Bild */
+    width: 100%;
+    margin: 0 auto 12px auto; /* Zentriert die Zeile perfekt über dem Bild */
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.grading-label-top {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #aaaaaa;
+    text-transform: uppercase;
+}
 
 /* ─── COLOR GRADING SLIDER ─── */
 .grading-slider {
     position: relative;
+    display: grid;
     max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    height: 0;
-    padding-bottom: 56.25%;
+    aspect-ratio: 3024 / 1660;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.08);
     cursor: ew-resize;
     user-select: none;
+    touch-action: pan-y;
+    line-height: 0;
+    --slider-pos: 43%;
 }
 
-.grading-base {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* Beide Bilder im selben Grid-Raster */
+.grading-slider img {
+    grid-area: 1 / 1;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
 }
 
-.grading-clip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 50%;
-    overflow: hidden;
-}
-
-.grading-clip img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+/* Das obere "Vorher"-Bild wird per clip-path beschnitten */
+.grading-slider img.grading-before {
+    z-index: 2;
+    clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
 }
 
 .grading-handle {
     position: absolute;
     top: 0;
-    left: 50%;
-    height: 100%;
+    bottom: 0;
+    left: var(--slider-pos);
     width: 3px;
     background-color: #ffffff;
     transform: translateX(-50%);
     cursor: ew-resize;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.grading-handle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20px;
+    right: -20px;
+}
+
+.grading-handle i {
+    background-color: #ffffff;
+    color: #0d0d0d;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.grading-handle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20px;
+    right: -20px;
+}
+
+.grading-handle i {
+    background-color: #ffffff;
+    color: #0d0d0d;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
 .grading-handle::after {
@@ -528,7 +586,7 @@ footer {
     padding: 6px 12px;
     border-radius: 4px;
     pointer-events: none;
-    z-index: 2;
+    z-index: 5;
 }
 
 .grading-label-before {
@@ -659,7 +717,6 @@ footer {
 }
 
 .info-sidebar li strong {
-    color: #fff;
     display: block;
     font-size: 0.8rem;
     text-transform: uppercase;

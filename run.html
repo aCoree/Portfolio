@@ -8,6 +8,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ─── ELEGANTES VIOLETT FÜR ÜBERSCHRIFTEN ─── */
+        .heading-violet {
+            color: #8b5cf6 !important;
+        }
+
+        /* ─── COLOR GRADING SLIDER & TOP LABELS ─── */
+        .grading-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .grading-labels-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+
+        .grading-label-top {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+        }
+
+        /* ─── CSS GRID STACKING (PERFEKTE DECKUNGSGLEICHHEIT) ─── */
+        .grading-slider {
+            position: relative;
+            display: grid; /* Beide Bilder im selben Grid-Raster */
+            width: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            user-select: none;
+            touch-action: pan-y;
+            line-height: 0;
+            --slider-pos: 50%;
+        }
+
+        /* Beide Bilder belegen exakt dieselbe Zelle (1 / 1) */
+        .grading-slider img {
+            grid-area: 1 / 1;
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Das obere Bild ("Vorher") wird per clip-path beschnitten */
+        .grading-slider img.grading-before {
+            z-index: 2;
+            clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
+        }
+
+        /* Der Slider-Griff orientiert sich exakt an der CSS Variable */
+        .grading-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: var(--slider-pos);
+            width: 3px;
+            background: #ffffff;
+            cursor: ew-resize;
+            transform: translateX(-50%);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .grading-handle i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 38px;
+            height: 38px;
+            background: #ffffff;
+            color: #111111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
         /* ─── RESPONSIVE FOOTER STYLES ─── */
         .site-footer {
             display: flex;
@@ -18,6 +118,7 @@
             box-sizing: border-box;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(0, 0, 0, 0.3);
+            line-height: 1.5;
         }
         .site-footer .footer-left,
         .site-footer .footer-right {
@@ -37,9 +138,32 @@
             color: #888;
             font-size: 0.85rem;
             padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .site-footer .footer-center p {
+            margin: 0;
+            line-height: 1.4;
+        }
+        .site-footer .footer-legal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .site-footer .footer-legal a {
+            color: #888;
+            text-decoration: underline;
+            transition: color 0.2s ease;
+        }
+        .site-footer .footer-legal a:hover {
+            color: #fff;
         }
 
-        /* Responsive Layout für Handys (iPhone 12 Pro, SE, etc.) */
         @media (max-width: 640px) {
             .site-footer {
                 flex-wrap: wrap;
@@ -48,11 +172,13 @@
             }
             .site-footer .footer-left {
                 order: 1;
-                flex: 0 0 auto;
+                flex: 1;
+                justify-content: flex-start;
             }
             .site-footer .footer-right {
                 order: 2;
-                flex: 0 0 auto;
+                flex: 1;
+                justify-content: flex-end;
             }
             .site-footer .footer-center {
                 order: 3;
@@ -126,11 +252,11 @@
 
             <div class="project-info-grid">
                 <div class="info-content">
-                    <h2>Das Projekt & Die Umsetzung</h2>
-                    <p>RUN ist mein bisher aufwendigstes und technisch anspruchsvollstes Projekt. Der Film bricht mit den klassischen, statischen Kameraführungen und setzt voll auf Bewegung, Tempo und unbarmherzige Spannung. Jede Szene wurde strategisch geplant, um den Zuschauer direkt in die Flucht des Protagonisten hineinzuziehen.</p>
+                    <h2 class="heading-violet">Das Projekt & Die Umsetzung</h2>
+                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!</p>
                     
-                    <h3 style="margin-top: 25px; margin-bottom: 10px; color: var(--accent-violet);">Behind the Scenes</h3>
-                    <p>Gedreht unter extremen Lichtbedingungen, boten vor allem die düsteren Kulissen eine perfekte Grundlage für mein 10-bit Apple Log-Workflow Setup. Dadurch konnte im Post-Production-Prozess genau die kühle, kontrastreiche Stimmung erzeugt werden, die den Film ausmacht.</p>
+                    <h2 class="heading-violet" style="margin-top: 25px; margin-bottom: 10px;">Behind the Scenes</h2>
+                    <p>Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.</p>
                 </div>
                 
                 <div class="info-sidebar">
@@ -145,24 +271,33 @@
                 </div>
             </div>
 
-            <!-- ─── COLOR GRADING SLIDER ─── -->
-            <div id="grading" class="grading-section">
-                <h2 class="section-title">Color Grading</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 50px auto; color: #cccccc;">
-                    Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
-                </p>
-                <div class="grading-slider" id="gradingSlider">
-                    <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-base">
-                    <div class="grading-clip" id="gradingClip">
-                        <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN">
-                    </div>
-                    <span class="grading-label grading-label-before">VORHER</span>
-                    <span class="grading-label grading-label-after">NACHHER</span>
-                    <div class="grading-handle" id="gradingHandle">
-                        <i class="fa-solid fa-arrows-left-right"></i>
-                    </div>
-                </div>
+          <!-- ─── COLOR GRADING SLIDER ─── -->
+<div id="grading" class="grading-section">
+    <h2 class="section-title">Color Grading</h2>
+    <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: #cccccc;">
+        Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
+    </p>
+
+    <div class="grading-container">
+        <!-- Überschriften exakt bündig über den Bildkanten -->
+        <div class="grading-labels-top">
+            <span class="grading-label-top">VORHER</span>
+            <span class="grading-label-top">NACHHER</span>
+        </div>
+
+        <div class="grading-slider" id="gradingSlider">
+            <!-- Unteres Bild ("Nachher") -->
+            <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-after">
+            
+            <!-- Oberes Bild ("Vorher") -->
+            <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" class="grading-before">
+            
+            <div class="grading-handle" id="gradingHandle">
+                <i class="fa-solid fa-arrows-left-right"></i>
             </div>
+        </div>
+    </div>
+</div>
         </div>
     </section>
 
@@ -176,7 +311,12 @@
             </a>
         </div>
         <div class="footer-center">
-            <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+            <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+            <div class="footer-legal">
+                <a href="impressum.html">Impressum</a>
+                <span>&middot;</span>
+                <a href="datenschutz.html">Datenschutz</a>
+            </div>
         </div>
         <div class="footer-right">
             <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
@@ -206,44 +346,49 @@
     </script>
 
     <script>
-        // Color Grading Before/After Slider Logik
-        const slider = document.getElementById('gradingSlider');
-        const clip = document.getElementById('gradingClip');
-        const clipImg = clip.querySelector('img');
-        const handle = document.getElementById('gradingHandle');
-        let isDragging = false;
+    // Ultra-schlanke Slider-Logik mit erzwungener 43%-Startposition
+    const slider = document.getElementById('gradingSlider');
+    const handle = document.getElementById('gradingHandle');
+    let isDragging = false;
 
-        function syncClipImgWidth() {
-            clipImg.style.width = slider.getBoundingClientRect().width + 'px';
-        }
+    function setSliderPositionPercent(percent) {
+        if (!slider) return;
+        percent = Math.max(0, Math.min(100, percent));
+        slider.style.setProperty('--slider-pos', percent + '%');
+    }
 
-        function setSlider(x) {
-            const rect = slider.getBoundingClientRect();
-            let percent = ((x - rect.left) / rect.width) * 100;
-            percent = Math.max(0, Math.min(100, percent));
-            clip.style.width = percent + '%';
-            handle.style.left = percent + '%';
-        }
+    function setSliderPosition(x) {
+        if (!slider) return;
+        const rect = slider.getBoundingClientRect();
+        let percent = ((x - rect.left) / rect.width) * 100;
+        setSliderPositionPercent(percent);
+    }
 
-        syncClipImgWidth();
-        window.addEventListener('resize', syncClipImgWidth);
+    if (slider && handle) {
+        // Zwingt den Slider sofort beim Laden auf exakt 43%
+        setSliderPositionPercent(39);
 
-        handle.addEventListener('mousedown', () => isDragging = true);
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', (e) => {
-            if (isDragging) setSlider(e.clientX);
-        });
+        const onStart = () => { isDragging = true; };
+        const onEnd = () => { isDragging = false; };
+        const onMove = (e) => {
+            if (!isDragging) return;
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            setSliderPosition(x);
+        };
 
-        handle.addEventListener('touchstart', (e) => { isDragging = true; e.preventDefault(); }, { passive: false });
-        window.addEventListener('touchend', () => isDragging = false);
-        window.addEventListener('touchmove', (e) => {
-            if (isDragging) setSlider(e.touches[0].clientX);
-        });
+        handle.addEventListener('mousedown', onStart);
+        window.addEventListener('mouseup', onEnd);
+        window.addEventListener('mousemove', onMove);
+
+        handle.addEventListener('touchstart', onStart, { passive: true });
+        window.addEventListener('touchend', onEnd);
+        window.addEventListener('touchmove', onMove, { passive: true });
 
         slider.addEventListener('click', (e) => {
-            setSlider(e.clientX);
+            setSliderPosition(e.clientX);
         });
-    </script>
+    }
+</script>
 
     <script>
         // Fade-In Observer für Abschnitte
@@ -261,7 +406,6 @@
             observer.observe(element);
         });
 
-        // Sofortige Überprüfung beim Laden der Seite
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('section').forEach((element) => {
                 const rect = element.getBoundingClientRect();
