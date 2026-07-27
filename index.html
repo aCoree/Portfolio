@@ -12,6 +12,62 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts für modernes Design -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ─── RESPONSIVE FOOTER STYLES ─── */
+        .site-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 24px;
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .site-footer .footer-left,
+        .site-footer .footer-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        .site-footer .footer-left {
+            justify-content: flex-start;
+        }
+        .site-footer .footer-right {
+            justify-content: flex-end;
+        }
+        .site-footer .footer-center {
+            flex: 0 0 auto;
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            padding: 0 15px;
+        }
+
+        /* Responsive Layout für Handys (iPhone 12 Pro, SE, etc.) */
+        @media (max-width: 640px) {
+            .site-footer {
+                flex-wrap: wrap;
+                row-gap: 16px;
+                padding: 20px 20px;
+            }
+            .site-footer .footer-left {
+                order: 1;
+                flex: 0 0 auto;
+            }
+            .site-footer .footer-right {
+                order: 2;
+                flex: 0 0 auto;
+            }
+            .site-footer .footer-center {
+                order: 3;
+                flex: 0 0 100%;
+                padding: 0;
+                font-size: 0.78rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -53,12 +109,12 @@
             <a href="#kontakt" class="mobile-nav-link">Kontakt</a>
         </nav>
         <div class="mobile-social">
-            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </div>
 
     <!-- ─── HERO SECTION (HOME) ─── -->
-    <section id="home" class="hero">
+    <section id="home" class="hero section">
         <div class="hero-content">
             <h1>CREATING VISUAL STORIES</h1>
             <p>Filmmaker & Cinematographer aus der Schweiz</p>
@@ -81,8 +137,8 @@
                     </div>
                     
                     <div class="project-content">
-                        <h3>„RUN“ – Kurzfilm</h3>
-                        <p>Ein kinetischer Action-Thriller in den Tiefen der Schweiz, mit intensiven Verfolgungsjagden, cineastischen Drohnen-Aufnahmen und atmosphärischem Color Grading.</p>
+                        <h3>RUN – Ein Kurzfilm</h3>
+                        <p>Ein cinematischer action Kurzfilm im Seeland der Schweiz mit Verfolgungsjagden und Drohnen-Aufnahmen.</p>
                         
                         <!-- Expliziter Hinweis zum Anklicken -->
                         <span class="project-cta">Projekt ansehen <span class="arrow">→</span></span>
@@ -114,7 +170,7 @@
                     <div class="gear-item">
                         <i class="fa-solid fa-mobile-screen-button"></i>
                         <h4>iPhone 16 Pro</h4>
-                        <p>Als Hauptkamera für hochwertige.</p>
+                        <p>Als Hauptkamera für hochwertige Shots.</p>
                     </div>
                     <div class="gear-item">
                         <i class="fa-solid fa-microphone"></i>
@@ -140,9 +196,26 @@
         </div>
     </section>
 
-    <!-- ─── FOOTER ─── -->
-    <footer>
-        <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+ <!-- ─── FOOTER ─── -->
+    <footer class="site-footer">
+        <div class="footer-left">
+            <a href="index.html#home" class="logo">
+                <span class="logo-mark">
+                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
+                </span>
+            </a>
+        </div>
+        <div class="footer-center">
+            <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+            <div style="margin-top: 6px; font-size: 0.8rem;">
+                <a href="impressum.html" style="color: #888; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Impressum</a>
+                <span style="color: #555; margin: 0 6px;">·</span>
+                <a href="datenschutz.html" style="color: #888; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Datenschutz</a>
+            </div>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
+        </div>
     </footer>
 
     <!-- ─── JAVASCRIPT ─── -->
@@ -174,11 +247,21 @@
                 }
             });
         }, {
-            threshold: 0.15 
+            threshold: 0.05
         });
 
         document.querySelectorAll('section').forEach((element) => {
             fadeObserver.observe(element);
+        });
+
+        // Sofortiges Einblenden sichtbarer Abschnitte beim Laden
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('section').forEach((element) => {
+                const rect = element.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    element.classList.add('active');
+                }
+            });
         });
 
         // 3. Scrollspy: Setzt .active Klasse dynamisch auf den aktuellen Nav-Link
@@ -199,7 +282,7 @@
                 }
             });
         }, {
-            threshold: 0.4 // Aktiviert den Link sobald die Section zu 40% im Bild ist
+            threshold: 0.3
         });
 
         sections.forEach(section => {

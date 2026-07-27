@@ -6,6 +6,62 @@
     <title>RUN – Kurzfilm | Aurelio Zingarello</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ─── RESPONSIVE FOOTER STYLES ─── */
+        .site-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 24px;
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .site-footer .footer-left,
+        .site-footer .footer-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        .site-footer .footer-left {
+            justify-content: flex-start;
+        }
+        .site-footer .footer-right {
+            justify-content: flex-end;
+        }
+        .site-footer .footer-center {
+            flex: 0 0 auto;
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            padding: 0 15px;
+        }
+
+        /* Responsive Layout für Handys (iPhone 12 Pro, SE, etc.) */
+        @media (max-width: 640px) {
+            .site-footer {
+                flex-wrap: wrap;
+                row-gap: 16px;
+                padding: 20px 20px;
+            }
+            .site-footer .footer-left {
+                order: 1;
+                flex: 0 0 auto;
+            }
+            .site-footer .footer-right {
+                order: 2;
+                flex: 0 0 auto;
+            }
+            .site-footer .footer-center {
+                order: 3;
+                flex: 0 0 100%;
+                padding: 0;
+                font-size: 0.78rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -20,14 +76,11 @@
         <nav class="nav-center">
             <a href="index.html#home">Home</a>
             <a href="index.html#projekte">Projekte</a>
-            <a href="#grading">Color Grading</a>
             <a href="index.html#ueber-mich">Über mich</a>
             <a href="index.html#kontakt">Kontakt</a>
         </nav>
         <div class="nav-right">
-            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
         </div>
 
         <!-- Hamburger Button (nur Mobile) -->
@@ -43,14 +96,11 @@
         <nav class="mobile-nav">
             <a href="index.html#home" class="mobile-nav-link">Home</a>
             <a href="index.html#projekte" class="mobile-nav-link">Projekte</a>
-            <a href="#grading" class="mobile-nav-link">Color Grading</a>
             <a href="index.html#ueber-mich" class="mobile-nav-link">Über mich</a>
             <a href="index.html#kontakt" class="mobile-nav-link">Kontakt</a>
         </nav>
         <div class="mobile-social">
-            <a href="https://www.tiktok.com/@aurelio.zingarello?lang=de-DE" target="_blank" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@acoreog4616" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.instagram.com/aurelio.zingarello/" target="_blank" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </div>
 
@@ -59,11 +109,8 @@
             <a href="index.html#projekte" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Zurück zur Übersicht</a>
             
             <div class="project-header">
-                <h1>KURZFILM „RUN“</h1>
-                <p class="tagline">Ein kinetischer Action-Thriller in den Tiefen der Schweiz.</p>
-            </div>
-
-            <div class="project-large-banner" style="background-image: url('images/run-banner.jpg');">
+                <h1>RUN - Ein Kurzfilm</h1>
+                <p class="tagline">Ein cinematischer action Kurzfilm im Seeland der Schweiz.</p>
             </div>
 
             <!-- ─── VIDEO PLAYER ─── -->
@@ -79,8 +126,8 @@
 
             <div class="project-info-grid">
                 <div class="info-content">
-                    <h2>Das Projekt & Die Vision</h2>
-                    <p>„RUN“ ist mein bisher intensivstes und technisch anspruchsvollstes Projekt. Der Film bricht mit den klassischen, statischen Kameraführungen und setzt voll auf Bewegung, Tempo und unbarmherzige Spannung. Jede Szene wurde strategisch geplant, um den Zuschauer direkt in die Flucht des Protagonisten hineinzuziehen.</p>
+                    <h2>Das Projekt & Die Umsetzung</h2>
+                    <p>RUN ist mein bisher aufwendigstes und technisch anspruchsvollstes Projekt. Der Film bricht mit den klassischen, statischen Kameraführungen und setzt voll auf Bewegung, Tempo und unbarmherzige Spannung. Jede Szene wurde strategisch geplant, um den Zuschauer direkt in die Flucht des Protagonisten hineinzuziehen.</p>
                     
                     <h3 style="margin-top: 25px; margin-bottom: 10px; color: var(--accent-violet);">Behind the Scenes</h3>
                     <p>Gedreht unter extremen Lichtbedingungen, boten vor allem die düsteren Kulissen eine perfekte Grundlage für mein 10-bit Apple Log-Workflow Setup. Dadurch konnte im Post-Production-Prozess genau die kühle, kontrastreiche Stimmung erzeugt werden, die den Film ausmacht.</p>
@@ -90,10 +137,10 @@
                     <h3>Projektdetails</h3>
                     <ul>
                         <li><strong>Regie & Kamera:</strong> Aurelio Zingarello</li>
-                        <li><strong>Genre:</strong> Action / Thriller</li>
-                        <li><strong>Kamera-Setup:</strong> Mobile Log Setup / Apple Log</li>
-                        <li><strong>Drohne:</strong> DJI Air 3S</li>
-                        <li><strong>Release Jahr:</strong> 2026</li>
+                        <li><strong>Cast:</strong> Leila & Marco Zingarello</li>
+                        <li><strong>Genre:</strong> Action</li>
+                        <li><strong>Kameras:</strong> iPhone 16 Pro & DJI Air 3S</li>
+                        <li><strong>Erscheinungsjahr:</strong> 2026</li>
                     </ul>
                 </div>
             </div>
@@ -102,7 +149,7 @@
             <div id="grading" class="grading-section">
                 <h2 class="section-title">Color Grading</h2>
                 <p style="text-align: center; max-width: 700px; margin: 0 auto 50px auto; color: #cccccc;">
-                    Vom flachen Log-Footage zur fertigen Stimmung – ein Beispiel aus „RUN“.
+                    Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
                 </p>
                 <div class="grading-slider" id="gradingSlider">
                     <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-base">
@@ -119,11 +166,26 @@
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer">
+        <div class="footer-left">
+            <a href="index.html#home" class="logo">
+                <span class="logo-mark">
+                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
+                </span>
+            </a>
+        </div>
+        <div class="footer-center">
+            <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
+        </div>
     </footer>
 
+    <!-- ─── JAVASCRIPT ─── -->
     <script>
+        // Mobile Menü Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -144,6 +206,7 @@
     </script>
 
     <script>
+        // Color Grading Before/After Slider Logik
         const slider = document.getElementById('gradingSlider');
         const clip = document.getElementById('gradingClip');
         const clipImg = clip.querySelector('img');
@@ -181,21 +244,32 @@
             setSlider(e.clientX);
         });
     </script>
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      }
-    });
-  }, {
-    threshold: 0.15 
-  });
 
-  // Holt sich automatisch alle <section>-Tags deiner Website!
-  document.querySelectorAll('section').forEach((element) => {
-    observer.observe(element);
-  });
-</script>
+    <script>
+        // Fade-In Observer für Abschnitte
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.05 
+        });
+
+        document.querySelectorAll('section').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Sofortige Überprüfung beim Laden der Seite
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('section').forEach((element) => {
+                const rect = element.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    element.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
