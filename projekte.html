@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurelio Zingarello | Projekte</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ─── CLEAN APPLE PAGE FADE-IN & AUFHELL-EFFEKT ─── */
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(12px) scale(0.995);
+                filter: brightness(0.44);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: brightness(1);
+            }
+        }
+
+        body {
+            animation: pageFadeIn 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            height: 100%;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        /* ─── STICKY FOOTER FIX ─── */
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        main.container {
+            flex: 1 0 auto;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px; /* Standard-Abstand links/rechts für PC */
+            box-sizing: border-box;
+        }
+
+        .site-footer {
+            margin-top: auto;
+        }
+
+        /* ─── HEADER & FILTER LAYOUT ─── */
+        .projects-header-flex {
+            padding: 110px 0 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .sort-filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-label {
+            color: #888;
+            font-size: 0.88rem;
+            font-weight: 400;
+        }
+
+        .custom-select {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .custom-select:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .custom-select option {
+            background-color: #121212;
+            color: #fff;
+        }
+
+        /* ─── LINKSBÜNDIGES GRID FIX ─── */
+        .poster-grid {
+            display: grid;
+            /* Basis-Grid für PC */
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 24px;
+            justify-content: start !important;
+            justify-items: start !important;
+            text-align: left !important;
+            padding-bottom: 60px;
+        }
+
+        .poster-card {
+            width: 100%;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            text-align: left !important;
+        }
+
+        /* ─── WEISSE LINIE FIX & CLEAN LINK RESETS ─── */
+        .poster-card, 
+        .poster-card:hover, 
+        .poster-card:focus,
+        .poster-card * {
+            text-decoration: none !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none;
+        }
+
+        .poster-img-wrapper {
+            border: none !important;
+            outline: none !important;
+            width: 100%;
+            /* ─── ZURÜCK AUF HOCHFORMAT (9:16) ─── */
+            aspect-ratio: 9 / 16;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .poster-card:hover .poster-img-wrapper {
+            transform: scale(1.03);
+        }
+
+        /* ─── APPLE STYLE TITLE & META ─── */
+        .poster-info-single {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: nowrap;
+            overflow: hidden;
+        }
+
+        .poster-info-single .poster-title {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #fff;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .poster-info-single .dot-separator {
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .poster-info-single .poster-meta {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #888;
+            line-height: 1.2;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        /* ─── MOBILE OPTIMIERUNGEN (HANDY) ─── */
+        @media (max-width: 768px) {
+            main.container {
+                padding: 0 16px; /* Abstand zum Handy-Rand */
+            }
+
+            .projects-header-flex {
+                padding: 90px 0 20px 0;
+            }
+
+            .projects-header-flex h1 {
+                font-size: 1.75rem !important;
+            }
+
+            .sort-label {
+                font-size: 0.8rem;
+            }
+
+            .custom-select {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+
+            /* Erzwinge 3 Spalten auf Mobilgeräten */
+            .poster-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 12px 8px; /* Abstand zwischen den Karten */
+            }
+
+            .poster-img-wrapper {
+                border-radius: 6px; /* Etwas kleinerer Radius auf Mobile */
+            }
+
+            /* Anpassung der Schriftgrößen für schmale Spalten */
+            .poster-info-single {
+                margin-top: 6px;
+                gap: 2px;
+                flex-direction: column; /* Titel und Meta untereinander */
+                align-items: flex-start;
+            }
+
+            .poster-info-single .dot-separator {
+                display: none; /* Punkt auf Mobile ausblenden */
+            }
+
+            .poster-info-single .poster-title {
+                font-size: 0.75rem; /* Etwas kleiner damit es passt */
+                white-space: normal; /* Erlaubt Umbruch wenn nötig */
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Max 2 Zeilen Titel */
+                -webkit-box-orient: vertical;
+            }
+
+            .poster-info-single .poster-meta {
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── NAVIGATIONBAR ─── -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html#home" class="logo">
+                <span class="logo-mark"><img src="images/logo-wide.png" alt="Aurelio Zingarello Logo"></span>
+            </a>
+        </div>
+        
+        <nav class="nav-center">
+            <a href="index.html#home">Home</a>
+            <a href="projekte.html" class="active">Projekte</a>
+            <a href="index.html#ueber-mich">Über mich</a>
+            <a href="index.html#kontakt">Kontakt</a>
+        </nav>
+        
+        <div class="nav-right">
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+
+        <!-- Hamburger Button (Mobile) -->
+        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="index.html#home" class="mobile-nav-link">Home</a>
+            <a href="projekte.html" class="mobile-nav-link">Projekte</a>
+            <a href="index.html#ueber-mich" class="mobile-nav-link">Über mich</a>
+            <a href="index.html#kontakt" class="mobile-nav-link">Kontakt</a>
+        </nav>
+        <div class="mobile-social">
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+    </div>
+
+    <!-- ─── MAIN CONTENT ─── -->
+    <main class="container">
+        
+        <div class="projects-header-flex">
+            <h1 style="font-size: 2.2rem; font-weight: 700; margin: 0;">Alle Projekte</h1>
+            
+            <div class="sort-filter-group">
+                <label for="sortSelect" class="sort-label">Sortieren nach:</label>
+                <select id="sortSelect" class="custom-select">
+                    <option value="neuste">Neuste zuerst</option>
+                    <option value="beliebteste">Beliebteste</option>
+                    <option value="aelteste">Älteste zuerst</option>
+                    <option value="alphabetisch">Name (A–Z)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- ─── MOVIE GRID (3 SPALTEN AUF MOBILE, 9:16 FORMAT) ─── -->
+        <div class="poster-grid" id="projectsContainer">
+            
+            <!-- Poster 1: RUN -->
+            <a href="run.html" class="poster-card" data-date="2026-06-01" data-views="1500" data-title="RUN">
+                <div class="poster-img-wrapper" style="background-image: url('images/run-banner.jpg');"></div>
+                <div class="poster-info poster-info-single">
+                    <h3 class="poster-title">RUN</h3>
+                    <span class="dot-separator">·</span>
+                    <span class="poster-meta">Action Kurzfilm</span>
+                </div>
+            </a>
+
+            <!-- Weitere Filme hier kopieren -->
+
+        </div>
+
+    </main>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer">
+        <div class="footer-left">
+            <a href="index.html#home" class="logo">
+                <span class="logo-mark">
+                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
+                </span>
+            </a>
+        </div>
+        <div class="footer-center">
+            <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+            <div style="margin-top: 6px; font-size: 0.8rem;">
+                <a href="impressum.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Impressum</a>
+                <span style="color: #555; margin: 0 6px;">·</span>
+                <a href="datenschutz.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Datenschutz</a>
+            </div>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <!-- ─── JAVASCRIPT ─── -->
+    <script>
+        // Hamburger Mobile Menü
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            document.body.classList.toggle('menu-open');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+                document.body.classList.remove('menu-open');
+            });
+        });
+
+        // Sortierungs-Funktion
+        const sortSelect = document.getElementById('sortSelect');
+        const container = document.getElementById('projectsContainer');
+
+        sortSelect.addEventListener('change', () => {
+            const cards = Array.from(container.children);
+            const val = sortSelect.value;
+
+            cards.sort((a, b) => {
+                if (val === 'neuste') {
+                    return new Date(b.dataset.date) - new Date(a.dataset.date);
+                } else if (val === 'aelteste') {
+                    return new Date(a.dataset.date) - new Date(b.dataset.date);
+                } else if (val === 'beliebteste') {
+                    return parseInt(b.dataset.views) - parseInt(a.dataset.views);
+                } else if (val === 'alphabetisch') {
+                    const titleA = a.dataset.title || a.querySelector('.poster-title').textContent;
+                    const titleB = b.dataset.title || b.querySelector('.poster-title').textContent;
+                    return titleA.localeCompare(titleB, 'de', { sensitivity: 'base' });
+                }
+            });
+
+            cards.forEach(card => container.appendChild(card));
+        });
+    </script>
+</body>
+</html>

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         html, body {
             overflow-x: hidden;
             width: 100%;
@@ -20,9 +24,58 @@
             height: auto;
         }
 
-        /* ─── ELEGANTES VIOLETT FÜR ÜBERSCHRIFTEN ─── */
+        /* ─── TOP NAVIGATION OBEN (LINKS & RECHTS) ─── */
+        .page-top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        /* ─── VIOLETT NUR FÜR BEHIND THE SCENES & UMSETZUNG ─── */
         .heading-violet {
-            color: #8b5cf6 !important;
+            color: #8b7bd8 !important;
+            font-weight: 700;
+        }
+
+        /* ─── WEISS FÜR COLOR GRADING ─── */
+        .section-title {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* ─── CLEANER APPLE-STYLE BUTTON FÜR DEN COLOR GRADING SLIDER ─── */
+        .grading-apple-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 14px;
+            padding: 9px 20px;
+            background: #ffffff;
+            color: #0d0d0d;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            line-height: 1;
+        }
+
+        .grading-apple-btn:hover {
+            background: #f4f4f6;
+            color: #000000;
+            transform: scale(1.025) translateY(-2px);
+            box-shadow: 0 8px 22px rgba(255, 255, 255, 0.18), 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .grading-apple-btn i {
+            font-size: 0.8rem;
+            transition: transform 0.25s ease;
+        }
+
+        .grading-apple-btn:hover i {
+            transform: translateY(2px);
         }
 
         /* ─── COLOR GRADING SLIDER & TOP LABELS ─── */
@@ -50,7 +103,7 @@
         /* ─── CSS GRID STACKING (PERFEKTE DECKUNGSGLEICHHEIT) ─── */
         .grading-slider {
             position: relative;
-            display: grid; /* Beide Bilder im selben Grid-Raster */
+            display: grid;
             width: 100%;
             overflow: hidden;
             border-radius: 12px;
@@ -60,7 +113,6 @@
             --slider-pos: 50%;
         }
 
-        /* Beide Bilder belegen exakt dieselbe Zelle (1 / 1) */
         .grading-slider img {
             grid-area: 1 / 1;
             width: 100%;
@@ -71,13 +123,11 @@
             padding: 0;
         }
 
-        /* Das obere Bild ("Vorher") wird per clip-path beschnitten */
         .grading-slider img.grading-before {
             z-index: 2;
             clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
         }
 
-        /* Der Slider-Griff orientiert sich exakt an der CSS Variable */
         .grading-handle {
             position: absolute;
             top: 0;
@@ -209,7 +259,6 @@
             <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
         </div>
 
-        <!-- Hamburger Button (nur Mobile) -->
         <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
             <span></span>
             <span></span>
@@ -217,7 +266,6 @@
         </button>
     </header>
 
-    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobileMenu">
         <nav class="mobile-nav">
             <a href="index.html#home" class="mobile-nav-link">Home</a>
@@ -232,14 +280,16 @@
 
     <section class="section project-detail-page">
         <div class="container">
-            <a href="index.html#projekte" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Zurück zur Übersicht</a>
+            <div class="page-top-nav">
+                <a href="index.html#projekte" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Zurück zur Übersicht</a>
+                <a href="projekte.html" class="back-btn">Projekte <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
             
             <div class="project-header">
                 <h1>RUN - Ein Kurzfilm</h1>
                 <p class="tagline">Ein cinematischer action Kurzfilm im Seeland der Schweiz.</p>
             </div>
 
-            <!-- ─── VIDEO PLAYER ─── -->
             <div class="video-wrapper">
                 <iframe
                     src="https://www.youtube.com/embed/fetBu3gqFOM"
@@ -252,11 +302,20 @@
 
             <div class="project-info-grid">
                 <div class="info-content">
-                    <h2 class="heading-violet">Das Projekt & Die Umsetzung</h2>
-                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!</p>
+                    <h2 class="heading-violet">Behind the Scenes</h2>
+                    <p>
+                        Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
+                    </p>
                     
-                    <h2 class="heading-violet" style="margin-top: 25px; margin-bottom: 10px;">Behind the Scenes</h2>
-                    <p>Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.</p>
+                    <p style="margin-top: 15px;">
+                        <a href="#grading" class="grading-apple-btn">
+                            <span>Zum Color Grading Slider</span>
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </p>
+
+                    <h2 class="heading-violet" style="margin-top: 35px; margin-bottom: 10px;">Das Projekt & Die Umsetzung</h2>
+                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!</p>
                 </div>
                 
                 <div class="info-sidebar">
@@ -271,37 +330,32 @@
                 </div>
             </div>
 
-          <!-- ─── COLOR GRADING SLIDER ─── -->
-<div id="grading" class="grading-section">
-    <h2 class="section-title">Color Grading</h2>
-    <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: #cccccc;">
-        Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
-    </p>
+            <div id="grading" class="grading-section">
+                <!-- Bleibt jetzt sauber weiß -->
+                <h2 class="section-title">Color Grading</h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: #cccccc;">
+                    Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
+                </p>
 
-    <div class="grading-container">
-        <!-- Überschriften exakt bündig über den Bildkanten -->
-        <div class="grading-labels-top">
-            <span class="grading-label-top">VORHER</span>
-            <span class="grading-label-top">NACHHER</span>
-        </div>
+                <div class="grading-container">
+                    <div class="grading-labels-top">
+                        <span class="grading-label-top">VORHER</span>
+                        <span class="grading-label-top">NACHHER</span>
+                    </div>
 
-        <div class="grading-slider" id="gradingSlider">
-            <!-- Unteres Bild ("Nachher") -->
-            <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-after">
-            
-            <!-- Oberes Bild ("Vorher") -->
-            <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" class="grading-before">
-            
-            <div class="grading-handle" id="gradingHandle">
-                <i class="fa-solid fa-arrows-left-right"></i>
+                    <div class="grading-slider" id="gradingSlider">
+                        <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-after">
+                        <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" class="grading-before">
+                        
+                        <div class="grading-handle" id="gradingHandle">
+                            <i class="fa-solid fa-arrows-left-right"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
         </div>
     </section>
 
-    <!-- ─── FOOTER ─── -->
     <footer class="site-footer">
         <div class="footer-left">
             <a href="index.html#home" class="logo">
@@ -323,9 +377,7 @@
         </div>
     </footer>
 
-    <!-- ─── JAVASCRIPT ─── -->
     <script>
-        // Mobile Menü Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -346,52 +398,49 @@
     </script>
 
     <script>
-    // Ultra-schlanke Slider-Logik mit erzwungener 43%-Startposition
-    const slider = document.getElementById('gradingSlider');
-    const handle = document.getElementById('gradingHandle');
-    let isDragging = false;
+        const slider = document.getElementById('gradingSlider');
+        const handle = document.getElementById('gradingHandle');
+        let isDragging = false;
 
-    function setSliderPositionPercent(percent) {
-        if (!slider) return;
-        percent = Math.max(0, Math.min(100, percent));
-        slider.style.setProperty('--slider-pos', percent + '%');
-    }
+        function setSliderPositionPercent(percent) {
+            if (!slider) return;
+            percent = Math.max(0, Math.min(100, percent));
+            slider.style.setProperty('--slider-pos', percent + '%');
+        }
 
-    function setSliderPosition(x) {
-        if (!slider) return;
-        const rect = slider.getBoundingClientRect();
-        let percent = ((x - rect.left) / rect.width) * 100;
-        setSliderPositionPercent(percent);
-    }
+        function setSliderPosition(x) {
+            if (!slider) return;
+            const rect = slider.getBoundingClientRect();
+            let percent = ((x - rect.left) / rect.width) * 100;
+            setSliderPositionPercent(percent);
+        }
 
-    if (slider && handle) {
-        // Zwingt den Slider sofort beim Laden auf exakt 43%
-        setSliderPositionPercent(39);
+        if (slider && handle) {
+            setSliderPositionPercent(39);
 
-        const onStart = () => { isDragging = true; };
-        const onEnd = () => { isDragging = false; };
-        const onMove = (e) => {
-            if (!isDragging) return;
-            const x = e.touches ? e.touches[0].clientX : e.clientX;
-            setSliderPosition(x);
-        };
+            const onStart = () => { isDragging = true; };
+            const onEnd = () => { isDragging = false; };
+            const onMove = (e) => {
+                if (!isDragging) return;
+                const x = e.touches ? e.touches[0].clientX : e.clientX;
+                setSliderPosition(x);
+            };
 
-        handle.addEventListener('mousedown', onStart);
-        window.addEventListener('mouseup', onEnd);
-        window.addEventListener('mousemove', onMove);
+            handle.addEventListener('mousedown', onStart);
+            window.addEventListener('mouseup', onEnd);
+            window.addEventListener('mousemove', onMove);
 
-        handle.addEventListener('touchstart', onStart, { passive: true });
-        window.addEventListener('touchend', onEnd);
-        window.addEventListener('touchmove', onMove, { passive: true });
+            handle.addEventListener('touchstart', onStart, { passive: true });
+            window.addEventListener('touchend', onEnd);
+            window.addEventListener('touchmove', onMove, { passive: true });
 
-        slider.addEventListener('click', (e) => {
-            setSliderPosition(e.clientX);
-        });
-    }
-</script>
+            slider.addEventListener('click', (e) => {
+                setSliderPosition(e.clientX);
+            });
+        }
+    </script>
 
     <script>
-        // Fade-In Observer für Abschnitte
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {

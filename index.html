@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurelio Zingarello | Filmmaker & Cinematographer</title>
+    <title>Aurelio Zingarello</title>
 
     <!-- Favicons für Browser, iOS und Android -->
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -92,7 +92,7 @@
         
         <nav class="nav-center">
             <a href="#home" class="active">Home</a>
-            <a href="#projekte">Projekte</a>
+            <a href="projekte.html">Projekte</a>
             <a href="#ueber-mich">Über mich</a>
             <a href="#kontakt">Kontakt</a>
         </nav>
@@ -113,7 +113,7 @@
     <div class="mobile-menu" id="mobileMenu">
         <nav class="mobile-nav">
             <a href="#home" class="mobile-nav-link">Home</a>
-            <a href="#projekte" class="mobile-nav-link">Projekte</a>
+            <a href="projekte.html" class="mobile-nav-link">Projekte</a>
             <a href="#ueber-mich" class="mobile-nav-link">Über mich</a>
             <a href="#kontakt" class="mobile-nav-link">Kontakt</a>
         </nav>
@@ -126,67 +126,74 @@
     <section id="home" class="hero section">
         <div class="hero-content">
             <h1>CREATING VISUAL STORIES</h1>
-            <p>Filmmaker & Cinematographer aus der Schweiz</p>
-            <a href="#projekte" class="btn">Projekte ansehen</a>
+            <p>Filmmaker & Mediamatiker aus der Schweiz</p>
+            <a href="projekte.html" class="btn">Projekte ansehen</a>
         </div>
     </section>
 
-   <!-- ─── PROJEKTE SECTION ─── -->
-    <section id="projekte" class="section">
-        <div class="container">
-            <h2 class="section-title">Meine Projekte</h2>
-            <div class="projects-grid">
+   <!-- ─── PROJEKTE SECTION (APPLE TV SLIDER STYLE) ─── -->
+<section id="projekte" class="section projekte-apple-section">
+    <div class="container-wide">
+        
+        <!-- Header mit Titelelement & Link zu allen Projekten -->
+        <div class="section-header-flex">
+            <div>
+                <h2 class="section-title-left">Meine Projekte</h2>
+            </div>
+            <a href="projekte.html" class="see-all-link">
+                Alle Projekte ansehen <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+
+        <!-- Apple-Style Slider Container -->
+        <div class="apple-slider-container">
+            <div class="apple-slider-track">
                 
-                <a href="run.html" class="project-card">
-                    <div class="project-img-placeholder" style="background-image: url('images/run-banner.jpg');">
-                        <!-- Hover-Overlay mit Play-Icon -->
-                        <div class="project-overlay">
-                            <span class="play-icon">▶</span>
+                <!-- Projekt-Karte 1: RUN (Ganzes Feld anklickbar) -->
+                <div class="apple-card active" onclick="window.location.href='run.html';" style="cursor: pointer;">
+                    <!-- Hintergrundbild / Banner -->
+                    <div class="apple-card-bg" style="background-image: url('images/run-banner.jpg');"></div>
+                    
+                    <!-- Gradient-Overlay unten für perfekte Lesbarkeit der Infos -->
+                    <div class="apple-card-overlay">
+                        <div class="apple-card-content">
+                            
+                            <!-- Der weiße Apple-Button -->
+                            <a href="run.html" class="apple-btn">
+                                <i class="fa-solid fa-play"></i> Jetzt ansehen
+                            </a>
+
+                            <!-- Infos & Tagline neben dem Button -->
+                            <div class="apple-card-text">
+                                <span class="genre-tag">Action / Kurzfilm</span>
+                                <span class="bullet-dot">•</span>
+                                <span class="card-desc">Ein cinematischer Action-Kurzfilm im Seeland der Schweiz mit Verfolgungsjagden & Spannung.</span>
+                            </div>
+
                         </div>
                     </div>
-                    
-                    <div class="project-content">
-                        <h3>RUN – Ein Kurzfilm</h3>
-                        <p>Ein cinematischer action Kurzfilm im Seeland der Schweiz mit Verfolgungsjagden und Drohnen-Aufnahmen.</p>
-                        
-                        <!-- Expliziter Hinweis zum Anklicken -->
-                        <span class="project-cta"><h4>Projekt ansehen</h4> <span class="arrow">→</span></span>
-                    </div>
-                </a>
+                </div>
 
-                <!-- Hier können später weitere Projekt-Karten hin -->
+                <!-- Wenn du später mehr Projekte hast, kopierst du einfach den <div class="apple-card"> Block hier drunter! -->
+
+            </div>
+
+            <!-- Apple Indikator-Punkte unter dem Banner -->
+            <div class="apple-slider-dots">
+                <span class="dot active"></span>
+                <!-- Spätere Punkte für weitere Projekte: <span class="dot"></span> -->
             </div>
         </div>
-    </section>
+
+    </div>
+</section>
 
     <!-- ─── ÜBER MICH & EQUIPMENT ─── -->
     <section id="ueber-mich" class="section bg-dark">
         <div class="container">
             <h2 class="section-title">Über mich</h2>
             <div class="about-text">
-                <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese dannach als cinematischesn Kurzfilm zu produzieren. </p>
-            </div>
-
-            <!-- Equipment Gear Grid -->
-            <div class="equipment-container">
-                <h3>Mein Equipment</h3>
-                <div class="gear-grid">
-                    <div class="gear-item">
-                        <i class="fa-solid fa-drone"></i>
-                        <h4>DJI Air 3S</h4>
-                        <p>Für epische Luftaufnahmen und Verfolgungsjagden.</p>
-                    </div>
-                    <div class="gear-item">
-                        <i class="fa-solid fa-mobile-screen-button"></i>
-                        <h4>iPhone 16 Pro</h4>
-                        <p>Als Hauptkamera für hochwertige Shots.</p>
-                    </div>
-                    <div class="gear-item">
-                        <i class="fa-solid fa-microphone"></i>
-                        <h4>Audio & Gimbal</h4>
-                        <p>DJI Mic Mini als portables Mikrofon und DJI OM8 für stabile Shots.</p>
-                    </div>
-                </div>
+                <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese dannach als cinematischen Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich mit Design, Webentwicklung und verschiedenen digitalen Projekten.  </p>
             </div>
         </div>
     </section>
@@ -217,9 +224,9 @@
         <div class="footer-center">
             <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
             <div style="margin-top: 6px; font-size: 0.8rem;">
-                <a href="impressum.html" style="color: #888; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Impressum</a>
+                <a href="impressum.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Impressum</a>
                 <span style="color: #555; margin: 0 6px;">·</span>
-                <a href="datenschutz.html" style="color: #888; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Datenschutz</a>
+                <a href="datenschutz.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Datenschutz</a>
             </div>
         </div>
         <div class="footer-right">
