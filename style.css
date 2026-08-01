@@ -1312,3 +1312,56 @@ html {
     color: #86868b;
     margin-top: 2px;
 }
+
+/* ==========================================
+   HERO VIDEO BACKGROUND & FALLBACK
+   ========================================== */
+
+/* Hero-Bereich als Ausrichtungsrahmen definieren */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh; /* Volle Bildschirmhöhe */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* FALLBACK: Falls das Video blockiert/nicht geladen wird, greift dein Hero-Bild */
+  background-image: url('assets/hero-bg.jpg'); /* <-- Hier später deinen Bildpfad anpassen */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Das Hintergrundvideo flexibel einpassen */
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* Abdunklung über dem Video (damit der weiße Text perfekt lesbar bleibt) */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45); /* 45% Schwarz-Filter (kannst du anpassen) */
+  z-index: 2;
+}
+
+/* Stellt sicher, dass Text & Buttons immer ganz oben über dem Video liegen */
+.hero-content,
+.hero .container,
+.hero-text {
+  position: relative;
+  z-index: 3;
+}

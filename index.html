@@ -41,12 +41,9 @@
         #home.hero {
             background-color: var(--sky-color) !important;
             margin-top: 0;
-            /* Falls ein Hintergrundbild in style.css gesetzt ist, müssen wir es überschreiben: */
-            /* background-image: none !important; */
         }
 
         /* Zwingt den dynamischen Header oben, transparent zu sein */
-        /* Wir überschreiben die Standardfarben, damit kein schwarzer Balken entsteht */
         header, .site-header, nav, .site-header-scrolled, .main-navigation, .navbar {
             background-color: transparent !important;
             background: transparent !important;
@@ -113,8 +110,18 @@
 
     <!-- Header und Footer werden dynamisch durch header.js geladen -->
 
-    <!-- ─── HERO SECTION (HOME) ─── -->
+    <!-- ─── HERO SECTION (HOME) MIT VIDEO-BACKGROUND & FALLBACK ─── -->
     <section id="home" class="hero section">
+        
+        <!-- Abdunklungs-Overlay für bessere Textlesbarkeit -->
+        <div class="hero-overlay"></div>
+
+        <!-- Hintergrundvideo (poster dient als Fallback-Bild) -->
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/hero-bg.jpg">
+            <source src="hero-loop-h264.mp4" type="video/mp4">
+            Dein Browser unterstützt keine HTML5-Videos.
+        </video>
+
         <div class="hero-content">
             <h1>CREATING VISUAL STORIES</h1>
             <p>Filmmaker & Mediamatiker aus der Schweiz</p>
@@ -258,13 +265,11 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
-                    // Nur Links innerhalb von .nav-center auswählen (kein Logo, keine Social Icons!)
                     const navLinks = document.querySelectorAll('.nav-center a');
 
                     navLinks.forEach(link => {
                         const href = link.getAttribute('href') || '';
                         
-                        // Nur wenn die Sektion erlaubt ist UND der Link dazu passt, bekommt er .active
                         if (allowedSections.includes(id) && (href === `#${id}` || href.endsWith(`#${id}`) || href.endsWith(`index.html#${id}`))) {
                             link.classList.add('active');
                         } else {
