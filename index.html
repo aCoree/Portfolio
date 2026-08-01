@@ -6,15 +6,15 @@
     <title>Aurelio Zingarello</title>
 
     <!-- Favicons für Browser, iOS und Android -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
-<!-- Hochauflösendes Icon speziell für Google-Suchergebnisse -->
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <!-- Hochauflösendes Icon speziell für Google-Suchergebnisse -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
 
-<!-- Web Manifest für mobile Verknüpfungen -->
-<link rel="manifest" href="/site.webmanifest">
+    <!-- Web Manifest für mobile Verknüpfungen -->
+    <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="style.css">    
     <!-- FontAwesome für Social Media Icons -->
@@ -23,7 +23,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* ─── RESPONSIVE FOOTER STYLES ─── */
+        /* ─── REVITALISIERTER TEIL FÜR DEN OBEREN BEREICH ─── */
+        :root {
+            /* ⚠️ BITTE HIER DEINEN EXAKTEN HEX-CODE VOM HIMMEL EINTRAGEN ⚠️ */
+            /* Ersetze #YOUR_SKY_COLOR_HEX mit deinem Code, z.B. #6DA2CB */
+            --sky-color: #YOUR_SKY_COLOR_HEX; 
+        }
+
+        /* Der allgemeine Seitenhintergrund bleibt dunkel */
+        body {
+            background-color: #0b0b0b; 
+            margin: 0;
+            padding: 0;
+        }
+
+        /* AUSSCHLIESSLICH die Hero-Section ganz oben bekommt die Himmelfarbe */
+        #home.hero {
+            background-color: var(--sky-color) !important;
+            margin-top: 0;
+            /* Falls ein Hintergrundbild in style.css gesetzt ist, müssen wir es überschreiben: */
+            /* background-image: none !important; */
+        }
+
+        /* Zwingt den dynamischen Header oben, transparent zu sein */
+        /* Wir überschreiben die Standardfarben, damit kein schwarzer Balken entsteht */
+        header, .site-header, nav, .site-header-scrolled, .main-navigation, .navbar {
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+
+        /* ─── REST DER BESTEHENDEN FOOTER-STYLES (UNVERÄNDERT) ─── */
         .site-footer {
             display: flex;
             justify-content: space-between;
@@ -54,7 +85,7 @@
             padding: 0 15px;
         }
 
-        /* Responsive Layout für Handys (iPhone 12 Pro, SE, etc.) */
+        /* Responsive Layout für Handys */
         @media (max-width: 640px) {
             .site-footer {
                 flex-wrap: wrap;
@@ -80,120 +111,75 @@
 </head>
 <body>
 
-    <!-- ─── NAVIGATIONBAR ─── -->
-    <header class="navbar">
-        <div class="nav-left">
-            <a href="#home" class="logo">
-                <span class="logo-mark">
-                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
-                </span>
-            </a>
-        </div>
-        
-        <nav class="nav-center">
-            <a href="#home" class="active">Home</a>
-            <a href="projekte.html">Projekte</a>
-            <a href="#ueber-mich">Über mich</a>
-            <a href="#kontakt">Kontakt</a>
-        </nav>
-        
-        <div class="nav-right">
-            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-
-        <!-- Hamburger Button (nur Mobile) -->
-        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mobileMenu">
-        <nav class="mobile-nav">
-            <a href="#home" class="mobile-nav-link">Home</a>
-            <a href="projekte.html" class="mobile-nav-link">Projekte</a>
-            <a href="#ueber-mich" class="mobile-nav-link">Über mich</a>
-            <a href="#kontakt" class="mobile-nav-link">Kontakt</a>
-        </nav>
-        <div class="mobile-social">
-            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-    </div>
+    <!-- Header und Footer werden dynamisch durch header.js geladen -->
 
     <!-- ─── HERO SECTION (HOME) ─── -->
     <section id="home" class="hero section">
         <div class="hero-content">
             <h1>CREATING VISUAL STORIES</h1>
             <p>Filmmaker & Mediamatiker aus der Schweiz</p>
-            <a href="projekte.html" class="btn">Projekte ansehen</a>
+            <a href="index.html#projekte" class="btn">Projekte ansehen</a>
         </div>
     </section>
 
-   <!-- ─── PROJEKTE SECTION (APPLE TV SLIDER STYLE) ─── -->
-<section id="projekte" class="section projekte-apple-section">
-    <div class="container-wide">
-        
-        <!-- Header mit Titelelement & Link zu allen Projekten -->
-        <div class="section-header-flex">
-            <div>
-                <h2 class="section-title-left">Meine Projekte</h2>
+    <!-- ─── PROJEKTE SECTION (APPLE TV SLIDER STYLE) ─── -->
+    <section id="projekte" class="section projekte-apple-section">
+        <div class="container-wide">
+            
+            <!-- Header mit Titelelement & Link zu allen Projekten -->
+            <div class="section-header-flex">
+                <div>
+                    <h2 class="section-title-left">Meine Projekte</h2>
+                </div>
+                <a href="projekte.html" class="see-all-link">
+                    Alle Projekte ansehen <i class="fa-solid fa-chevron-right"></i>
+                </a>
             </div>
-            <a href="projekte.html" class="see-all-link">
-                Alle Projekte ansehen <i class="fa-solid fa-chevron-right"></i>
-            </a>
-        </div>
 
-        <!-- Apple-Style Slider Container -->
-        <div class="apple-slider-container">
-            <div class="apple-slider-track">
-                
-                <!-- Projekt-Karte 1: RUN (Ganzes Feld anklickbar) -->
-                <div class="apple-card active" onclick="window.location.href='run.html';" style="cursor: pointer;">
-                    <!-- Hintergrundbild / Banner -->
-                    <div class="apple-card-bg" style="background-image: url('images/run-banner.jpg');"></div>
+            <!-- Apple-Style Slider Container -->
+            <div class="apple-slider-container">
+                <div class="apple-slider-track">
                     
-                    <!-- Gradient-Overlay unten für perfekte Lesbarkeit der Infos -->
-                    <div class="apple-card-overlay">
-                        <div class="apple-card-content">
-                            
-                            <!-- Der weiße Apple-Button -->
-                            <a href="run.html" class="apple-btn">
-                                <i class="fa-solid fa-play"></i> Jetzt ansehen
-                            </a>
+                    <!-- Projekt-Karte 1: RUN -->
+                    <div class="apple-card active" onclick="window.location.href='run.html';" style="cursor: pointer;">
+                        <!-- Hintergrundbild / Banner -->
+                        <div class="apple-card-bg" style="background-image: url('images/run-banner.jpg');"></div>
+                        
+                        <!-- Gradient-Overlay unten -->
+                        <div class="apple-card-overlay">
+                            <div class="apple-card-content">
+                                
+                                <a href="run.html" class="apple-btn">
+                                    <i class="fa-solid fa-play"></i> Jetzt ansehen
+                                </a>
 
-                            <!-- Infos & Tagline neben dem Button -->
-                            <div class="apple-card-text">
-                                <span class="genre-tag">Action / Kurzfilm</span>
-                                <span class="bullet-dot">•</span>
-                                <span class="card-desc">Ein cinematischer Action-Kurzfilm im Seeland der Schweiz mit Verfolgungsjagden & Spannung.</span>
+                                <div class="apple-card-text">
+                                    <span class="genre-tag">Action / Kurzfilm</span>
+                                    <span class="bullet-dot">•</span>
+                                    <span class="card-desc">Ein cinematischer Action-Kurzfilm im Seeland der Schweiz mit Verfolgungsjagden & Spannung.</span>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
+
                 </div>
 
-                <!-- Wenn du später mehr Projekte hast, kopierst du einfach den <div class="apple-card"> Block hier drunter! -->
-
+                <!-- Apple Indikator-Punkte -->
+                <div class="apple-slider-dots">
+                    <span class="dot active"></span>
+                </div>
             </div>
 
-            <!-- Apple Indikator-Punkte unter dem Banner -->
-            <div class="apple-slider-dots">
-                <span class="dot active"></span>
-                <!-- Spätere Punkte für weitere Projekte: <span class="dot"></span> -->
-            </div>
         </div>
-
-    </div>
-</section>
+    </section>
 
     <!-- ─── ÜBER MICH & EQUIPMENT ─── -->
     <section id="ueber-mich" class="section bg-dark">
         <div class="container">
             <h2 class="section-title">Über mich</h2>
             <div class="about-text">
-                <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese dannach als cinematischen Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich mit Design, Webentwicklung und verschiedenen digitalen Projekten.  </p>
+                <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich mit Design, Webentwicklung und verschiedenen digitalen Projekten.</p>
             </div>
         </div>
     </section>
@@ -212,48 +198,32 @@
         </div>
     </section>
 
- <!-- ─── FOOTER ─── -->
-    <footer class="site-footer">
-        <div class="footer-left">
-            <a href="index.html#home" class="logo">
-                <span class="logo-mark">
-                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
-                </span>
-            </a>
-        </div>
-        <div class="footer-center">
-            <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
-            <div style="margin-top: 6px; font-size: 0.8rem;">
-                <a href="impressum.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Impressum</a>
-                <span style="color: #555; margin: 0 6px;">·</span>
-                <a href="datenschutz.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Datenschutz</a>
-            </div>
-        </div>
-        <div class="footer-right">
-            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-    </footer>
+    <!-- ─── EXTERNE SKRIPTE ─── -->
+    <!-- Zentrales Skript für Header & Footer -->
+    <script src="header.js"></script>
 
-    <!-- ─── JAVASCRIPT ─── -->
+    <!-- ─── LOKALES JAVASCRIPT ─── -->
     <script>
-        // 1. Mobile Menü Toggle
+        // 1. Mobile Menü Toggle (Abgesichert: Nur ausführen, falls die Elemente im DOM existieren)
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-            document.body.classList.toggle('menu-open');
-        });
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-                document.body.classList.remove('menu-open');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.classList.toggle('menu-open');
             });
-        });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('open');
+                    mobileMenu.classList.remove('open');
+                    document.body.classList.remove('menu-open');
+                });
+            });
+        }
 
         // 2. Fade-In Animation für Sections beim Scrollen
         const fadeObserver = new IntersectionObserver((entries) => {
@@ -280,16 +250,22 @@
             });
         });
 
-        // 3. Scrollspy: Setzt .active Klasse dynamisch auf den aktuellen Nav-Link
+        // 3. Scrollspy: Setzt .active Klasse dynamisch NUR auf Home, Über mich und Kontakt (ausschließlich in .nav-center)
+        const allowedSections = ['home', 'ueber-mich', 'kontakt'];
         const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-center a');
 
         const navObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
+                    // Nur Links innerhalb von .nav-center auswählen (kein Logo, keine Social Icons!)
+                    const navLinks = document.querySelectorAll('.nav-center a');
+
                     navLinks.forEach(link => {
-                        if (link.getAttribute('href') === `#${id}`) {
+                        const href = link.getAttribute('href') || '';
+                        
+                        // Nur wenn die Sektion erlaubt ist UND der Link dazu passt, bekommt er .active
+                        if (allowedSections.includes(id) && (href === `#${id}` || href.endsWith(`#${id}`) || href.endsWith(`index.html#${id}`))) {
                             link.classList.add('active');
                         } else {
                             link.classList.remove('active');

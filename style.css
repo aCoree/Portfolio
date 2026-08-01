@@ -1,3 +1,6 @@
+/* ─── GOOGLE FONTS IMPORT ─── */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 /* ─── BASIC RESETS & FONTS ─── */
 * {
     margin: 0;
@@ -13,7 +16,7 @@ body {
     --accent-blue: #4aa8ff;
     --accent-violet: #8b7bd8;
     --accent-gradient: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
-    font-family: 'Inter', sans-serif;
+    font-family: 'Barlow Condensed', 'Inter', sans-serif;
     background-color: #0d0d0d;
     color: #ffffff;
     line-height: 1.6;
@@ -30,13 +33,13 @@ a {
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px;
-    background-color: rgba(13, 13, 13, 0.9);
+    height: 58px; /* vorher 70px – etwas kompakter */
+    background-color: rgba(13, 13, 13, 0.55); /* deutlich durchsichtiger */
     backdrop-filter: blur(10px);
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 0 40px;
+    padding: 0 30px; /* vorher 40px */
     z-index: 1000;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -44,7 +47,8 @@ a {
 /* Linke Seite: Logo */
 .nav-left {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end; /* vorher flex-start – zieht Logo Richtung Mitte */
+    padding-right: 24px; /* Mindestabstand zu den Nav-Links */
 }
 
 .logo {
@@ -55,8 +59,8 @@ a {
 .logo-mark {
     position: relative;
     display: inline-block;
-    height: 42px;
-    width: 42px;
+    height: 41px; /* vorher 42px – kleiner, dezenter */
+    width: 41px;
     overflow: hidden;
     vertical-align: middle;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -74,22 +78,23 @@ a {
 }
 
 .logo:hover .logo-mark {
-    width: 75px;
+    width: 60px; /* vorher 75px, proportional kleiner */
 }
 
 /* Mittlere Seite: Navigations-Links */
 .nav-center {
     display: flex;
-    gap: 35px;
+    gap: 28px; /* vorher 35px */
 }
 
 .nav-center a {
     position: relative;
     padding: 8px 0;
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem; /* vorher 0.85rem – Condensed braucht etwas mehr Größe für Lesbarkeit */
+    font-weight: 600; /* vorher 400 – kräftiger, passend zum neuen Look */
+    text-transform: uppercase; /* vorher none */
+    letter-spacing: 1.5px; /* vorher 0.2px */
     color: #ffffff;
     opacity: 0.7;
     transition: opacity 0.3s ease;
@@ -122,7 +127,7 @@ a {
 /* STATISCH AKTIV: Bleibt bombenfest auf dem aktiven Link stehen */
 .nav-center a.active {
     opacity: 1 !important;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .nav-center a.active::after {
@@ -132,36 +137,62 @@ a {
     transform: scaleX(1) !important;
 }
 
-/* Rechte Seite: Social Media mit GRADIENT-RAHMEN (nicht ausgefüllt) */
+/* Rechte Seite: Social Media mit GRADIENT-RAHMEN (und transparentem Hintergrund) */
 .nav-right {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start; /* vorher flex-end – zieht Icon Richtung Mitte */
     gap: 12px;
+    padding-left: 24px; /* Mindestabstand zu den Nav-Links */
 }
 
 .social-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    background: #0d0d0d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 34px; /* compact size */
+    height: 34px;
+    border-radius: 50%;
+    position: relative; /* Wichtig für das Pseudoelement */
+    background-color: transparent; /* IMMER transparent, kein schwarzer Hintergrund mehr */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Ruhezustand-Rahmen */
     color: #ffffff;
     opacity: 0.8;
-    font-size: 1.1rem;
-    transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    z-index: 1; /* Damit das Icon vor dem Pseudoelement liegt */
+}
+
+/* Das Pseudoelement für den Gradienten-Rahmen beim Hovern */
+.social-icon::after {
+    content: '';
+    position: absolute;
+    top: -1px; /* Entspricht der Rahmenbreite, um den äußeren Rand zu bilden */
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: var(--accent-gradient); /* Der gewünschte Gradient */
+    border-radius: 50%;
+    z-index: -1; /* Hinter dem Icon-Inhalt platziert */
+    opacity: 0; /* Im Ruhezustand unsichtbar */
+    transition: opacity 0.3s ease;
 }
 
 .social-icon:hover {
     opacity: 1;
-    background-image: linear-gradient(#0d0d0d, #0d0d0d), var(--accent-gradient);
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    border: 1px solid transparent;
-    transform: translateY(-2px);
+    border-color: transparent; /* Entfernt den weißen Rahmen, damit der Gradient sichtbar wird */
     box-shadow: 0 4px 15px rgba(139, 123, 216, 0.2);
+}
+
+/* Zeigt das Gradienten-Pseudoelement beim Hovern */
+.social-icon:hover::after {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .nav-left {
+        justify-content: flex-start;
+        padding-right: 0;
+    }
 }
 
 /* ─── HERO SECTION ─── */
@@ -176,17 +207,23 @@ a {
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
-    font-weight: 800;
-    letter-spacing: 4px;
+    font-family: 'Anton', sans-serif;
+    font-size: 4.2rem; /* leicht größer, da Anton sehr kompakt/condensed ist */
+    font-weight: 400; /* Anton hat nur ein Gewicht, wirkt aber bereits sehr fett */
+    text-transform: uppercase;
+    letter-spacing: 1px; /* vorher 4px – Anton ist bereits eng gesetzt, daher reduziert */
     margin-bottom: 10px;
+    line-height: 1.05;
 }
 
 .hero-content p {
-    font-size: 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
     color: #cccccc;
     margin-bottom: 30px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 /* ─── BUTTONS & LAYOUT ─── */
@@ -195,7 +232,10 @@ a {
     padding: 12px 30px;
     background-color: #ffffff;
     color: #0d0d0d;
-    font-weight: 600;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     border-radius: 4px;
     transition: background-color 0.3s, transform 0.3s;
     border: none;
@@ -221,10 +261,12 @@ a {
 }
 
 .section-title {
-    font-size: 2.2rem;
+    font-family: 'Anton', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 400;
     text-align: center;
     margin-bottom: 50px;
-    letter-spacing: 2px;
+    letter-spacing: 1px; /* vorher 2px */
     text-transform: uppercase;
 }
 
@@ -299,13 +341,18 @@ a {
 }
 
 .project-card h3 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-bottom: 10px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 .project-card p {
+    font-family: 'Barlow Condensed', sans-serif;
     color: #a7a7a7;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 /* Call-To-Action Text mit Logo-Farbverlauf */
@@ -314,11 +361,14 @@ a {
     align-items: center;
     gap: 6px;
     margin-top: 15px;
-    font-weight: 600;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .arrow {
@@ -336,7 +386,8 @@ a {
     max-width: 800px;
     margin: 0 auto 60px auto;
     text-align: center;
-    font-size: 1.1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
     color: #cccccc;
 }
 
@@ -347,7 +398,9 @@ a {
 
 .equipment-container h3 {
     text-align: center;
-    font-size: 1.6rem;
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 1.9rem;
     margin-bottom: 40px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -374,13 +427,18 @@ a {
 }
 
 .gear-item h4 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .gear-item p {
+    font-family: 'Barlow Condensed', sans-serif;
     color: #8c8c8c;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 /* ─── KONTAKT FORMULAR ─── */
@@ -400,7 +458,7 @@ a {
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 4px;
     color: #fff;
-    font-family: inherit;
+    font-family: 'Barlow Condensed', sans-serif;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -434,8 +492,9 @@ footer {
     text-align: center;
     padding: 40px 20px;
     border-top: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Barlow Condensed', sans-serif;
     color: #666;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 /* ─── TOP LABELS (STRIKT AUF BILD-BREITE BEGRENZT) ─── */
 .grading-labels-top {
@@ -450,8 +509,9 @@ footer {
 }
 
 .grading-label-top {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
     letter-spacing: 1.5px;
     color: #aaaaaa;
     text-transform: uppercase;
@@ -531,57 +591,14 @@ footer {
     box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
-.grading-handle::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -20px;
-    right: -20px;
-}
-
-.grading-handle i {
-    background-color: #ffffff;
-    color: #0d0d0d;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-}
-
-.grading-handle::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -20px;
-    right: -20px;
-}
-
-.grading-handle i {
-    background-color: #ffffff;
-    color: #0d0d0d;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-}
-
 .grading-label {
     position: absolute;
     top: 15px;
     background-color: rgba(0,0,0,0.7);
     color: #fff;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
     letter-spacing: 1px;
     padding: 6px 12px;
     border-radius: 4px;
@@ -632,8 +649,12 @@ footer {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
     color: #b3b3b3;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-bottom: 40px;
     transition: color 0.3s;
 }
@@ -648,14 +669,19 @@ footer {
 }
 
 .project-header h1 {
-    font-size: 2.6rem;
-    letter-spacing: 3px;
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    font-size: 3.1rem;
+    letter-spacing: 1px; /* vorher 3px */
+    text-transform: uppercase;
     margin-bottom: 12px;
 }
 
 .project-header .tagline {
+    font-family: 'Barlow Condensed', sans-serif;
     color: #cccccc;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
 }
 
 .project-large-banner {
@@ -670,14 +696,17 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    font-family: 'Anton', sans-serif;
     font-size: 3rem;
     color: #444;
     margin-bottom: 60px;
 }
 
 .project-large-banner span {
+    font-family: 'Barlow Condensed', sans-serif;
     font-size: 1rem;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .project-info-grid {
@@ -687,6 +716,7 @@ footer {
 }
 
 .info-content p {
+    font-family: 'Barlow Condensed', sans-serif;
     color: #cccccc;
     margin-bottom: 15px;
 }
@@ -700,9 +730,11 @@ footer {
 }
 
 .info-sidebar h3 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
     margin-bottom: 20px;
     text-transform: uppercase;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     letter-spacing: 1px;
 }
 
@@ -711,14 +743,17 @@ footer {
 }
 
 .info-sidebar li {
+    font-family: 'Barlow Condensed', sans-serif;
     margin-bottom: 14px;
     color: #cccccc;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .info-sidebar li strong {
     display: block;
-    font-size: 0.8rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--accent-blue);
@@ -797,9 +832,10 @@ footer {
 }
 
 .mobile-nav-link {
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 3px;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    letter-spacing: 2px; /* vorher 3px */
     text-transform: uppercase;
     color: #ffffff;
     opacity: 0.8;
@@ -840,8 +876,8 @@ body.menu-open {
     }
 
     .hero-content h1 {
-        font-size: 2rem;
-        letter-spacing: 2px;
+        font-size: 2.4rem;
+        letter-spacing: 1px;
     }
     .hero-content p {
         font-size: 1rem;
@@ -851,7 +887,7 @@ body.menu-open {
         padding: 70px 16px;
     }
     .section-title {
-        font-size: 1.6rem;
+        font-size: 1.9rem;
         margin-bottom: 35px;
     }
 
@@ -859,7 +895,7 @@ body.menu-open {
         padding-top: 100px;
     }
     .project-header h1 {
-        font-size: 1.8rem;
+        font-size: 2.1rem;
     }
     .project-large-banner {
         height: 200px;
@@ -937,15 +973,19 @@ html {
 }
 
 .grading-card h4 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
     margin: 0 0 6px 0;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     color: #ffffff;
-    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .grading-card p {
+    font-family: 'Barlow Condensed', sans-serif;
     margin: 0 0 16px 0;
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     color: #aaaaaa;
     line-height: 1.45;
 }
@@ -959,8 +999,11 @@ html {
     padding: 10px 16px;
     background: #8b5cf6;
     color: #ffffff !important;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     border-radius: 8px;
     text-decoration: none;
     transition: background 0.2s ease, transform 0.2s ease;
@@ -1006,8 +1049,9 @@ html {
 .site-footer .footer-center {
     flex: 0 0 auto;
     text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
     color: #888;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     padding: 0 15px;
 }
 
@@ -1023,7 +1067,7 @@ html {
         order: 3;
         flex: 0 0 100%;
         padding: 0;
-        font-size: 0.78rem;
+        font-size: 0.82rem;
     }
 }
 
@@ -1042,16 +1086,20 @@ html {
 }
 
 .section-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
     text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
     color: #86868b;
-    font-weight: 600;
 }
 
 .section-title-left {
-    font-size: 2.2rem;
-    font-weight: 700;
+    font-family: 'Anton', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin: 4px 0 0 0;
     color: #f5f5f7;
 }
@@ -1059,8 +1107,10 @@ html {
 .see-all-link {
     color: #2997ff;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.98rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -1126,8 +1176,11 @@ html {
     color: #000000;
     padding: 12px 24px;
     border-radius: 30px;
+    font-family: 'Barlow Condensed', sans-serif;
     font-weight: 700;
-    font-size: 0.92rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     text-decoration: none;
     flex-shrink: 0;
     transition: background-color 0.2s, transform 0.2s;
@@ -1143,10 +1196,11 @@ html {
     align-items: center;
     gap: 10px;
     color: #ffffff;
-    font-size: 1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem;
 }
 
-.genre-tag { font-weight: 700; }
+.genre-tag { font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 .card-desc { color: rgba(255, 255, 255, 0.85); }
 
 /* ─── ECHTES 9:16 HOCHFORMAT FÜR SMARTPHONES (INDEX.HTML) ─── */
@@ -1177,11 +1231,11 @@ html {
 
     .apple-btn {
         padding: 8px 18px !important;
-        font-size: 0.82rem !important;
+        font-size: 0.85rem !important;
     }
 
     .apple-card-text {
-        font-size: 0.78rem !important;
+        font-size: 0.82rem !important;
         flex-direction: column !important;
         gap: 2px !important;
     }
@@ -1242,7 +1296,8 @@ html {
 }
 
 .poster-title {
-    font-size: 0.92rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
     font-weight: 600;
     color: #f5f5f7;
     margin: 0;
@@ -1252,7 +1307,8 @@ html {
 }
 
 .poster-meta {
-    font-size: 0.78rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
     color: #86868b;
     margin-top: 2px;
 }
