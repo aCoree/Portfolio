@@ -285,6 +285,12 @@
         sections.forEach(section => {
             navObserver.observe(section);
         });
+
+        // Beim Laden der Seite sanft ganz nach oben springen
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
     </script>
 </body>
 </html>
