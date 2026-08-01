@@ -188,7 +188,7 @@ a {
     opacity: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 504px) {
     .nav-left {
         justify-content: flex-start;
         padding-right: 0;
@@ -858,7 +858,7 @@ body.menu-open {
 }
 
 /* ─── RESPONSIVE DESIGN ─── */
-@media (max-width: 768px) {
+@media (max-width: 504px) {
     .navbar {
         grid-template-columns: 1fr auto;
         height: 65px;
