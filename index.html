@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurelio Zingarello</title>
 
+    <!-- Preload für instant reibungsloses Laden der Poster -->
+    <link rel="preload" as="image" href="images/run-banner.jpg">
+    <link rel="preload" as="image" href="images/hero-bg.jpg">
+
     <!-- Favicons für Browser, iOS und Android -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -20,13 +24,11 @@
     <!-- FontAwesome für Social Media Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts für modernes Design -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* ─── REVITALISIERTER TEIL FÜR DEN OBEREN BEREICH ─── */
+        /* ─── SYSTEM-VARIABLEN ─── */
         :root {
-            /* ⚠️ BITTE HIER DEINEN EXAKTEN HEX-CODE VOM HIMMEL EINTRAGEN ⚠️ */
-            /* Ersetze #YOUR_SKY_COLOR_HEX mit deinem Code, z.B. #6DA2CB */
             --sky-color: #YOUR_SKY_COLOR_HEX; 
         }
 
@@ -35,15 +37,16 @@
             background-color: #0b0b0b; 
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
-        /* AUSSCHLIESSLICH die Hero-Section ganz oben bekommt die Himmelfarbe */
+        /* Hero-Section ganz oben */
         #home.hero {
             background-color: var(--sky-color) !important;
             margin-top: 0;
         }
 
-        /* Zwingt den dynamischen Header oben, transparent zu sein */
+        /* Header Transparent zwingen */
         header, .site-header, nav, .site-header-scrolled, .main-navigation, .navbar {
             background-color: transparent !important;
             background: transparent !important;
@@ -51,7 +54,183 @@
             border: none !important;
         }
 
-        /* ─── REST DER BESTEHENDEN FOOTER-STYLES (UNVERÄNDERT) ─── */
+        /* ─── PERFEKTES APPLE TV CAROUSEL (CLEAN & MINIMALER PEEK) ─── */
+        .apple-slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 15px 0;
+            contain: layout paint; /* Optimiert die GPU-Performance */
+        }
+
+        .apple-slider-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            will-change: transform;
+            transform: translateZ(0); /* Hardware-Beschleunigung */
+        }
+
+        /* EXAKT BERECHNET: 25px dezenter Ausschnitt links UND rechts */
+        .apple-card {
+            flex: 0 0 calc(100vw - 90px);
+            max-width: 1200px;
+            height: 540px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            opacity: 0.35;
+            transform: scale(0.96) translateZ(0);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            box-sizing: border-box;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* Card Background GPU-Optimierung */
+        .apple-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transform: translateZ(0);
+        }
+
+        /* Aktives mittiges Poster */
+        .apple-card.active {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+        }
+
+        /* Stylischer Hintergrund für Coming Soon */
+        .coming-soon-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #181a26 0%, #0d0e15 50%, #121420 100%);
+            position: relative;
+        }
+
+        .coming-soon-bg::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(100, 130, 255, 0.16) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Großer mittiger Text für Coming Soon */
+        .coming-soon-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+            pointer-events: none;
+        }
+
+        .coming-soon-center-text h3 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .coming-soon-center-text p {
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* Coming Soon Button */
+        .apple-btn.coming-soon-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            cursor: default;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* SYMMETRISCHE PFEILE */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) translateZ(0);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-50%) scale(1.08) translateZ(0);
+        }
+
+        .prev-arrow { left: 20px; }
+        .next-arrow { right: 20px; }
+
+        /* CLEAN UND FLÜSSIGE APPLE INDIKATOR-PUNKTE */
+        .apple-slider-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .apple-slider-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 100px;
+            background-color: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
+            transform: translateZ(0);
+            box-sizing: border-box;
+        }
+
+        .apple-slider-dots .dot:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .apple-slider-dots .dot.active {
+            background-color: #ffffff;
+            width: 28px;
+        }
+
+        /* Footer Styles */
         .site-footer {
             display: flex;
             justify-content: space-between;
@@ -82,27 +261,26 @@
             padding: 0 15px;
         }
 
-        /* Responsive Layout für Handys */
-        @media (max-width: 640px) {
-            .site-footer {
-                flex-wrap: wrap;
-                row-gap: 16px;
-                padding: 20px 20px;
+        /* Mobile Anpassungen */
+        @media (max-width: 768px) {
+            .apple-card {
+                flex: 0 0 calc(100vw - 50px);
+                height: 420px;
             }
-            .site-footer .footer-left {
-                order: 1;
-                flex: 0 0 auto;
+            .coming-soon-center-text h3 {
+                font-size: 2.2rem;
+                letter-spacing: 4px;
             }
-            .site-footer .footer-right {
-                order: 2;
-                flex: 0 0 auto;
+            .coming-soon-center-text p {
+                font-size: 0.85rem;
             }
-            .site-footer .footer-center {
-                order: 3;
-                flex: 0 0 100%;
-                padding: 0;
-                font-size: 0.78rem;
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 0.95rem;
             }
+            .prev-arrow { left: 10px; }
+            .next-arrow { right: 10px; }
         }
     </style>
 </head>
@@ -113,10 +291,8 @@
     <!-- ─── HERO SECTION (HOME) MIT VIDEO-BACKGROUND & FALLBACK ─── -->
     <section id="home" class="hero section">
         
-        <!-- Abdunklungs-Overlay für bessere Textlesbarkeit -->
         <div class="hero-overlay"></div>
 
-        <!-- Hintergrundvideo (poster dient als Fallback-Bild) -->
         <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/hero-bg.jpg">
             <source src="hero-loop-h264.mp4" type="video/mp4">
             Dein Browser unterstützt keine HTML5-Videos.
@@ -133,7 +309,7 @@
     <section id="projekte" class="section projekte-apple-section">
         <div class="container-wide">
             
-            <!-- Header mit Titelelement & Link zu allen Projekten -->
+            <!-- Header mit Titel & Link -->
             <div class="section-header-flex">
                 <div>
                     <h2 class="section-title-left">Meine Projekte</h2>
@@ -145,27 +321,52 @@
 
             <!-- Apple-Style Slider Container -->
             <div class="apple-slider-container">
-                <div class="apple-slider-track">
+                
+                <!-- Navigation Pfeile -->
+                <button class="slider-arrow prev-arrow" id="prevBtn" aria-label="Vorheriges Projekt">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="slider-arrow next-arrow" id="nextBtn" aria-label="Nächstes Projekt">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <div class="apple-slider-track" id="sliderTrack">
                     
                     <!-- Projekt-Karte 1: RUN -->
-                    <div class="apple-card active" onclick="window.location.href='run.html';" style="cursor: pointer;">
-                        <!-- Hintergrundbild / Banner -->
+                    <div class="apple-card" onclick="window.location.href='run.html';">
                         <div class="apple-card-bg" style="background-image: url('images/run-banner.jpg');"></div>
-                        
-                        <!-- Gradient-Overlay unten -->
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
-                                
                                 <a href="run.html" class="apple-btn">
                                     <i class="fa-solid fa-play"></i> Jetzt ansehen
                                 </a>
-
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Action / Kurzfilm</span>
                                     <span class="bullet-dot">•</span>
                                     <span class="card-desc">Ein cinematischer Action-Kurzfilm im Seeland der Schweiz mit Verfolgungsjagden & Spannung.</span>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Projekt-Karte 2: COMING SOON -->
+                    <div class="apple-card">
+                        <div class="apple-card-bg coming-soon-bg">
+                            <div class="coming-soon-center-text">
+                                <h3>COMING SOON</h3>
+                                <p>Neues Projekt in Arbeit</p>
+                            </div>
+                        </div>
+                        <div class="apple-card-overlay">
+                            <div class="apple-card-content">
+                                <div class="apple-btn coming-soon-btn">
+                                    <i class="fa-solid fa-clock"></i> In Kürze
+                                </div>
+                                <div class="apple-card-text">
+                                    <span class="genre-tag">Coming This Year</span>
+                                    <span class="bullet-dot">•</span>
+                                    <span class="card-desc">Ein neues Projekt ist in Vorbereitung. Erscheint noch dieses Jahr.</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -173,8 +374,9 @@
                 </div>
 
                 <!-- Apple Indikator-Punkte -->
-                <div class="apple-slider-dots">
+                <div class="apple-slider-dots" id="sliderDots">
                     <span class="dot active"></span>
+                    <span class="dot"></span>
                 </div>
             </div>
 
@@ -206,12 +408,11 @@
     </section>
 
     <!-- ─── EXTERNE SKRIPTE ─── -->
-    <!-- Zentrales Skript für Header & Footer -->
     <script src="header.js"></script>
 
     <!-- ─── LOKALES JAVASCRIPT ─── -->
     <script>
-        // 1. Mobile Menü Toggle (Abgesichert: Nur ausführen, falls die Elemente im DOM existieren)
+        // 1. Mobile Menü Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -232,22 +433,19 @@
             });
         }
 
-        // 2. Fade-In Animation für Sections beim Scrollen
+        // 2. Fade-In Animation für Sections
         const fadeObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 }
             });
-        }, {
-            threshold: 0.05
-        });
+        }, { threshold: 0.05 });
 
         document.querySelectorAll('section').forEach((element) => {
             fadeObserver.observe(element);
         });
 
-        // Sofortiges Einblenden sichtbarer Abschnitte beim Laden
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('section').forEach((element) => {
                 const rect = element.getBoundingClientRect();
@@ -257,7 +455,7 @@
             });
         });
 
-        // 3. Scrollspy: Setzt .active Klasse dynamisch NUR auf Home, Über mich und Kontakt (ausschließlich in .nav-center)
+        // 3. Scrollspy
         const allowedSections = ['home', 'ueber-mich', 'kontakt'];
         const sections = document.querySelectorAll('section[id]');
 
@@ -278,15 +476,145 @@
                     });
                 }
             });
-        }, {
-            threshold: 0.3
-        });
+        }, { threshold: 0.3 });
 
         sections.forEach(section => {
             navObserver.observe(section);
         });
 
-        // Beim Laden der Seite sanft ganz nach oben springen
+        // 4. UNENDLICHER KREISLAUF-SLIDER (HARDWARE-ACCELERATED & SOFORT FLÜSSIG)
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.apple-slider-container');
+            const track = document.getElementById('sliderTrack');
+            const origCards = Array.from(track.querySelectorAll('.apple-card'));
+            const dots = document.querySelectorAll('.apple-slider-dots .dot');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (!origCards.length) return;
+
+            const totalOrig = origCards.length;
+
+            // Klone für unendliches Kreislaufsystem erstellen
+            const firstClone = origCards[0].cloneNode(true);
+            const lastClone = origCards[totalOrig - 1].cloneNode(true);
+
+            track.appendChild(firstClone);
+            track.insertBefore(lastClone, origCards[0]);
+
+            const allCards = Array.from(track.querySelectorAll('.apple-card'));
+
+            let currentIndex = 1;
+            let isAnimating = false;
+            let autoSlideTimer = null;
+
+            function updateCarousel(animated = true) {
+                if (!container || !track || !allCards.length) return;
+
+                if (animated) {
+                    track.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                } else {
+                    track.style.transition = 'none';
+                }
+
+                const containerWidth = container.offsetWidth;
+                const cardWidth = allCards[0].offsetWidth;
+                const gap = 20;
+
+                // Zentrierungsberechnung
+                const centerOffset = (containerWidth / 2) - (currentIndex * (cardWidth + gap) + (cardWidth / 2));
+                track.style.transform = `translate3d(${centerOffset}px, 0, 0)`;
+
+                // Reale Karte für Optik & Dots ermitteln
+                let realIndex = currentIndex - 1;
+                if (currentIndex === 0) realIndex = totalOrig - 1;
+                if (currentIndex === allCards.length - 1) realIndex = 0;
+
+                allCards.forEach((card, idx) => {
+                    const isCardActive = (idx === currentIndex) || 
+                        (currentIndex === 0 && idx === allCards.length - 2) ||
+                        (currentIndex === allCards.length - 1 && idx === 1);
+                    card.classList.toggle('active', isCardActive);
+                });
+
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === realIndex);
+                });
+            }
+
+            function goToSlide(index) {
+                if (isAnimating) return;
+                isAnimating = true;
+                currentIndex = index;
+                updateCarousel(true);
+            }
+
+            // Nahtloser Übergang beim Erreichen der Klone
+            track.addEventListener('transitionend', () => {
+                isAnimating = false;
+                if (currentIndex === 0) {
+                    currentIndex = totalOrig;
+                    updateCarousel(false);
+                } else if (currentIndex === allCards.length - 1) {
+                    currentIndex = 1;
+                    updateCarousel(false);
+                }
+            });
+
+            function nextSlide() {
+                goToSlide(currentIndex + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentIndex - 1);
+            }
+
+            function startTimer() {
+                stopTimer();
+                autoSlideTimer = setInterval(nextSlide, 4500);
+            }
+
+            function stopTimer() {
+                if (autoSlideTimer) clearInterval(autoSlideTimer);
+            }
+
+            // Klick Events für Navigation
+            if (prevBtn) {
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                    startTimer();
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                    startTimer();
+                });
+            }
+
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => {
+                    goToSlide(idx + 1);
+                    startTimer();
+                });
+            });
+
+            if (container) {
+                container.addEventListener('mouseenter', stopTimer);
+                container.addEventListener('mouseleave', startTimer);
+            }
+
+            window.addEventListener('resize', () => updateCarousel(false));
+
+            // Initiales Laden ohne Verzögerung
+            updateCarousel(false);
+            startTimer();
+        });
+
+        // Beim Laden sanft nach oben scrollen
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }

@@ -1,8 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    // ─── 1. DYNAMISCHE CSS STYLES (HEADER STICKY & FOOTER) ───
+    // ─── 1. DYNAMISCHE CSS STYLES (HEADER, FOOTER & AUTOMATISCHER STICKY FOOTER) ───
     const dynamicStyle = document.createElement('style');
     dynamicStyle.textContent = `
+        /* ─── AUTOMATISCHER STICKY FOOTER FÜR ALLE SEITEN ─── */
+        html, body {
+            min-height: 100vh !important;
+        }
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            margin: 0;
+        }
+
         /* ─── SMART STICKY HEADER STYLES ─── */
         .navbar {
             position: fixed !important;
@@ -19,8 +29,9 @@ document.addEventListener("DOMContentLoaded", function() {
             transform: translateY(-100%);
         }
 
-        /* ─── FOOTER STYLES ─── */
+        /* ─── FOOTER STYLES (SCHIEBT SICH AUTOMATISCH NACH UNTEN) ─── */
         .site-footer {
+            margin-top: auto !important; /* DAS SCHIEBT DEN FOOTER AN DEN BODEN */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -147,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.insertAdjacentHTML('afterbegin', headerHTML);
     document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-    // ─── 5. HANDY-MENÜ STEUERUNG (ORIGINAL EVENT-LISTENER) ───
+    // ─── 5. HANDY-MENÜ STEUERUNG ───
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
@@ -168,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // ─── 6. AKTIVEN LINK AUTOMATISCH HERVORHEBEN (z.B. auf projekte.html) ───
+    // ─── 6. AKTIVEN LINK AUTOMATISCH HERVORHEBEN ───
     const currentPath = window.location.pathname.split("/").pop();
     const allNavLinks = document.querySelectorAll('.nav-center a');
 
@@ -189,21 +200,17 @@ document.addEventListener("DOMContentLoaded", function() {
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
 
-            // Header nicht verstecken, falls das Mobile-Menü geöffnet ist
             if (document.body.classList.contains('menu-open')) {
                 navbar.classList.remove('nav-hidden');
                 return;
             }
 
-            // Ganz oben auf der Seite: Header immer anzeigen
             if (currentScrollY <= 0) {
                 navbar.classList.remove('nav-hidden');
             } 
-            // Nach unten scrollen & mindestens 60px gescrollt: Header verschwinden lassen
             else if (currentScrollY > lastScrollY && currentScrollY > 60) {
                 navbar.classList.add('nav-hidden');
             } 
-            // Auch nur ein kleines Stück nach oben scrollen: Header sofort wieder einblenden
             else if (currentScrollY < lastScrollY) {
                 navbar.classList.remove('nav-hidden');
             }
