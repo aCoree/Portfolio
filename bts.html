@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behind the Scenes | Aurelio Zingarello</title>
+
+    <!-- Font Awesome (für das YouTube-Icon im Header & Footer) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* 1. Globales Layout von style.css zwingend überschreiben */
+        html, body {
+            width: 100% !important;
+        }
+
+        /* 2. Haupt-Container breitmachen & Platz für fixed Header lassen */
+        #bts-wrapper {
+            width: 100% !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+            padding: 6rem 2rem 4rem 2rem !important;
+            box-sizing: border-box !important;
+            display: block !important;
+            text-align: left !important;
+        }
+
+        /* 3. Überschrift strikt linksbündig */
+        #bts-wrapper h1, 
+        #bts-wrapper .bts-title {
+            text-align: left !important;
+            font-size: 2.2rem !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+            font-weight: 700 !important;
+            margin: 0 0 2.5rem 0 !important;
+            padding: 0 !important;
+            display: block !important;
+            width: 100% !important;
+        }
+
+        /* 4. Feste 3-Spalten Grid-Struktur */
+        #bts-wrapper .bts-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 20px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        #bts-wrapper .bts-item {
+            position: relative !important;
+            overflow: hidden !important;
+            border-radius: 12px !important;
+            aspect-ratio: 16 / 9 !important;
+            width: 100% !important;
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        #bts-wrapper .bts-item img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+            border-radius: 12px !important;
+            transition: transform 0.4s ease !important;
+        }
+
+        #bts-wrapper .bts-item:hover img {
+            transform: scale(1.05) !important;
+        }
+
+        /* 5. Tablet: 2 Spalten */
+        @media (max-width: 900px) {
+            #bts-wrapper .bts-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        /* 6. Handy: 1 Spalte */
+        @media (max-width: 600px) {
+            #bts-wrapper {
+                padding: 5rem 1rem 2rem 1rem !important;
+            }
+            #bts-wrapper .bts-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            #bts-wrapper h1, 
+            #bts-wrapper .bts-title {
+                font-size: 1.6rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main id="bts-wrapper">
+        <h1 class="bts-title">BEHIND THE SCENES</h1>
+
+        <div class="bts-grid">
+            <!-- Bild 1 -->
+            <div class="bts-item">
+                <img src="img/bts-1.jpg" alt="Behind the Scenes 1">
+            </div>
+
+            <!-- Bild 2 -->
+            <div class="bts-item">
+                <img src="img/bts-2.jpg" alt="Behind the Scenes 2">
+            </div>
+
+            <!-- Bild 3 -->
+            <div class="bts-item">
+                <img src="img/bts-3.jpg" alt="Behind the Scenes 3">
+            </div>
+
+            <!-- Bild 4 -->
+            <div class="bts-item">
+                <img src="img/bts-4.jpg" alt="Behind the Scenes 4">
+            </div>
+
+            <!-- Bild 5 -->
+            <div class="bts-item">
+                <img src="img/bts-5.jpg" alt="Behind the Scenes 5">
+            </div>
+
+            <!-- Bild 6 -->
+            <div class="bts-item">
+                <img src="img/bts-6.jpg" alt="Behind the Scenes 6">
+            </div>
+
+            <!-- Bild 7 -->
+            <div class="bts-item">
+                <img src="img/bts-7.jpg" alt="Behind the Scenes 7">
+            </div>
+
+            <!-- Bild 8 -->
+            <div class="bts-item">
+                <img src="img/bts-8.jpg" alt="Behind the Scenes 8">
+            </div>
+        </div>
+    </main>
+
+    <script src="header.js"></script>
+</body>
+</html>
