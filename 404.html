@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 – Seite nicht gefunden | Aurelio Zingarello</title>
+
+    <!-- Favicons für Browser, iOS und Android -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <!-- Hochauflösendes Icon speziell für Google-Suchergebnisse -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+
+    <!-- Web Manifest für mobile Verknüpfungen -->
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css?v=2.0">
+    <!-- FontAwesome für Social Media & UI Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter (mit 800 & 900 für maximale Schärfe & Fettschrift) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- Header & Footer via JavaScript einbinden -->
+    <script src="header.js" defer></script>
+
+    <!-- Apple-Style Pill Button Styling (Clean & Reset) -->
+    <style>
+        .error-actions .btn-pill {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            padding: 9px 20px !important; /* Feiner und kompakter */
+            border-radius: 9999px !important; /* Exakte Pillenform */
+            background: transparent !important;
+            background-color: transparent !important;
+            border: 1px solid rgba(255, 255, 255, 0.8) !important; /* Feiner 1px Rand */
+            color: #ffffff !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 0.875rem !important; /* 14px – typische Apple-Größe */
+            font-weight: 400 !important;
+            line-height: 1.2 !important;
+            letter-spacing: -0.01em !important;
+            text-decoration: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            outline: none !important;
+            box-sizing: border-box !important;
+            cursor: pointer !important;
+            -webkit-font-smoothing: antialiased !important;
+            /* Seidenweicher Übergang nur auf Farbe & Hintergrund */
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
+        }
+
+        .error-actions .btn-pill i {
+            font-size: 0.8rem !important;
+            color: inherit !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            transition: none !important;
+        }
+
+        /* Apple Hover: Sauber weiß ausgefüllt, keine Layout-Verschiebung */
+        .error-actions .btn-pill:hover {
+            background-color: #ffffff !important;
+            border-color: #ffffff !important;
+            color: #000000 !important;
+            text-decoration: none !important;
+            box-shadow: none !important;
+            transform: none !important; /* Verhindert jedes Pixel-Zucken */
+        }
+
+        .error-actions .btn-pill:hover i {
+            color: #000000 !important;
+            transform: none !important;
+        }
+
+        /* Dezent gedimmter Klick-Effekt */
+        .error-actions .btn-pill:active {
+            opacity: 0.85 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 404 Fehlerbereich (Header & Footer werden durch header.js automatisch eingefügt) -->
+    <main class="error-page">
+        <div class="error-container">
+            <span class="error-code">404</span>
+            <h1>Seite nicht gefunden</h1>
+            <p>Die Seite, die du aufrufen wolltest, existiert leider nicht, wurde verschoben oder die Webadresse ist nicht korrekt.</p>
+            
+            <div class="error-actions">
+                <a href="index.html" class="btn-pill">
+                    <i class="fa-solid fa-arrow-left"></i> Zurück zur Startseite
+                </a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
