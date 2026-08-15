@@ -35,10 +35,29 @@
             letter-spacing: 2px !important;
             text-transform: uppercase !important;
             font-weight: 700 !important;
-            margin: 0 0 2.5rem 0 !important;
+            margin: 0 0 0.8rem 0 !important;
             padding: 0 !important;
             display: block !important;
             width: 100% !important;
+        }
+
+        /* Zurück-Link unter dem Titel */
+        #bts-wrapper .bts-back-link {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            color: rgba(255, 255, 255, 0.55) !important;
+            text-decoration: none !important;
+            font-family: inherit !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 1.5px !important;
+            text-transform: uppercase !important;
+            margin: 0 0 2.5rem 0 !important;
+            transition: color 0.25s ease !important;
+        }
+
+        #bts-wrapper .bts-back-link:hover {
+            color: #ffffff !important;
         }
 
         /* 4. Feste 3-Spalten Grid-Struktur */
@@ -91,6 +110,11 @@
             #bts-wrapper h1, 
             #bts-wrapper .bts-title {
                 font-size: 1.6rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            #bts-wrapper .bts-back-link {
+                margin-bottom: 1.8rem !important;
+                font-size: 0.85rem !important;
             }
         }
     </style>
@@ -99,6 +123,7 @@
 
     <main id="bts-wrapper">
         <h1 class="bts-title">BEHIND THE SCENES</h1>
+        <a href="javascript:history.back()" class="bts-back-link">&#8592; Zurück</a>
 
         <div class="bts-grid">
             <!-- Bild 1 -->
@@ -145,4 +170,4 @@
 
     <script src="header.js"></script>
 </body>
-</html>
+</html> 

@@ -108,10 +108,10 @@
             color: #ffffff;
         }
 
-        /* ─── LINKSBÜNDIGES GRID ─── */
+        /* ─── LINKSBÜNDIGES GRID (DESKTOP: 4 SPALTEN) ─── */
         .poster-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
             justify-content: start;
             justify-items: start;
@@ -140,9 +140,10 @@
             border: none;
             outline: none;
             width: 100%;
-            aspect-ratio: 9 / 16;
+            aspect-ratio: 2 / 3; /* Breiteres, moderneres Poster-Format */
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             border-radius: 10px;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform;
@@ -193,7 +194,7 @@
             overflow: hidden;
         }
 
-        /* ─── MOBILE OPTIMIERUNGEN ─── */
+        /* ─── MOBILE OPTIMIERUNGEN (HANDY: 2 SPALTEN) ─── */
         @media (max-width: 768px) {
             main.container {
                 padding: 0 16px;
@@ -217,12 +218,12 @@
             }
 
             .poster-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 12px 8px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px 12px;
             }
 
             .poster-img-wrapper {
-                border-radius: 6px;
+                border-radius: 8px;
             }
 
             .poster-info-single {
@@ -237,7 +238,7 @@
             }
 
             .poster-info-single .poster-title {
-                font-size: 0.75rem;
+                font-size: 0.85rem;
                 white-space: normal;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
@@ -245,7 +246,7 @@
             }
 
             .poster-info-single .poster-meta {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -272,7 +273,7 @@
             </div>
         </div>
 
-        <!-- ─── MOVIE GRID (3 SPALTEN AUF MOBILE, 9:16 FORMAT) ─── -->
+        <!-- ─── MOVIE GRID (4 SPALTEN DESKTOP, 2 SPALTEN MOBILE) ─── -->
         <div class="poster-grid" id="projectsContainer">
             
             <!-- Poster 1: RUN -->
@@ -285,7 +286,27 @@
                 </div>
             </a>
 
-            <!-- Weitere Film-Karten können hier eingefügt werden -->
+            <!-- Poster 2: URBNVIBE -->
+            <a href="urbnvibe.html" class="poster-card" data-date="2025-06-01" data-views="1200" data-title="URBNVIBE">
+                <div class="poster-img-wrapper" style="background-image: url('images/poster-urbnvibe.jpg');"></div>
+                <div class="poster-info poster-info-single">
+                    <h3 class="poster-title">URBNVIBE</h3>
+                    <span class="dot-separator">·</span>
+                    <span class="poster-meta">Projekt</span>
+                </div>
+            </a>
+
+                        <!-- Poster 2: Lego Family Studio -->
+            <a href="https://www.youtube.com/@legofamilystudio8229" class="poster-card" data-date="2020-06-01" data-views="1300" data-title="Lego Family Studio">
+                <div class="poster-img-wrapper" style="background-image: url('images/logo-lego.jpg');"></div>
+                <div class="poster-info poster-info-single">
+                    <h3 class="poster-title">Lego Family Studio</h3>
+                    <span class="dot-separator">·</span>
+                    <span class="poster-meta">Youtube Kanal</span>
+                </div>
+            </a>
+
+            
 
         </div>
 
@@ -298,14 +319,20 @@
     <script src="header.js"></script>
 
     <script>
-        // Sortierungs-Funktion für die Projekte
-        const sortSelect = document.getElementById('sortSelect');
-        const container = document.getElementById('projectsContainer');
+    const sortSelect = document.getElementById('sortSelect');
+    const container = document.getElementById('projectsContainer');
 
-        sortSelect.addEventListener('change', () => {
-            const cards = Array.from(container.children);
-            const val = sortSelect.value;
+    function sortProjects() {
+        const cards = Array.from(container.querySelectorAll('.poster-card'));
+        const val = sortSelect.value;
 
+        // 1. Dezenter Fade-Out vor dem Sortieren
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(6px)';
+        container.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+
+        setTimeout(() => {
+            // 2. Logik für die Sortierung
             cards.sort((a, b) => {
                 if (val === 'neuste') {
                     return new Date(b.dataset.date || 0) - new Date(a.dataset.date || 0);
@@ -320,8 +347,19 @@
                 }
             });
 
+
+            // 4. Nur die echten Projekt-Karten wieder einfügen
             cards.forEach(card => container.appendChild(card));
-        });
-    </script>
+
+            // 5. Sanfter Fade-In Effekt
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+        }, 150);
+    }
+
+    // Event-Listener & Initialer Aufruf
+    sortSelect.addEventListener('change', sortProjects);
+    sortProjects();
+</script>
 </body>
 </html>

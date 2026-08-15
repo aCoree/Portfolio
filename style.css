@@ -23,7 +23,7 @@ html {
 body {
     font-family: 'Barlow Condensed', sans-serif;
     background-color: #0d0d0d;
-    color: #ffffff;
+    color: #cbc8c8;
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -36,7 +36,7 @@ img, video {
 a {
     text-decoration: none;
     color: inherit;
-}
+}       
 
 /* Automatischer Abstand für Unterseiten ohne Hero-Banner */
 body:not(.has-hero) main,
@@ -296,7 +296,7 @@ body:not(.has-hero) main,
     gap: 20px;
 }
 
-body.menu-open {
+body.menu-open {    
     overflow: hidden;
 }
 
@@ -706,7 +706,7 @@ select {
     filter: none !important;
     outline: none !important;
 
-    /* Nur die Farbänderung animieren */
+    /* Nur die Farbänderung animieren */ 
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
 }
 
@@ -1516,4 +1516,35 @@ section.active {
 .error-container .btn-pill i {
     font-size: 0.95rem !important;
     color: inherit !important;
+}
+
+
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    #7728f6 0%,
+    #65b5ff 25%,
+    #7728f6 50%,
+    #65b5ff 75%,
+    #7728f6 100%
+  );
+
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  animation: gradient-flow 10s linear infinite;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 200% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
