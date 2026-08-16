@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LEGO FAMILY STUDIO – Projekte</title>
+
+    <!-- =========================================================
+         FAVICONS UND MANIFEST
+         ========================================================= -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- =========================================================
+         DEIN GLOBALER STYLE
+         ========================================================= -->
+    <link rel="stylesheet" href="style.css?v=1.1">
+
+    <!-- =========================================================
+         FONTAWESOME (Social Media & YouTube Icons)
+         ========================================================= -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- =========================================================
+         GOOGLE FONTS (Inter Font)
+         ========================================================= -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- =========================================================
+         INTERNES LEGO FAMILY STUDIO CSS
+         ========================================================= -->
+    <style>
+        /* SICHERHEIT */
+        html,
+        body {
+            visibility: visible !important;
+            opacity: 1 !important;
+            background-color: #2d2d2d !important;
+            color: #ffffff !important;
+        }
+
+        /* HAUPT-CONTAINER */
+        #lego-page {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 1 !important;
+            width: 100% !important;
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+
+            padding-top: 140px !important;
+            padding-bottom: 130px !important;
+            padding-left: 40px !important;
+            padding-right: 40px !important;
+
+            box-sizing: border-box !important;
+        }
+
+        #lego-page *,
+        #lego-page *::before,
+        #lego-page *::after {
+            box-sizing: border-box !important;
+        }
+
+        /* HEADER DER PROJEKTSEITE */
+        .lego-intro {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            margin: 0 0 90px 0 !important;
+            padding: 0 !important;
+            text-align: center !important;
+        }
+
+        /* TITEL */
+        .lego-title-wrap {
+            display: block !important;
+            margin: 0 0 25px 0 !important;
+            padding: 0 !important;
+        }
+
+        /* PROJEKT-BEREICH */
+        .lego-section {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            margin: 0 0 120px 0 !important;
+            padding: 0 !important;
+        }
+
+        /* TRENNER */
+        .lego-separator {
+            display: block !important;
+            width: 100% !important;
+            height: 1px !important;
+            margin: 0 0 120px 0 !important;
+            padding: 0 !important;
+            background: currentColor !important;
+            opacity: 0.18 !important;
+        }
+
+        /* 2-SPALTEN LAYOUT */
+        .lego-two-column {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
+            align-items: center !important;
+            column-gap: 70px !important;
+            row-gap: 50px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .lego-two-column.reverse {
+            grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
+        }
+
+        /* MEDIA CONTAINER */
+        .lego-media {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+
+        /* =========================================================
+           LEGO CARD-BILD
+           
+           STANDARD = MOBILE / TABLET
+           Wird weiter unten NUR für PC angepasst.
+           ========================================================= */
+        .lego-card-image {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            object-fit: contain !important;
+            border-radius: 4px !important;
+        }
+
+        /* =========================================================
+           NUR PC
+           
+           Bild etwas größer + etwas nach oben.
+           ========================================================= */
+        @media (min-width: 901px) {
+
+            .lego-card-image {
+                width: 108% !important;
+                max-width: 108% !important;
+                margin-top: -235px !important;
+                margin-left: -45px !important;
+            }
+
+        }
+
+        /* VIDEO EMBED (16:9 RESPONSIVE) */
+        .lego-video {
+            position: relative !important;
+            display: block !important;
+            width: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            background: rgba(0, 0, 0, 0.2) !important;
+            border-radius: 4px !important;
+        }
+
+        .lego-video iframe {
+            position: absolute !important;
+            display: block !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        /* INFO-BEREICH */
+        .lego-info {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            max-width: 470px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .lego-info-label {
+            display: block !important;
+            visibility: visible !important;
+            margin: 0 0 18px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.12em !important;
+            text-transform: uppercase !important;
+            color: rgb(236, 204, 94) !important;
+        }
+
+        .lego-info h2 {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            margin: 0 0 22px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: clamp(32px, 4vw, 56px) !important;
+            font-weight: 900 !important;
+            line-height: 1.05 !important;
+            letter-spacing: -0.04em !important;
+            color: rgb(168, 199, 225) !important;
+        }
+
+        .lego-info-description {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.75 !important;
+            margin: 0 0 30px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            line-height: 1.75 !important;
+            color: inherit !important;
+        }
+
+        /* DETAILS */
+        .lego-details {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            margin: 25px 0 0 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+        }
+
+        .lego-details li {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: flex-start !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 13px 0 !important;
+            border-top: 1px solid currentColor !important;
+            color: inherit !important;
+        }
+
+        .lego-details li:last-child {
+            border-bottom: 1px solid currentColor !important;
+        }
+
+        .lego-detail-name {
+            display: block !important;
+            font-family: inherit !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            line-height: 1.4 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.08em !important;
+            opacity: 0.55 !important;
+        }
+
+        .lego-detail-value {
+            display: block !important;
+            max-width: 55% !important;
+            font-family: inherit !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            line-height: 1.4 !important;
+            text-align: right !important;
+            color: inherit !important;
+        }
+
+        /* MOBILE / TABLET RESPONSIVE */
+        @media (max-width: 900px) {
+
+            #lego-page {
+                padding-top: 110px !important;
+                padding-bottom: 90px !important;
+                padding-left: 25px !important;
+                padding-right: 25px !important;
+            }
+
+            .lego-intro {
+                margin-bottom: 70px !important;
+            }
+
+            .lego-section {
+                margin-bottom: 90px !important;
+            }
+
+            .lego-two-column,
+            .lego-two-column.reverse {
+                grid-template-columns: 1fr !important;
+                column-gap: 0 !important;
+                row-gap: 45px !important;
+            }
+
+            .lego-info {
+                max-width: 100% !important;
+            }
+
+            .lego-separator {
+                margin-bottom: 90px !important;
+            }
+        }
+
+        /* SMARTPHONE RESPONSIVE */
+        @media (max-width: 600px) {
+
+            #lego-page {
+                padding-top: 100px !important;
+                padding-bottom: 70px !important;
+                padding-left: 18px !important;
+                padding-right: 18px !important;
+            }
+
+            .lego-intro {
+                margin-bottom: 50px !important;
+            }
+
+            .lego-info h2 {
+                font-size: 36px !important;
+            }
+
+            .lego-details li {
+                gap: 12px !important;
+            }
+
+            .lego-detail-name,
+            .lego-detail-value {
+                font-size: 11px !important;
+            }
+
+            /* MOBILE BLEIBT WIE VORHER */
+            .lego-card-image {
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
+    <div id="header-placeholder"></div>
+
+    <!-- =========================================================
+         LEGO FAMILY STUDIO CONTENT
+         ========================================================= -->
+    <main id="lego-page">
+
+        <!-- =====================================================
+             INTRO
+             ===================================================== -->
+
+        <!-- =====================================================
+             01 — YOUTUBE KANAL & PROFIL
+             ===================================================== -->
+        <section class="lego-section">
+
+            <div class="lego-two-column">
+
+                <!-- LINKS: LEGO CARD -->
+                <div class="lego-media">
+
+                    <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio" class="lego-card-image">
+
+                </div>
+
+                <!-- RECHTS: KANAL BESCHREIBUNG -->
+                <div class="lego-info">
+
+                    <span class="lego-info-label">01 / YouTube Channel</span>
+
+                    <h2>Über den Kanal</h2>
+
+                    <p class="lego-info-description">
+                        Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video. Als dann der
+                        Lockdown 2020 kam, konnten wir unsere freie Zeit voll und ganz dieser Sache widmen.
+                        <br><br>
+                        So entstand der YouTube-Kanal „Lego Family Studio“.
+                        <br><br>
+                        In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede einzelne
+                        Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um
+                        LEGO-Figuren, die irgendetwas erlebten. Die Geschichten hatten manchmal auch mit der aktuellen
+                        Weltlage zu tun, zum Beispiel mit Corona.
+                        <br><br>
+                        Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis
+                        Schnitt-App zusammengeschnitten. Man war sehr viele Stunden am Arbeiten für die kurzen Videos,
+                        die man am Ende hatte.
+                        <br><br>
+                        Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und ich
+                        kann es mit grossem Stolz zeigen.
+                        <br><br>
+                        In diesem QR-Code kann man auf unseren YouTube-Kanal gelangen und sich die Videos anschauen.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="lego-separator"></div>
+
+        <!-- =====================================================
+             02 — VIDEO 1: HIGHLIGHT BRICKFILM
+             ===================================================== -->
+        <section class="lego-section">
+
+            <div class="lego-two-column reverse">
+
+                <!-- LINKS: INFOS ZU VIDEO 1 -->
+                <div class="lego-info">
+
+                    <span class="lego-info-label">02 / Featured Animation</span>
+
+                    <h2>Action Brickfilm</h2>
+
+                    <p class="lego-info-description">
+                        Ein dynamischer LEGO Stop-Motion Kurzfilm mit flüssigen Bewegungen,
+                        maßgeschneiderten Soundeffekten und einer spannenden Storyline.
+                        Jede Sekunde entsteht aus zahlreichen sorgfältig ausgerichteten Einzelbildern.
+                    </p>
+
+                    <ul class="lego-details">
+
+                        <li>
+                            <span class="lego-detail-name">Format</span>
+                            <span class="lego-detail-value">16 : 9 (4K UHD)</span>
+                        </li>
+
+                        <li>
+                            <span class="lego-detail-name">Technik</span>
+                            <span class="lego-detail-value">Stop-Motion Animation</span>
+                        </li>
+
+                        <li>
+                            <span class="lego-detail-name">Postproduktion</span>
+                            <span class="lego-detail-value">Video & Color Grading</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- RECHTS: VIDEO EMBED 1 -->
+                <div class="lego-media">
+
+                    <div class="lego-video">
+
+                        <iframe src="https://www.youtube.com/embed/DEIN_YOUTUBE_ID_1"
+                            title="LEGO Family Studio - Action Brickfilm"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="lego-separator"></div>
+
+        <!-- =====================================================
+             03 — VIDEO 2: CREATIVE BUILD / MOC SHOWCASE
+             ===================================================== -->
+        <section class="lego-section">
+
+            <div class="lego-two-column">
+
+                <!-- LINKS: VIDEO EMBED 2 -->
+                <div class="lego-media">
+
+                    <div class="lego-video">
+
+                        <iframe src="https://www.youtube.com/embed/DEIN_YOUTUBE_ID_2"
+                            title="LEGO Family Studio - Build & Showcase"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                </div>
+
+                <!-- RECHTS: INFOS ZU VIDEO 2 -->
+                <div class="lego-info">
+
+                    <span class="lego-info-label">03 / Custom Build Showcase</span>
+
+                    <h2>MOC & Design</h2>
+
+                    <p class="lego-info-description">
+                        Ein detaillierter Einblick in ein eigenständiges LEGO Eigenbau-Projekt (MOC).
+                        Das Video zeigt sowohl das fertige Modell mit kinematischen Kamerafahrten
+                        als auch faszinierende Details der Bautechniken.
+                    </p>
+
+                    <ul class="lego-details">
+
+                        <li>
+                            <span class="lego-detail-name">Format</span>
+                            <span class="lego-detail-value">16 : 9</span>
+                        </li>
+
+                        <li>
+                            <span class="lego-detail-name">Thema</span>
+                            <span class="lego-detail-value">Custom MOC & Bauanleitung</span>
+                        </li>
+
+                        <li>
+                            <span class="lego-detail-name">Audio</span>
+                            <span class="lego-detail-value">Custom Sound Design</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="lego-separator"></div>
+
+        <!-- =====================================================
+             04 — VIDEO 3: CINEMATIC SHORT
+             ===================================================== -->
+        <section class="lego-section">
+
+            <div class="lego-two-column reverse">
+
+                <!-- LINKS: INFOS ZU VIDEO 3 -->
+                <div class="lego-info">
+
+                    <span class="lego-info-label">04 / Story & Animation</span>
+
+                    <h2>Mini-Movie</h2>
+
+                    <p class="lego-info-description">
+                        Ein erzählerischer LEGO Kurzfilm mit speziellem Licht-Design und cineastischer Atmosphäre.
+                        Hier verbinden sich Animation, Dramaturgie und kreatives Set-Design zu einem vollwertigen
+                        Filmprojekt.
+                    </p>
+
+                    <ul class="lego-details">
+
+                        <li>
+                            <span class="lego-detail-name">Format</span>
+                            <span class="lego-detail-value">16 : 9</span>
+                        </li>
+
+                        <li>
+                            <span class="lego-detail-name">Kategorie</span>
+                            <span class="lego-detail-value">Cinematic Short Film</span>
+                        </li>
+
+                        <li>
+                            <span class="lego-detail-name">Beleuchtung</span>
+                            <span class="lego-detail-value">Atmosphere & Lighting</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- RECHTS: VIDEO EMBED 3 -->
+                <div class="lego-media">
+
+                    <div class="lego-video">
+
+                        <iframe src="https://www.youtube.com/embed/DEIN_YOUTUBE_ID_3"
+                            title="LEGO Family Studio - Cinematic Short"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+    <div id="footer-placeholder"></div>
+
+    <!-- =========================================================
+         DEIN HEADER.JS
+         ========================================================= -->
+    <script src="header.js"></script>
+
+</body>
+
+</html>
