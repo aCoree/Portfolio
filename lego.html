@@ -43,6 +43,70 @@
             background-color: #2d2d2d !important;
             color: #ffffff !important;
         }
+                    .lego-btn {
+                display: inline-block;
+                align-self: center;
+                padding: 12px 34px;
+                border-radius: 9999px !important;
+                font-family: 'Barlow Condensed', sans-serif;
+                font-size: 16px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                margin-top: 44px;
+                cursor: pointer;
+
+                /* Dezentere Blur-Stärke (6px statt 12px) für einen sanften Apple-Look */
+                background-color: rgba(255, 255, 255, 0.05) !important;
+                background-image: none !important;
+                backdrop-filter: blur(6px) !important;
+                -webkit-backdrop-filter: blur(6px) !important;
+
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                color: #ffffff !important;
+
+                /* Alle alten Effekte / Animationen deaktivieren */
+                box-shadow: none !important;
+                transform: none !important;
+                filter: none !important;
+                outline: none !important;
+
+                /* Übergänge animieren */
+                transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease !important;
+            }
+
+            .lego-btn::before,
+            .lego-btn::after {
+                display: none !important;
+                content: none !important;
+            }
+
+            .lego-btn:hover {
+                background: #ffffff !important;
+                background-color: #ffffff !important;
+                background-image: none !important;
+                backdrop-filter: blur(0px) !important;
+                -webkit-backdrop-filter: blur(0px) !important;
+                color: #000000 !important;
+                border-color: #ffffff !important;
+
+                /* Verhindert jedes Zucken oder Vergrößern */
+                transform: none !important;
+                box-shadow: none !important;
+                filter: none !important;
+            }
+
+            .btn:active {
+                background-color: rgba(255, 255, 255, 0.85) !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .lego-btn:active {
+                background-color: rgba(255, 255, 255, 0.85) !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
 
         /* HAUPT-CONTAINER */
         #lego-page {
@@ -364,6 +428,9 @@
                 height: auto !important;
                 margin: 0 !important;
             }
+
+
+
         }
     </style>
 
@@ -396,7 +463,8 @@
                 <div class="lego-media">
 
                     <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio" class="lego-card-image">
-
+                    <a href="https://www.youtube.com/channel/UCO4B5l8DP3AyfVa3rPpNR6A" class="lego-btn">Kanal
+                        ansehen</a>
                 </div>
 
                 <!-- RECHTS: KANAL BESCHREIBUNG -->
@@ -445,34 +513,15 @@
                 <!-- LINKS: INFOS ZU VIDEO 1 -->
                 <div class="lego-info">
 
-                    <span class="lego-info-label">02 / Featured Animation</span>
+                    <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
 
-                    <h2>Action Brickfilm</h2>
+                    <h2>Corona LEGO Time</h2>
 
                     <p class="lego-info-description">
                         Ein dynamischer LEGO Stop-Motion Kurzfilm mit flüssigen Bewegungen,
                         maßgeschneiderten Soundeffekten und einer spannenden Storyline.
                         Jede Sekunde entsteht aus zahlreichen sorgfältig ausgerichteten Einzelbildern.
                     </p>
-
-                    <ul class="lego-details">
-
-                        <li>
-                            <span class="lego-detail-name">Format</span>
-                            <span class="lego-detail-value">16 : 9 (4K UHD)</span>
-                        </li>
-
-                        <li>
-                            <span class="lego-detail-name">Technik</span>
-                            <span class="lego-detail-value">Stop-Motion Animation</span>
-                        </li>
-
-                        <li>
-                            <span class="lego-detail-name">Postproduktion</span>
-                            <span class="lego-detail-value">Video & Color Grading</span>
-                        </li>
-
-                    </ul>
 
                 </div>
 
@@ -481,7 +530,7 @@
 
                     <div class="lego-video">
 
-                        <iframe src="https://www.youtube.com/embed/DEIN_YOUTUBE_ID_1"
+                        <iframe src="https://www.youtube.com/embed/watch?v=X0yMc0KBZUU"
                             title="LEGO Family Studio - Action Brickfilm"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>

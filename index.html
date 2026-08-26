@@ -6,28 +6,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurelio Zingarello</title>
 
-    <!-- Preload für instant reibungsloses Laden der Poster -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
     <link rel="preload" as="image" href="images/run-banner.jpg">
     <link rel="preload" as="image" href="images/hero-bg.jpg">
 
-    <!-- Favicons für Browser, iOS und Android -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
-    <!-- Hochauflösendes Icon speziell für Google-Suchergebnisse -->
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
 
-    <!-- Web Manifest für mobile Verknüpfungen -->
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.1">
-    <!-- FontAwesome für Social Media Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts für modernes Design -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
+        /* ─── HERO ─── */
+
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+        }
+
+        /* ─── HERO VIDEO ─── */
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            width: 100%;
+            height: 100%;
+
+            /* Immer gesamten Hero ausfüllen */
+            object-fit: cover;
+            object-position: center center;
+
+            transform: translate(-50%, -50%);
+
+            z-index: 0;
+
+            /* Anfangs schwarz */
+            opacity: 0;
+
+            /* Cleanes Einblenden */
+            transition: opacity 0.4s ease;
+        }
+
+        /* Sobald Video bereit ist */
+        .hero-video.is-ready {
+            opacity: 1;
+        }
+
+        /* ─── OVERLAY ─── */
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        /* ─── CONTENT ─── */
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
         /* ─── SYSTEM-VARIABLEN ─── */
         :root {
             --sky-color: #YOUR_SKY_COLOR_HEX;
@@ -39,6 +93,9 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         /* Hero-Section ganz oben */
@@ -76,7 +133,7 @@
             width: max-content;
             will-change: transform;
             transform: translateZ(0);
-            /* Hardware-Beschleunigung */
+            -webkit-transform: translateZ(0);
         }
 
         /* DESKTOP KARTE (QUERFORMAT BANNER) */
@@ -93,11 +150,14 @@
             position: relative;
             opacity: 0.35;
             transform: scale(0.96) translateZ(0);
+            -webkit-transform: scale(0.96) translateZ(0);
             transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
             box-sizing: border-box;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
         }
 
         /* Card Background & Overlay */
@@ -110,19 +170,43 @@
             background-size: cover;
             background-position: center;
             transform: translateZ(0);
+            -webkit-transform: translateZ(0);
             background-image: var(--bg-desktop);
             transition: background-image 0.3s ease;
             border-radius: inherit !important;
+            will-change: transform;
         }
 
         .apple-card-overlay {
             border-radius: inherit !important;
+            position: absolute;
+            inset: 0;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* GPU-Kopplung für Text & Button (verhindert verzögertes Laden online) */
+        .apple-card-content,
+        .apple-btn,
+        .apple-card-text,
+        .genre-tag,
+        .card-desc {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            will-change: transform, opacity;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Aktives mittiges Poster */
         .apple-card.active {
             opacity: 1;
             transform: scale(1) translateZ(0);
+            -webkit-transform: scale(1) translateZ(0);
         }
 
         /* SYMMETRISCHE PFEILE */
@@ -130,6 +214,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%) translateZ(0);
+            -webkit-transform: translateY(-50%) translateZ(0);
             width: 48px;
             height: 48px;
             border-radius: 50%;
@@ -152,6 +237,7 @@
             background: rgba(255, 255, 255, 0.3);
             border-color: rgba(255, 255, 255, 0.6);
             transform: translateY(-50%) scale(1.08) translateZ(0);
+            -webkit-transform: translateY(-50%) scale(1.08) translateZ(0);
         }
 
         .prev-arrow {
@@ -179,6 +265,7 @@
             cursor: pointer;
             transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
             transform: translateZ(0);
+            -webkit-transform: translateZ(0);
             box-sizing: border-box;
         }
 
@@ -240,7 +327,6 @@
                 flex: 0 0 calc(100vw - 100px) !important;
                 max-width: 320px !important;
                 height: 480px !important;
-                /* 👈 HIER DIE HÖHE FÜR MOBILE ERHÖHT (vorher 440px) */
                 border-radius: 20px !important;
             }
 
@@ -280,7 +366,6 @@
                 line-height: 1.3 !important;
                 display: -webkit-box !important;
                 -webkit-line-clamp: 2;
-                /* Schneidet Text nach max 2 Zeilen ab */
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
@@ -310,7 +395,6 @@
                 flex: 0 0 calc(100vw - 80px) !important;
                 max-width: 280px !important;
                 height: 440px !important;
-                /* 👈 HIER AUCH FÜR KLEINE HANDYS ERHÖHT (vorher 400px) */
                 border-radius: 18px !important;
             }
         }
@@ -319,30 +403,26 @@
 
 <body>
 
-    <!-- Header und Footer werden dynamisch durch header.js geladen -->
-
-    <!-- ─── HERO SECTION (HOME) MIT VIDEO-BACKGROUND & FALLBACK ─── -->
     <section id="home" class="hero section">
 
         <div class="hero-overlay"></div>
 
-        <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/hero-bg.jpg">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto" fetchpriority="high">
             <source src="hero-loop-h264.mp4" type="video/mp4">
             Dein Browser unterstützt keine HTML5-Videos.
         </video>
 
         <div class="hero-content">
-            <h1>CREATING <span class="gradient-text">VISUAL</span> STORIES </h1>
+            <h1>CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
             <p>Filmmaker & Mediamatiker aus der Schweiz</p>
             <a href="projekte.html" class="btn">Projekte ansehen</a>
         </div>
+
     </section>
 
-    <!-- ─── PROJEKTE SECTION (APPLE TV SLIDER STYLE) ─── -->
     <section id="projekte" class="section projekte-apple-section">
         <div class="container-wide">
 
-            <!-- Header mit Titel & Link -->
             <div class="section-header-flex">
                 <div>
                     <h2 class="section-title-left">Meine Projekte</h2>
@@ -352,10 +432,8 @@
                 </a>
             </div>
 
-            <!-- Apple-Style Slider Container -->
             <div class="apple-slider-container">
 
-                <!-- Navigation Pfeile -->
                 <button class="slider-arrow prev-arrow" id="prevBtn" aria-label="Vorheriges Projekt">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
@@ -365,7 +443,6 @@
 
                 <div class="apple-slider-track" id="sliderTrack">
 
-                    <!-- Projekt-Karte 1: RUN -->
                     <div class="apple-card" onclick="window.location.href='run.html';">
                         <div class="apple-card-bg"
                             style="--bg-desktop: url('images/run-banner.jpg'); --bg-mobile: url('cards/card-big-run.jpg');">
@@ -385,7 +462,6 @@
                         </div>
                     </div>
 
-                    <!-- Projekt-Karte 2: LEGO FAMILY STUDIO -->
                     <div class="apple-card" onclick="window.location.href='lego.html';">
                         <div class="apple-card-bg"
                             style="--bg-desktop: url('cards/card-big-lego.png'); --bg-mobile: url('cards/card-small-lego.png');">
@@ -405,7 +481,6 @@
                         </div>
                     </div>
 
-                    <!-- Projekt-Karte 3: URBNVIBE -->
                     <div class="apple-card" onclick="window.location.href='urbnvibe.html';">
                         <div class="apple-card-bg"
                             style="--bg-desktop: url('cards/card-big-urbnvibe.jpg'); --bg-mobile: url('cards/card-small-urbnvibe.jpg');">
@@ -424,7 +499,6 @@
                         </div>
                     </div>
 
-                    <!-- Projekt-Karte 4: MUSIK  -->
                     <div class="apple-card"
                         onclick="window.location.href='https://www.youtube.com/@legofamilystudio8229';">
                         <div class="apple-card-bg"
@@ -446,7 +520,6 @@
 
                 </div>
 
-                <!-- Apple Indikator-Punkte -->
                 <div class="apple-slider-dots" id="sliderDots">
                     <span class="dot active"></span>
                     <span class="dot"></span>
@@ -458,7 +531,6 @@
         </div>
     </section>
 
-    <!-- ─── ÜBER MICH & EQUIPMENT ─── -->
     <section id="ueber-mich" class="section bg-dark">
         <div class="container">
             <h2 class="section-title">Über mich</h2>
@@ -470,7 +542,6 @@
         </div>
     </section>
 
-    <!-- ─── KONTAKT SECTION ─── -->
     <section id="kontakt" class="section">
         <div class="container">
             <h2 class="section-title">Kontakt</h2>
@@ -485,10 +556,8 @@
         </div>
     </section>
 
-    <!-- ─── EXTERNE SKRIPTE ─── -->
     <script src="header.js"></script>
 
-    <!-- ─── LOKALES JAVASCRIPT ─── -->
     <script>
 
         // 2. Fade-In Animation für Sections
@@ -598,6 +667,7 @@
                 // Zentrierungsberechnung
                 const centerOffset = (containerWidth / 2) - (currentIndex * (cardWidth + gap) + (cardWidth / 2));
                 track.style.transform = `translate3d(${centerOffset}px, 0, 0)`;
+                track.style.webkitTransform = `translate3d(${centerOffset}px, 0, 0)`;
 
                 // Reale Karte für Optik & Dots ermitteln
                 let realIndex = currentIndex - 1;
@@ -686,6 +756,27 @@
             history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const heroVideo = document.querySelector('.hero-video');
+
+            if (!heroVideo) return;
+
+            const showVideo = () => {
+                heroVideo.classList.add('is-ready');
+            };
+
+            // Sobald genug Video-Daten vorhanden sind
+            heroVideo.addEventListener('canplay', showVideo);
+
+            // Falls das Video beim Laden bereits bereit ist
+            if (heroVideo.readyState >= 3) {
+                showVideo();
+            }
+
+        });
+
     </script>
 </body>
 
