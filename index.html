@@ -16,7 +16,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
 
     <link rel="manifest" href="/site.webmanifest">
@@ -84,7 +83,7 @@
 
         /* ─── SYSTEM-VARIABLEN ─── */
         :root {
-            --sky-color: #YOUR_SKY_COLOR_HEX;
+            --sky-color: #0b0b0b;
         }
 
         /* Der allgemeine Seitenhintergrund bleibt dunkel */
@@ -160,7 +159,7 @@
             -webkit-transform-style: preserve-3d;
         }
 
-        /* Card Background & Overlay */
+        /* Card Background & Overlay (Tippfehler gefixt) */
         .apple-card-bg {
             position: absolute;
             top: 0;
@@ -559,8 +558,7 @@
     <script src="header.js"></script>
 
     <script>
-
-        // 2. Fade-In Animation für Sections
+        // Fade-In Animation für Sections
         const fadeObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -582,7 +580,7 @@
             });
         });
 
-        // 3. Scrollspy
+        // Scrollspy
         const allowedSections = ['home', 'ueber-mich', 'kontakt'];
         const sections = document.querySelectorAll('section[id]');
 
@@ -609,7 +607,7 @@
             navObserver.observe(section);
         });
 
-        // 4. UNENDLICHER KREISLAUF-SLIDER (HARDWARE-ACCELERATED & SOFORT FLÜSSIG)
+        // UNENDLICHER KREISLAUF-SLIDER (GEFIXT)
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.apple-slider-container');
             const track = document.getElementById('sliderTrack');
@@ -622,7 +620,6 @@
 
             const totalOrig = origCards.length;
 
-            // Dynamisch Punkte generieren für die exakte Anzahl an Karten
             if (dotsContainer) {
                 dotsContainer.innerHTML = '';
                 origCards.forEach((_, idx) => {
@@ -664,12 +661,10 @@
                 const cardWidth = allCards[0].offsetWidth;
                 const gap = 20;
 
-                // Zentrierungsberechnung
                 const centerOffset = (containerWidth / 2) - (currentIndex * (cardWidth + gap) + (cardWidth / 2));
                 track.style.transform = `translate3d(${centerOffset}px, 0, 0)`;
                 track.style.webkitTransform = `translate3d(${centerOffset}px, 0, 0)`;
 
-                // Reale Karte für Optik & Dots ermitteln
                 let realIndex = currentIndex - 1;
                 if (currentIndex === 0) realIndex = totalOrig - 1;
                 if (currentIndex === allCards.length - 1) realIndex = 0;
@@ -688,13 +683,15 @@
 
             function goToSlide(index) {
                 if (isAnimating) return;
+                if (index === currentIndex) return;
                 isAnimating = true;
                 currentIndex = index;
                 updateCarousel(true);
             }
 
-            // Nahtloser Übergang beim Erreichen der Klone
-            track.addEventListener('transitionend', () => {
+            // Exaktes Abfangen der Transitionen nur für den Slider-Track selbst
+            track.addEventListener('transitionend', (e) => {
+                if (e.target !== track) return;
                 isAnimating = false;
                 if (currentIndex === 0) {
                     currentIndex = totalOrig;
@@ -722,9 +719,9 @@
                 if (autoSlideTimer) clearInterval(autoSlideTimer);
             }
 
-            // Klick Events für Navigation
             if (prevBtn) {
                 prevBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     prevSlide();
                     startTimer();
@@ -733,6 +730,7 @@
 
             if (nextBtn) {
                 nextBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     nextSlide();
                     startTimer();
@@ -746,19 +744,16 @@
 
             window.addEventListener('resize', () => updateCarousel(false));
 
-            // Initiales Laden ohne Verzögerung
             updateCarousel(false);
             startTimer();
         });
 
-        // Beim Laden sanft nach oben scrollen
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
 
         document.addEventListener('DOMContentLoaded', () => {
-
             const heroVideo = document.querySelector('.hero-video');
 
             if (!heroVideo) return;
@@ -767,16 +762,12 @@
                 heroVideo.classList.add('is-ready');
             };
 
-            // Sobald genug Video-Daten vorhanden sind
             heroVideo.addEventListener('canplay', showVideo);
 
-            // Falls das Video beim Laden bereits bereit ist
             if (heroVideo.readyState >= 3) {
                 showVideo();
             }
-
         });
-
     </script>
 </body>
 
