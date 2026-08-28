@@ -7,16 +7,8 @@
 
     <title>URBNVIBE – Projekte</title>
 
-    <!-- =========================================================
-         PRELOADS
-         ========================================================= -->
-
     <link rel="preload" as="image" href="cards/card-big-urbnvibe.jpg">
 
-
-    <!-- =========================================================
-         FAVICONS
-         ========================================================= -->
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -26,30 +18,14 @@
     <link rel="manifest" href="/site.webmanifest">
 
 
-    <!-- =========================================================
-         DEIN GLOBALER STYLE
-         ========================================================= -->
-
     <link rel="stylesheet" href="style.css?v=1.1">
 
-
-    <!-- =========================================================
-         FONTAWESOME
-         ========================================================= -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
-    <!-- =========================================================
-         INTER FONT
-         ========================================================= -->
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
-
-    <!-- =========================================================
-         INTERNES URBNVIBE CSS
-         ========================================================= -->
 
     <style>
         /* =====================================================
@@ -59,7 +35,7 @@
         html {
             visibility: visible !important;
             opacity: 1 !important;
-            scroll-behavior: auto; /* Auf auto setzen für direkteres Scroll-Gefühl beim Effekt */
+            scroll-behavior: auto;
         }
 
         body {
@@ -76,15 +52,13 @@
            SCROLL-ANIMATION-BEREICH (HERO + FLYER)
            ===================================================== */
 
-        /* Dieser Track bestimmt, wie lange der Pin-Effekt dauert */
         .scroll-sequence {
             position: relative;
-            height: 250vh; /* 2.5x Bildschirmhöhe Scroll-Zeit, bevor es normal weitergeht */
+            height: 250vh;
             width: 100%;
             background-color: #0d0d0d;
         }
 
-        /* Der fixierte Container während des Scrollens */
         .sticky-container {
             position: sticky;
             top: 0;
@@ -111,11 +85,12 @@
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
+            object-position: center !important;
             border-radius: 0 !important;
             margin: 0 !important;
         }
 
-        /* Der Fade ins Dunkle (passt sich der Hintergrundfarbe an) */
+        /* Overlay für den Dunkel-Fade */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -127,7 +102,7 @@
             z-index: 2;
         }
 
-        /* Container für die Flyer, der von unten hochkommt */
+        /* Container für die Flyer (kommt von unten hoch) */
         .flyer-layer {
             position: absolute;
             top: 0;
@@ -136,10 +111,10 @@
             height: 100%;
             z-index: 3;
             display: flex;
-            align-items: center; /* Zentriert den Content vertikal */
+            align-items: center;
             justify-content: center;
-            opacity: 0; /* Startet unsichtbar */
-            transform: translateY(100vh); /* Startet unterhalb des Bildschirms */
+            opacity: 0;
+            transform: translateY(100vh);
         }
 
         .flyer-layer-inner {
@@ -164,8 +139,6 @@
             width: 100% !important;
             max-width: 1400px !important;
             margin: 0 auto !important;
-            
-            /* Weniger Padding oben, da der Flyer schon drüber gezeigt wurde */
             padding: 60px 40px 130px !important; 
             box-sizing: border-box !important;
         }
@@ -190,8 +163,6 @@
             padding: 0 !important;
         }
 
-        /* Flyer Sektion innerhalb der Animation hat kein Margin bottom mehr, 
-           da sie per Flexbox zentriert wird */
         .flyer-layer-inner .urbnvibe-section {
             margin-bottom: 0 !important; 
         }
@@ -244,7 +215,7 @@
 
 
         /* =====================================================
-           FLYER
+           FLYER GRID
            ===================================================== */
 
         .urbnvibe-flyer-grid {
@@ -265,7 +236,7 @@
             visibility: visible !important;
             opacity: 1 !important;
             border-radius: 6px !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4); /* Leichter Schatten für Tiefe beim rein-sliden */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
 
@@ -329,7 +300,6 @@
         /* =====================================================
            DETAILS & LOGO & VIDEO & CREATIVES
            ===================================================== */
-        /* ... (Dein restliches CSS bleibt hier 1:1 gleich) ... */
 
         .urbnvibe-details { display: block !important; visibility: visible !important; opacity: 1 !important; width: 100% !important; margin: 25px 0 0 0 !important; padding: 0 !important; list-style: none !important; }
         .urbnvibe-details li { display: flex !important; justify-content: space-between !important; align-items: flex-start !important; width: 100% !important; margin: 0 !important; padding: 13px 0 !important; border-top: 1px solid currentColor !important; color: inherit !important; }
@@ -350,12 +320,20 @@
 
 
         /* =====================================================
-           MOBILE / TABLET
+           RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
            ===================================================== */
+
+        /* Optimierung für Bildschirme kleiner als 1100px */
+        @media (max-width: 1099px) {
+            .urbnvibe-hero-img {
+                object-fit: cover !important;
+                object-position: center center !important;
+            }
+        }
 
         @media (max-width: 900px) {
             #urbnvibe-page { padding: 40px 25px 90px !important; }
-            .flyer-layer-inner { padding: 0 25px; } /* Mobile Padding für die Animation */
+            .flyer-layer-inner { padding: 0 25px; }
             
             .urbnvibe-section { margin-bottom: 90px !important; }
             .urbnvibe-two-column, .urbnvibe-two-column.reverse { grid-template-columns: 1fr !important; column-gap: 0 !important; row-gap: 45px !important; }
@@ -368,10 +346,6 @@
             .urbnvibe-logo-container { justify-content: flex-start !important; }
             .urbnvibe-logo-container img { width: min(100%, 550px) !important; }
         }
-
-        /* =====================================================
-           SMARTPHONE
-           ===================================================== */
 
         @media (max-width: 600px) {
             #urbnvibe-page { padding: 30px 18px 70px !important; }
@@ -388,35 +362,24 @@
 
 <body>
 
-    <!-- =========================================================
-         HEADER
-         ========================================================= -->
     <div id="header-placeholder"></div>
 
-
-    <!-- =========================================================
-         SCROLL-SEQUENCE (HERO & FLYER REVEAL)
-         ========================================================= -->
 
     <div class="scroll-sequence">
         <div class="sticky-container">
             
-            <!-- 1. Hero Image im Hintergrund -->
             <picture class="urbnvibe-hero-picture">
-                <source media="(max-width: 768px)" srcset="cards/card-small-urbnvibe.jpg">
+                <source media="(max-width: 644px)" srcset="cards/card-small-urbnvibe.jpg">
                 <img src="cards/card-big-urbnvibe.jpg" alt="URBNVIBE Hero Image" class="urbnvibe-hero-img">
             </picture>
             
-            <!-- 2. Overlay, das beim Scrollen schwarz wird -->
             <div class="hero-overlay"></div>
             
-            <!-- 3. Die Flyer-Sektion, die hoch slidet -->
             <div class="flyer-layer">
                 <div class="flyer-layer-inner">
                     <section class="urbnvibe-section">
                         <div class="urbnvibe-two-column flyer-column">
                             
-                            <!-- BILDER -->
                             <div class="urbnvibe-media">
                                 <div class="urbnvibe-flyer-grid">
                                     <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1">
@@ -424,7 +387,6 @@
                                 </div>
                             </div>
 
-                            <!-- TEXT -->
                             <div class="urbnvibe-info">
                                 <span class="urbnvibe-info-label">01 / Print Design</span>
                                 <h2>Flyer Design</h2>
@@ -442,15 +404,8 @@
     </div>
 
 
-    <!-- =========================================================
-         NORMALER SCROLL-CONTENT (Schliesst sich nahtlos an)
-         ========================================================= -->
-
     <main id="urbnvibe-page">
 
-        <!-- =====================================================
-             02 — LOGO
-             ===================================================== -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
@@ -469,9 +424,6 @@
         </section>
 
 
-        <!-- =====================================================
-             03 — VIDEO
-             ===================================================== -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
@@ -486,16 +438,13 @@
                     <span class="urbnvibe-info-label">03 / Motion Design</span>
                     <h2>Awareness Video</h2>
                     <p class="urbnvibe-info-description">
-                        Ein dynamisch geschnittenes Motion-Design-Video, das den urbanen Vibe der Marke in Bewegung versetzt. Durch rhythmische Bildwechsel und abgestimmte Grafiken wird URBNVIBE lebendig inszeniert.
+                        Ein dynamisch geschnittes Motion-Design-Video, das den urbanen Vibe der Marke in Bewegung versetzt. Durch rhythmische Bildwechsel und abgestimmte Grafiken wird URBNVIBE lebendig inszeniert.
                     </p>
                 </div>
             </div>
         </section>
 
 
-        <!-- =====================================================
-             04 — CREATIVES
-             ===================================================== -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-creatives-grid">
                 <div class="urbnvibe-creative"><img src="images/creative-1.png" alt="URBNVIBE Creative 1"></div>
@@ -519,17 +468,11 @@
     </main>
 
 
-    <!-- =========================================================
-         FOOTER
-         ========================================================= -->
     <div id="footer-placeholder"></div>
 
     <script src="header.js"></script>
 
 
-    <!-- =========================================================
-         ANIMATION SCRIPT
-         ========================================================= -->
     <script>
         document.addEventListener("scroll", () => {
             const scrollY = window.scrollY;
@@ -538,7 +481,7 @@
             const overlay = document.querySelector('.hero-overlay');
             const flyerLayer = document.querySelector('.flyer-layer');
 
-            // 1. Fade ins Dunkle (Startet sofort, ist bei 70% der Bildschirmhöhe komplett schwarz)
+            // 1. Fade ins Dunkle
             let fadeProgress = scrollY / (windowH * 0.7);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
@@ -547,8 +490,7 @@
                 overlay.style.opacity = fadeProgress;
             }
 
-            // 2. Flyer & Text kommen von unten nach oben (Parallax)
-            // Startet, wenn 30% gescrollt wurde, endet wenn 120% gescrollt wurde
+            // 2. Parallax Reveal der Flyer-Sektion
             let slideStart = windowH * 0.3;
             let slideEnd = windowH * 1.2;
             let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
@@ -556,15 +498,11 @@
             if (slideProgress > 1) slideProgress = 1;
             if (slideProgress < 0) slideProgress = 0;
 
-            // Smoothe Easing-Kurve (Damit es sanft abbremst, wenn es in der Mitte ankommt)
             let easeOut = 1 - Math.pow(1 - slideProgress, 3);
 
             if (flyerLayer) {
-                // Bewegt sich von +100vh (unter dem Bildschirm) zu 0 (genau in der Mitte)
                 let yOffset = 100 - (easeOut * 100);
                 flyerLayer.style.transform = `translateY(${yOffset}vh)`;
-                
-                // Opacity steigt leicht an für den perfekten Fade-In Effekt
                 flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
             }
         });
