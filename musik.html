@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Musik – Klaviervideos</title>
+
+    <link rel="preload" as="image" href="cards/card-big-musik.jpg">
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+
+    <link rel="manifest" href="/site.webmanifest">
+
+
+    <link rel="stylesheet" href="style.css?v=1.1">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
+
+    <style>
+        /* =====================================================
+           SICHERHEIT & BASIS
+           ===================================================== */
+
+        html {
+            visibility: visible !important;
+            opacity: 1 !important;
+            scroll-behavior: auto;
+        }
+
+        body {
+            visibility: visible !important;
+            opacity: 1 !important;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           SCROLL-ANIMATION-BEREICH (HERO + ERSTES VIDEO)
+           ===================================================== */
+
+        .scroll-sequence {
+            position: relative;
+            height: 250vh;
+            width: 100%;
+            background-color: #0d0d0d;
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #0d0d0d;
+        }
+
+        .musik-hero-picture {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .musik-hero-img {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+        }
+
+        /* Overlay für den Dunkel-Fade */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d0d0d;
+            opacity: 0;
+            z-index: 2;
+        }
+
+        /* Container für die erste Reveal-Sektion (kommt von unten hoch) */
+        .flyer-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(100vh);
+        }
+
+        .flyer-layer-inner {
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           HAUPT-CONTAINER (Rest der Seite)
+           ===================================================== */
+
+        #musik-page {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 10 !important;
+            background-color: #0d0d0d !important;
+            width: 100% !important;
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+            padding: 60px 40px 130px !important;
+            box-sizing: border-box !important;
+        }
+
+        #musik-page *,
+        #musik-page *::before,
+        #musik-page *::after {
+            box-sizing: border-box !important;
+        }
+
+
+        /* =====================================================
+           VIDEO-BEREICH
+           ===================================================== */
+
+        .musik-section {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            margin: 0 0 120px 0 !important;
+            padding: 0 !important;
+        }
+
+        .flyer-layer-inner .musik-section {
+            margin-bottom: 0 !important;
+        }
+
+
+        /* =====================================================
+           THEMATISCHE HINTERGRUND-BLOBS (verschwommen, cinematic)
+           ===================================================== */
+
+        .musik-section.themed-bg {
+            position: relative !important;
+            isolation: isolate;
+        }
+
+        .musik-section.themed-bg::before {
+            content: "";
+            position: absolute;
+            inset: -12% -10%;
+            z-index: -1;
+            filter: blur(130px);
+            opacity: 0.4;
+            pointer-events: none;
+            border-radius: 50%;
+            transition: opacity 0.6s ease;
+        }
+
+        /* Trennlinie zwischen den Songs, damit klar erkennbar ist,
+           dass es sich um unterschiedliche Videos handelt */
+        #musik-page > .musik-section:not(:first-child) {
+            position: relative !important;
+        }
+
+        #musik-page > .musik-section:not(:first-child)::after {
+            content: "";
+            position: absolute;
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18) 15%, rgba(255, 255, 255, 0.18) 85%, transparent);
+            pointer-events: none;
+        }
+
+        /* Star Wars (The Force Theme) – blau / hellblau / grünlich, Lichtschwert-mässig */
+        .theme-starwars::before {
+            background:
+                radial-gradient(circle at 25% 30%, rgba(61, 220, 255, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(41, 255, 176, 0.75) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(20, 90, 160, 0.6) 0%, transparent 70%);
+        }
+
+        /* Interstellar – violett */
+        .theme-interstellar::before {
+            background:
+                radial-gradient(circle at 70% 35%, rgba(176, 107, 255, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 30% 70%, rgba(123, 47, 247, 0.7) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(60, 20, 100, 0.6) 0%, transparent 70%);
+        }
+
+        /* Pirates of the Caribbean – orange / rot */
+        .theme-pirates::before {
+            background:
+                radial-gradient(circle at 35% 40%, rgba(255, 145, 71, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 70% 70%, rgba(255, 59, 31, 0.75) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(90, 15, 10, 0.6) 0%, transparent 70%);
+        }
+
+
+        /* =====================================================
+           ANIMIERTE GRADIENT-TITEL
+           ===================================================== */
+
+        .musik-info h2.gradient-title {
+            background-size: 200% auto !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+            animation: gradientMove 7s ease-in-out infinite alternate;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .theme-starwars .gradient-title {
+            background-image: linear-gradient(90deg, #3ddcff, #29ffb0, #8ff0ff, #3ddcff) !important;
+        }
+
+        .theme-interstellar .gradient-title {
+            background-image: linear-gradient(90deg, #b06bff, #7b2ff7, #d6b3ff, #b06bff) !important;
+        }
+
+        .theme-pirates .gradient-title {
+            background-image: linear-gradient(90deg, #ff9147, #ff3b1f, #ffd08a, #ff9147) !important;
+        }
+
+
+        /* =====================================================
+           2-SPALTEN LAYOUT
+           ===================================================== */
+
+        .musik-two-column {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
+            align-items: center !important;
+            column-gap: 70px !important;
+            row-gap: 50px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .musik-two-column.reverse {
+            grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
+        }
+
+
+        /* =====================================================
+           MEDIA CONTAINER
+           ===================================================== */
+
+        .musik-media {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+
+        #musik-page img, .flyer-layer-inner img {
+            visibility: visible !important;
+            opacity: 1 !important;
+            max-width: 100% !important;
+            border: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+
+        /* =====================================================
+           INFO-BEREICH
+           ===================================================== */
+
+        .musik-info {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            max-width: 470px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .musik-info-label {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.55 !important;
+            margin: 0 0 18px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.12em !important;
+            text-transform: uppercase !important;
+            color: inherit !important;
+        }
+
+        .musik-info h2 {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            margin: 0 0 22px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: clamp(34px, 4vw, 60px) !important;
+            font-weight: 900 !important;
+            line-height: 1 !important;
+            letter-spacing: -0.04em !important;
+            color: inherit !important;
+        }
+
+        .musik-info-description {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.75 !important;
+            margin: 0 0 30px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            line-height: 1.75 !important;
+            color: inherit !important;
+        }
+
+
+        /* =====================================================
+           DETAILS & VIDEO & GRID
+           ===================================================== */
+
+        .musik-details { display: block !important; visibility: visible !important; opacity: 1 !important; width: 100% !important; margin: 25px 0 0 0 !important; padding: 0 !important; list-style: none !important; }
+        .musik-details li { display: flex !important; justify-content: space-between !important; align-items: flex-start !important; width: 100% !important; margin: 0 !important; padding: 13px 0 !important; border-top: 1px solid currentColor !important; color: inherit !important; }
+        .musik-details li:last-child { border-bottom: 1px solid currentColor !important; }
+        .musik-detail-name { display: block !important; font-family: inherit !important; font-size: 12px !important; font-weight: 800 !important; line-height: 1.4 !important; text-transform: uppercase !important; letter-spacing: 0.08em !important; opacity: 0.55 !important; }
+        .musik-detail-value { display: block !important; max-width: 55% !important; font-family: inherit !important; font-size: 14px !important; font-weight: 600 !important; line-height: 1.4 !important; text-align: right !important; color: inherit !important; }
+
+        .musik-video { position: relative !important; display: block !important; width: 100% !important; aspect-ratio: 16 / 9 !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background: transparent !important; border-radius: 12px !important; }
+        .musik-video iframe { position: absolute !important; display: block !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; border: 0 !important; visibility: visible !important; opacity: 1 !important; }
+
+        .musik-videos-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 22px !important; width: 100% !important; margin: 0 0 55px 0 !important; padding: 0 !important; }
+        .musik-video-item { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; }
+        .musik-video-item .musik-video { border-radius: 8px !important; }
+        .musik-video-item span { display: block !important; margin-top: 14px !important; font-family: inherit !important; font-size: 15px !important; font-weight: 600 !important; opacity: 0.8 !important; }
+        .musik-videos-info { display: block !important; width: 100% !important; max-width: 700px !important; margin: 0 !important; padding: 0 !important; visibility: visible !important; opacity: 1 !important; }
+
+
+        /* =====================================================
+           RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
+           ===================================================== */
+
+        /* Optimierung für Bildschirme kleiner als 1100px */
+        @media (max-width: 1099px) {
+            .musik-hero-img {
+                object-fit: cover !important;
+                object-position: center center !important;
+            }
+        }
+
+        @media (max-width: 900px) {
+            #musik-page { padding: 40px 25px 90px !important; }
+            .flyer-layer-inner { padding: 0 25px; }
+
+            .musik-section { margin-bottom: 90px !important; }
+
+            #musik-page > .musik-section:not(:first-child)::after {
+                top: -45px;
+            }
+
+            .musik-two-column, .musik-two-column.reverse {
+                display: flex !important;
+                flex-direction: column !important;
+                column-gap: 0 !important;
+                row-gap: 28px !important;
+            }
+
+            .musik-two-column .musik-info,
+            .musik-two-column.reverse .musik-info { order: 1 !important; }
+            .musik-two-column .musik-media,
+            .musik-two-column.reverse .musik-media { order: 2 !important; }
+
+            .musik-info { max-width: 100% !important; }
+        }
+
+        @media (max-width: 600px) {
+            #musik-page { padding: 30px 18px 70px !important; }
+            .flyer-layer-inner { padding: 0 18px; }
+
+            .musik-videos-grid { grid-template-columns: 1fr !important; gap: 15px !important; margin-bottom: 40px !important; }
+            .musik-info h2 { font-size: 40px !important; }
+            .musik-details li { gap: 12px !important; }
+            .musik-detail-name, .musik-detail-value { font-size: 11px !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="header-placeholder"></div>
+
+
+    <div class="scroll-sequence">
+        <div class="sticky-container">
+
+
+            <!-- TODO: Hero-Bild ersetzen (z.B. Foto von dir am Klavier) -->
+            <picture class="musik-hero-picture">
+                <source media="(max-width: 644px)" srcset="cards/card-big-musik.jpg">
+                <img src="cards/card-big-musik.jpg" alt="Klaviermusik Hero Bild" class="musik-hero-img">
+            </picture>
+
+            <div class="hero-overlay"></div>
+
+            <div class="flyer-layer">
+
+                <div class="flyer-layer-inner">
+                    <section class="musik-section themed-bg theme-starwars">
+                        <div class="musik-two-column flyer-column">
+
+                            <div class="musik-media">
+                                <!-- TODO: YouTube-Embed-Link von Video 1 einsetzen -->
+                                <div class="musik-video">
+                                    <iframe src="https://www.youtube.com/embed/RECdpPv4btI" title="Klaviervideo 1"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
+                            </div>
+
+                            <div class="musik-info">
+                                <span class="musik-info-label">01 / Piano </span>
+                                <h2 class="gradient-title">THE FORCE THEME - STAR WARS</h2>
+                                <p class="musik-info-description">
+                            
+                                </p>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <main id="musik-page">
+
+        <section class="musik-section themed-bg theme-interstellar">
+            <div class="musik-two-column reverse">
+                <div class="musik-info">
+                    <span class="musik-info-label">02 / Piano </span>
+                    <h2 class="gradient-title">INTERSTELLAR</h2>
+                    <p class="musik-info-description">
+                    
+                    </p>
+                </div>
+                <div class="musik-media">
+                    <!-- TODO: YouTube-Embed-Link von Video 2 einsetzen -->
+                    <div class="musik-video">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Klaviervideo 2"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="musik-section themed-bg theme-pirates">
+            <div class="musik-two-column">
+                <div class="musik-media">
+                    <!-- TODO: YouTube-Embed-Link von Video 3 einsetzen -->
+                    <div class="musik-video">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Klaviervideo 3"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="musik-info">
+                    <span class="musik-info-label">03 / Piano </span>
+                    <h2 class="gradient-title">PIRATES OF THE CARIBBEAN</h2>
+                    <p class="musik-info-description">
+                        
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="musik-section">
+            <div class="musik-videos-grid">
+                <!-- TODO: Weitere Klaviervideos einsetzen (Grid lässt sich um beliebig viele erweitern) -->
+                <div class="musik-video-item">
+                    <div class="musik-video">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_4" title="Klaviervideo 4"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <span>Titel Video 4</span>
+                </div>
+                <div class="musik-video-item">
+                    <div class="musik-video">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_5" title="Klaviervideo 5"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <span>Titel Video 5</span>
+                </div>
+                <div class="musik-video-item">
+                    <div class="musik-video">
+                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_6" title="Klaviervideo 6"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <span>Titel Video 6</span>
+                </div>
+            </div>
+            <div class="musik-videos-info">
+                <span class="musik-info-label">04 / Weitere Aufnahmen</span>
+                <h2>Mehr Klaviervideos</h2>
+                <p class="musik-info-description">
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+
+    <div id="footer-placeholder"></div>
+
+    <script src="header.js"></script>
+
+
+    <script>
+        document.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            const windowH = window.innerHeight;
+
+            const overlay = document.querySelector('.hero-overlay');
+            const flyerLayer = document.querySelector('.flyer-layer');
+
+            // 1. Fade ins Dunkle
+            let fadeProgress = scrollY / (windowH * 0.7);
+            if (fadeProgress > 1) fadeProgress = 1;
+            if (fadeProgress < 0) fadeProgress = 0;
+
+            if (overlay) {
+                overlay.style.opacity = fadeProgress;
+            }
+
+            // 2. Parallax Reveal der ersten Video-Sektion
+            let slideStart = windowH * 0.3;
+            let slideEnd = windowH * 1.2;
+            let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
+
+            if (slideProgress > 1) slideProgress = 1;
+            if (slideProgress < 0) slideProgress = 0;
+
+            let easeOut = 1 - Math.pow(1 - slideProgress, 3);
+
+            if (flyerLayer) {
+                let yOffset = 100 - (easeOut * 100);
+                flyerLayer.style.transform = `translateY(${yOffset}vh)`;
+                flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            }
+        });
+    </script>
+
+</body>
+</html>
