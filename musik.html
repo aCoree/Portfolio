@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Musik – Klaviervideos</title>
 
@@ -26,7 +26,7 @@
         html {
             visibility: visible !important;
             opacity: 1 !important;
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -39,27 +39,11 @@
         }
 
         /* =====================================================
-        SCROLL-ANIMATION-BEREICH (HERO)
-        Das Klavierbild bleibt fix stehen (position: fixed – bewegt
-        sich NIE) und wird beim Runterscrollen dunkler, bevor es
-        weich ausblendet.
-
-        WICHTIG FÜR SPÄTERE ANPASSUNGEN:
-        Die einzige Zahl, die du hier ändern musst, um zu steuern
-        WANN die Liste erscheint, ist die "height" von
-        .scroll-sequence weiter unten. Alles andere (wann das Bild
-        dunkel wird, wann es verschwindet) berechnet sich im
-        JavaScript automatisch als PROZENTSATZ davon – die Werte
-        verschieben sich also immer automatisch mit und es kann nie
-        mehr zu einem "Sprung" oder einer sichtbaren Kante kommen,
-        egal welche Zahl du hier einträgst.
-        - Kleinere Zahl = Liste erscheint früher
-        - Größere Zahl = Liste erscheint später / mehr Zeit für den
-          Dunkel-Effekt
+        STICKY HERO BEREICH (FIXED BILD DUNKEL-FADE)
         ===================================================== */
         .scroll-sequence {
             position: relative;
-            height: 170vh;
+            height: 150vh;
             width: 100%;
             background-color: #0d0d0d;
         }
@@ -74,6 +58,7 @@
             overflow: hidden;
             background-color: #0d0d0d;
             z-index: 1;
+            will-change: opacity;
         }
 
         .musik-hero-picture {
@@ -96,21 +81,12 @@
             margin: 0 !important;
         }
 
-        /* Permanente, gleichmäßige Vignette: gleicht ungleichmäßige
-           Belichtung im Originalfoto aus (z.B. links dunkler / rechts
-           heller) und sorgt dafür, dass ALLE Ränder – oben, unten,
-           links, rechts – gleich weich ins Schwarz übergehen. Das ist
-           IMMER aktiv, unabhängig vom Scroll-Fade darunter. */
         .hero-vignette {
             position: absolute;
             inset: 0;
             z-index: 2;
             pointer-events: none;
             background:
-                /* Gleicht die HELLERE rechte Bildhälfte (weiße Tasten) an
-                   die dunklere linke Hälfte (schwarze Tasten) an – mit
-                   feinen Zwischenstufen für einen weichen, stufenlosen
-                   Verlauf statt eines harten Übergangs. */
                 linear-gradient(115deg,
                     rgba(13, 13, 13, 0) 0%,
                     rgba(13, 13, 13, 0.06) 20%,
@@ -131,10 +107,6 @@
                 rgba(13, 13, 13, 0.1);
         }
 
-        /* Scroll-abhängiger Dunkel-Fade: legt sich gleichmäßig über das
-           GESAMTE Bild (inkl. Vignette), macht es beim Scrollen also
-           komplett und gleichmäßig dunkler – keine ungleichen Stellen
-           mehr sichtbar, da hier flächendeckend Schwarz draufgelegt wird. */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -145,10 +117,48 @@
             opacity: 0;
             z-index: 3;
             pointer-events: none;
+            will-change: opacity;
+        }
+
+        /* Scroll-Button auf dem Hero-Bild */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .hero-scroll-indicator:hover {
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .hero-scroll-indicator i {
+            font-size: 13px;
+            animation: bounceDown 2s infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(5px); }
+            60% { transform: translateY(2px); }
         }
 
         /* =====================================================
-        HAUPT-CONTAINER (alle Songs – inkl. The Force Theme)
+        HAUPT-CONTAINER
         ===================================================== */
         #musik-page {
             display: block !important;
@@ -160,7 +170,7 @@
             width: 100% !important;
             max-width: 1400px !important;
             margin: 0 auto !important;
-            padding: 60px 40px 130px !important;
+            padding: 20px 40px 130px !important;
             box-sizing: border-box !important;
         }
 
@@ -171,8 +181,111 @@
         }
 
         /* =====================================================
+        EINZELNER INTRO-BEREICH (STANDALONE)
+        ===================================================== */
+        .musik-intro-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 100px);
+            max-width: 820px !important;
+            margin: 0 auto 140px auto !important;
+            text-align: center;
+            padding: 40px 0;
+            box-sizing: border-box;
+            scroll-margin-top: 60px;
+        }
+
+        .musik-intro-section .musik-info-label {
+            display: inline-block !important;
+            margin-bottom: 16px !important;
+        }
+
+        .musik-intro-section h1 {
+            font-size: clamp(34px, 4.5vw, 56px) !important;
+            font-weight: 900 !important;
+            line-height: 1.1 !important;
+            letter-spacing: -0.03em !important;
+            margin: 0 0 28px 0 !important;
+            background: linear-gradient(90deg, #ffffff, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .musik-intro-text {
+            font-size: 17px !important;
+            line-height: 1.8 !important;
+            opacity: 0.75 !important;
+            margin-bottom: 20px !important;
+        }
+
+        .musik-intro-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 100%;
+            margin-top: 45px;
+            padding-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .intro-highlight-item {
+            text-align: center;
+        }
+
+        .intro-highlight-title {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
+            margin-bottom: 6px;
+        }
+
+        .intro-highlight-value {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* Indicator vom Intro weiter zu den Videos */
+        .intro-scroll-indicator {
+            margin-top: 95px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 9px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            user-select: none;
+        }
+
+        .intro-scroll-indicator:hover {
+            color: #ffffff;
+            transform: translateY(3px);
+        }
+
+        .intro-scroll-indicator i {
+            font-size: 13px;
+            animation: bounceDown 2s infinite;
+        }
+
+        /* =====================================================
         VIDEO-BEREICH
         ===================================================== */
+        #musik-videos {
+            display: block;
+            scroll-margin-top: 40px;
+        }
+
         .musik-section {
             display: block !important;
             visibility: visible !important;
@@ -181,31 +294,30 @@
             padding: 0 !important;
         }
 
-        #musik-page>.musik-section:last-child {
+        #musik-page #musik-videos .musik-section:last-child {
             margin-bottom: 0 !important;
         }
 
         /* =====================================================
-        REVEAL-ANIMATION (kommt von unten nach oben rein)
-        Gilt jetzt für ALLE Songs gleichermassen –
-        The Force Theme, Interstellar und Pirates verhalten
-        sich exakt identisch, damit nichts "abgetrennt" wirkt.
+        REVEAL-ANIMATION
         ===================================================== */
-        .musik-section.reveal {
+        .musik-section.reveal,
+        .musik-intro-section.reveal {
             opacity: 0;
-            transform: translateY(90px);
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(70px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform;
         }
 
-        .musik-section.reveal.in-view {
+        .musik-section.reveal.in-view,
+        .musik-intro-section.reveal.in-view {
             opacity: 1;
             transform: translateY(0);
         }
 
         /* =====================================================
-        THEMATISCHE HINTERGRUND-BLOBS (verschwommen, cinematic)
+        THEMATISCHE HINTERGRUND-BLOBS
         ===================================================== */
         .musik-section.themed-bg {
             position: relative !important;
@@ -224,7 +336,6 @@
             transition: opacity 0.6s ease;
         }
 
-        /* Star Wars (The Force Theme) – blau / hellblau / grünlich, Lichtschwert-mässig */
         .theme-starwars::before {
             background:
                 radial-gradient(circle at 25% 30%, rgba(61, 220, 255, 0.9) 0%, transparent 55%),
@@ -232,7 +343,6 @@
                 radial-gradient(circle at 50% 50%, rgba(20, 90, 160, 0.6) 0%, transparent 70%);
         }
 
-        /* Interstellar – violett */
         .theme-interstellar::before {
             background:
                 radial-gradient(circle at 70% 35%, rgba(176, 107, 255, 0.85) 0%, transparent 55%),
@@ -240,7 +350,6 @@
                 radial-gradient(circle at 50% 50%, rgba(60, 20, 100, 0.6) 0%, transparent 70%);
         }
 
-        /* Pirates of the Caribbean – orange / rot */
         .theme-pirates::before {
             background:
                 radial-gradient(circle at 35% 40%, rgba(255, 145, 71, 0.85) 0%, transparent 55%),
@@ -249,7 +358,7 @@
         }
 
         /* =====================================================
-        ANIMIERTE GRADIENT-TITEL
+        GRADIENT-TITEL & LAYOUT
         ===================================================== */
         .musik-info h2.gradient-title {
             background-size: 200% auto !important;
@@ -277,9 +386,6 @@
             background-image: linear-gradient(90deg, #ff9147, #ff3b1f, #ffd08a, #ff9147) !important;
         }
 
-        /* =====================================================
-        2-SPALTEN LAYOUT
-        ===================================================== */
         .musik-two-column {
             display: grid !important;
             grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
@@ -295,9 +401,6 @@
             grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
         }
 
-        /* =====================================================
-        MEDIA CONTAINER
-        ===================================================== */
         .musik-media {
             display: block !important;
             visibility: visible !important;
@@ -319,9 +422,6 @@
             padding: 0 !important;
         }
 
-        /* =====================================================
-        INFO-BEREICH
-        ===================================================== */
         .musik-info {
             display: block !important;
             visibility: visible !important;
@@ -374,56 +474,6 @@
             color: inherit !important;
         }
 
-        /* =====================================================
-        DETAILS & VIDEO & GRID
-        ===================================================== */
-        .musik-details {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            margin: 25px 0 0 0 !important;
-            padding: 0 !important;
-            list-style: none !important;
-        }
-
-        .musik-details li {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: flex-start !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 13px 0 !important;
-            border-top: 1px solid currentColor !important;
-            color: inherit !important;
-        }
-
-        .musik-details li:last-child {
-            border-bottom: 1px solid currentColor !important;
-        }
-
-        .musik-detail-name {
-            display: block !important;
-            font-family: inherit !important;
-            font-size: 12px !important;
-            font-weight: 800 !important;
-            line-height: 1.4 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.08em !important;
-            opacity: 0.55 !important;
-        }
-
-        .musik-detail-value {
-            display: block !important;
-            max-width: 55% !important;
-            font-family: inherit !important;
-            font-size: 14px !important;
-            font-weight: 600 !important;
-            line-height: 1.4 !important;
-            text-align: right !important;
-            color: inherit !important;
-        }
-
         .musik-video {
             position: relative !important;
             display: block !important;
@@ -450,48 +500,8 @@
             opacity: 1 !important;
         }
 
-        .musik-videos-grid {
-            display: grid !important;
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            gap: 22px !important;
-            width: 100% !important;
-            margin: 0 0 55px 0 !important;
-            padding: 0 !important;
-        }
-
-        .musik-video-item {
-            display: block !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: visible !important;
-        }
-
-        .musik-video-item .musik-video {
-            border-radius: 8px !important;
-        }
-
-        .musik-video-item span {
-            display: block !important;
-            margin-top: 14px !important;
-            font-family: inherit !important;
-            font-size: 15px !important;
-            font-weight: 600 !important;
-            opacity: 0.8 !important;
-        }
-
-        .musik-videos-info {
-            display: block !important;
-            width: 100% !important;
-            max-width: 700px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-
         /* =====================================================
-        RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
+        RESPONSIVE
         ===================================================== */
         @media (max-width: 1099px) {
             .musik-hero-img {
@@ -502,11 +512,17 @@
 
         @media (max-width: 900px) {
             #musik-page {
-                padding: 40px 25px 90px !important;
+                padding: 20px 25px 90px !important;
             }
 
             .musik-section {
                 margin-bottom: 90px !important;
+            }
+
+            .musik-intro-section {
+                min-height: auto;
+                margin-bottom: 90px !important;
+                padding: 20px 0;
             }
 
             .musik-two-column,
@@ -534,32 +550,22 @@
 
         @media (max-width: 600px) {
             #musik-page {
-                padding: 30px 18px 70px !important;
+                padding: 10px 18px 70px !important;
             }
 
-            .musik-videos-grid {
-                grid-template-columns: 1fr !important;
-                gap: 15px !important;
-                margin-bottom: 40px !important;
+            .musik-intro-highlights {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .musik-info h2 {
-                font-size: 40px !important;
-            }
-
-            .musik-details li {
-                gap: 12px !important;
-            }
-
-            .musik-detail-name,
-            .musik-detail-value {
-                font-size: 11px !important;
+                font-size: 38px !important;
             }
         }
 
-        /* Reduzierte Bewegung für Nutzer, die das bevorzugen */
         @media (prefers-reduced-motion: reduce) {
-            .musik-section.reveal {
+            .musik-section.reveal,
+            .musik-intro-section.reveal {
                 opacity: 1 !important;
                 transform: none !important;
                 transition: none !important;
@@ -572,9 +578,9 @@
 
     <div id="header-placeholder"></div>
 
+    <!-- HERO BEREICH (STICKY / FIXED OVERLAY) -->
     <div class="scroll-sequence">
         <div class="sticky-container">
-            <!-- TODO: Hero-Bild ersetzen (z.B. Foto von dir am Klavier) -->
             <picture class="musik-hero-picture">
                 <source media="(max-width: 644px)" srcset="cards/card-big-musik.jpg">
                 <img src="cards/card-big-musik.jpg" alt="Klaviermusik Hero Bild" class="musik-hero-img">
@@ -582,67 +588,109 @@
 
             <div class="hero-vignette"></div>
             <div class="hero-overlay"></div>
+
+            <div class="hero-scroll-indicator" onclick="scrollToIntro()">
+                <span>Scrollen</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
         </div>
     </div>
 
+    <!-- MAIN CONTENT -->
     <main id="musik-page">
 
-        <section class="musik-section themed-bg theme-starwars reveal">
-            <div class="musik-two-column">
-                <div class="musik-media">
-                    <!-- TODO: YouTube-Embed-Link von Video 1 einsetzen -->
-                    <div class="musik-video">
-                        <iframe src="https://www.youtube.com/embed/RECdpPv4btI" title="Klaviervideo 1"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
+        <!-- 1. INTRO-BEREICH (ALLEINE AUF EINER SEITE) -->
+        <section class="musik-intro-section reveal" id="musik-intro">
+            <span class="musik-info-label"> Meine Musik</span>
+            <h1>LEIDENSCHAFT AM KLAVIER</h1>
+            
+            <p class="musik-intro-text">
+            Klavier spielen ist für mich der beste Weg, Emotionen und Geschichten ohne Worte auszudrücken. Ich habe vor einigen Jahren angefangen, mir das Klavierspielen selbst beizubringen – getrieben von der Faszination für epische Film-Soundtracks wie "Interstellar" und moderne Klavierlieder.
+            </p>
+            <p class="musik-intro-text">
+                Meine Videos nehme ich mit viel Liebe zum Detail auf: Vom Ausarbeiten der Arrangements bis hin zum visuellen Setup versuche ich, jedem Stück seinen eigenen, passenden Vibe zu verleihen. Hier findest du eine Auswahl meiner liebsten Cover.
+            </p>
+
+            <div class="musik-intro-highlights">
+                <div class="intro-highlight-item">
+                    <span class="intro-highlight-title">Am Klavier seit</span>
+                    <span class="intro-highlight-value">2020</span>
                 </div>
-                <div class="musik-info">
-                    <span class="musik-info-label">01 / Piano </span>
-                    <h2 class="gradient-title">THE FORCE THEME - STAR WARS</h2>
-                    <p class="musik-info-description"></p>
+                <div class="intro-highlight-item">
+                    <span class="intro-highlight-title">Fokus</span>
+                    <span class="intro-highlight-value">Film-Soundtracks</span>
                 </div>
+                <div class="intro-highlight-item">
+                    <span class="intro-highlight-title">Setup</span>
+                    <span class="intro-highlight-value">Burger & Jacobi Klavier</span>
+                </div>
+            </div>
+
+            <!-- BUTTON ZU DEN VIDEOS -->
+            <div class="intro-scroll-indicator" onclick="scrollToVideos()">
+                <span>Zu den Videos</span>
+                <i class="fa-solid fa-chevron-down"></i>
             </div>
         </section>
 
-        <section class="musik-section themed-bg theme-interstellar reveal">
-            <div class="musik-two-column reverse">
-                <div class="musik-info">
-                    <span class="musik-info-label">02 / Piano </span>
-                    <h2 class="gradient-title">INTERSTELLAR</h2>
-                    <p class="musik-info-description"></p>
-                </div>
-                <div class="musik-media">
-                    <!-- TODO: YouTube-Embed-Link von Video 2 einsetzen -->
-                    <div class="musik-video">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Klaviervideo 2"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- 2. BEREICH: VIDEOS -->
+        <div id="musik-videos">
 
-        <section class="musik-section themed-bg theme-pirates reveal">
-            <div class="musik-two-column">
-                <div class="musik-media">
-                    <!-- TODO: YouTube-Embed-Link von Video 3 einsetzen -->
-                    <div class="musik-video">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Klaviervideo 3"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+            <section class="musik-section themed-bg theme-starwars reveal">
+                <div class="musik-two-column">
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/RECdpPv4btI" title="Klaviervideo 1"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="musik-info">
+                        <span class="musik-info-label">01 / Piano </span>
+                        <h2 class="gradient-title">THE FORCE THEME - STAR WARS</h2>
+                        <p class="musik-info-description"></p>
                     </div>
                 </div>
-                <div class="musik-info">
-                    <span class="musik-info-label">03 / Piano </span>
-                    <h2 class="gradient-title">PIRATES OF THE CARIBBEAN</h2>
-                    <p class="musik-info-description"></p>
+            </section>
+
+            <section class="musik-section themed-bg theme-interstellar reveal">
+                <div class="musik-two-column reverse">
+                    <div class="musik-info">
+                        <span class="musik-info-label">02 / Piano </span>
+                        <h2 class="gradient-title">INTERSTELLAR</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Klaviervideo 2"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <section class="musik-section themed-bg theme-pirates reveal">
+                <div class="musik-two-column">
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Klaviervideo 3"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="musik-info">
+                        <span class="musik-info-label">03 / Piano </span>
+                        <h2 class="gradient-title">PIRATES OF THE CARIBBEAN</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
 
     </main>
 
@@ -652,90 +700,36 @@
 
     <script>
         // ==========================================================
-        // HERO-EFFEKT: sauber & selbst-synchronisierend
-        //
-        // Statt fixer Pixel-/vh-Werte, die man bei jeder Änderung von
-        // Hand aufeinander abstimmen muss, arbeitet dieser Code mit
-        // einem einzigen Fortschritts-Wert (0 -> 1), der sich aus der
-        // TATSÄCHLICHEN Höhe von .scroll-sequence berechnet. Das
-        // bedeutet: egal welche "height" du oben bei .scroll-sequence
-        // einstellst – Verdunkeln und Ausblenden passen sich IMMER
-        // automatisch proportional an. Kein manuelles Nachjustieren
-        // mehr nötig, kein Sprung, keine sichtbare Kante mehr möglich.
+        // HERO STICKY FADE-EFFEKT (Bild bleibt fixed & dunkelt ab)
         // ==========================================================
         const heroContainer = document.querySelector('.sticky-container');
         const heroOverlay = document.querySelector('.hero-overlay');
         const scrollSequence = document.querySelector('.scroll-sequence');
 
-        // Ab hier: bei Bedarf anpassen (als Anteil 0–1 der gesamten
-        // Scroll-Sequence-Höhe).
-        // DARK_END     = Punkt, an dem das Bild komplett schwarz ist
-        // VANISH_START = Punkt, an dem das Bild ZUSÄTZLICH anfängt zu
-        //                verschwinden (bewusst VOR DARK_END, dadurch
-        //                überlappen sich "dunkler werden" und
-        //                "verschwinden" – genau wie im urbnvibe-Vorbild.
-        //                Das wirkt smoother/weniger "gestuft", weil nicht
-        //                erst das eine komplett fertig sein muss, bevor
-        //                das nächste beginnt.)
-        // VANISH_END   = Punkt, an dem das Bild komplett unsichtbar ist
-        // (muss immer < 1 sein, damit vor Erscheinen der Liste noch
-        // Puffer bleibt – 0.9 lässt bewusst ca. 10% Sicherheitsabstand,
-        // damit die Liste spürbar schneller erscheint als vorher)
-        const DARK_END = 0.5;
-        const VANISH_START = 0.22;
-        const VANISH_END = 0.9;
-
-        // Sanfte Ease-Kurve statt linearem Verlauf – wirkt organischer
-        // und "cleaner" als eine 1:1 Kopplung an die Scroll-Position.
-        function smoothstep(edge0, edge1, x) {
-            let t = (x - edge0) / (edge1 - edge0);
-            if (t < 0) t = 0;
-            if (t > 1) t = 1;
-            return t * t * (3 - 2 * t);
-        }
-
-        let totalScrollRange = 1;
-
-        function measure() {
-            if (!scrollSequence) return;
-            // Strecke, während der der Hero-Bereich die volle Ansicht
-            // einnimmt, bevor die Liste von unten hereinkommt.
-            totalScrollRange = Math.max(
-                scrollSequence.offsetHeight - window.innerHeight,
-                1
-            );
-        }
-
         function updateHero() {
-            const progress = window.scrollY / totalScrollRange;
+            if (!scrollSequence || !heroContainer || !heroOverlay) return;
 
-            const darkProgress = smoothstep(0, DARK_END, progress);
-            if (heroOverlay) {
-                heroOverlay.style.opacity = darkProgress;
-            }
+            const totalScrollRange = Math.max(scrollSequence.offsetHeight - window.innerHeight, 1);
+            const progress = Math.min(Math.max(window.scrollY / totalScrollRange, 0), 1);
 
-            const vanishProgress = smoothstep(VANISH_START, VANISH_END, progress);
-            const heroOpacity = 1 - vanishProgress;
+            // Overlay wird dunkler beim Scrollen
+            heroOverlay.style.opacity = progress * 1.15;
 
-            if (heroContainer) {
-                heroContainer.style.opacity = heroOpacity;
-                // Komplett unsichtbar: auch aus dem Rendering-/
-                // Interaktionsfluss nehmen, damit garantiert nichts
-                // mehr durchschimmern oder Klicks abfangen kann.
-                if (heroOpacity <= 0) {
-                    heroContainer.style.visibility = 'hidden';
-                    heroContainer.style.pointerEvents = 'none';
-                } else {
-                    heroContainer.style.visibility = 'visible';
-                    heroContainer.style.pointerEvents = 'auto';
-                }
+            // Transparenz des Sticky-Containers sanft ausblenden
+            const fadeOut = Math.max((progress - 0.6) / 0.4, 0);
+            heroContainer.style.opacity = 1 - fadeOut;
+
+            if (progress >= 1) {
+                heroContainer.style.visibility = 'hidden';
+                heroContainer.style.pointerEvents = 'none';
+            } else {
+                heroContainer.style.visibility = 'visible';
+                heroContainer.style.pointerEvents = 'auto';
             }
         }
 
-        // requestAnimationFrame-Throttling: verhindert Ruckeln, da die
-        // Berechnung nie öfter als einmal pro Frame läuft.
         let tickScheduled = false;
-        function onScroll() {
+        window.addEventListener('scroll', () => {
             if (!tickScheduled) {
                 tickScheduled = true;
                 requestAnimationFrame(() => {
@@ -743,21 +737,51 @@
                     tickScheduled = false;
                 });
             }
+        }, { passive: true });
+
+        window.addEventListener('resize', updateHero);
+        updateHero();
+
+        // ==========================================================
+        // SMOOTH SCROLL NAVIGATION & SANFTER AUTO-TRIGGER
+        // ==========================================================
+        function scrollToIntro() {
+            const intro = document.getElementById('musik-intro');
+            if (intro) {
+                const isMobile = window.matchMedia('(max-width: 900px)').matches;
+                intro.scrollIntoView({ behavior: 'smooth', block: isMobile ? 'center' : 'start' });
+            }
         }
 
-        measure();
-        updateHero();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', () => {
-            measure();
-            updateHero();
-        });
+        function scrollToVideos() {
+            const videos = document.getElementById('musik-videos');
+            if (videos) {
+                videos.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-        // 2. Alle Songs (The Force Theme, Interstellar, Pirates) kommen
-        // beim Reinscrollen einheitlich von unten nach oben rein –
-        // exakt der gleiche Effekt für jeden einzelnen Song, damit
-        // nichts wie ein eigenes, abgetrenntes Element wirkt.
-        const revealSections = document.querySelectorAll('.musik-section.reveal');
+        // Sanfter Trigger: Ein kurzer Scroll nach unten zieht clean zum Intro
+        let isAutoScrolling = false;
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            const sequenceRange = scrollSequence ? scrollSequence.offsetHeight - window.innerHeight : 400;
+
+            if (!isAutoScrolling && currentScrollY > 15 && currentScrollY < sequenceRange * 0.5 && currentScrollY > lastScrollY) {
+                isAutoScrolling = true;
+                scrollToIntro();
+                setTimeout(() => {
+                    isAutoScrolling = false;
+                }, 900);
+            }
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+
+        // ==========================================================
+        // REVEAL OBSERVER FOR SECTIONS
+        // ==========================================================
+        const revealSections = document.querySelectorAll('.musik-section.reveal, .musik-intro-section.reveal');
 
         if ('IntersectionObserver' in window) {
             const revealObserver = new IntersectionObserver((entries) => {
@@ -774,7 +798,6 @@
 
             revealSections.forEach((section) => revealObserver.observe(section));
         } else {
-            // Fallback ohne IntersectionObserver: einfach direkt anzeigen
             revealSections.forEach((section) => section.classList.add('in-view'));
         }
     </script>

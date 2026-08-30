@@ -91,6 +91,21 @@
             z-index: 2;
         }
 
+        /* Dezenter, permanenter Schatten unten im Video (macht den
+           Scroll-Button besser sichtbar, unabhängig vom Scroll-Fade) */
+        .hero-bottom-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                rgba(13, 13, 13, 0) 0%,
+                rgba(13, 13, 13, 1) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
         /* Container für die erste Sektion */
         .flyer-layer {
             position: absolute;
@@ -111,6 +126,43 @@
             max-width: 1400px;
             padding: 0 40px;
             box-sizing: border-box;
+        }
+
+        /* Scroll-Button auf dem Hero-Video (identisch zu musik.html) */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .hero-scroll-indicator:hover {
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .hero-scroll-indicator i {
+            font-size: 13px;
+            animation: bounceDown 2s infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(5px); }
+            60% { transform: translateY(2px); }
         }
 
 
@@ -347,7 +399,14 @@
                 Ihr Browser unterstützt kein Video.
             </video>
 
+            <div class="hero-bottom-fade"></div>
+
             <div class="hero-overlay"></div>
+
+            <div class="hero-scroll-indicator" onclick="scrollPastHero()">
+                <span>Scrollen</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
 
             <div class="flyer-layer">
                 <div class="flyer-layer-inner">
@@ -465,12 +524,23 @@
 
     <!-- SCROLL ANIMATION SCRIPT -->
     <script>
+        // Klick auf "Scrollen" -> scrollt genau so weit, bis Sektion 1
+        // (das Parallax-Reveal unten) vollständig eingeblendet ist.
+        // Nutzt bewusst denselben "slideEnd"-Wert wie die Reveal-Animation,
+        // damit Button-Klick & normales Scrollen exakt zusammenpassen.
+        function scrollPastHero() {
+            const windowH = window.innerHeight;
+            const slideEnd = windowH * 1.2;
+            window.scrollTo({ top: slideEnd, behavior: 'smooth' });
+        }
+
         document.addEventListener("scroll", () => {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
 
             const overlay = document.querySelector('.hero-overlay');
             const flyerLayer = document.querySelector('.flyer-layer');
+            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
 
             // 1. Fade ins Dunkle
             let fadeProgress = scrollY / (windowH * 0.7);
@@ -495,6 +565,16 @@
                 let yOffset = 100 - (easeOut * 100);
                 flyerLayer.style.transform = `translateY(${yOffset}vh)`;
                 flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            }
+
+            // 3. Scroll-Button ausblenden, sobald man zu scrollen beginnt
+            // (verhindert, dass er über der einblendenden Sektion 1 "schwebt")
+            if (scrollIndicator) {
+                let buttonFade = 1 - (scrollY / (windowH * 0.25));
+                if (buttonFade < 0) buttonFade = 0;
+                if (buttonFade > 1) buttonFade = 1;
+                scrollIndicator.style.opacity = buttonFade;
+                scrollIndicator.style.pointerEvents = buttonFade === 0 ? 'none' : 'auto';
             }
         });
     </script>

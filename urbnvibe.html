@@ -102,6 +102,21 @@ SCROLL-ANIMATION-BEREICH (HERO + INTRO TEXT)
             z-index: 2;
         }
 
+        /* Dezenter, permanenter Schatten unten im Hero-Bild (macht den
+           Scroll-Button besser sichtbar & wirkt hochwertiger) */
+        .hero-bottom-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                rgba(13, 13, 13, 0) 0%,
+                rgba(13, 13, 13, 1) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
         /* Container für den Text (kommt von unten hoch und zentriert sich) */
         .flyer-layer {
             position: absolute;
@@ -122,6 +137,70 @@ SCROLL-ANIMATION-BEREICH (HERO + INTRO TEXT)
             max-width: 1400px;
             padding: 0 40px;
             box-sizing: border-box;
+        }
+
+        /* Scroll-Button auf dem Hero-Bild (identisch zu musik.html / drone.html) */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .hero-scroll-indicator:hover {
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .hero-scroll-indicator i {
+            font-size: 13px;
+            animation: bounceDown 2s infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(5px); }
+            60% { transform: translateY(2px); }
+        }
+
+        /* Button innerhalb des Intro-Textes (identisch zu musik.html) */
+        .intro-scroll-indicator {
+            margin-top: 55px;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 9px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+            user-select: none;
+        }
+
+        .intro-scroll-indicator:hover {
+            color: #ffffff;
+            transform: translateY(3px);
+        }
+
+        .intro-scroll-indicator i {
+            font-size: 13px;
+            animation: bounceDown 2s infinite;
         }
 
 
@@ -578,7 +657,15 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
                 <source media="(max-width: 644px)" srcset="cards/card-small-urbnvibe.jpg">
                 <img src="cards/card-big-urbnvibe.jpg" alt="URBNVIBE Hero Image" class="urbnvibe-hero-img">
             </picture>
+            <div class="hero-bottom-fade"></div>
+
             <div class="hero-overlay"></div>
+
+            <div class="hero-scroll-indicator" onclick="scrollPastHero()">
+                <span>Scrollen</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+
             <div class="flyer-layer">
                 <div class="flyer-layer-inner">
 
@@ -590,14 +677,11 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
                             designt wie z.B. ein Flyer, ein Logo, eine Social-Media-Präsenz und ein Video. Ich habe
                             dieses Projekt duchs ganze Schuljahr geführt. Da wir oft mit Adobe Programmen gearbeitet
                             haben, konnte ich viele neue Erfahrungen im Bereich Deisin und Social Media sammeln.
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            <br><br>
-                            Scrollen um mehr zu erfahren.
                         </p>
+                        <div class="intro-scroll-indicator" onclick="scrollToProjects()">
+                            <span>Zu den Projekten</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
                     </div>
 
                 </div>
@@ -704,12 +788,29 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
 
 
     <script>
+        // Klick auf "Scrollen" (Hero) -> scrollt bis der Intro-Text
+        // vollständig eingeblendet ist (identische Logik wie drone.html)
+        function scrollPastHero() {
+            const windowH = window.innerHeight;
+            const slideEnd = windowH * 1.2;
+            window.scrollTo({ top: slideEnd, behavior: 'smooth' });
+        }
+
+        // Klick auf "Zu den Projekten" -> scrollt zum Hauptinhalt nach der Scroll-Sequenz
+        function scrollToProjects() {
+            const page = document.getElementById('urbnvibe-page');
+            if (page) {
+                page.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
         document.addEventListener("scroll", () => {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
 
             const overlay = document.querySelector('.hero-overlay');
             const flyerLayer = document.querySelector('.flyer-layer');
+            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
 
             // 1. Fade ins Dunkle
             let fadeProgress = scrollY / (windowH * 0.7);
@@ -732,6 +833,15 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
                 let yOffset = 100 - (easeOut * 100);
                 flyerLayer.style.transform = `translateY(${yOffset}vh)`;
                 flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            }
+
+            // 3. Hero-Scroll-Button ausblenden, sobald man zu scrollen beginnt
+            if (scrollIndicator) {
+                let buttonFade = 1 - (scrollY / (windowH * 0.25));
+                if (buttonFade < 0) buttonFade = 0;
+                if (buttonFade > 1) buttonFade = 1;
+                scrollIndicator.style.opacity = buttonFade;
+                scrollIndicator.style.pointerEvents = buttonFade === 0 ? 'none' : 'auto';
             }
         });
     </script>
