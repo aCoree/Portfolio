@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Musik – Klaviervideos</title>
-
-    <link rel="preload" as="image" href="cards/card-big-musik.jpg">
+    <title>Drohnen Videos | Aurelio Zingarello</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -15,19 +13,22 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
 
     <link rel="manifest" href="/site.webmanifest">
+
     <link rel="stylesheet" href="style.css?v=1.1">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
 
     <style>
         /* =====================================================
            SICHERHEIT & BASIS
            ===================================================== */
+
         html {
             visibility: visible !important;
             opacity: 1 !important;
             scroll-behavior: auto;
-            overflow-x: clip;
         }
 
         body {
@@ -37,12 +38,13 @@
             padding: 0;
             background-color: #0d0d0d;
             color: #ffffff;
-            overflow-x: clip; /* Verhindert seitliches Scrollen ohne position:sticky zu brechen */
         }
 
+
         /* =====================================================
-           SCROLL-ANIMATION-BEREICH (HERO + ERSTER SONG)
+           SCROLL-ANIMATION-BEREICH (HERO + SEKTION 01)
            ===================================================== */
+
         .scroll-sequence {
             position: relative;
             height: 250vh;
@@ -61,51 +63,20 @@
             background-color: #0d0d0d;
         }
 
-        .musik-hero-picture {
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .musik-hero-img {
+        /* Hero Background Video */
+        .urbnvibe-hero-video {
             display: block !important;
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
             object-position: center !important;
-            border-radius: 0 !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 1 !important;
+            border: 0 !important;
             margin: 0 !important;
-        }
-
-        /* Vignette für gleichmässige Abdunkelung an den Rändern */
-        .hero-vignette {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            pointer-events: none;
-            background:
-                linear-gradient(115deg,
-                    rgba(13, 13, 13, 0) 0%,
-                    rgba(13, 13, 13, 0.06) 20%,
-                    rgba(13, 13, 13, 0.16) 40%,
-                    rgba(13, 13, 13, 0.32) 60%,
-                    rgba(13, 13, 13, 0.48) 80%,
-                    rgba(13, 13, 13, 0.6) 100%),
-                radial-gradient(ellipse 130% 110% at 50% 42%,
-                    rgba(13, 13, 13, 0) 30%,
-                    rgba(13, 13, 13, 0.12) 55%,
-                    rgba(13, 13, 13, 0.3) 75%,
-                    rgba(13, 13, 13, 0.55) 100%),
-                linear-gradient(to bottom,
-                    rgba(13, 13, 13, 0) 45%,
-                    rgba(13, 13, 13, 0.15) 65%,
-                    rgba(13, 13, 13, 0.4) 82%,
-                    rgba(13, 13, 13, 0.85) 100%),
-                rgba(13, 13, 13, 0.1);
+            padding: 0 !important;
         }
 
         /* Overlay für den Dunkel-Fade */
@@ -118,10 +89,9 @@
             background-color: #0d0d0d;
             opacity: 0;
             z-index: 2;
-            pointer-events: none;
         }
 
-        /* Container für die erste Sektion (kommt von unten hoch) */
+        /* Container für die erste Sektion */
         .flyer-layer {
             position: absolute;
             top: 0;
@@ -143,10 +113,12 @@
             box-sizing: border-box;
         }
 
+
         /* =====================================================
-           HAUPT-CONTAINER (Rest der Songs)
+           HAUPT-CONTAINER (Rest der Seite)
            ===================================================== */
-        #musik-page {
+
+        #urbnvibe-page {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
@@ -160,16 +132,18 @@
             box-sizing: border-box !important;
         }
 
-        #musik-page *,
-        #musik-page *::before,
-        #musik-page *::after {
+        #urbnvibe-page *,
+        #urbnvibe-page *::before,
+        #urbnvibe-page *::after {
             box-sizing: border-box !important;
         }
 
+
         /* =====================================================
-           PROJEKT / VIDEO BEREICH
+           PROJEKT-BEREICH
            ===================================================== */
-        .musik-section {
+
+        .urbnvibe-section {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
@@ -178,101 +152,16 @@
             padding: 0 !important;
         }
 
-        .flyer-layer-inner .musik-section {
+        .flyer-layer-inner .urbnvibe-section {
             margin-bottom: 0 !important;
         }
 
-        #musik-page > .musik-section:last-child {
-            margin-bottom: 0 !important;
-        }
 
         /* =====================================================
-           REVEAL-ANIMATION FOR REST OF SECTIONS
+           2-SPALTEN LAYOUT (Z-PATTERN DESKTOP)
            ===================================================== */
-        .musik-section.reveal {
-            opacity: 0;
-            transform: translateY(90px);
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
 
-        .musik-section.reveal.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* =====================================================
-           THEMATISCHE HINTERGRUND-BLOBS & GRADIENTS
-           ===================================================== */
-        .musik-section.themed-bg {
-            position: relative !important;
-            isolation: isolate;
-        }
-
-        .musik-section.themed-bg::before {
-            content: "";
-            position: absolute;
-            inset: -12% 0; /* Begrenzt seitlichen Auswuchs auf Handys */
-            z-index: -1;
-            filter: blur(130px);
-            opacity: 0.4;
-            pointer-events: none;
-            border-radius: 50%;
-            transition: opacity 0.6s ease;
-        }
-
-        .theme-starwars::before {
-            background:
-                radial-gradient(circle at 25% 30%, rgba(61, 220, 255, 0.9) 0%, transparent 55%),
-                radial-gradient(circle at 75% 65%, rgba(41, 255, 176, 0.75) 0%, transparent 55%),
-                radial-gradient(circle at 50% 50%, rgba(20, 90, 160, 0.6) 0%, transparent 70%);
-        }
-
-        .theme-interstellar::before {
-            background:
-                radial-gradient(circle at 70% 35%, rgba(176, 107, 255, 0.85) 0%, transparent 55%),
-                radial-gradient(circle at 30% 70%, rgba(123, 47, 247, 0.7) 0%, transparent 55%),
-                radial-gradient(circle at 50% 50%, rgba(60, 20, 100, 0.6) 0%, transparent 70%);
-        }
-
-        .theme-pirates::before {
-            background:
-                radial-gradient(circle at 35% 40%, rgba(255, 145, 71, 0.85) 0%, transparent 55%),
-                radial-gradient(circle at 70% 70%, rgba(255, 59, 31, 0.75) 0%, transparent 55%),
-                radial-gradient(circle at 50% 50%, rgba(90, 15, 10, 0.6) 0%, transparent 70%);
-        }
-
-        .musik-info h2.gradient-title {
-            background-size: 200% auto !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            color: transparent !important;
-            -webkit-text-fill-color: transparent !important;
-            animation: gradientMove 7s ease-in-out infinite alternate;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        .theme-starwars .gradient-title {
-            background-image: linear-gradient(90deg, #3ddcff, #29ffb0, #8ff0ff, #3ddcff) !important;
-        }
-
-        .theme-interstellar .gradient-title {
-            background-image: linear-gradient(90deg, #b06bff, #7b2ff7, #d6b3ff, #b06bff) !important;
-        }
-
-        .theme-pirates .gradient-title {
-            background-image: linear-gradient(90deg, #ff9147, #ff3b1f, #ffd08a, #ff9147) !important;
-        }
-
-        /* =====================================================
-           2-SPALTEN LAYOUT
-           ===================================================== */
-        .musik-two-column {
+        .urbnvibe-two-column {
             display: grid !important;
             grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
             align-items: center !important;
@@ -283,14 +172,16 @@
             padding: 0 !important;
         }
 
-        .musik-two-column.reverse {
+        .urbnvibe-two-column.reverse {
             grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
         }
 
+
         /* =====================================================
-           MEDIA CONTAINER & VIDEO
+           MEDIA CONTAINER & VIDEO EMBEDS
            ===================================================== */
-        .musik-media {
+
+        .urbnvibe-media {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
@@ -302,7 +193,7 @@
             overflow: visible !important;
         }
 
-        .musik-video {
+        .urbnvibe-video {
             position: relative !important;
             display: block !important;
             width: 100% !important;
@@ -314,7 +205,7 @@
             border-radius: 12px !important;
         }
 
-        .musik-video iframe {
+        .urbnvibe-video iframe {
             position: absolute !important;
             display: block !important;
             top: 0 !important;
@@ -328,10 +219,12 @@
             opacity: 1 !important;
         }
 
+
         /* =====================================================
            INFO-BEREICH
            ===================================================== */
-        .musik-info {
+
+        .urbnvibe-info {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
@@ -341,7 +234,7 @@
             padding: 0 !important;
         }
 
-        .musik-info-label {
+        .urbnvibe-info-label {
             display: block !important;
             visibility: visible !important;
             opacity: 0.55 !important;
@@ -356,7 +249,7 @@
             color: inherit !important;
         }
 
-        .musik-info h2 {
+        .urbnvibe-info h2 {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
@@ -370,7 +263,7 @@
             color: inherit !important;
         }
 
-        .musik-info-description {
+        .urbnvibe-info-description {
             display: block !important;
             visibility: visible !important;
             opacity: 0.75 !important;
@@ -383,50 +276,58 @@
             color: inherit !important;
         }
 
+
         /* =====================================================
-           RESPONSIVE (TABLET & MOBILE)
+           RESPONSIVE (UNTER 900PX & MOBILE)
+           Erzwingt auf Mobile IMMER Titel/Text OBEN und Video UNTEN
            ===================================================== */
-        @media (max-width: 1099px) {
-            .musik-hero-img {
-                object-fit: cover !important;
-                object-position: center center !important;
-            }
-        }
 
         @media (max-width: 900px) {
-            #musik-page { padding: 40px 25px 90px !important; }
-            .flyer-layer-inner { padding: 0 25px; }
-
-            .musik-section { margin-bottom: 90px !important; }
-
-            .musik-two-column, .musik-two-column.reverse {
-                display: flex !important;
-                flex-direction: column !important;
-                column-gap: 0 !important;
-                row-gap: 28px !important;
+            #urbnvibe-page {
+                padding: 40px 25px 90px !important;
             }
 
-            .musik-two-column .musik-info,
-            .musik-two-column.reverse .musik-info { order: 1 !important; }
+            .flyer-layer-inner {
+                padding: 0 25px;
+            }
 
-            .musik-two-column .musik-media,
-            .musik-two-column.reverse .musik-media { order: 2 !important; }
+            .urbnvibe-section {
+                margin-bottom: 90px !important;
+            }
 
-            .musik-info { max-width: 100% !important; }
+            /* Grid zu Flex-Spalte umwandeln */
+            .urbnvibe-two-column,
+            .urbnvibe-two-column.reverse {
+                display: flex !important;
+                flex-direction: column !important;
+                row-gap: 35px !important;
+                column-gap: 0 !important;
+            }
+
+            /* Info (Titel & Text) IMMER an 1. Stelle anzeigen */
+            .urbnvibe-info {
+                order: 1 !important;
+                max-width: 100% !important;
+            }
+
+            /* Media (Video) IMMER an 2. Stelle (darunter) anzeigen */
+            .urbnvibe-media {
+                order: 2 !important;
+                width: 100% !important;
+            }
         }
 
         @media (max-width: 600px) {
-            #musik-page { padding: 30px 18px 70px !important; }
-            .flyer-layer-inner { padding: 0 18px; }
+            #urbnvibe-page {
+                padding: 30px 18px 70px !important;
+            }
 
-            .musik-info h2 { font-size: 40px !important; }
-        }
+            .flyer-layer-inner {
+                padding: 0 18px;
+            }
 
-        @media (prefers-reduced-motion: reduce) {
-            .musik-section.reveal {
-                opacity: 1 !important;
-                transform: none !important;
-                transition: none !important;
+            .urbnvibe-info h2 {
+                font-size: 40px !important;
             }
         }
     </style>
@@ -436,34 +337,42 @@
 
     <div id="header-placeholder"></div>
 
+    <!-- HERO & SCROLL SEQUENCE -->
     <div class="scroll-sequence">
         <div class="sticky-container">
-            
-            <picture class="musik-hero-picture">
-                <source media="(max-width: 644px)" srcset="cards/card-big-musik.jpg">
-                <img src="cards/card-big-musik.jpg" alt="Klaviermusik Hero Bild" class="musik-hero-img">
-            </picture>
 
-            <div class="hero-vignette"></div>
+            <!-- Fullscreen Background Video -->
+            <video class="urbnvibe-hero-video" autoplay loop muted playsinline>
+                <source src="dji-loop-h264.mp4" type="video/mp4">
+                Ihr Browser unterstützt kein Video.
+            </video>
+
             <div class="hero-overlay"></div>
 
             <div class="flyer-layer">
                 <div class="flyer-layer-inner">
-                    <section class="musik-section themed-bg theme-starwars">
-                        <div class="musik-two-column">
-                            <div class="musik-media">
-                                <div class="musik-video">
-                                    <iframe src="https://www.youtube.com/embed/RECdpPv4btI" title="Klaviervideo 1"
+                    <!-- VIDEO 1 (Desktop: Video links / Text rechts) -->
+                    <section class="urbnvibe-section">
+                        <div class="urbnvibe-two-column">
+
+                            <div class="urbnvibe-media">
+                                <div class="urbnvibe-video">
+                                    <iframe src="https://www.youtube.com/embed/pE6OSm0zISU" title="Drone Video 1"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                         allowfullscreen>
                                     </iframe>
                                 </div>
                             </div>
-                            <div class="musik-info">
-                                <span class="musik-info-label">01 / Piano </span>
-                                <h2 class="gradient-title">THE FORCE THEME - STAR WARS</h2>
-                                <p class="musik-info-description"></p>
+
+                            <div class="urbnvibe-info">
+                                <span class="urbnvibe-info-label">01 / Drohnen Videos</span>
+                                <h2>Münchenbuchsee - Schweiz </h2>
+                                <p class="urbnvibe-info-description">
+                                    Aufgenommen mit der DJI Air 3S – goldener Himmel, ruhige Momente und Schweizer
+                                    Schönheit aus der Vogelperspektive.
+                                </p>
                             </div>
+
                         </div>
                     </section>
                 </div>
@@ -472,18 +381,28 @@
         </div>
     </div>
 
-    <main id="musik-page">
 
-        <section class="musik-section themed-bg theme-interstellar reveal">
-            <div class="musik-two-column reverse">
-                <div class="musik-info">
-                    <span class="musik-info-label">02 / Piano </span>
-                    <h2 class="gradient-title">INTERSTELLAR</h2>
-                    <p class="musik-info-description"></p>
+    <!-- MAIN CONTENT AREA -->
+    <main id="urbnvibe-page">
+
+        <!-- VIDEO 2 (Desktop: Text links / Video rechts) -->
+        <section class="urbnvibe-section">
+            <div class="urbnvibe-two-column reverse">
+                <div class="urbnvibe-info">
+                    <span class="urbnvibe-info-label">02 / Drohnen Videos</span>
+                    <h2>Finsterhennen - Schweiz</h2>
+                    <p class="urbnvibe-info-description">
+                        Während der „Goldenen Stunde“ habe ich filmreife Drohnenaufnahmen der wunderschönen Landschaft
+                        von Finsterhennen eingefangen.
+                        Dieses Video zeigt die friedliche ländliche Umgebung aus der Vogelperspektive und hebt Natur,
+                        Licht und Atmosphäre hervor.
+                        Die Aufnahmen zeichnen sich durch sanfte Flugbewegungen aus, die ein ruhiges und fesselndes
+                        Erlebnis schaffen.
+                    </p>
                 </div>
-                <div class="musik-media">
-                    <div class="musik-video">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Klaviervideo 2"
+                <div class="urbnvibe-media">
+                    <div class="urbnvibe-video">
+                        <iframe src="https://www.youtube.com/embed/TpgiEzjr52s" title="Drone Video 2"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
@@ -492,30 +411,59 @@
             </div>
         </section>
 
-        <section class="musik-section themed-bg theme-pirates reveal">
-            <div class="musik-two-column">
-                <div class="musik-media">
-                    <div class="musik-video">
-                        <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Klaviervideo 3"
+
+        <!-- VIDEO 3 (Desktop: Video links / Text rechts) -->
+        <section class="urbnvibe-section">
+            <div class="urbnvibe-two-column">
+                <div class="urbnvibe-media">
+                    <div class="urbnvibe-video">
+                        <iframe src="https://www.youtube.com/embed/uf6SBskgJNk" title="Drone Video 3"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
                     </div>
                 </div>
-                <div class="musik-info">
-                    <span class="musik-info-label">03 / Piano </span>
-                    <h2 class="gradient-title">PIRATES OF THE CARIBBEAN</h2>
-                    <p class="musik-info-description"></p>
+                <div class="urbnvibe-info">
+                    <span class="urbnvibe-info-label">03 / Drohnen Videos</span>
+                    <h2>Sonnenberg, Kerzers - Schweiz</h2>
+                    <p class="urbnvibe-info-description">
+                        Cinematic sunset in Switzerland with the DJI Air 3S.
+                        The video captures the beauty of the Swiss Seeland Region.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VIDEO 4 (Desktop: Text links / Video rechts) -->
+        <section class="urbnvibe-section">
+            <div class="urbnvibe-two-column reverse">
+                <div class="urbnvibe-info">
+                    <span class="urbnvibe-info-label">04 / Drohnen Videos</span>
+                    <h2>Gümmenen - Schweiz</h2>
+                    <p class="urbnvibe-info-description">
+                        
+                    </p>
+                </div>
+                <div class="urbnvibe-media">
+                    <div class="urbnvibe-video">
+                        <iframe src="https://www.youtube.com/embed/" title="Drone Video 4"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
+
     <div id="footer-placeholder"></div>
 
     <script src="header.js"></script>
 
+    <!-- SCROLL ANIMATION SCRIPT -->
     <script>
         document.addEventListener("scroll", () => {
             const scrollY = window.scrollY;
@@ -528,16 +476,16 @@
             let fadeProgress = scrollY / (windowH * 0.7);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
-            
+
             if (overlay) {
                 overlay.style.opacity = fadeProgress;
             }
 
-            // 2. Parallax Reveal der ersten Sektion (Song 01)
+            // 2. Parallax Reveal der ersten Sektion
             let slideStart = windowH * 0.3;
             let slideEnd = windowH * 1.2;
             let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
-            
+
             if (slideProgress > 1) slideProgress = 1;
             if (slideProgress < 0) slideProgress = 0;
 
@@ -549,27 +497,6 @@
                 flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
             }
         });
-
-        // Reveal Animation für die darauffolgenden Sektionen im Hauptbereich
-        const revealSections = document.querySelectorAll('.musik-section.reveal');
-
-        if ('IntersectionObserver' in window) {
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px 0px 0px'
-            });
-
-            revealSections.forEach((section) => revealObserver.observe(section));
-        } else {
-            revealSections.forEach((section) => section.classList.add('in-view'));
-        }
     </script>
 
 </body>

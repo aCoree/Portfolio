@@ -29,8 +29,8 @@
 
     <style>
         /* =====================================================
-           SICHERHEIT & BASIS
-           ===================================================== */
+SICHERHEIT & BASIS
+===================================================== */
 
         html {
             visibility: visible !important;
@@ -43,14 +43,14 @@
             opacity: 1 !important;
             margin: 0;
             padding: 0;
-            background-color: #0d0d0d; 
+            background-color: #0d0d0d;
             color: #ffffff;
         }
 
 
         /* =====================================================
-           SCROLL-ANIMATION-BEREICH (HERO + FLYER)
-           ===================================================== */
+SCROLL-ANIMATION-BEREICH (HERO + INTRO TEXT)
+===================================================== */
 
         .scroll-sequence {
             position: relative;
@@ -98,11 +98,11 @@
             width: 100%;
             height: 100%;
             background-color: #0d0d0d;
-            opacity: 0; 
+            opacity: 0;
             z-index: 2;
         }
 
-        /* Container für die Flyer (kommt von unten hoch) */
+        /* Container für den Text (kommt von unten hoch und zentriert sich) */
         .flyer-layer {
             position: absolute;
             top: 0;
@@ -126,20 +126,49 @@
 
 
         /* =====================================================
-           HAUPT-CONTAINER (Rest der Seite)
-           ===================================================== */
+INTRO-BEREICH (Zentriert im Scroll-Effekt)
+===================================================== */
+
+        .urbnvibe-intro {
+            display: block !important;
+            width: 100% !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+            text-align: center !important;
+        }
+
+        .urbnvibe-intro h2 {
+            font-family: inherit !important;
+            font-size: clamp(34px, 4vw, 50px) !important;
+            font-weight: 900 !important;
+            margin: 0 0 20px 0 !important;
+            letter-spacing: -0.04em !important;
+        }
+
+        .urbnvibe-intro p {
+            font-family: inherit !important;
+            font-size: 18px !important;
+            line-height: 1.75 !important;
+            opacity: 0.8 !important;
+            margin: 0 !important;
+        }
+
+
+        /* =====================================================
+HAUPT-CONTAINER (Rest der Seite)
+===================================================== */
 
         #urbnvibe-page {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
             position: relative !important;
-            z-index: 10 !important; 
-            background-color: #0d0d0d !important; 
+            z-index: 10 !important;
+            background-color: #0d0d0d !important;
             width: 100% !important;
             max-width: 1400px !important;
             margin: 0 auto !important;
-            padding: 60px 40px 130px !important; 
+            padding: 60px 40px 130px !important;
             box-sizing: border-box !important;
         }
 
@@ -151,8 +180,8 @@
 
 
         /* =====================================================
-           PROJEKT-BEREICH
-           ===================================================== */
+PROJEKT-BEREICH
+===================================================== */
 
         .urbnvibe-section {
             display: block !important;
@@ -163,14 +192,10 @@
             padding: 0 !important;
         }
 
-        .flyer-layer-inner .urbnvibe-section {
-            margin-bottom: 0 !important; 
-        }
-
 
         /* =====================================================
-           2-SPALTEN LAYOUT
-           ===================================================== */
+2-SPALTEN LAYOUT
+===================================================== */
 
         .urbnvibe-two-column {
             display: grid !important;
@@ -189,8 +214,8 @@
 
 
         /* =====================================================
-           MEDIA CONTAINER
-           ===================================================== */
+MEDIA CONTAINER
+===================================================== */
 
         .urbnvibe-media {
             display: block !important;
@@ -204,7 +229,7 @@
             overflow: visible !important;
         }
 
-        #urbnvibe-page img, .flyer-layer-inner img {
+        #urbnvibe-page img {
             visibility: visible !important;
             opacity: 1 !important;
             max-width: 100% !important;
@@ -215,8 +240,8 @@
 
 
         /* =====================================================
-           FLYER GRID
-           ===================================================== */
+FLYER GRID
+===================================================== */
 
         .urbnvibe-flyer-grid {
             display: grid !important;
@@ -236,13 +261,13 @@
             visibility: visible !important;
             opacity: 1 !important;
             border-radius: 6px !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
 
 
         /* =====================================================
-           INFO-BEREICH
-           ===================================================== */
+INFO-BEREICH
+===================================================== */
 
         .urbnvibe-info {
             display: block !important;
@@ -298,30 +323,144 @@
 
 
         /* =====================================================
-           DETAILS & LOGO & VIDEO & CREATIVES
-           ===================================================== */
+DETAILS & LOGO & VIDEO & CREATIVES
+===================================================== */
 
-        .urbnvibe-details { display: block !important; visibility: visible !important; opacity: 1 !important; width: 100% !important; margin: 25px 0 0 0 !important; padding: 0 !important; list-style: none !important; }
-        .urbnvibe-details li { display: flex !important; justify-content: space-between !important; align-items: flex-start !important; width: 100% !important; margin: 0 !important; padding: 13px 0 !important; border-top: 1px solid currentColor !important; color: inherit !important; }
-        .urbnvibe-details li:last-child { border-bottom: 1px solid currentColor !important; }
-        .urbnvibe-detail-name { display: block !important; font-family: inherit !important; font-size: 12px !important; font-weight: 800 !important; line-height: 1.4 !important; text-transform: uppercase !important; letter-spacing: 0.08em !important; opacity: 0.55 !important; }
-        .urbnvibe-detail-value { display: block !important; max-width: 55% !important; font-family: inherit !important; font-size: 14px !important; font-weight: 600 !important; line-height: 1.4 !important; text-align: right !important; color: inherit !important; }
-        
-        .urbnvibe-logo-container { display: flex !important; justify-content: flex-end !important; align-items: center !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
-        .urbnvibe-logo-container img { display: block !important; width: min(100%, 600px) !important; height: auto !important; aspect-ratio: 1 / 1 !important; object-fit: cover !important; visibility: visible !important; opacity: 1 !important; border-radius: 12px !important; }
-        
-        .urbnvibe-video { position: relative !important; display: block !important; width: 100% !important; aspect-ratio: 16 / 9 !important; margin: 0 !important; padding: 0 !important; overflow: hidden !important; background: transparent !important; border-radius: 12px !important; }
-        .urbnvibe-video iframe { position: absolute !important; display: block !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; border: 0 !important; visibility: visible !important; opacity: 1 !important; }
-        
-        .urbnvibe-creatives-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 22px !important; width: 100% !important; margin: 0 0 55px 0 !important; padding: 0 !important; }
-        .urbnvibe-creative { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; overflow: visible !important; }
-        .urbnvibe-creative img { display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 4 / 5 !important; object-fit: cover !important; visibility: visible !important; opacity: 1 !important; border-radius: 8px !important; }
-        .urbnvibe-creatives-info { display: block !important; width: 100% !important; max-width: 700px !important; margin: 0 !important; padding: 0 !important; visibility: visible !important; opacity: 1 !important; }
+        .urbnvibe-details {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            margin: 25px 0 0 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+        }
+
+        .urbnvibe-details li {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: flex-start !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 13px 0 !important;
+            border-top: 1px solid currentColor !important;
+            color: inherit !important;
+        }
+
+        .urbnvibe-details li:last-child {
+            border-bottom: 1px solid currentColor !important;
+        }
+
+        .urbnvibe-detail-name {
+            display: block !important;
+            font-family: inherit !important;
+            font-size: 12px !important;
+            font-weight: 800 !important;
+            line-height: 1.4 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.08em !important;
+            opacity: 0.55 !important;
+        }
+
+        .urbnvibe-detail-value {
+            display: block !important;
+            max-width: 55% !important;
+            font-family: inherit !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            line-height: 1.4 !important;
+            text-align: right !important;
+            color: inherit !important;
+        }
+
+        .urbnvibe-logo-container {
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .urbnvibe-logo-container img {
+            display: block !important;
+            width: min(100%, 600px) !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            object-fit: cover !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            border-radius: 12px !important;
+        }
+
+        .urbnvibe-video {
+            position: relative !important;
+            display: block !important;
+            width: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            background: transparent !important;
+            border-radius: 12px !important;
+        }
+
+        .urbnvibe-video iframe {
+            position: absolute !important;
+            display: block !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .urbnvibe-creatives-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 22px !important;
+            width: 100% !important;
+            margin: 0 0 55px 0 !important;
+            padding: 0 !important;
+        }
+
+        .urbnvibe-creative {
+            display: block !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+
+        .urbnvibe-creative img {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 4 / 5 !important;
+            object-fit: cover !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            border-radius: 8px !important;
+        }
+
+        .urbnvibe-creatives-info {
+            display: block !important;
+            width: 100% !important;
+            max-width: 700px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
 
 
         /* =====================================================
-           RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
-           ===================================================== */
+RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
+===================================================== */
 
         /* Optimierung für Bildschirme kleiner als 1100px */
         @media (max-width: 1099px) {
@@ -332,74 +471,135 @@
         }
 
         @media (max-width: 900px) {
-            #urbnvibe-page { padding: 40px 25px 90px !important; }
-            .flyer-layer-inner { padding: 0 25px; }
-            
-            .urbnvibe-section { margin-bottom: 90px !important; }
-            .urbnvibe-two-column, .urbnvibe-two-column.reverse { grid-template-columns: 1fr !important; column-gap: 0 !important; row-gap: 45px !important; }
-            
-            .urbnvibe-two-column.flyer-column { display: flex !important; flex-direction: column !important; }
-            .urbnvibe-two-column.flyer-column .urbnvibe-info { order: 1 !important; }
-            .urbnvibe-two-column.flyer-column .urbnvibe-media { order: 2 !important; }
-            
-            .urbnvibe-info { max-width: 100% !important; }
-            .urbnvibe-logo-container { justify-content: flex-start !important; }
-            .urbnvibe-logo-container img { width: min(100%, 550px) !important; }
+            #urbnvibe-page {
+                padding: 40px 25px 90px !important;
+            }
+
+            .flyer-layer-inner {
+                padding: 0 25px;
+            }
+
+            .urbnvibe-section {
+                margin-bottom: 90px !important;
+            }
+
+            /* Intro Anpassung Mobile (bleibt zentriert) */
+            .urbnvibe-intro p {
+                font-size: 16px !important;
+                padding: 0 10px !important;
+            }
+
+            /* Mobile Z-Layout Fix: Text immer oben, Bild immer unten */
+            .urbnvibe-two-column,
+            .urbnvibe-two-column.reverse {
+                display: flex !important;
+                flex-direction: column !important;
+                column-gap: 0 !important;
+                row-gap: 45px !important;
+            }
+
+            .urbnvibe-two-column .urbnvibe-info {
+                order: 1 !important;
+                max-width: 100% !important;
+            }
+
+            .urbnvibe-two-column .urbnvibe-media {
+                order: 2 !important;
+            }
+
+            /* Social Media Creatives Fix (Text zuerst) */
+            .creatives-mobile-fix {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .creatives-mobile-fix .urbnvibe-creatives-info {
+                order: 1 !important;
+                margin-bottom: 30px !important;
+            }
+
+            .creatives-mobile-fix .urbnvibe-creatives-grid {
+                order: 2 !important;
+                margin-bottom: 0 !important;
+            }
+
+            /* Logo Container Anpassung */
+            .urbnvibe-logo-container {
+                justify-content: flex-start !important;
+            }
+
+            .urbnvibe-logo-container img {
+                width: min(100%, 550px) !important;
+            }
         }
 
         @media (max-width: 600px) {
-            #urbnvibe-page { padding: 30px 18px 70px !important; }
-            .flyer-layer-inner { padding: 0 18px; }
-            
-            .urbnvibe-flyer-grid { gap: 10px !important; }
-            .urbnvibe-creatives-grid { grid-template-columns: 1fr !important; gap: 15px !important; margin-bottom: 40px !important; }
-            .urbnvibe-info h2 { font-size: 40px !important; }
-            .urbnvibe-details li { gap: 12px !important; }
-            .urbnvibe-detail-name, .urbnvibe-detail-value { font-size: 11px !important; }
+            #urbnvibe-page {
+                padding: 30px 18px 70px !important;
+            }
+
+            .flyer-layer-inner {
+                padding: 0 18px;
+            }
+
+            .urbnvibe-flyer-grid {
+                gap: 10px !important;
+            }
+
+            .urbnvibe-creatives-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .urbnvibe-info h2 {
+                font-size: 40px !important;
+            }
+
+            .urbnvibe-details li {
+                gap: 12px !important;
+            }
+
+            .urbnvibe-detail-name,
+            .urbnvibe-detail-value {
+                font-size: 11px !important;
+            }
         }
     </style>
 </head>
 
 <body>
-    
 
     <div id="header-placeholder"></div>
 
 
     <div class="scroll-sequence">
         <div class="sticky-container">
-            
-            
             <picture class="urbnvibe-hero-picture">
                 <source media="(max-width: 644px)" srcset="cards/card-small-urbnvibe.jpg">
                 <img src="cards/card-big-urbnvibe.jpg" alt="URBNVIBE Hero Image" class="urbnvibe-hero-img">
             </picture>
-            
             <div class="hero-overlay"></div>
-            
             <div class="flyer-layer">
-                
                 <div class="flyer-layer-inner">
-                    <section class="urbnvibe-section">
-                        <div class="urbnvibe-two-column flyer-column">
-                            
-                            <div class="urbnvibe-media">
-                                <div class="urbnvibe-flyer-grid">
-                                    <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1">
-                                    <img src="images/flyer_seite_2.jpg" alt="URBNVIBE Flyer Seite 2">
-                                </div>
-                            </div>
 
-                            <div class="urbnvibe-info">
-                                <span class="urbnvibe-info-label">01 / Print Design</span>
-                                <h2>Flyer Design</h2>
-                                <p class="urbnvibe-info-description">
-                                    Ein zweiseitiges Print-Design für URBNVIBE, entwickelt für den Druck und die visuelle Präsentation der Marke. Die Vorder- und Rückseite sind in Layout, Typografie und Farbgebung perfekt aufeinander abgestimmt, um eine moderne und professionelle Wirkung zu erzielen.
-                                </p>
-                            </div>
-                            
-                        </div>
-                    </section>
+                    <!-- PERFEKT ZENTRIERTER INTRO TEXT IM SCROLL-EFFEKT -->
+                    <div class="urbnvibe-intro">
+                        <h2>Über URBNVIBE</h2>
+                        <p>
+                            URBNVIBE war ein Projekt aus dem 10. ICT-Schuljahr. Ich habe dabei verschiedene Sachen
+                            designt wie z.B. ein Flyer, ein Logo, eine Social-Media-Präsenz und ein Video. Ich habe
+                            dieses Projekt duchs ganze Schuljahr geführt. Da wir oft mit Adobe Programmen gearbeitet
+                            haben, konnte ich viele neue Erfahrungen im Bereich Deisin und Social Media sammeln.
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            <br><br>
+                            Scrollen um mehr zu erfahren.
+                        </p>
+                    </div>
+
                 </div>
             </div>
 
@@ -409,13 +609,38 @@
 
     <main id="urbnvibe-page">
 
+        <!-- FLYER SEKTION (Nun der erste normale Abschnitt nach dem Scroll) -->
+        <section class="urbnvibe-section">
+            <div class="urbnvibe-two-column flyer-column">
+                <div class="urbnvibe-media">
+                    <div class="urbnvibe-flyer-grid">
+                        <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1">
+                        <img src="images/flyer_seite_2.jpg" alt="URBNVIBE Flyer Seite 2">
+                    </div>
+                </div>
+
+                <div class="urbnvibe-info">
+                    <span class="urbnvibe-info-label">01 / Print Design</span>
+                    <h2>Flyer Design</h2>
+                    <p class="urbnvibe-info-description">
+                        Ein zweiseitiger Flyer für URBNVIBE, entwickelt für den Druck und die visuelle Präsentation der
+                        Marke. Die Vorder- und Rückseite sind in Layout, Typografie und Farbgebung perfekt aufeinander
+                        abgestimmt, um eine moderne und professionelle Wirkung zu erzielen.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRANDING / LOGO -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
                     <span class="urbnvibe-info-label">02 / Branding</span>
                     <h2>Logo Design</h2>
                     <p class="urbnvibe-info-description">
-                        Das Logo bildet das Herzstück der visuellen Identität von URBNVIBE. Es kombiniert einen prägnanten, modernen Look mit hohem Wiedererkennungswert und dient als Fundament für sämtliche Medieninhalte des Projekts.
+                        Das Logo bildet das Herzstück der visuellen Identität von URBNVIBE. Die Farben wurden passend zu
+                        der Altstadt von Bern gewählt, um einen modernen, aber auch einen schönen Look zu erzielen. Der
+                        Pfeil bringt Schwung in das Logo und dient als Symbol für die Bewegung der Marke.
                     </p>
                 </div>
                 <div class="urbnvibe-media">
@@ -427,6 +652,7 @@
         </section>
 
 
+        <!-- AWARENESS VIDEO -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
@@ -438,27 +664,33 @@
                     </div>
                 </div>
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">03 / Motion Design</span>
+                    <span class="urbnvibe-info-label">03 / Social Media</span>
                     <h2>Awareness Video</h2>
                     <p class="urbnvibe-info-description">
-                        Ein dynamisch geschnittes Motion-Design-Video, das den urbanen Vibe der Marke in Bewegung versetzt. Durch rhythmische Bildwechsel und abgestimmte Grafiken wird URBNVIBE lebendig inszeniert.
+                        Ein dynamisch geschnittes Video für Social Media, das den urbanen Vibe der Marke in Bewegung
+                        versetzt. In dem Video wird eine kurze Geschichte von zwei Personen vorgestellt die zusammen
+                        Videos in den Sozialen Medien schauen. Die eine Person muss plötzlich so fest Lachen, dass die
+                        andere Person vom Dach fällt. Doch glücklicherweise fällt die Person auf eine URBNVIBE Jacke und
+                        wird dadurch gerettet.
                     </p>
                 </div>
             </div>
         </section>
 
 
-        <section class="urbnvibe-section">
+        <!-- SOCIAL MEDIA CREATIVES -->
+        <section class="urbnvibe-section creatives-mobile-fix">
             <div class="urbnvibe-creatives-grid">
                 <div class="urbnvibe-creative"><img src="images/creative-1.png" alt="URBNVIBE Creative 1"></div>
                 <div class="urbnvibe-creative"><img src="images/creative-2.png" alt="URBNVIBE Creative 2"></div>
                 <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3"></div>
             </div>
             <div class="urbnvibe-creatives-info">
-                <span class="urbnvibe-info-label">04 / Social Media Design</span>
+                <span class="urbnvibe-info-label">04 / Social Media </span>
                 <h2>Social Media Creatives</h2>
                 <p class="urbnvibe-info-description">
-                    Eine Serie aus drei eigenständigen Content-Piece-Designs für die digitale Kommunikation. Die Visuals wurden im hochformatigen 4:5-Format gestaltet, um im Social-Media-Feed maximale Aufmerksamkeit zu erzielen.
+                    Eine Serie aus drei Creatives für Social Media. Die Creatives wurden im 4:5-Format gestaltet,
+                    speziell für Instagram.
                 </p>
             </div>
         </section>
@@ -483,16 +715,14 @@
             let fadeProgress = scrollY / (windowH * 0.7);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
-            
             if (overlay) {
                 overlay.style.opacity = fadeProgress;
             }
 
-            // 2. Parallax Reveal der Flyer-Sektion
+            // 2. Parallax Reveal des Textes (Intro)
             let slideStart = windowH * 0.3;
             let slideEnd = windowH * 1.2;
             let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
-            
             if (slideProgress > 1) slideProgress = 1;
             if (slideProgress < 0) slideProgress = 0;
 
@@ -507,4 +737,5 @@
     </script>
 
 </body>
+
 </html>
