@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Musik – Klaviervideos</title>
 
@@ -26,7 +26,7 @@
         html {
             visibility: visible !important;
             opacity: 1 !important;
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         body {
@@ -43,13 +43,13 @@
         ===================================================== */
         .scroll-sequence {
             position: relative;
-            height: 150vh;
+            height: 250vh;
             width: 100%;
             background-color: #0d0d0d;
         }
 
         .sticky-container {
-            position: fixed;
+            position: sticky;
             top: 0;
             left: 0;
             width: 100%;
@@ -57,8 +57,6 @@
             height: 100dvh;
             overflow: hidden;
             background-color: #0d0d0d;
-            z-index: 1;
-            will-change: opacity;
         }
 
         .musik-hero-picture {
@@ -81,30 +79,17 @@
             margin: 0 !important;
         }
 
-        .hero-vignette {
+        .hero-bottom-fade {
             position: absolute;
-            inset: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                rgba(13, 13, 13, 0) 0%,
+                rgba(13, 13, 13, 1) 100%);
             z-index: 2;
             pointer-events: none;
-            background:
-                linear-gradient(115deg,
-                    rgba(13, 13, 13, 0) 0%,
-                    rgba(13, 13, 13, 0.06) 20%,
-                    rgba(13, 13, 13, 0.16) 40%,
-                    rgba(13, 13, 13, 0.32) 60%,
-                    rgba(13, 13, 13, 0.48) 80%,
-                    rgba(13, 13, 13, 0.6) 100%),
-                radial-gradient(ellipse 130% 110% at 50% 42%,
-                    rgba(13, 13, 13, 0) 30%,
-                    rgba(13, 13, 13, 0.12) 55%,
-                    rgba(13, 13, 13, 0.3) 75%,
-                    rgba(13, 13, 13, 0.55) 100%),
-                linear-gradient(to bottom,
-                    rgba(13, 13, 13, 0) 45%,
-                    rgba(13, 13, 13, 0.15) 65%,
-                    rgba(13, 13, 13, 0.4) 82%,
-                    rgba(13, 13, 13, 0.85) 100%),
-                rgba(13, 13, 13, 0.1);
         }
 
         .hero-overlay {
@@ -115,9 +100,28 @@
             height: 100%;
             background-color: #0d0d0d;
             opacity: 0;
+            z-index: 2;
+        }
+
+        .flyer-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 3;
-            pointer-events: none;
-            will-change: opacity;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(100vh);
+        }
+
+        .flyer-layer-inner {
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 40px;
+            box-sizing: border-box;
         }
 
         /* Scroll-Button auf dem Hero-Bild */
@@ -196,26 +200,20 @@
         /* =====================================================
         EINZELNER INTRO-BEREICH (STANDALONE)
         ===================================================== */
-        .musik-intro-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 100px);
+        .musik-intro {
+            display: block !important;
+            width: 100% !important;
             max-width: 820px !important;
-            margin: 0 auto 140px auto !important;
-            text-align: center;
-            padding: 40px 0;
-            box-sizing: border-box;
-            scroll-margin-top: 60px;
+            margin: 0 auto !important;
+            text-align: center !important;
         }
 
-        .musik-intro-section .musik-info-label {
+        .musik-intro .musik-info-label {
             display: inline-block !important;
             margin-bottom: 16px !important;
         }
 
-        .musik-intro-section h1 {
+        .musik-intro h1 {
             font-size: clamp(34px, 4.5vw, 56px) !important;
             font-weight: 900 !important;
             line-height: 1.1 !important;
@@ -314,8 +312,7 @@
         /* =====================================================
         REVEAL-ANIMATION
         ===================================================== */
-        .musik-section.reveal,
-        .musik-intro-section.reveal {
+        .musik-section.reveal {
             opacity: 0;
             transform: translateY(70px);
             transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
@@ -323,8 +320,7 @@
             will-change: opacity, transform;
         }
 
-        .musik-section.reveal.in-view,
-        .musik-intro-section.reveal.in-view {
+        .musik-section.reveal.in-view {
             opacity: 1;
             transform: translateY(0);
         }
@@ -385,6 +381,34 @@
                 radial-gradient(circle at 50% 50%, rgba(80, 5, 5, 0.6) 0%, transparent 70%);
         }
 
+        .theme-topgun::before {
+            background:
+                radial-gradient(circle at 28% 32%, rgba(255, 214, 64, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 74% 66%, rgba(255, 170, 0, 0.8) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(120, 85, 5, 0.55) 0%, transparent 70%);
+        }
+
+        .theme-victory::before {
+            background:
+                radial-gradient(circle at 25% 30%, rgba(130, 195, 255, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(70, 150, 255, 0.75) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(20, 75, 145, 0.55) 0%, transparent 70%);
+        }
+
+        .theme-wildflower::before {
+            background:
+                radial-gradient(circle at 30% 32%, rgba(224, 194, 255, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 72% 66%, rgba(200, 150, 255, 0.75) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(120, 85, 165, 0.5) 0%, transparent 70%);
+        }
+
+        .theme-notimetodie::before {
+            background:
+                radial-gradient(circle at 28% 34%, rgba(210, 35, 45, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 74% 68%, rgba(90, 15, 20, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(15, 15, 15, 0.6) 0%, transparent 70%);
+        }
+
         /* =====================================================
         GRADIENT-TITEL & LAYOUT
         ===================================================== */
@@ -425,6 +449,22 @@
 
         .theme-avengers .gradient-title {
             background-image: linear-gradient(90deg, #ff1a1a, #ff4d1a, #ff0000, #ff1a1a) !important;
+        }
+
+        .theme-topgun .gradient-title {
+            background-image: linear-gradient(90deg, #ffd54f, #ffb300, #fff3b0, #ffd54f) !important;
+        }
+
+        .theme-victory .gradient-title {
+            background-image: linear-gradient(90deg, #82c3ff, #4a90ff, #d4ecff, #82c3ff) !important;
+        }
+
+        .theme-wildflower .gradient-title {
+            background-image: linear-gradient(90deg, #e0c2ff, #c896ff, #f5e6ff, #e0c2ff) !important;
+        }
+
+        .theme-notimetodie .gradient-title {
+            background-image: linear-gradient(90deg, #e63946, #6a0000, #ff8a8a, #e63946) !important;
         }
 
         .musik-two-column {
@@ -553,17 +593,19 @@
 
         @media (max-width: 900px) {
             #musik-page {
-                padding: 20px 25px 90px !important;
+                padding: 40px 25px 90px !important;
+            }
+
+            .flyer-layer-inner {
+                padding: 0 25px;
             }
 
             .musik-section {
                 margin-bottom: 90px !important;
             }
 
-            .musik-intro-section {
-                min-height: auto;
-                margin-bottom: 90px !important;
-                padding: 20px 0;
+            .musik-intro-text {
+                font-size: 16px !important;
             }
 
             .musik-two-column,
@@ -591,7 +633,11 @@
 
         @media (max-width: 600px) {
             #musik-page {
-                padding: 10px 18px 70px !important;
+                padding: 30px 18px 70px !important;
+            }
+
+            .flyer-layer-inner {
+                padding: 0 18px;
             }
 
             .musik-intro-highlights {
@@ -606,8 +652,7 @@
 
         @media (prefers-reduced-motion: reduce) {
 
-            .musik-section.reveal,
-            .musik-intro-section.reveal {
+            .musik-section.reveal {
                 opacity: 1 !important;
                 transform: none !important;
                 transition: none !important;
@@ -626,54 +671,61 @@
                 <source media="(max-width: 644px)" srcset="cards/card-big-musik.jpg">
                 <img src="cards/card-big-musik.jpg" alt="Klaviermusik Hero Bild" class="musik-hero-img">
             </picture>
+            <div class="hero-bottom-fade"></div>
 
-            <div class="hero-vignette"></div>
             <div class="hero-overlay"></div>
 
-            <div class="hero-scroll-indicator" onclick="scrollToIntro()">
+            <div class="hero-scroll-indicator" onclick="scrollPastHero()">
                 <span>Scrollen</span>
                 <i class="fa-solid fa-chevron-down"></i>
+            </div>
+
+            <div class="flyer-layer">
+                <div class="flyer-layer-inner">
+
+                    <div class="musik-intro" id="musik-intro">
+                        <span class="musik-info-label"> Meine Musik</span>
+                        <h1>LEIDENSCHAFT AM KLAVIER</h1>
+
+                        <p class="musik-intro-text">
+                            Klavier spielen ist für mich der beste Weg, Emotionen und Geschichten ohne Worte
+                            auszudrücken. Ich habe vor einigen Jahren angefangen, mir das Klavierspielen selbst
+                            beizubringen – motiviert von der Faszination für Film-Soundtracks wie "Interstellar" aber
+                            auch moderne Klavierlieder.
+                        </p>
+                        <p class="musik-intro-text">
+                            Meine Videos nehme ich mit viel Liebe zum Detail auf: Vom Ausarbeiten der Arrangements bis
+                            hin zum visuellen Setup versuche ich, jedem Stück seinen eigenen, passenden Vibe zu
+                            verleihen, durch Licht und Schatten. Hier findest du eine Auswahl meiner liebsten Cover.
+                        </p>
+
+                        <div class="musik-intro-highlights">
+                            <div class="intro-highlight-item">
+                                <span class="intro-highlight-title">Am Klavier seit</span>
+                                <span class="intro-highlight-value">2020</span>
+                            </div>
+                            <div class="intro-highlight-item">
+                                <span class="intro-highlight-title">Fokus</span>
+                                <span class="intro-highlight-value">Film-Soundtracks</span>
+                            </div>
+                            <div class="intro-highlight-item">
+                                <span class="intro-highlight-title">Setup</span>
+                                <span class="intro-highlight-value">Burger & Jacobi Klavier</span>
+                            </div>
+                        </div>
+
+                        <div class="intro-scroll-indicator" onclick="scrollToVideos()">
+                            <span>Zu den Videos</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 
     <main id="musik-page">
-
-        <section class="musik-intro-section reveal" id="musik-intro">
-            <span class="musik-info-label"> Meine Musik</span>
-            <h1>LEIDENSCHAFT AM KLAVIER</h1>
-
-            <p class="musik-intro-text">
-                Klavier spielen ist für mich der beste Weg, Emotionen und Geschichten ohne Worte auszudrücken. Ich habe
-                vor einigen Jahren angefangen, mir das Klavierspielen selbst beizubringen – motiviert von der
-                Faszination für Film-Soundtracks wie "Interstellar" aber auch moderne Klavierlieder.
-            </p>
-            <p class="musik-intro-text">
-                Meine Videos nehme ich mit viel Liebe zum Detail auf: Vom Ausarbeiten der Arrangements bis hin zum
-                visuellen Setup versuche ich, jedem Stück seinen eigenen, passenden Vibe zu verleihen, durch Licht und
-                Schatten. Hier findest du eine Auswahl meiner liebsten Cover.
-            </p>
-
-            <div class="musik-intro-highlights">
-                <div class="intro-highlight-item">
-                    <span class="intro-highlight-title">Am Klavier seit</span>
-                    <span class="intro-highlight-value">2020</span>
-                </div>
-                <div class="intro-highlight-item">
-                    <span class="intro-highlight-title">Fokus</span>
-                    <span class="intro-highlight-value">Film-Soundtracks</span>
-                </div>
-                <div class="intro-highlight-item">
-                    <span class="intro-highlight-title">Setup</span>
-                    <span class="intro-highlight-value">Burger & Jacobi Klavier</span>
-                </div>
-            </div>
-
-            <div class="intro-scroll-indicator" onclick="scrollToVideos()">
-                <span>Zu den Videos</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-        </section>
 
         <div id="musik-videos">
 
@@ -767,6 +819,78 @@
                 </div>
             </section>
 
+            <section class="musik-section themed-bg theme-topgun reveal">
+                <div class="musik-two-column reverse">
+                    <div class="musik-info">
+                        <span class="musik-info-label">HAROLD FALTERMEYER </span>
+                        <h2 class="gradient-title">TOP GUN: MAVERICK</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER" title="Klaviervideo Top Gun: Maverick"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-victory reveal">
+                <div class="musik-two-column">
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER" title="Klaviervideo Victory"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="musik-info">
+                        <span class="musik-info-label">TWO STEPS FROM HELL </span>
+                        <h2 class="gradient-title">VICTORY</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-wildflower reveal">
+                <div class="musik-two-column reverse">
+                    <div class="musik-info">
+                        <span class="musik-info-label">BILLIE EILISH </span>
+                        <h2 class="gradient-title">WILDFLOWER</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER" title="Klaviervideo Wildflower"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-notimetodie reveal">
+                <div class="musik-two-column">
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER" title="Klaviervideo No Time To Die"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="musik-info">
+                        <span class="musik-info-label">BILLIE EILISH </span>
+                        <h2 class="gradient-title">NO TIME TO DIE</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
     </main>
@@ -777,59 +901,18 @@
 
     <script>
         // ==========================================================
-        // HERO STICKY FADE-EFFEKT (Bild bleibt fixed & dunkelt ab)
+        // HERO SCROLL-EFFEKT (identisch zu urbnvibe.html)
         // ==========================================================
-        const heroContainer = document.querySelector('.sticky-container');
-        const heroOverlay = document.querySelector('.hero-overlay');
-        const scrollSequence = document.querySelector('.scroll-sequence');
 
-        function updateHero() {
-            if (!scrollSequence || !heroContainer || !heroOverlay) return;
-
-            const totalScrollRange = Math.max(scrollSequence.offsetHeight - window.innerHeight, 1);
-            const progress = Math.min(Math.max(window.scrollY / totalScrollRange, 0), 1);
-
-            // Overlay wird dunkler beim Scrollen
-            heroOverlay.style.opacity = progress * 1.15;
-
-            // Transparenz des Sticky-Containers sanft ausblenden
-            const fadeOut = Math.max((progress - 0.6) / 0.4, 0);
-            heroContainer.style.opacity = 1 - fadeOut;
-
-            if (progress >= 1) {
-                heroContainer.style.visibility = 'hidden';
-                heroContainer.style.pointerEvents = 'none';
-            } else {
-                heroContainer.style.visibility = 'visible';
-                heroContainer.style.pointerEvents = 'auto';
-            }
+        // Klick auf "Scrollen" (Hero) -> scrollt bis der Intro-Text
+        // vollständig eingeblendet ist
+        function scrollPastHero() {
+            const windowH = window.innerHeight;
+            const slideEnd = windowH * 1.2;
+            window.scrollTo({ top: slideEnd, behavior: 'smooth' });
         }
 
-        let tickScheduled = false;
-        window.addEventListener('scroll', () => {
-            if (!tickScheduled) {
-                tickScheduled = true;
-                requestAnimationFrame(() => {
-                    updateHero();
-                    tickScheduled = false;
-                });
-            }
-        }, { passive: true });
-
-        window.addEventListener('resize', updateHero);
-        updateHero();
-
-        // ==========================================================
-        // SMOOTH SCROLL NAVIGATION & SANFTER AUTO-TRIGGER
-        // ==========================================================
-        function scrollToIntro() {
-            const intro = document.getElementById('musik-intro');
-            if (intro) {
-                const isMobile = window.matchMedia('(max-width: 900px)').matches;
-                intro.scrollIntoView({ behavior: 'smooth', block: isMobile ? 'center' : 'start' });
-            }
-        }
-
+        // Klick auf "Zu den Videos" -> scrollt zum Hauptinhalt nach der Scroll-Sequenz
         function scrollToVideos() {
             const videos = document.getElementById('musik-videos');
             if (videos) {
@@ -837,28 +920,51 @@
             }
         }
 
-        // Sanfter Trigger: Ein kurzer Scroll nach unten zieht clean zum Intro
-        let isAutoScrolling = false;
-        let lastScrollY = window.scrollY;
+        document.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            const windowH = window.innerHeight;
 
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            const sequenceRange = scrollSequence ? scrollSequence.offsetHeight - window.innerHeight : 400;
+            const overlay = document.querySelector('.hero-overlay');
+            const flyerLayer = document.querySelector('.flyer-layer');
+            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
 
-            if (!isAutoScrolling && currentScrollY > 15 && currentScrollY < sequenceRange * 0.5 && currentScrollY > lastScrollY) {
-                isAutoScrolling = true;
-                scrollToIntro();
-                setTimeout(() => {
-                    isAutoScrolling = false;
-                }, 900);
+            // 1. Fade ins Dunkle
+            let fadeProgress = scrollY / (windowH * 0.7);
+            if (fadeProgress > 1) fadeProgress = 1;
+            if (fadeProgress < 0) fadeProgress = 0;
+            if (overlay) {
+                overlay.style.opacity = fadeProgress;
             }
-            lastScrollY = currentScrollY;
-        }, { passive: true });
+
+            // 2. Parallax Reveal des Textes (Intro)
+            let slideStart = windowH * 0.3;
+            let slideEnd = windowH * 1.2;
+            let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
+            if (slideProgress > 1) slideProgress = 1;
+            if (slideProgress < 0) slideProgress = 0;
+
+            let easeOut = 1 - Math.pow(1 - slideProgress, 3);
+
+            if (flyerLayer) {
+                let yOffset = 100 - (easeOut * 100);
+                flyerLayer.style.transform = `translateY(${yOffset}vh)`;
+                flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            }
+
+            // 3. Hero-Scroll-Button ausblenden, sobald man zu scrollen beginnt
+            if (scrollIndicator) {
+                let buttonFade = 1 - (scrollY / (windowH * 0.25));
+                if (buttonFade < 0) buttonFade = 0;
+                if (buttonFade > 1) buttonFade = 1;
+                scrollIndicator.style.opacity = buttonFade;
+                scrollIndicator.style.pointerEvents = buttonFade === 0 ? 'none' : 'auto';
+            }
+        });
 
         // ==========================================================
         // REVEAL OBSERVER FOR SECTIONS
         // ==========================================================
-        const revealSections = document.querySelectorAll('.musik-section.reveal, .musik-intro-section.reveal');
+        const revealSections = document.querySelectorAll('.musik-section.reveal');
 
         if ('IntersectionObserver' in window) {
             const revealObserver = new IntersectionObserver((entries) => {
