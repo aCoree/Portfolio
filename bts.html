@@ -1,173 +1,443 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Behind the Scenes | Aurelio Zingarello</title>
 
-    <!-- Font Awesome (für das YouTube-Icon im Header & Footer) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* 1. Globales Layout von style.css zwingend überschreiben */
+        /* 1. Globales Layout zwingend überschreiben */
         html, body {
             width: 100% !important;
+            background-color: #000000 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
-        /* 2. Haupt-Container breitmachen & Platz für fixed Header lassen */
+        /* 2. Haupt-Container */
         #bts-wrapper {
             width: 100% !important;
-            max-width: 1200px !important;
+            max-width: 1300px !important;
             margin: 0 auto !important;
-            padding: 6rem 2rem 4rem 2rem !important;
+            padding: 5rem 2rem 4rem 2rem !important;
             box-sizing: border-box !important;
             display: block !important;
-            text-align: left !important;
+            background: #000000 !important;
         }
 
-        /* 3. Überschrift strikt linksbündig */
-        #bts-wrapper h1, 
-        #bts-wrapper .bts-title {
+        /* 3. 2-Spalten Grid für PC & Tablet */
+        #bts-wrapper .bts-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 24px !important;
+            align-items: start !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            background: #000000 !important;
+        }
+
+        /* Header-Spalte (Links im Grid: Titel + Zurück + Bild 1 + Bild 2) */
+        .bts-header-col {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            background: transparent !important;
+        }
+
+        .bts-header-col h1, 
+        .bts-header-col .bts-title {
             text-align: left !important;
             font-size: 2.2rem !important;
             letter-spacing: 2px !important;
             text-transform: uppercase !important;
             font-weight: 700 !important;
-            margin: 0 0 0.8rem 0 !important;
+            margin: 0 0 0.4rem 0 !important;
             padding: 0 !important;
             display: block !important;
             width: 100% !important;
+            color: #ffffff !important;
+            border: none !important;
         }
 
-        /* Zurück-Link unter dem Titel */
-        #bts-wrapper .bts-back-link {
+        .bts-header-col .bts-back-link {
             display: inline-flex !important;
             align-items: center !important;
             gap: 8px !important;
             color: rgba(255, 255, 255, 0.55) !important;
             text-decoration: none !important;
             font-family: inherit !important;
-            font-size: 0.95rem !important;
+            font-size: 0.88rem !important;
             letter-spacing: 1.5px !important;
             text-transform: uppercase !important;
-            margin: 0 0 2.5rem 0 !important;
+            margin: 0 0 1.8rem 0 !important;
             transition: color 0.25s ease !important;
+            align-self: flex-start !important;
+            border: none !important;
         }
 
-        #bts-wrapper .bts-back-link:hover {
+        .bts-header-col .bts-back-link:hover {
             color: #ffffff !important;
         }
 
-        /* 4. Feste 3-Spalten Grid-Struktur */
-        #bts-wrapper .bts-grid {
-            display: grid !important;
-            grid-template-columns: repeat(3, 1fr) !important;
-            gap: 20px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
+        /* Abstand zwischen Bild 1 und Bild 2 in der linken Spalte */
+        .bts-header-col .bts-item-first {
+            margin-bottom: 24px !important;
         }
 
+        /* 4. Bild-Container – Keine Ränder, Linien oder Hintergründe */
         #bts-wrapper .bts-item {
             position: relative !important;
             overflow: hidden !important;
-            border-radius: 12px !important;
-            aspect-ratio: 16 / 9 !important;
+            border-radius: 10px !important;
             width: 100% !important;
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background: #000000 !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            cursor: pointer !important;
+            padding: 0 !important;
         }
 
+        /* Hochformat-Bild unten bündig ausrichten */
+        #bts-wrapper .bts-item-bottom {
+            align-self: end !important;
+        }
+
+        /* Formate: Querformat (16:9), Hochformat (3:4) */
+        #bts-wrapper .bts-item.landscape {
+            aspect-ratio: 16 / 9 !important;
+        }
+
+        #bts-wrapper .bts-item.portrait {
+            aspect-ratio: 3 / 4 !important;
+        }
+
+        /* Standard Bild-Styling */
         #bts-wrapper .bts-item img {
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
             display: block !important;
-            border-radius: 12px !important;
-            transition: transform 0.4s ease !important;
+            border-radius: 10px !important;
+            border: none !important;
+            outline: none !important;
+            background: #000000 !important;
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
         }
 
-        #bts-wrapper .bts-item:hover img {
-            transform: scale(1.05) !important;
+        /* Spezial-Zoom gegen weiße Ränder/Linien */
+        #bts-wrapper .bts-item.zoom-fix img {
+            transform: scale(1.06) !important;
         }
 
-        /* 5. Tablet: 2 Spalten */
-        @media (max-width: 900px) {
-            #bts-wrapper .bts-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
+        /* Hover-Effekte */
+        #bts-wrapper .bts-item:not(.zoom-fix):hover img {
+            transform: scale(1.03) !important;
         }
 
-        /* 6. Handy: 1 Spalte */
-        @media (max-width: 600px) {
+        #bts-wrapper .bts-item.zoom-fix:hover img {
+            transform: scale(1.09) !important;
+        }
+
+        /* 5. Mobile Layout (1 Spalte ab 768px) */
+        @media (max-width: 768px) {
             #bts-wrapper {
-                padding: 5rem 1rem 2rem 1rem !important;
+                padding: 4rem 1rem 2rem 1rem !important;
             }
             #bts-wrapper .bts-grid {
                 grid-template-columns: 1fr !important;
-                gap: 15px !important;
+                gap: 16px !important;
             }
-            #bts-wrapper h1, 
-            #bts-wrapper .bts-title {
+            .bts-header-col .bts-item-first {
+                margin-bottom: 16px !important;
+            }
+            #bts-wrapper .bts-item-bottom {
+                align-self: auto !important;
+            }
+            .bts-header-col .bts-title {
                 font-size: 1.6rem !important;
-                margin-bottom: 0.5rem !important;
+                margin-bottom: 0.3rem !important;
             }
-            #bts-wrapper .bts-back-link {
-                margin-bottom: 1.8rem !important;
-                font-size: 0.85rem !important;
+            .bts-header-col .bts-back-link {
+                margin-bottom: 1.2rem !important;
+                font-size: 0.8rem !important;
             }
+        }
+
+        /* 6. Clean Lightbox Modal – GROSSE ANSICHT */
+        .bts-lightbox {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background-color: rgba(0, 0, 0, 0.96) !important;
+            z-index: 999999 !important;
+            display: none;
+            align-items: center !important;
+            justify-content: center !important;
+            backdrop-filter: blur(10px) !important;
+            opacity: 0;
+            transition: opacity 0.25s ease !important;
+        }
+
+        .bts-lightbox.active {
+            display: flex !important;
+            opacity: 1 !important;
+        }
+
+        .lightbox-content {
+            width: 100vw !important;
+            height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: relative !important;
+            padding: 10px !important;
+            box-sizing: border-box !important;
+        }
+
+        .lightbox-content img {
+            max-width: 96vw !important;
+            max-height: 95vh !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+            border-radius: 4px !important;
+            user-select: none !important;
+            border: none !important;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9) !important;
+            background: transparent !important;
+            transition: transform 0.25s ease !important;
+        }
+
+        /* Vergrößerungs-Boost auf PC für das Hochformat-Bild (Bild 3) & Bild 8 */
+        @media (min-width: 900px) {
+            .lightbox-content img.extra-large {
+                transform: scale(1.18) !important;
+            }
+        }
+
+        /* Dezent schwebende Steuerungsknöpfe */
+        .lightbox-btn {
+            position: absolute !important;
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            color: #ffffff !important;
+            width: 50px !important;
+            height: 50px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            font-size: 1.1rem !important;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
+            user-select: none !important;
+            outline: none !important;
+            z-index: 1000000 !important;
+            backdrop-filter: blur(4px) !important;
+        }
+
+        .lightbox-btn:hover {
+            background: rgba(255, 255, 255, 0.25) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            transform: scale(1.08) !important;
+        }
+
+        .lightbox-prev { left: 20px !important; }
+        .lightbox-next { right: 20px !important; }
+        .lightbox-close { top: 20px !important; right: 20px !important; font-size: 1.2rem !important; }
+
+        @media (max-width: 768px) {
+            .lightbox-content img {
+                max-width: 98vw !important;
+                max-height: 94vh !important;
+            }
+            .lightbox-btn {
+                width: 42px !important;
+                height: 42px !important;
+                font-size: 0.95rem !important;
+            }
+            .lightbox-prev { left: 10px !important; }
+            .lightbox-next { right: 10px !important; }
+            .lightbox-close { top: 12px !important; right: 12px !important; }
         }
     </style>
 </head>
 <body>
 
     <main id="bts-wrapper">
-        <h1 class="bts-title">BEHIND THE SCENES</h1>
-        <a href="javascript:history.back()" class="bts-back-link">&#8592; Zurück</a>
-
         <div class="bts-grid">
-            <!-- Bild 1 -->
-            <div class="bts-item">
-                <img src="img/bts-1.jpg" alt="Behind the Scenes 1">
+
+            <!-- Linke Spalte oben: Titel + Zurück + Bild 1 (Quer) + Bild 2 (Quer) -->
+            <div class="bts-header-col">
+                <h1 class="bts-title">BEHIND THE SCENES</h1>
+                <a href="javascript:history.back()" class="bts-back-link">&#8592; Zurück</a>
+                
+                <!-- Bild 1 (Querformat) -->
+                <div class="bts-item landscape zoom-fix bts-item-first">
+                    <img src="bts/bts-1.jpg" alt="Behind the Scenes 1">
+                </div>
+
+                <!-- Bild 2 (Querformat, direkt unter Bild 1) -->
+                <div class="bts-item landscape zoom-fix">
+                    <img src="bts/bts-2.jpg" alt="Behind the Scenes 2">
+                </div>
             </div>
 
-            <!-- Bild 2 -->
-            <div class="bts-item">
-                <img src="img/bts-2.jpg" alt="Behind the Scenes 2">
+            <!-- Rechte Spalte oben: Bild 3 (Hochformat, unten bündig) -->
+            <div class="bts-item portrait bts-item-bottom zoom-fix">
+                <img src="bts/bts-3.jpg" alt="Behind the Scenes 3">
             </div>
 
-            <!-- Bild 3 -->
-            <div class="bts-item">
-                <img src="img/bts-3.jpg" alt="Behind the Scenes 3">
+            <!-- Bild 4 (Querformat) -->
+            <div class="bts-item landscape zoom-fix">
+                <img src="bts/bts-4.jpg" alt="Behind the Scenes 4">
             </div>
 
-            <!-- Bild 4 -->
-            <div class="bts-item">
-                <img src="img/bts-4.jpg" alt="Behind the Scenes 4">
+            <!-- Bilder 5 bis 10 (Querformat) -->
+            <div class="bts-item landscape">
+                <img src="bts/bts-5.png" alt="Behind the Scenes 5">
             </div>
 
-            <!-- Bild 5 -->
-            <div class="bts-item">
-                <img src="img/bts-5.jpg" alt="Behind the Scenes 5">
+            <div class="bts-item landscape">
+                <img src="bts/bts-6.png" alt="Behind the Scenes 6">
             </div>
 
-            <!-- Bild 6 -->
-            <div class="bts-item">
-                <img src="img/bts-6.jpg" alt="Behind the Scenes 6">
+            <div class="bts-item landscape">
+                <img src="bts/bts-7.png" alt="Behind the Scenes 7">
             </div>
 
-            <!-- Bild 7 -->
-            <div class="bts-item">
-                <img src="img/bts-7.jpg" alt="Behind the Scenes 7">
+            <div class="bts-item landscape">
+                <img src="bts/bts-8.png" alt="Behind the Scenes 8">
             </div>
 
-            <!-- Bild 8 -->
-            <div class="bts-item">
-                <img src="img/bts-8.jpg" alt="Behind the Scenes 8">
+            <div class="bts-item landscape">
+                <img src="bts/bts-9.jpg" alt="Behind the Scenes 9">
             </div>
+
         </div>
     </main>
 
+    <!-- Lightbox Modal -->
+    <div id="bts-lightbox" class="bts-lightbox">
+        <button class="lightbox-btn lightbox-close" id="lightbox-close" aria-label="Schließen">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button class="lightbox-btn lightbox-prev" id="lightbox-prev" aria-label="Vorheriges Bild">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Behind the Scenes Detailansicht">
+        </div>
+        <button class="lightbox-btn lightbox-next" id="lightbox-next" aria-label="Nächstes Bild">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+
     <script src="header.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = Array.from(document.querySelectorAll('.bts-item img'));
+            const lightbox = document.getElementById('bts-lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            let currentIndex = 0;
+
+            function updateLightboxImage() {
+                lightboxImg.src = items[currentIndex].src;
+                lightboxImg.alt = items[currentIndex].alt;
+
+                /* Bild 3 (Index 2, Hochformat) und Bild 8 (Index 7) auf PC nochmals größer skalieren */
+                if (currentIndex === 2 || currentIndex === 7) {
+                    lightboxImg.classList.add('extra-large');
+                } else {
+                    lightboxImg.classList.remove('extra-large');
+                }
+            }
+
+            function openLightbox(index) {
+                currentIndex = index;
+                updateLightboxImage();
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function showNext() {
+                currentIndex = (currentIndex + 1) % items.length;
+                updateLightboxImage();
+            }
+
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                updateLightboxImage();
+            }
+
+            items.forEach((img, idx) => {
+                img.addEventListener('click', () => openLightbox(idx));
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showNext();
+            });
+
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showPrev();
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') showNext();
+                if (e.key === 'ArrowLeft') showPrev();
+            });
+
+            /* Mobile Swipe Unterstützung */
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            lightbox.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const threshold = 40;
+                if (touchEndX < touchStartX - threshold) {
+                    showNext();
+                } else if (touchEndX > touchStartX + threshold) {
+                    showPrev();
+                }
+            }
+        });
+    </script>
 </body>
-</html> 
+</html>

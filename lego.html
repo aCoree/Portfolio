@@ -29,6 +29,7 @@
             margin: 0 !important;
             padding: 0 !important;
             background-color: rgb(36, 36, 36) !important;
+            scroll-behavior: auto;
         }
 
         body {
@@ -40,6 +41,156 @@
         }
 
 
+        /* =====================================================
+           SCROLL-ANIMATION-BEREICH (HERO + SEKTION 01)
+           ===================================================== */
+
+        .scroll-sequence {
+            position: relative;
+            height: 250vh;
+            width: 100%;
+            background-color: rgb(36, 36, 36);
+        }
+
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: rgb(36, 36, 36);
+        }
+
+        /* Hero Background Video */
+        .lego-hero-video {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 1 !important;
+            border: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Overlay für den Dunkel-Fade */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(36, 36, 36);
+            opacity: 0;
+            z-index: 2;
+        }
+
+        /* Permanent-Schatten unten */
+        .hero-bottom-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom,
+                rgba(36, 36, 36, 0) 0%,
+                rgba(36, 36, 36, 1) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Container für die erste Sektion */
+        .flyer-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(100vh);
+        }
+
+        .flyer-layer-inner {
+            width: 100%;
+            max-width: 1400px;
+            overflow: visible;
+            padding: 20px 40px;
+            box-sizing: border-box;
+        }
+
+        .flyer-layer-inner .lego-section {
+            margin-bottom: 0 !important;
+        }
+
+        .flyer-layer-inner .lego-media {
+            margin-top: 0 !important;
+        }
+
+        .flyer-layer-inner .lego-card-image {
+            margin-top: 0 !important;
+            margin-left: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            max-height: 75vh !important;
+            object-fit: contain !important;
+        }
+
+        .flyer-layer-inner .lego-info-description {
+            font-size: 15px !important;
+            line-height: 1.55 !important;
+            margin-bottom: 0 !important;
+        }
+
+        .flyer-layer-inner .lego-info h2 {
+            font-size: clamp(28px, 3.5vw, 44px) !important;
+        }
+
+        /* Scroll-Button auf dem Hero-Video */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .hero-scroll-indicator:hover {
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .hero-scroll-indicator i {
+            font-size: 13px;
+            animation: bounceDown 2s infinite;
+        }
+
+        @keyframes bounceDown {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(5px); }
+            60% { transform: translateY(2px); }
+        }
 
 
         /* =====================================================
@@ -110,7 +261,7 @@
         }
 
         /* =====================================================
-       HEADER & MOBILE YOUTUBE ICON (VOLLSTÄNDIGER RESET)
+       HEADER & MOBILE YOUTUBE ICON
        ===================================================== */
         body.lego-family-studio .navbar .social-icon,
         body.lego-family-studio .navbar .social-icon:link,
@@ -231,14 +382,13 @@
         }
 
         /* =====================================================
-       MOBILE MENU (POINTER-EVENTS FIX FÜR KLICKBARKEIT)
+       MOBILE MENU
        ===================================================== */
         body.lego-family-studio .mobile-menu {
             background-color: rgb(248, 214, 78) !important;
             background: rgb(248, 214, 78) !important;
             z-index: 99999 !important;
             pointer-events: none !important;
-            /* Verhindert das Blockieren von Klicks im Hintergrund */
         }
 
         body.lego-family-studio .mobile-menu.open,
@@ -261,20 +411,6 @@
         body.lego-family-studio .mobile-menu a.active {
             color: #E30613 !important;
             transition: none !important;
-        }
-
-        /* =====================================================
-       HERO-BEREICH
-       ===================================================== */
-        .lego-hero-wrapper {
-            display: block !important;
-            width: 100% !important;
-            position: relative !important;
-            background-color: rgb(36, 36, 36) !important;
-            color: #ffffff !important;
-            padding-top: 140px !important;
-            padding-bottom: 80px !important;
-            z-index: 2 !important;
         }
 
         /* =====================================================
@@ -389,7 +525,7 @@
         }
 
         @media (min-width: 901px) {
-            .lego-card-image {
+            .lego-white-wrapper .lego-card-image {
                 width: 108% !important;
                 max-width: 108% !important;
                 margin-top: -235px !important;
@@ -477,17 +613,37 @@
         }
 
         /* =====================================================
+       TITEL-ZEILE MIT BUTTON
+       ===================================================== */
+        .lego-info-title-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            flex-wrap: wrap !important;
+            gap: 16px !important;
+            margin: 0 0 22px 0 !important;
+        }
+
+        .lego-info-title-row h2 {
+            margin: 0 !important;
+        }
+
+        .lego-info-title-row .lego-btn {
+            margin-top: 4px !important;
+        }
+
+        /* =====================================================
        HERO TEXT
        ===================================================== */
-        .lego-hero-wrapper .lego-info-label {
+        .flyer-layer-inner .lego-info-label {
             color: #FFCC00 !important;
         }
 
-        .lego-hero-wrapper .lego-info h2 {
+        .flyer-layer-inner .lego-info h2 {
             color: rgb(234, 51, 35) !important;
         }
 
-        .lego-hero-wrapper .lego-info-description {
+        .flyer-layer-inner .lego-info-description {
             color: #ffffff !important;
             opacity: 0.9 !important;
         }
@@ -559,8 +715,8 @@
             text-align: right !important;
         }
 
-  /* =====================================================
-       NEUES CLEANES BUTTON DESIGN ("KANAL ANSEHEN")
+        /* =====================================================
+       BUTTON DESIGN ("KANAL ANSEHEN")
        ===================================================== */
         .lego-btn,
         body.lego-family-studio .lego-btn {
@@ -569,8 +725,9 @@
             justify-content: center !important;
             position: relative !important;
             z-index: 20 !important;
-            margin-top: 60px !important; /* Abstand nach oben zum Bild */
-            margin-left: 40px !important; /* HIER NEU: Schiebt den Button etwas nach rechts */
+            margin: 0 !important;
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
             padding: 12px 32px !important;
             border-radius: 9999px !important;
             cursor: pointer !important;
@@ -590,7 +747,6 @@
             backdrop-filter: blur(6px) !important;
             -webkit-backdrop-filter: blur(6px) !important;
             transition: none !important;
-            /* Sofortige Änderung ohne Transition/Animation */
             animation: none !important;
         }
 
@@ -600,7 +756,6 @@
             content: none !important;
         }
 
-        /* Sofortiger Wechsel auf Rot beim Hovern */
         .lego-btn:hover,
         .lego-btn:focus,
         .lego-btn:active,
@@ -619,7 +774,7 @@
         }
 
         /* =====================================================
-       LEGO FOOTER (OVERRIDE & VISITED FIX)
+       LEGO FOOTER
        ===================================================== */
         body.lego-family-studio .site-footer,
         body.lego-family-studio footer {
@@ -671,7 +826,7 @@
             animation: none !important;
         }
 
-        /* FOOTER YOUTUBE ICON (SOFORTIGES ROT BEIM HOVER, VOLLSTÄNDIGER RESET) */
+        /* FOOTER YOUTUBE ICON */
         body.lego-family-studio .site-footer .social-icon,
         body.lego-family-studio .site-footer .social-icon:link,
         body.lego-family-studio .site-footer .social-icon:visited,
@@ -747,9 +902,12 @@
        TABLET RESPONSIVE
        ===================================================== */
         @media (max-width: 900px) {
-            .lego-hero-wrapper {
-                padding-top: 110px !important;
-                padding-bottom: 60px !important;
+            .flyer-layer {
+                align-items: center !important;
+            }
+
+            .flyer-layer-inner {
+                padding: 80px 25px 24px 25px;
             }
 
             .lego-white-wrapper {
@@ -763,32 +921,45 @@
             }
 
             .lego-section {
-                margin-bottom: 70px !important;
+                margin-bottom: 45px !important;
             }
 
             .lego-separator {
-                margin-bottom: 70px !important;
+                margin-bottom: 45px !important;
             }
 
             .lego-two-column,
             .lego-two-column.reverse {
-                grid-template-columns: 1fr !important;
+                display: flex !important;
+                flex-direction: column !important;
+                row-gap: 22px !important;
                 column-gap: 0 !important;
-                row-gap: 45px !important;
             }
 
             .lego-info {
+                order: 1 !important;
                 max-width: 100% !important;
             }
 
-            .lego-card-image {
+            .lego-media {
+                order: 2 !important;
                 width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 !important;
+                margin-top: 0 !important;
             }
 
-            .lego-btn {
-                margin-top: 25px !important;
+            .flyer-layer-inner .lego-media {
+                order: 1 !important;
+            }
+
+            .flyer-layer-inner .lego-info {
+                order: 2 !important;
+            }
+
+            .flyer-layer-inner .lego-card-image {
+                max-height: 35vh !important;
+                width: auto !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
             }
         }
 
@@ -796,9 +967,8 @@
        MOBILE RESPONSIVE
        ===================================================== */
         @media (max-width: 600px) {
-            .lego-hero-wrapper {
-                padding-top: 100px !important;
-                padding-bottom: 50px !important;
+            .flyer-layer-inner {
+                padding: 70px 18px 20px 18px;
             }
 
             .lego-white-wrapper {
@@ -811,12 +981,25 @@
                 padding-right: 18px !important;
             }
 
+            .lego-section {
+                margin-bottom: 35px !important;
+            }
+
+            .lego-separator {
+                margin-bottom: 35px !important;
+            }
+
+            .lego-two-column,
+            .lego-two-column.reverse {
+                row-gap: 18px !important;
+            }
+
             .lego-info h2 {
-                font-size: 36px !important;
+                font-size: 32px !important;
             }
 
             .lego-info-description {
-                font-size: 15px !important;
+                font-size: 14px !important;
             }
 
             .lego-details li {
@@ -838,52 +1021,75 @@
 </head>
 
 <body class="lego-family-studio">
-    <div class="lego-hero-wrapper">
-        <div class="lego-container">
-            <section class="lego-section">
-                <div class="lego-two-column">
-                    <div class="lego-media">
-                        <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio"
-                            class="lego-card-image">
-                        <a href="https://www.youtube.com/@legofamilystudio8229" class="lego-btn" target="_blank"
-                            rel="noopener noreferrer">
-                            Kanal ansehen
-                        </a>
-                    </div>
-                    <div class="lego-info">
-                        <span class="lego-info-label">
-                            01 / YouTube Channel
-                        </span>
-                        <h2>
-                            Über den Kanal
-                        </h2>
-                        <p class="lego-info-description">
-                            Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video.
-                            Als dann der Lockdown 2020 kam, konnten wir unsere freie Zeit voll und ganz dieser Sache
-                            widmen.
-                            <br><br>
-                            So entstand der YouTube-Kanal „Lego Family Studio“.
-                            <br><br>
-                            In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede einzelne
-                            Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um
-                            LEGO-Figuren, die irgendetwas erlebten. Die Geschichten hatten manchmal auch mit der
-                            aktuellen
-                            Weltlage zu tun, zum Beispiel mit Corona.
-                            <br><br>
-                            Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis
-                            Schnitt-App zusammengeschnitten. Man war sehr viele Stunden am Arbeiten für die kurzen
-                            Videos,
-                            die man am Ende hatte.
-                            <br><br>
-                            Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und
-                            ich
-                            kann es mit grossem Stolz zeigen.
-                        </p>
-                    </div>
+
+    <!-- HERO & SCROLL SEQUENCE -->
+    <div class="scroll-sequence">
+        <div class="sticky-container">
+
+            <!-- Fullscreen Background Video -->
+            <video class="lego-hero-video" autoplay loop muted playsinline>
+                <source src="lego-loop-h264.mp4" type="video/mp4">
+                Ihr Browser unterstützt kein Video.
+            </video>
+
+            <div class="hero-bottom-fade"></div>
+
+            <div class="hero-overlay"></div>
+
+            <div class="hero-scroll-indicator" onclick="scrollPastHero()">
+                <span>Scrollen</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+
+            <div class="flyer-layer">
+                <div class="flyer-layer-inner">
+                    <section class="lego-section">
+                        <div class="lego-two-column">
+                            <div class="lego-media">
+                                <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio"
+                                    class="lego-card-image">
+                            </div>
+                            <div class="lego-info">
+                                <span class="lego-info-label">
+                                    01 / YouTube Channel
+                                </span>
+                                <div class="lego-info-title-row">
+                                    <h2>
+                                        Über den Kanal
+                                    </h2>
+                                    <a href="https://www.youtube.com/@legofamilystudio8229" class="lego-btn" target="_blank"
+                                        rel="noopener noreferrer">
+                                        Kanal ansehen
+                                    </a>
+                                </div>
+                                <p class="lego-info-description">
+                                    Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video.
+                                    Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache
+                                    widmen.
+                                    <br><br>
+                                    So entstand der YouTube-Kanal „Lego Family Studio“.
+                                    <br><br>
+                                    In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede
+                                    Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um
+                                    LEGO-Figuren, die etwas erlebten. Die Geschichten hatten manchmal auch mit der
+                                    aktuellen Weltlage zu tun, zum Beispiel mit Corona.
+                                    <br><br>
+                                    Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis
+                                    Schnitt-App zusammengeschnitten. Man war viele Stunden am Arbeiten für die kurzen
+                                    Videos, die man am Ende hatte.
+                                    <br><br>
+                                    Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut
+                                    und kann es mit Stolz zeigen.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </section>
+            </div>
+
         </div>
     </div>
+
     <div class="lego-white-wrapper">
         <main class="lego-container">
             <section class="lego-section">
@@ -960,6 +1166,59 @@
         </main>
     </div>
     <script src="header.js"></script>
+
+    <!-- SCROLL ANIMATION SCRIPT -->
+    <script>
+        function scrollPastHero() {
+            const windowH = window.innerHeight;
+            const slideEnd = windowH * 1.2;
+            window.scrollTo({ top: slideEnd, behavior: 'smooth' });
+        }
+
+        document.addEventListener("scroll", () => {
+            const scrollY = window.scrollY;
+            const windowH = window.innerHeight;
+
+            const overlay = document.querySelector('.hero-overlay');
+            const flyerLayer = document.querySelector('.flyer-layer');
+            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
+
+            // 1. Fade ins Dunkle
+            let fadeProgress = scrollY / (windowH * 0.7);
+            if (fadeProgress > 1) fadeProgress = 1;
+            if (fadeProgress < 0) fadeProgress = 0;
+
+            if (overlay) {
+                overlay.style.opacity = fadeProgress;
+            }
+
+            // 2. Parallax Reveal der ersten Sektion
+            let slideStart = windowH * 0.3;
+            let slideEnd = windowH * 1.2;
+            let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
+
+            if (slideProgress > 1) slideProgress = 1;
+            if (slideProgress < 0) slideProgress = 0;
+
+            let easeOut = 1 - Math.pow(1 - slideProgress, 3);
+
+            if (flyerLayer) {
+                let yOffset = 100 - (easeOut * 100);
+                flyerLayer.style.transform = `translateY(${yOffset}vh)`;
+                flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            }
+
+            // 3. Scroll-Button ausblenden
+            if (scrollIndicator) {
+                let buttonFade = 1 - (scrollY / (windowH * 0.25));
+                if (buttonFade < 0) buttonFade = 0;
+                if (buttonFade > 1) buttonFade = 1;
+                scrollIndicator.style.opacity = buttonFade;
+                scrollIndicator.style.pointerEvents = buttonFade === 0 ? 'none' : 'auto';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
