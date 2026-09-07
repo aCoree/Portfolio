@@ -139,6 +139,31 @@
             transform: scale(1.05);
         }
 
+        /* ─── ANPASSUNGEN FÜR MOBILE GERÄTE (HANDYS) ─── */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding-bottom: 24px;
+            }
+
+            .mute-btn {
+                width: 35px;
+                height: 35px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 0.85rem;
+            }
+
+            .scroll-down-btn {
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+                gap: 5px;
+            }
+
+            .scroll-down-btn i {
+                font-size: 0.95rem;
+            }
+        }
+
         /* ─── ORIGINAL LAYOUT ZURÜCK ─── */
         .project-detail-page {
             position: relative;
@@ -403,33 +428,34 @@
         const scrollBtn = document.getElementById('scrollDownBtn');
         const overlay = document.getElementById('videoOverlay');
 
-        // Mute / Unmute umschalten
-        if (muteBtn && bgVideo) {
-            muteBtn.addEventListener('click', () => {
-                bgVideo.muted = !bgVideo.muted;
-                if (bgVideo.muted) {
-                    muteIcon.className = 'fa-solid fa-volume-xmark';
-                } else {
-                    muteIcon.className = 'fa-solid fa-volume-high';
-                }
-            });
-        }
+        let audioCtx = null;
+        let gainNode = null;
+        let isWebAudioSetup = false;
 
-        // Scroll-Logik: Video abdunkeln, Audio leiser machen, Buttons verstecken und Video pausieren
-        window.addEventListener('scroll', () => {
+        // Lautstärke & Overlay-Funktion
+        function updateVolumeAndOverlay() {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
             
             // 1. Abdunkeln & Audio-Fade: Von 0 bis ca. 80% des Bildschirms berechnen
             let fadeProgress = scrollY / (windowH * 0.8);
-            if (fadeProgress > 1) fadeProgress = 1; // Maximal komplett schwarz / 0 Lautstärke
+            if (fadeProgress > 1) fadeProgress = 1;
+            if (fadeProgress < 0) fadeProgress = 0;
             
             if (overlay) {
                 overlay.style.opacity = fadeProgress;
             }
             
+            const targetVolume = 1 - fadeProgress;
+
+            // Standard HTML5 Video Volume (für PC / Android)
             if (bgVideo) {
-                bgVideo.volume = Math.max(0, 1 - fadeProgress);
+                bgVideo.volume = targetVolume;
+            }
+
+            // Web Audio API Gain Node Volume (für iOS Safari)
+            if (gainNode && audioCtx && audioCtx.state === 'running') {
+                gainNode.gain.value = targetVolume;
             }
 
             // 2. Mute Button & "Ganzer Film" Button ausblenden, sobald man ein bisschen scrollt (> 100px)
@@ -451,7 +477,49 @@
                     bgVideo.play().catch(() => {});
                 }
             }
-        });
+        }
+
+        // Mute / Unmute umschalten
+        if (muteBtn && bgVideo) {
+            muteBtn.addEventListener('click', () => {
+                if (bgVideo.muted) {
+                    // 1. Zuerst Video entmuten
+                    bgVideo.muted = false;
+                    muteIcon.className = 'fa-solid fa-volume-high';
+
+                    // 2. Web Audio API einrichten für stufenloses Fading auf iOS / Mobilgeräten
+                    if (!isWebAudioSetup) {
+                        try {
+                            const AudioContext = window.AudioContext || window.webkitAudioContext;
+                            if (AudioContext) {
+                                audioCtx = new AudioContext();
+                                gainNode = audioCtx.createGain();
+                                const source = audioCtx.createMediaElementSource(bgVideo);
+                                source.connect(gainNode);
+                                gainNode.connect(audioCtx.destination);
+                                isWebAudioSetup = true;
+                            }
+                        } catch (e) {
+                            console.warn("Web Audio API Fallback:", e);
+                            gainNode = null;
+                            audioCtx = null;
+                        }
+                    }
+
+                    if (audioCtx && audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+
+                    updateVolumeAndOverlay();
+                } else {
+                    bgVideo.muted = true;
+                    muteIcon.className = 'fa-solid fa-volume-xmark';
+                }
+            });
+        }
+
+        // Scroll-Event
+        window.addEventListener('scroll', updateVolumeAndOverlay);
     </script>
 
     <!-- ─── COLOR GRADING SLIDER SCRIPT ─── -->
