@@ -68,8 +68,13 @@
             pointer-events: none; /* Klicks gehen durch aufs Video (bzw. stören nicht) */
         }
 
-        /* Scroll Button unten in der Mitte */
+        /* Scroll Button unten in der Mitte (Jetzt fixiert wie der Mute-Button) */
         .scroll-down-btn {
+            position: fixed;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
             pointer-events: auto;
             display: flex;
             flex-direction: column;
@@ -88,7 +93,11 @@
 
         .scroll-down-btn:hover {
             color: #ffffff;
-            transform: translateY(3px);
+            transform: translate(-50%, 3px);
+        }
+
+        .scroll-down-btn.fade-out-on-scroll {
+            transform: translate(-50%, 10px) !important;
         }
 
         .scroll-down-btn i {
@@ -157,6 +166,7 @@
                 font-size: 0.65rem;
                 letter-spacing: 2px;
                 gap: 5px;
+                bottom: 24px;
             }
 
             .scroll-down-btn i {
