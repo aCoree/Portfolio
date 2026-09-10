@@ -25,7 +25,7 @@
             height: auto;
         }
 
-        /* ─── FULLSCREEN BACKGROUND VIDEO ─── */
+        /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE ─── */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -41,6 +41,40 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            opacity: 0; /* Versteckt das Video am Anfang */
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Das Video wird sichtbar, wenn es gestartet wurde */
+        .bg-video.playing {
+            opacity: 1;
+        }
+
+        /* Das Start-Standbild */
+        .bg-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/run-grading-after.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        /* Abdunkelung für das Standbild (Dunkleres Overlay) */
+        .bg-image-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d0d0d;
+            opacity: 0.65; /* Abdunkelung des Standbildes */
         }
 
         /* Dieses Overlay wird beim Scrollen langsam schwarz */
@@ -53,29 +87,76 @@
             background: #0d0d0d;
             opacity: 0; /* Startet komplett durchsichtig */
             transition: opacity 0.1s linear;
+            z-index: 2; /* Über Video und Standbild */
         }
 
-        /* ─── HERO SECTION (100vh Platzhalter für das Video) ─── */
+        /* ─── HERO SECTION ─── */
         .hero-section {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             height: 100vh;
             display: flex;
-            align-items: flex-end; /* Schiebt den Inhalt nach ganz unten */
-            justify-content: center;
-            padding-bottom: 35px; /* Auf exakt gleicher Linie wie der Mute-Button */
+            align-items: center; /* Vertikal zentrieren */
+            justify-content: center; /* Horizontal zentrieren */
             box-sizing: border-box;
-            pointer-events: none; /* Klicks gehen durch aufs Video (bzw. stören nicht) */
+            pointer-events: none;
         }
 
-        /* Scroll Button unten in der Mitte (Jetzt fixiert wie der Mute-Button) */
+        /* ─── CLEANER STYLISCHER TRAILER START BUTTON (ECKIG, ZENTRIERT) ─── */
+        .start-trailer-btn {
+            position: fixed; /* Fixiert in der Mitte */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            pointer-events: auto;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            padding: 16px 40px;
+            /* ECKIGES DESIGN - KEINE PILLE */
+            border-radius: 4px; /* Sehr kleine Rundung für moderne Ecken */
+            font-size: 1.1rem; /* Größere Schrift */
+            font-weight: 700; /* Fetter */
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.35s ease, opacity 0.5s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .start-trailer-btn:hover {
+            background: #ffffff;
+            color: #0d0d0d;
+            border-color: #ffffff;
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .start-trailer-btn i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Sanftes Ausblenden beim Klick oder Scrollen */
+        .start-trailer-btn.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Scroll Button unten in der Mitte (Am Anfang unsichtbar) */
         .scroll-down-btn {
             position: fixed;
             bottom: 35px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 100;
-            pointer-events: auto;
+            pointer-events: none;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -86,9 +167,16 @@
             font-weight: 600;
             letter-spacing: 2.5px;
             text-transform: uppercase;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.3s ease, color 0.3s ease;
+        }
+
+        /* Wird nach 4 Sekunden eingeblendet */
+        .scroll-down-btn.show-btn {
             opacity: 1;
             visibility: visible;
-            transition: all 0.3s ease;
+            pointer-events: auto;
         }
 
         .scroll-down-btn:hover {
@@ -98,6 +186,9 @@
 
         .scroll-down-btn.fade-out-on-scroll {
             transform: translate(-50%, 10px) !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
         }
 
         .scroll-down-btn i {
@@ -111,55 +202,17 @@
             60% { transform: translateY(-4px); }
         }
 
-        /* Universelle Klasse zum Ausblenden beim Scrollen */
-        .fade-out-on-scroll {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-            transform: translateY(10px);
-        }
-
-        /* Dezent gefrosteter Mute/Unmute Button */
-        .mute-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 100;
-            pointer-events: auto;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0.35; /* Sehr dezent am Anfang */
-            visibility: visible;
-            transition: all 0.3s ease;
-        }
-
-        .mute-btn:hover {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.6);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
-        }
-
-        /* ─── ANPASSUNGEN FÜR MOBILE GERÄTE (HANDYS) ─── */
+        /* ─── ANPASSUNGEN FÜR MOBILE GERÄTE ─── */
         @media (max-width: 768px) {
             .hero-section {
                 padding-bottom: 24px;
             }
 
-            .mute-btn {
-                width: 35px;
-                height: 35px;
-                bottom: 20px;
-                right: 20px;
-                font-size: 0.85rem;
+            .start-trailer-btn {
+                padding: 12px 28px;
+                font-size: 0.95rem;
+                letter-spacing: 2px;
+                border-radius: 2px;
             }
 
             .scroll-down-btn {
@@ -174,21 +227,19 @@
             }
         }
 
-        /* ─── ORIGINAL LAYOUT ZURÜCK ─── */
+        /* ─── ORIGINAL LAYOUT ─── */
         .project-detail-page {
             position: relative;
             z-index: 1;
             background: transparent;
         }
 
-        /* WICHTIG: Stellt sicher, dass der Footer nicht hinter dem Video verschwindet */
         footer {
             position: relative;
             z-index: 1;
             background-color: #0d0d0d;
         }
 
-        /* ─── TOP NAVIGATION OBEN (LINKS & RECHTS) ─── */ 
         .page-top-nav {
             display: flex;
             justify-content: space-between;
@@ -196,19 +247,16 @@
             margin-bottom: 24px;
         }
 
-        /* ─── VIOLETT NUR FÜR BEHIND THE SCENES & UMSETZUNG ─── */
         .heading-violet {
             color: #8b7bd8 !important;
             font-weight: 700;
         }
 
-        /* ─── WEISS FÜR COLOR GRADING ─── */
         .section-title {
             color: #ffffff;
             font-weight: 700;
         }
 
-        /* ─── CLEANER APPLE-STYLE OUTLINE BUTTONS ─── */
         .button-group {
             display: flex;
             gap: 12px;
@@ -247,12 +295,10 @@
             transform: translateX(2px);
         }
 
-        /* Special Hover-Animation für Pfeil nach unten beim Grading-Slider */
         .grading-apple-btn.slider-btn:hover i {
             transform: translateY(2px);
         }
 
-        /* ─── COLOR GRADING SLIDER & TOP LABELS ─── */
         .grading-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -274,7 +320,6 @@
             text-transform: uppercase;
         }
 
-        /* ─── CSS GRID STACKING (PERFEKTE DECKUNGSGLEICHHEIT) ─── */
         .grading-slider {
             position: relative;
             display: grid;
@@ -335,27 +380,33 @@
 </head>
 <body>
 
-    <!-- ─── FULLSCREEN HINTERGRUND VIDEO & MUTE BUTTON ─── -->
+    <!-- ─── FULLSCREEN HINTERGRUND VIDEO & Standbild ─── -->
     <div class="bg-video-container">
-        <video id="bgVideo" autoplay loop muted playsinline class="bg-video">
+        <video id="bgVideo" loop playsinline class="bg-video" preload="auto">
             <source src="6767.mp4" type="video/mp4">
         </video>
+        <!-- Standbild welches am Anfang sichtbar ist -->
+        <div id="bgImageOverlay" class="bg-image-overlay"></div>
+        <!-- Schwarzes Overlay beim Scrollen -->
         <div id="videoOverlay" class="bg-video-overlay"></div>
     </div>
 
-    <button id="muteToggleBtn" class="mute-btn" title="Ton ein-/ausschalten" aria-label="Mute Toggle">
-        <i id="muteIcon" class="fa-solid fa-volume-xmark"></i>
+    <!-- ZENTRIERTER BUTTON "TRAILER STARTEN" (ECKIG) -->
+    <button id="startTrailerBtn" class="start-trailer-btn">
+        <i class="fa-solid fa-play"></i>
+        <span>Trailer starten</span>
     </button>
 
-    <!-- ─── HERO SECTION (Zeigt den "Ganzer Film"-Button unten an) ─── -->
+    <!-- ─── HERO SECTION ─── -->
     <div class="hero-section">
+        <!-- "GANZER FILM" BUTTON (ERSCHEINT ERST NACH 4 SEKUNDEN) -->
         <a href="#content" id="scrollDownBtn" class="scroll-down-btn">
             <span>Ganzer Film</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
     </div>
 
-    <!-- ─── INHALT KURZFILM SEITE (Original Layout) ─── -->
+    <!-- ─── INHALT KURZFILM SEITE ─── -->
     <section id="content" class="section project-detail-page">
         <div class="container">
             <div class="page-top-nav">
@@ -430,24 +481,44 @@
 
     <!-- Footer wird automatisch durch header.js am Ende des body eingefügt -->
 
-    <!-- ─── HINTERGRUND VIDEO STEUERUNG (MUTE, AUDIO-FADE, SCROLL-FADE & STOP) ─── -->
+    <!-- ─── TRAILER & VIDEO LOGIK SKRIPT ─── -->
     <script>
         const bgVideo = document.getElementById('bgVideo');
-        const muteBtn = document.getElementById('muteToggleBtn');
-        const muteIcon = document.getElementById('muteIcon');
+        const bgImageOverlay = document.getElementById('bgImageOverlay');
+        const startTrailerBtn = document.getElementById('startTrailerBtn');
         const scrollBtn = document.getElementById('scrollDownBtn');
         const overlay = document.getElementById('videoOverlay');
 
-        let audioCtx = null;
-        let gainNode = null;
-        let isWebAudioSetup = false;
+        // Trailer mit Ton starten
+        if (startTrailerBtn && bgVideo) {
+            startTrailerBtn.addEventListener('click', () => {
+                // Video entmuten & Lautstärke auf Max setzen
+                bgVideo.muted = false;
+                bgVideo.volume = 1;
 
-        // Lautstärke & Overlay-Funktion
+                // Video abspielen & Klasse zum Einblenden hinzufügen
+                bgVideo.play().catch((e) => console.log("Video Play Error:", e));
+                bgVideo.classList.add('playing');
+
+                // Standbild & "Trailer starten" Button ausblenden
+                bgImageOverlay.style.opacity = 0;
+                startTrailerBtn.classList.add('fade-out');
+
+                // Nach genau 4 Sekunden den "Ganzer Film" Button einblenden
+                setTimeout(() => {
+                    if (scrollBtn) {
+                        scrollBtn.classList.add('show-btn');
+                    }
+                }, 4000);
+            });
+        }
+
+        // Lautstärke & Overlay-Funktion beim Scrollen
         function updateVolumeAndOverlay() {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
             
-            // 1. Abdunkeln & Audio-Fade: Von 0 bis ca. 80% des Bildschirms berechnen
+            // 1. Abdunkeln & Audio-Fade beim Scrollen
             let fadeProgress = scrollY / (windowH * 0.8);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
@@ -458,77 +529,44 @@
             
             const targetVolume = 1 - fadeProgress;
 
-            // Standard HTML5 Video Volume (für PC / Android)
-            if (bgVideo) {
+            if (bgVideo && !bgVideo.muted) {
                 bgVideo.volume = targetVolume;
             }
 
-            // Web Audio API Gain Node Volume (für iOS Safari)
-            if (gainNode && audioCtx && audioCtx.state === 'running') {
-                gainNode.gain.value = targetVolume;
-            }
-
-            // 2. Mute Button & "Ganzer Film" Button ausblenden, sobald man ein bisschen scrollt (> 100px)
+            // 2. Button Verhalten beim Scrollen
+            
             if (scrollY > 100) {
-                if (muteBtn) muteBtn.classList.add('fade-out-on-scroll');
+                // "Trailer starten" ausblenden, falls noch da
+                if (startTrailerBtn) startTrailerBtn.classList.add('fade-out');
+                
+                // "Ganzer Film" Button ausblenden beim Runterscrollen
                 if (scrollBtn) scrollBtn.classList.add('fade-out-on-scroll');
             } else {
-                if (muteBtn) muteBtn.classList.remove('fade-out-on-scroll');
-                if (scrollBtn) scrollBtn.classList.remove('fade-out-on-scroll');
+                // "Trailer starten" wieder einblenden, falls Trailer NICHT gestartet wurde
+                if (startTrailerBtn && (!bgVideo.classList.contains('playing'))) {
+                    startTrailerBtn.classList.remove('fade-out');
+                }
+                
+                // "Ganzer Film" Button wieder einblenden, falls er eingeblendet sein soll (nach 4sek)
+                if (scrollBtn && scrollBtn.classList.contains('show-btn')) {
+                    scrollBtn.classList.remove('fade-out-on-scroll');
+                }
             }
 
-            // 3. Video pausieren, wenn der Inhaltsbereich komplett über dem Video liegt
+            // 3. Video pausieren, wenn man nach unten scrollt
             if (scrollY > windowH * 0.9) {
                 if (!bgVideo.paused) {
                     bgVideo.pause();
                 }
             } else {
-                if (bgVideo.paused) {
+                // Nur weiterspielen, wenn der Trailer bereits einmal gestartet wurde
+                if (bgVideo.paused && bgVideo.classList.contains('playing')) {
                     bgVideo.play().catch(() => {});
                 }
             }
         }
 
-        // Mute / Unmute umschalten
-        if (muteBtn && bgVideo) {
-            muteBtn.addEventListener('click', () => {
-                if (bgVideo.muted) {
-                    // 1. Zuerst Video entmuten
-                    bgVideo.muted = false;
-                    muteIcon.className = 'fa-solid fa-volume-high';
-
-                    // 2. Web Audio API einrichten für stufenloses Fading auf iOS / Mobilgeräten
-                    if (!isWebAudioSetup) {
-                        try {
-                            const AudioContext = window.AudioContext || window.webkitAudioContext;
-                            if (AudioContext) {
-                                audioCtx = new AudioContext();
-                                gainNode = audioCtx.createGain();
-                                const source = audioCtx.createMediaElementSource(bgVideo);
-                                source.connect(gainNode);
-                                gainNode.connect(audioCtx.destination);
-                                isWebAudioSetup = true;
-                            }
-                        } catch (e) {
-                            console.warn("Web Audio API Fallback:", e);
-                            gainNode = null;
-                            audioCtx = null;
-                        }
-                    }
-
-                    if (audioCtx && audioCtx.state === 'suspended') {
-                        audioCtx.resume();
-                    }
-
-                    updateVolumeAndOverlay();
-                } else {
-                    bgVideo.muted = true;
-                    muteIcon.className = 'fa-solid fa-volume-xmark';
-                }
-            });
-        }
-
-        // Scroll-Event
+        // Scroll-Event aktivieren
         window.addEventListener('scroll', updateVolumeAndOverlay);
     </script>
 
