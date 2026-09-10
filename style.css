@@ -1138,12 +1138,12 @@ select {
 }
 
 .see-all-link:hover {
-    color: #66b2ff;
-    transform: translateX(3px);
+    color: #76baff;
+
 }
 
 .apple-slider-container {
-    position: relative;
+    position: relative; 
     width: 100%;
 }
 
