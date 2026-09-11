@@ -186,22 +186,6 @@
             -webkit-backface-visibility: hidden;
         }
 
-        /* ─── HOVER-PREVIEW VIDEO (z.B. RUN-KARTE) ─── */
-        .apple-card-video {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: inherit !important;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .apple-card:hover .apple-card-video {
-            opacity: 1;
-        }
-
         /* GPU-Kopplung für Text & Button (verhindert verzögertes Laden online) */
         .apple-card-content,
         .apple-btn,
@@ -423,7 +407,7 @@
         <div class="hero-overlay"></div>
 
         <video class="hero-video" autoplay muted loop playsinline preload="auto" fetchpriority="high">
-            <source src="dji-loop-h264.mp4" type="video/mp4">
+            <source src="hero-loop-h264.mp4" type="video/mp4">
             Dein Browser unterstützt keine HTML5-Videos.
         </video>
 
@@ -460,11 +444,8 @@
 
                     <div class="apple-card" onclick="window.location.href='run.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('images/run-banner.jpg'); --bg-mobile: url('cards/card-big-run.jpg');">
+                            style="--bg-desktop: url('cards/card-big-run.png'); --bg-mobile: url('cards/card-small-run.png');">
                         </div>
-                        <video class="apple-card-video" muted loop playsinline preload="metadata">
-                            <source src="run-card-loop-h264.mp4" type="video/mp4">
-                        </video>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="run.html" class="apple-btn">
@@ -519,7 +500,7 @@
 
                     <div class="apple-card" onclick="window.location.href='musik.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-musik.jpg'); --bg-mobile: url('cards/card-big-musik.jpg');">
+                            style="--bg-desktop: url('cards/card-big-musik.png'); --bg-mobile: url('cards/card-big-musik.png');">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -623,24 +604,6 @@
 
         sections.forEach(section => {
             navObserver.observe(section);
-        });
-
-        // HOVER-PREVIEW: Video auf der Karte abspielen, wenn man drüber hovert
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.apple-card').forEach((card) => {
-                const previewVideo = card.querySelector('.apple-card-video');
-                if (!previewVideo) return;
-
-                card.addEventListener('mouseenter', () => {
-                    previewVideo.currentTime = 0;
-                    previewVideo.play().catch(() => { });
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    previewVideo.pause();
-                    previewVideo.currentTime = 0;
-                });
-            });
         });
 
         // UNENDLICHER KREISLAUF-SLIDER (GEFIXT)

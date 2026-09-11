@@ -113,10 +113,10 @@
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.4);
             color: #ffffff;
-            padding: 16px 40px;
+            padding: 13px 32px;
             /* ECKIGES DESIGN - KEINE PILLE */
             border-radius: 4px; /* Sehr kleine Rundung für moderne Ecken */
-            font-size: 1.1rem; /* Größere Schrift */
+            font-size: 0.95rem; /* Etwas kleinere Schrift */
             font-weight: 700; /* Fetter */
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -124,7 +124,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: all 0.35s ease, opacity 0.5s ease;
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.5s ease;
             opacity: 1;
             visibility: visible;
         }
@@ -133,13 +133,10 @@
             background: #ffffff;
             color: #0d0d0d;
             border-color: #ffffff;
-            transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         .start-trailer-btn i {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
+            font-size: 0.9rem;
         }
 
         /* Sanftes Ausblenden beim Klick oder Scrollen */
@@ -154,7 +151,7 @@
             position: fixed;
             bottom: 35px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateZ(0);
             z-index: 100;
             pointer-events: none;
             display: flex;
@@ -170,6 +167,9 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.3s ease, color 0.3s ease;
+            /* Eigener Compositing-Layer: verhindert, dass der Button unsichtbar bleibt, bis gescrollt wird */
+            will-change: opacity, transform;
+            backface-visibility: hidden;
         }
 
         /* Wird nach 4 Sekunden eingeblendet */
@@ -181,11 +181,11 @@
 
         .scroll-down-btn:hover {
             color: #ffffff;
-            transform: translate(-50%, 3px);
+            transform: translate(-50%, 3px) translateZ(0);
         }
 
         .scroll-down-btn.fade-out-on-scroll {
-            transform: translate(-50%, 10px) !important;
+            transform: translate(-50%, 10px) translateZ(0) !important;
             opacity: 0 !important;
             visibility: hidden !important;
             pointer-events: none !important;
@@ -209,8 +209,8 @@
             }
 
             .start-trailer-btn {
-                padding: 12px 28px;
-                font-size: 0.95rem;
+                padding: 11px 26px;
+                font-size: 0.88rem;
                 letter-spacing: 2px;
                 border-radius: 2px;
             }
@@ -383,7 +383,7 @@
     <!-- ─── FULLSCREEN HINTERGRUND VIDEO & Standbild ─── -->
     <div class="bg-video-container">
         <video id="bgVideo" loop playsinline class="bg-video" preload="auto">
-            <source src="6767.mp4" type="video/mp4">
+            <!-- Quelle wird per JS gesetzt: run-trailer-big.mp4 (PC/Querformat) oder run-trailer-small.mp4 (Mobile/Hochformat) -->
         </video>
         <!-- Standbild welches am Anfang sichtbar ist -->
         <div id="bgImageOverlay" class="bg-image-overlay"></div>
@@ -489,6 +489,20 @@
         const scrollBtn = document.getElementById('scrollDownBtn');
         const overlay = document.getElementById('videoOverlay');
 
+        // ─── RICHTIGEN TRAILER JE NACH GERÄT LADEN ───
+        // PC / Querformat -> run-trailer-big.mp4
+        // Mobile / Hochformat -> run-trailer-small.mp4
+        function getTrailerSource() {
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            return isMobile ? 'run-trailer-small.mp4' : 'run-trailer-big.mp4';
+        }
+
+        if (bgVideo) {
+            const trailerSrc = getTrailerSource();
+            bgVideo.src = trailerSrc;
+            bgVideo.load();
+        }
+
         // Trailer mit Ton starten
         if (startTrailerBtn && bgVideo) {
             startTrailerBtn.addEventListener('click', () => {
@@ -508,6 +522,9 @@
                 setTimeout(() => {
                     if (scrollBtn) {
                         scrollBtn.classList.add('show-btn');
+                        // Repaint-Fix: erzwingt sofortiges korrektes Rendern des fixed-position Buttons,
+                        // ohne dass der Nutzer erst scrollen muss (Browser-Bug bei fixed + video)
+                        void scrollBtn.offsetHeight;
                     }
                 }, 4000);
             });
