@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RUN – Kurzfilm | Aurelio Zingarello</title>
+    
+    <!-- PRELOAD FÜR DAS SMALL-TRAILER VIDEO -->
+    <link rel="preload" href="run-trailer-small.mp4" as="video" type="video/mp4">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -382,8 +386,7 @@
 
     <!-- ─── FULLSCREEN HINTERGRUND VIDEO & Standbild ─── -->
     <div class="bg-video-container">
-        <video id="bgVideo" loop playsinline class="bg-video" preload="auto">
-            <!-- Quelle wird per JS gesetzt: run-trailer-big.mp4 (PC/Querformat) oder run-trailer-small.mp4 (Mobile/Hochformat) -->
+        <video id="bgVideo" src="run-trailer-small.mp4" loop playsinline class="bg-video" preload="auto">
         </video>
         <!-- Standbild welches am Anfang sichtbar ist -->
         <div id="bgImageOverlay" class="bg-image-overlay"></div>
@@ -449,7 +452,7 @@
                     </div>
 
                     <h2 class="heading-violet" style="margin-top: 35px; margin-bottom: 10px;">Das Projekt & Die Umsetzung</h2>
-                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!</p>
+                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau planned, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!</p>
                 </div>
         
             </div>
@@ -489,20 +492,6 @@
         const scrollBtn = document.getElementById('scrollDownBtn');
         const overlay = document.getElementById('videoOverlay');
 
-        // ─── RICHTIGEN TRAILER JE NACH GERÄT LADEN ───
-        // PC / Querformat -> run-trailer-big.mp4
-        // Mobile / Hochformat -> run-trailer-small.mp4
-        function getTrailerSource() {
-            const isMobile = window.matchMedia('(max-width: 768px)').matches;
-            return isMobile ? 'run-trailer-small.mp4' : 'run-trailer-small.mp4';
-        }
-
-        if (bgVideo) {
-            const trailerSrc = getTrailerSource();
-            bgVideo.src = trailerSrc;
-            bgVideo.load();
-        }
-
         // Trailer mit Ton starten
         if (startTrailerBtn && bgVideo) {
             startTrailerBtn.addEventListener('click', () => {
@@ -522,8 +511,7 @@
                 setTimeout(() => {
                     if (scrollBtn) {
                         scrollBtn.classList.add('show-btn');
-                        // Repaint-Fix: erzwingt sofortiges korrektes Rendern des fixed-position Buttons,
-                        // ohne dass der Nutzer erst scrollen muss (Browser-Bug bei fixed + video)
+                        // Repaint-Fix: erzwingt sofortiges korrektes Rendern des fixed-position Buttons
                         void scrollBtn.offsetHeight;
                     }
                 }, 4000);
@@ -551,7 +539,6 @@
             }
 
             // 2. Button Verhalten beim Scrollen
-            
             if (scrollY > 100) {
                 // "Trailer starten" ausblenden, falls noch da
                 if (startTrailerBtn) startTrailerBtn.classList.add('fade-out');
