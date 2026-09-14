@@ -42,26 +42,16 @@
             position: absolute;
             top: 50%;
             left: 50%;
-
             width: 100%;
             height: 100%;
-
-            /* Immer gesamten Hero ausfüllen */
             object-fit: cover;
             object-position: center center;
-
             transform: translate(-50%, -50%);
-
             z-index: 0;
-
-            /* Anfangs schwarz */
             opacity: 0;
-
-            /* Cleanes Einblenden */
             transition: opacity 0.4s ease;
         }
 
-        /* Sobald Video bereit ist */
         .hero-video.is-ready {
             opacity: 1;
         }
@@ -86,7 +76,6 @@
             --sky-color: #0b0b0b;
         }
 
-        /* Der allgemeine Seitenhintergrund bleibt dunkel */
         body {
             background-color: #0b0b0b;
             margin: 0;
@@ -97,13 +86,11 @@
             text-rendering: optimizeLegibility;
         }
 
-        /* Hero-Section ganz oben */
         #home.hero {
             background-color: var(--sky-color) !important;
             margin-top: 0;
         }
 
-        /* Header Transparent zwingen */
         header,
         .site-header,
         nav,
@@ -116,41 +103,31 @@
             border: none !important;
         }
 
-        /* ─── PERFEKTES APPLE TV CAROUSEL (CLEAN & MINIMALER PEEK) ─── */
+        /* ─── PERFEKTES APPLE TV CAROUSEL ─── */
         .apple-slider-container {
             position: relative;
             width: 100%;
             overflow: hidden;
             padding: 20px 0;
             contain: layout paint;
-            /* Optimiert die GPU-Performance */
         }
 
-        .apple-slider-track {
-            display: flex;
-            gap: 20px;
-            width: max-content;
-            will-change: transform;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-        }
-
-        /* DESKTOP KARTE (QUERFORMAT BANNER) */
         .apple-card {
-            flex: 0 0 calc(100vw - 90px);
+            flex: 0 0 min(86%, 1200px);
             max-width: 1200px;
             height: 540px;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
             border-radius: 24px !important;
             overflow: hidden !important;
-            /* Garantiert abgerundete Ecken auf allen mobilen Safari & WebKit Browsern */
             isolation: isolate;
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             mask-image: linear-gradient(#fff, #fff);
             position: relative;
-            opacity: 0.35;
-            transform: scale(0.96) translateZ(0);
-            -webkit-transform: scale(0.96) translateZ(0);
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.55;
+            transform: scale(0.97) translateZ(0);
+            -webkit-transform: scale(0.97) translateZ(0);
+            transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
             box-sizing: border-box;
             backface-visibility: hidden;
@@ -159,7 +136,6 @@
             -webkit-transform-style: preserve-3d;
         }
 
-        /* Card Background & Overlay (Tippfehler gefixt) */
         .apple-card-bg {
             position: absolute;
             top: 0;
@@ -184,14 +160,61 @@
             -webkit-transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start; /* Auf PC LINKSBÜNDIG */
+            padding: 32px 40px;
+            box-sizing: border-box;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
         }
 
-        /* GPU-Kopplung für Text & Button (verhindert verzögertes Laden online) */
+        .apple-card-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 2;
+            justify-content: flex-start; /* Auf PC LINKSBÜNDIG */
+        }
+
+        .apple-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            color: #000000;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            white-space: nowrap !important;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .apple-card-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .genre-tag {
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .card-desc, .bullet-dot {
+            display: none !important;
+        }
+
+        /* GPU-Kopplung für Text & Button */
         .apple-card-content,
         .apple-btn,
         .apple-card-text,
-        .genre-tag,
-        .card-desc {
+        .genre-tag {
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
             backface-visibility: hidden;
@@ -230,13 +253,14 @@
             z-index: 10;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .slider-arrow:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-50%) scale(1.08) translateZ(0);
-            -webkit-transform: translateY(-50%) scale(1.08) translateZ(0);
+        @media (hover: hover) and (pointer: fine) {
+            .slider-arrow:hover {
+                background: rgba(255, 255, 255, 0.22);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
         }
 
         .prev-arrow {
@@ -247,7 +271,37 @@
             right: 20px;
         }
 
-        /* CLEAN UND FLÜSSIGE APPLE INDIKATOR-PUNKTE */
+        .apple-slider-track {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-x: contain;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-user-select: none;
+            user-select: none;
+            padding-inline: calc((100% - min(86%, 1200px)) / 2);
+            box-sizing: border-box;
+        }
+
+        .apple-slider-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .apple-slider-track {
+                cursor: grab;
+            }
+        }
+
+        .apple-slider-track.is-dragging {
+            cursor: grabbing;
+            scroll-snap-type: none;
+        }
+
         .apple-slider-dots {
             display: flex;
             justify-content: center;
@@ -312,7 +366,6 @@
             padding: 0 15px;
         }
 
-        /* ─── RESPONSIVE MID-TABLET ANPASSUNG ─── */
         @media (max-width: 1024px) {
             .apple-card {
                 height: 440px;
@@ -320,57 +373,58 @@
             }
         }
 
-        /* ─── EXAKTER WECHSEL ZUR MOBILE VERSION (768px): HOCHFORMAT-KARTE MIT SCHÖNEN ECKEN ─── */
+        /* ─── MOBILE VERSION (bis 768px): ALLES MITTIG ANORDNEN ─── */
         @media (max-width: 768px) {
+            .apple-slider-track {
+                gap: 14px;
+                padding-inline: calc((100% - min(76%, 320px)) / 2);
+            }
+
             .apple-card {
-                flex: 0 0 calc(100vw - 100px) !important;
+                flex: 0 0 min(76%, 320px) !important;
                 max-width: 320px !important;
-                height: 480px !important;
+                aspect-ratio: 2 / 3 !important;
+                height: auto !important;
                 border-radius: 20px !important;
             }
 
-            /* Hier wechseln die Bilder auf die mobilen Portrait-Poster */
             .apple-card-bg {
                 background-image: var(--bg-mobile, var(--bg-desktop)) !important;
             }
 
-            /* ─── TEXTE IN DEN KARTEN FÜR MOBILE ANPASSEN ─── */
+            .apple-card-overlay {
+                padding: 14px !important;
+                justify-content: center !important; /* AUF MOBILE MITTIG */
+                align-items: flex-end !important;
+            }
+
             .apple-card-content {
-                padding: 16px !important;
+                padding: 6px 10px !important;
                 gap: 8px !important;
                 flex-direction: column !important;
-                align-items: center !important;
+                align-items: center !important; /* AUF MOBILE MITTIG */
+                justify-content: flex-end !important;
+                width: 100% !important;
             }
 
             .apple-btn {
-                padding: 8px 16px !important;
+                padding: 8px 18px !important;
                 font-size: 0.85rem !important;
+                white-space: nowrap !important;
             }
 
             .apple-card-text {
-                font-size: 0.8rem !important;
+                font-size: 0.78rem !important;
                 flex-direction: column !important;
-                align-items: center !important;
+                align-items: center !important; /* AUF MOBILE MITTIG */
                 text-align: center !important;
-                gap: 4px !important;
+                gap: 0 !important;
             }
 
             .genre-tag {
                 font-size: 0.75rem !important;
                 opacity: 0.9;
-            }
-
-            .card-desc {
-                font-size: 0.78rem !important;
-                line-height: 1.3 !important;
-                display: -webkit-box !important;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-
-            .bullet-dot {
-                display: none !important;
+                text-align: center !important;
             }
 
             .slider-arrow {
@@ -388,13 +442,65 @@
             }
         }
 
-        /* Smartphone Display Anpassen (unter 480px) */
-        @media (max-width: 480px) {
-            .apple-card {
-                flex: 0 0 calc(100vw - 80px) !important;
-                max-width: 280px !important;
-                height: 440px !important;
-                border-radius: 18px !important;
+        /* ─── SPEZIELL AB 417PX SCHMALER: CLEANES SCHRUMPFEN FÜR SCHMALE HANDYS ─── */
+        @media (max-width: 417px) {
+            .apple-card-overlay {
+                padding: 10px !important;
+            }
+
+            .apple-card-content {
+                padding: 4px 6px !important;
+                gap: 5px !important;
+            }
+
+            .apple-btn {
+                padding: 6px 14px !important;
+                font-size: 0.75rem !important;
+                gap: 5px !important;
+                white-space: nowrap !important;
+            }
+
+            .apple-btn i {
+                font-size: 0.7rem !important;
+            }
+
+            .genre-tag {
+                font-size: 0.7rem !important;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .slider-arrow {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ─── SCROLL POP-IN ANIMATION ─── */
+        .az-reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .az-reveal.az-reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .az-reveal[data-az-delay="1"] { transition-delay: 0.08s; }
+        .az-reveal[data-az-delay="2"] { transition-delay: 0.16s; }
+        .az-reveal[data-az-delay="3"] { transition-delay: 0.24s; }
+        .az-reveal[data-az-delay="4"] { transition-delay: 0.32s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .az-reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
             }
         }
     </style>
@@ -412,9 +518,9 @@
         </video>
 
         <div class="hero-content">
-            <h1>CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
-            <p>Filmmaker & Mediamatiker aus der Schweiz</p>
-            <a href="projekte.html" class="btn">Projekte ansehen</a>
+            <h1 class="az-reveal">CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
+            <p class="az-reveal" data-az-delay="1">Filmmaker & Mediamatiker aus der Schweiz</p>
+            <a href="projekte.html" class="btn az-reveal" data-az-delay="2">Projekte ansehen</a>
         </div>
 
     </section>
@@ -422,7 +528,7 @@
     <section id="projekte" class="section projekte-apple-section">
         <div class="container-wide">
 
-            <div class="section-header-flex">
+            <div class="section-header-flex az-reveal">
                 <div>
                     <h2 class="section-title-left">Meine Projekte</h2>
                 </div>
@@ -431,7 +537,7 @@
                 </a>
             </div>
 
-            <div class="apple-slider-container">
+            <div class="apple-slider-container az-reveal" data-az-delay="1">
 
                 <button class="slider-arrow prev-arrow" id="prevBtn" aria-label="Vorheriges Projekt">
                     <i class="fa-solid fa-chevron-left"></i>
@@ -453,9 +559,6 @@
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Action / Kurzfilm</span>
-                                    <span class="bullet-dot">•</span>
-                                    <span class="card-desc">Ein cinematischer Action-Kurzfilm im Seeland der Schweiz mit
-                                        Verfolgungsjagden & Spannung.</span>
                                 </div>
                             </div>
                         </div>
@@ -472,9 +575,6 @@
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Stop-Motion / Youtube Kanal</span>
-                                    <span class="bullet-dot">•</span>
-                                    <span class="card-desc">Ein Youtube Kanal mit Stop-Motion Videos, MOC's und
-                                        Speed-Build's.</span>
                                 </div>
                             </div>
                         </div>
@@ -491,8 +591,6 @@
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">10. ICT-Schuljahr / Projekt</span>
-                                    <span class="bullet-dot">•</span>
-                                    <span class="card-desc">Ein Projekt aus dem 10. ICT-Schuljahr</span>
                                 </div>
                             </div>
                         </div>
@@ -509,8 +607,6 @@
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Musik / Klavier & Schlagzeug</span>
-                                    <span class="bullet-dot">•</span>
-                                    <span class="card-desc">Videos von Klavier & Schlagzeug Musik.</span>
                                 </div>
                             </div>
                         </div>
@@ -531,8 +627,8 @@
 
     <section id="ueber-mich" class="section bg-dark">
         <div class="container">
-            <h2 class="section-title">Über mich</h2>
-            <div class="about-text">
+            <h2 class="section-title az-reveal">Über mich</h2>
+            <div class="about-text az-reveal" data-az-delay="1">
                 <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen
                     Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich
                     mit Design, Webentwicklung und verschiedenen digitalen Projekten.</p>
@@ -542,10 +638,11 @@
 
     <section id="kontakt" class="section">
         <div class="container">
-            <h2 class="section-title">Kontakt</h2>
-            <p style="text-align: center; margin-bottom: 30px;">Lust auf eine Zusammenarbeit oder hast du Fragen zu
+            <h2 class="section-title az-reveal">Kontakt</h2>
+            <p class="az-reveal" data-az-delay="1" style="text-align: center; margin-bottom: 30px;">Lust auf eine
+                Zusammenarbeit oder hast du Fragen zu
                 meinen Projekten? Schreib mir!</p>
-            <form class="contact-form" action="https://formspree.io/f/xojowqvy" method="POST">
+            <form class="contact-form az-reveal" data-az-delay="2" action="https://formspree.io/f/xojowqvy" method="POST">
                 <input type="text" name="name" placeholder="Dein Name" required>
                 <input type="email" name="email" placeholder="Deine E-Mail" required>
                 <textarea name="message" placeholder="Deine Nachricht..." rows="5" required></textarea>
@@ -579,6 +676,27 @@
             });
         });
 
+        // Pop-In beim Scrollen
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('az-reveal-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.az-reveal').forEach((element) => {
+                const rect = element.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    element.classList.add('az-reveal-visible');
+                } else {
+                    revealObserver.observe(element);
+                }
+            });
+        });
+
         // Scrollspy
         const allowedSections = ['home', 'ueber-mich', 'kontakt'];
         const sections = document.querySelectorAll('section[id]');
@@ -606,7 +724,7 @@
             navObserver.observe(section);
         });
 
-        // UNENDLICHER KREISLAUF-SLIDER (GEFIXT)
+        // ─── PERFEKTES, FLÜSSIGES ENDLOS-KARUSSELL ───
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.querySelector('.apple-slider-container');
             const track = document.getElementById('sliderTrack');
@@ -619,13 +737,14 @@
 
             const totalOrig = origCards.length;
 
+            // Indikator-Punkte generieren
             if (dotsContainer) {
                 dotsContainer.innerHTML = '';
                 origCards.forEach((_, idx) => {
                     const dot = document.createElement('span');
                     dot.className = 'dot' + (idx === 0 ? ' active' : '');
                     dot.addEventListener('click', () => {
-                        goToSlide(idx + 1);
+                        goTo(idx + 2, true); // Index 2 ist die erste echte Karte
                     });
                     dotsContainer.appendChild(dot);
                 });
@@ -633,78 +752,82 @@
 
             const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
 
-            // Klone für unendliches Kreislaufsystem erstellen
+            // Erstelle je 2 Klone vorne und hinten für absolut nahtloses Durchscrollen
             const firstClone = origCards[0].cloneNode(true);
+            const secondClone = origCards[1].cloneNode(true);
             const lastClone = origCards[totalOrig - 1].cloneNode(true);
+            const secondLastClone = origCards[totalOrig - 2].cloneNode(true);
 
+            // An das Ende anhängen
             track.appendChild(firstClone);
+            track.appendChild(secondClone);
+
+            // An den Anfang einfügen
             track.insertBefore(lastClone, origCards[0]);
+            track.insertBefore(secondLastClone, lastClone);
 
             const allCards = Array.from(track.querySelectorAll('.apple-card'));
 
-            let currentIndex = 1;
-            let isAnimating = false;
+            // Startindex ist 2 (die erste echte Karte)
+            let currentIndex = 2;
 
-            function updateCarousel(animated = true) {
-                if (!container || !track || !allCards.length) return;
+            function setActiveIndex(idx) {
+                currentIndex = idx;
 
-                if (animated) {
-                    track.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-                } else {
-                    track.style.transition = 'none';
-                }
+                allCards.forEach((card, i) => card.classList.toggle('active', i === idx));
 
-                const containerWidth = container.offsetWidth;
-                const cardWidth = allCards[0].offsetWidth;
-                const gap = 20;
+                // Echten Index für die Indikator-Punkte berechnen
+                let realIndex = (idx - 2) % totalOrig;
+                if (realIndex < 0) realIndex += totalOrig;
 
-                const centerOffset = (containerWidth / 2) - (currentIndex * (cardWidth + gap) + (cardWidth / 2));
-                track.style.transform = `translate3d(${centerOffset}px, 0, 0)`;
-                track.style.webkitTransform = `translate3d(${centerOffset}px, 0, 0)`;
+                dots.forEach((dot, i) => dot.classList.toggle('active', i === realIndex));
+            }
 
-                let realIndex = currentIndex - 1;
-                if (currentIndex === 0) realIndex = totalOrig - 1;
-                if (currentIndex === allCards.length - 1) realIndex = 0;
+            function getClosestCardIndex() {
+                const trackRect = track.getBoundingClientRect();
+                const centerX = trackRect.left + trackRect.width / 2;
+                let closest = currentIndex;
+                let closestDist = Infinity;
 
-                allCards.forEach((card, idx) => {
-                    const isCardActive = (idx === currentIndex) ||
-                        (currentIndex === 0 && idx === allCards.length - 2) ||
-                        (currentIndex === allCards.length - 1 && idx === 1);
-                    card.classList.toggle('active', isCardActive);
+                allCards.forEach((card, i) => {
+                    const r = card.getBoundingClientRect();
+                    const cardCenter = r.left + r.width / 2;
+                    const dist = Math.abs(cardCenter - centerX);
+                    if (dist < closestDist) {
+                        closestDist = dist;
+                        closest = i;
+                    }
                 });
 
-                dots.forEach((dot, idx) => {
-                    dot.classList.toggle('active', idx === realIndex);
+                return closest;
+            }
+
+            // Unbemerkt und ohne Animation springen für unendlichen Loop
+            function jumpInstant(idx) {
+                const card = allCards[idx];
+                if (!card) return;
+                const prevSnap = track.style.scrollSnapType;
+                track.style.scrollSnapType = 'none';
+                card.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+                setActiveIndex(idx);
+                requestAnimationFrame(() => {
+                    track.style.scrollSnapType = prevSnap || '';
                 });
             }
 
-            function goToSlide(index) {
-                if (isAnimating) return;
-                if (index === currentIndex) return;
-                isAnimating = true;
-                currentIndex = index;
-                updateCarousel(true);
+            function goTo(idx, smooth = true) {
+                const card = allCards[idx];
+                if (!card) return;
+                card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', inline: 'center', block: 'nearest' });
+                setActiveIndex(idx);
             }
-
-            // Exaktes Abfangen der Transitionen nur für den Slider-Track selbst
-            track.addEventListener('transitionend', (e) => {
-                if (e.target !== track) return;
-                isAnimating = false;
-                if (currentIndex === 0) {
-                    currentIndex = totalOrig;
-                    updateCarousel(false);
-                } else if (currentIndex === allCards.length - 1) {
-                    currentIndex = 1;
-                    updateCarousel(false);
-                }
-            });
 
             function nextSlide() {
-                goToSlide(currentIndex + 1);
+                goTo(currentIndex + 1, true);
             }
 
             function prevSlide() {
-                goToSlide(currentIndex - 1);
+                goTo(currentIndex - 1, true);
             }
 
             if (prevBtn) {
@@ -723,9 +846,97 @@
                 });
             }
 
-            window.addEventListener('resize', () => updateCarousel(false));
+            let scrollSettleTimer = null;
+            let rafPending = false;
+            let isJumping = false;
 
-            updateCarousel(false);
+            function liveUpdateActive() {
+                if (rafPending) return;
+                rafPending = true;
+                requestAnimationFrame(() => {
+                    setActiveIndex(getClosestCardIndex());
+                    rafPending = false;
+                });
+            }
+
+            function handleScrollSettled() {
+                if (isJumping) return;
+                const idx = getClosestCardIndex();
+
+                // Wenn am geklonten Ende angekommen -> unsichtbar zur echten Karte am Anfang springen
+                if (idx >= totalOrig + 2) {
+                    isJumping = true;
+                    jumpInstant(idx - totalOrig);
+                    setTimeout(() => { isJumping = false; }, 50);
+                } 
+                // Wenn am geklonten Anfang angekommen -> unsichtbar zur echten Karte am Ende springen
+                else if (idx < 2) {
+                    isJumping = true;
+                    jumpInstant(idx + totalOrig);
+                    setTimeout(() => { isJumping = false; }, 50);
+                } else {
+                    setActiveIndex(idx);
+                }
+            }
+
+            track.addEventListener('scroll', () => {
+                liveUpdateActive();
+                if (scrollSettleTimer) clearTimeout(scrollSettleTimer);
+                scrollSettleTimer = setTimeout(handleScrollSettled, 90);
+            }, { passive: true });
+
+            // Maus-Drag für Desktop
+            let isDragging = false;
+            let dragStartX = 0;
+            let dragStartScrollLeft = 0;
+            let dragMoved = false;
+
+            track.addEventListener('pointerdown', (e) => {
+                if (e.pointerType !== 'mouse') return;
+                isDragging = true;
+                dragMoved = false;
+                dragStartX = e.clientX;
+                dragStartScrollLeft = track.scrollLeft;
+                track.classList.add('is-dragging');
+                if (track.setPointerCapture) {
+                    try { track.setPointerCapture(e.pointerId); } catch (err) { }
+                }
+            });
+
+            track.addEventListener('pointermove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - dragStartX;
+                if (Math.abs(dx) > 4) dragMoved = true;
+                track.scrollLeft = dragStartScrollLeft - dx;
+            });
+
+            function endDrag() {
+                if (!isDragging) return;
+                isDragging = false;
+                track.classList.remove('is-dragging');
+                if (dragMoved) {
+                    goTo(getClosestCardIndex(), true);
+                }
+            }
+
+            track.addEventListener('pointerup', endDrag);
+            track.addEventListener('pointercancel', endDrag);
+            track.addEventListener('pointerleave', () => { if (isDragging) endDrag(); });
+
+            track.addEventListener('click', (e) => {
+                if (dragMoved) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                dragMoved = false;
+            }, true);
+
+            // Initiales Setzen auf die erste echte Karte
+            jumpInstant(2);
+
+            window.addEventListener('resize', () => {
+                jumpInstant(currentIndex);
+            });
         });
 
         if ('scrollRestoration' in history) {
