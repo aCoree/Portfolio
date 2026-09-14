@@ -115,7 +115,8 @@
         .apple-card {
             flex: 0 0 min(86%, 1200px);
             max-width: 1200px;
-            height: 540px;
+            aspect-ratio: 20 / 9;
+            height: auto;
             scroll-snap-align: center;
             scroll-snap-stop: always;
             border-radius: 24px !important;
@@ -368,7 +369,6 @@
 
         @media (max-width: 1024px) {
             .apple-card {
-                height: 440px;
                 border-radius: 22px !important;
             }
         }
@@ -802,13 +802,21 @@
                 return closest;
             }
 
+            // Zentriert eine Karte NUR horizontal innerhalb des Tracks (nie die ganze Seite scrollen!)
+            function centerCard(idx, smooth) {
+                const card = allCards[idx];
+                if (!card) return;
+                const target = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+                track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'auto' });
+            }
+
             // Unbemerkt und ohne Animation springen für unendlichen Loop
             function jumpInstant(idx) {
                 const card = allCards[idx];
                 if (!card) return;
                 const prevSnap = track.style.scrollSnapType;
                 track.style.scrollSnapType = 'none';
-                card.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+                centerCard(idx, false);
                 setActiveIndex(idx);
                 requestAnimationFrame(() => {
                     track.style.scrollSnapType = prevSnap || '';
@@ -818,7 +826,7 @@
             function goTo(idx, smooth = true) {
                 const card = allCards[idx];
                 if (!card) return;
-                card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', inline: 'center', block: 'nearest' });
+                centerCard(idx, smooth);
                 setActiveIndex(idx);
             }
 
