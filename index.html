@@ -31,7 +31,9 @@
             position: relative;
             width: 100%;
             min-height: 100vh;
+            min-height: 100dvh;
             height: 100vh;
+            height: 100dvh;
             background: #000;
             overflow: hidden;
         }
@@ -71,14 +73,14 @@
             z-index: 2;
         }
 
-        /* ─── SCROLL-BUTTON (identisch zu urbnvibe.html) ─── */
+        /* ─── SCROLL-BUTTON (dynamisch an Mobile-Browser-Leisten angepasst) ─── */
 
         .hero-scroll-indicator {
             position: absolute;
-            bottom: 40px;
+            bottom: calc(40px + env(safe-area-inset-bottom, 0px));
             left: 50%;
             transform: translateX(-50%);
-            z-index: 5;
+            z-index: 20;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -91,6 +93,7 @@
             cursor: pointer;
             transition: opacity 0.3s ease, color 0.3s ease;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .hero-scroll-indicator:hover {
@@ -169,7 +172,7 @@
             aspect-ratio: 20 / 9;
             height: auto;
             scroll-snap-align: center;
-            scroll-snap-stop: always;
+            scroll-snap-stop: normal;
             border-radius: 24px !important;
             overflow: hidden !important;
             isolation: isolate;
@@ -338,6 +341,7 @@
             user-select: none;
             padding-inline: calc((100% - min(86%, 1200px)) / 2);
             box-sizing: border-box;
+            touch-action: pan-x pan-y;
         }
 
         .apple-slider-track::-webkit-scrollbar {
@@ -425,8 +429,12 @@
             }
         }
 
-        /* ─── MOBILE VERSION (bis 768px): ALLES MITTIG ANORDNEN ─── */
+        /* ─── MOBILE VERSION (bis 768px) ─── */
         @media (max-width: 768px) {
+            .hero-scroll-indicator {
+                bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+            }
+
             .apple-slider-track {
                 gap: 14px;
                 padding-inline: calc((100% - min(76%, 320px)) / 2);
@@ -792,6 +800,8 @@
             if (!origCards.length) return;
 
             const totalOrig = origCards.length;
+            const numCloneSets = 3; // 3 Sets davor, 3 Sets danach für absolut nahtloses & unendliches Swipen auf Mobile
+            const startOffset = totalOrig * numCloneSets; // Index 12 ist die erste echte Karte
 
             // Indikator-Punkte generieren
             if (dotsContainer) {
@@ -800,7 +810,7 @@
                     const dot = document.createElement('span');
                     dot.className = 'dot' + (idx === 0 ? ' active' : '');
                     dot.addEventListener('click', () => {
-                        goTo(idx + totalOrig, true); // erste echte Karte beginnt nach dem vorderen Klon-Set
+                        goTo(idx + startOffset, true);
                     });
                     dotsContainer.appendChild(dot);
                 });
@@ -808,29 +818,37 @@
 
             const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
 
-            // Klone das GESAMTE Set einmal vorne und einmal hinten (statt nur 2 Karten).
-            // Das gibt genug Puffer, damit auch sehr schnelles Klicken/Scrollen nie ins Leere läuft,
-            // bevor der unsichtbare Loop-Sprung greifen kann.
-            const frontClones = origCards.map(card => card.cloneNode(true));
-            const backClones = origCards.map(card => card.cloneNode(true));
+            // Erstelle Klone (3 Sets davor, 3 Sets danach)
+            const clonesBefore = [];
+            const clonesAfter = [];
 
-            frontClones.forEach(clone => track.insertBefore(clone, origCards[0]));
-            backClones.forEach(clone => track.appendChild(clone));
+            for (let s = 0; s < numCloneSets; s++) {
+                origCards.forEach(card => clonesBefore.push(card.cloneNode(true)));
+                origCards.forEach(card => clonesAfter.push(card.cloneNode(true)));
+            }
+
+            const firstRealCard = origCards[0];
+            clonesBefore.forEach(clone => track.insertBefore(clone, firstRealCard));
+            clonesAfter.forEach(clone => track.appendChild(clone));
 
             const allCards = Array.from(track.querySelectorAll('.apple-card'));
 
-            // Startindex ist totalOrig (die erste echte Karte, nach dem vorderen Klon-Set)
-            let currentIndex = totalOrig;
+            let currentIndex = startOffset;
+
+            function getRealIndex(idx) {
+                return ((idx % totalOrig) + totalOrig) % totalOrig;
+            }
+
+            function getNormalizedIndex(idx) {
+                return getRealIndex(idx) + startOffset;
+            }
 
             function setActiveIndex(idx) {
                 currentIndex = idx;
 
                 allCards.forEach((card, i) => card.classList.toggle('active', i === idx));
 
-                // Echten Index für die Indikator-Punkte berechnen
-                let realIndex = (idx - totalOrig) % totalOrig;
-                if (realIndex < 0) realIndex += totalOrig;
-
+                const realIndex = getRealIndex(idx);
                 dots.forEach((dot, i) => dot.classList.toggle('active', i === realIndex));
             }
 
@@ -853,8 +871,6 @@
                 return closest;
             }
 
-            // Zentriert eine Karte NUR horizontal innerhalb des Tracks (nie die ganze Seite scrollen!)
-            // 'instant' statt 'auto', damit es wirklich sofort passiert, egal was scroll-behavior sagt.
             function centerCard(idx, smooth) {
                 const card = allCards[idx];
                 if (!card) return;
@@ -862,7 +878,6 @@
                 track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'instant' });
             }
 
-            // Unbemerkt und ohne Animation springen für unendlichen Loop
             function jumpInstant(idx) {
                 const card = allCards[idx];
                 if (!card) return;
@@ -871,20 +886,11 @@
                 centerCard(idx, false);
                 setActiveIndex(idx);
                 requestAnimationFrame(() => {
-                    track.style.scrollSnapType = prevSnap || '';
+                    track.style.scrollSnapType = prevSnap || 'x mandatory';
                 });
             }
 
-            // Hält idx immer innerhalb des geklonten Puffers, damit Klicken/Scrollen
-            // NIE ins Leere läuft, egal wie schnell man unterwegs ist.
-            function wrapIndex(idx) {
-                while (idx < 0) idx += totalOrig;
-                while (idx >= allCards.length) idx -= totalOrig;
-                return idx;
-            }
-
             function goTo(idx, smooth = true) {
-                idx = wrapIndex(idx);
                 const card = allCards[idx];
                 if (!card) return;
                 centerCard(idx, smooth);
@@ -918,6 +924,7 @@
             let scrollSettleTimer = null;
             let rafPending = false;
             let isJumping = false;
+            let isUserTouching = false;
 
             function liveUpdateActive() {
                 if (rafPending) return;
@@ -931,34 +938,39 @@
             function handleScrollSettled() {
                 if (isJumping) return;
                 const idx = getClosestCardIndex();
+                const normIdx = getNormalizedIndex(idx);
 
-                // Wenn im hinteren Klon-Set angekommen -> unsichtbar zur echten Karte springen
-                if (idx >= totalOrig * 2) {
+                // Wenn nicht in der mittleren Hauptgruppe oder am Rand der Puffer -> unsichtbar zur echten Karte springen
+                if (idx !== normIdx && (idx < totalOrig * 2 || idx >= totalOrig * 5 || !isUserTouching)) {
                     isJumping = true;
-                    jumpInstant(idx - totalOrig);
+                    jumpInstant(normIdx);
                     setTimeout(() => { isJumping = false; }, 50);
-                }
-                // Wenn im vorderen Klon-Set angekommen -> unsichtbar zur echten Karte springen
-                else if (idx < totalOrig) {
-                    isJumping = true;
-                    jumpInstant(idx + totalOrig);
-                    setTimeout(() => { isJumping = false; }, 50);
-                } else {
-                    setActiveIndex(idx);
                 }
             }
 
             track.addEventListener('scroll', () => {
                 liveUpdateActive();
                 if (scrollSettleTimer) clearTimeout(scrollSettleTimer);
-                scrollSettleTimer = setTimeout(handleScrollSettled, 60);
+                scrollSettleTimer = setTimeout(handleScrollSettled, 40);
+            }, { passive: true });
+
+            track.addEventListener('touchstart', () => {
+                isUserTouching = true;
+            }, { passive: true });
+
+            track.addEventListener('touchend', () => {
+                isUserTouching = false;
+                if (scrollSettleTimer) clearTimeout(scrollSettleTimer);
+                scrollSettleTimer = setTimeout(handleScrollSettled, 40);
+            }, { passive: true });
+
+            track.addEventListener('touchcancel', () => {
+                isUserTouching = false;
+                if (scrollSettleTimer) clearTimeout(scrollSettleTimer);
+                scrollSettleTimer = setTimeout(handleScrollSettled, 40);
             }, { passive: true });
 
             // Maus-Drag für Desktop
-            // WICHTIG: Der Pointer wird NUR gecaptured, wenn wirklich gezogen wird
-            // (Bewegung > Schwellenwert). Bei einem normalen Klick (kein Drag) wird
-            // niemals setPointerCapture aufgerufen, damit der Klick garantiert ganz
-            // normal (unretargeted) bei der jeweiligen Projekt-Karte ankommt.
             let pointerActive = false;
             let isDragging = false;
             let dragStartX = 0;
@@ -981,7 +993,7 @@
                 const dx = e.clientX - dragStartX;
 
                 if (!isDragging) {
-                    if (Math.abs(dx) <= 4) return; // noch kein echtes Ziehen -> normaler Klick bleibt möglich
+                    if (Math.abs(dx) <= 4) return;
                     isDragging = true;
                     dragMoved = true;
                     track.classList.add('is-dragging');
@@ -1022,7 +1034,7 @@
             }, true);
 
             // Initiales Setzen auf die erste echte Karte
-            jumpInstant(totalOrig);
+            jumpInstant(startOffset);
 
             window.addEventListener('resize', () => {
                 jumpInstant(currentIndex);
