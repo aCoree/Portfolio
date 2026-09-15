@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RUN – Kurzfilm | Aurelio Zingarello</title>
-    
+
     <!-- PRELOAD FÜR DAS SMALL-TRAILER VIDEO -->
     <link rel="preload" href="run-trailer-small.mp4" as="video" type="video/mp4">
 
@@ -16,7 +17,8 @@
             scroll-behavior: smooth;
         }
 
-        html, body {
+        html,
+        body {
             overflow-x: hidden;
             width: 100%;
             margin: 0;
@@ -27,6 +29,18 @@
         img {
             max-width: 100%;
             height: auto;
+        }
+
+        header,
+        .site-header,
+        nav,
+        .site-header-scrolled,
+        .main-navigation,
+        .navbar {
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
         }
 
         /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE ─── */
@@ -45,10 +59,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0; /* Versteckt das Video am Anfang */
+            opacity: 0;
+            /* Versteckt das Video am Anfang */
             transition: opacity 0.5s ease;
         }
-        
+
         /* Das Video wird sichtbar, wenn es gestartet wurde */
         .bg-video.playing {
             opacity: 1;
@@ -78,7 +93,8 @@
             width: 100%;
             height: 100%;
             background: #0d0d0d;
-            opacity: 0.65; /* Abdunkelung des Standbildes */
+            opacity: 0.65;
+            /* Abdunkelung des Standbildes */
         }
 
         /* Dieses Overlay wird beim Scrollen langsam schwarz */
@@ -89,9 +105,11 @@
             width: 100%;
             height: 100%;
             background: #0d0d0d;
-            opacity: 0; /* Startet komplett durchsichtig */
+            opacity: 0;
+            /* Startet komplett durchsichtig */
             transition: opacity 0.1s linear;
-            z-index: 2; /* Über Video und Standbild */
+            z-index: 2;
+            /* Über Video und Standbild */
         }
 
         /* ─── HERO SECTION ─── */
@@ -100,15 +118,18 @@
             z-index: 10;
             height: 100vh;
             display: flex;
-            align-items: center; /* Vertikal zentrieren */
-            justify-content: center; /* Horizontal zentrieren */
+            align-items: center;
+            /* Vertikal zentrieren */
+            justify-content: center;
+            /* Horizontal zentrieren */
             box-sizing: border-box;
             pointer-events: none;
         }
 
         /* ─── CLEANER STYLISCHER TRAILER START BUTTON (ECKIG, ZENTRIERT) ─── */
         .start-trailer-btn {
-            position: fixed; /* Fixiert in der Mitte */
+            position: fixed;
+            /* Fixiert in der Mitte */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -119,9 +140,12 @@
             color: #ffffff;
             padding: 13px 32px;
             /* ECKIGES DESIGN - KEINE PILLE */
-            border-radius: 4px; /* Sehr kleine Rundung für moderne Ecken */
-            font-size: 0.95rem; /* Etwas kleinere Schrift */
-            font-weight: 700; /* Fetter */
+            border-radius: 4px;
+            /* Sehr kleine Rundung für moderne Ecken */
+            font-size: 0.95rem;
+            /* Etwas kleinere Schrift */
+            font-weight: 700;
+            /* Fetter */
             letter-spacing: 3px;
             text-transform: uppercase;
             cursor: pointer;
@@ -201,9 +225,22 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-8px);
+            }
+
+            60% {
+                transform: translateY(-4px);
+            }
         }
 
         /* ─── ANPASSUNGEN FÜR MOBILE GERÄTE ─── */
@@ -382,6 +419,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- ─── FULLSCREEN HINTERGRUND VIDEO & Standbild ─── -->
@@ -416,17 +454,14 @@
                 <a href="javascript:history.back()" class="back-btn">&#8592; Zurück</a>
                 <a href="projekte.html" class="back-btn">Projekte <i class="fa-solid fa-arrow-right"></i></a>
             </div>
-            
+
             <div class="project-header">
                 <h1>RUN - Ein Kurzfilm</h1>
                 <p class="tagline">Ein cinematischer action Kurzfilm im Seeland der Schweiz.</p>
             </div>
 
             <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/fetBu3gqFOM"
-                    title="RUN – Kurzfilm"
-                    frameborder="0"
+                <iframe src="https://www.youtube.com/embed/fetBu3gqFOM" title="RUN – Kurzfilm" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
                 </iframe>
@@ -436,9 +471,11 @@
                 <div class="info-content">
                     <h2 class="heading-violet">Behind the Scenes</h2>
                     <p>
-                        Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
+                        Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute
+                        Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die
+                        kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
                     </p>
-                    
+
                     <div class="button-group">
                         <a href="bts.html" class="grading-apple-btn">
                             <span>Behind the Scenes</span>
@@ -451,10 +488,14 @@
                         </a>
                     </div>
 
-                    <h2 class="heading-violet" style="margin-top: 35px; margin-bottom: 10px;">Das Projekt & Die Umsetzung</h2>
-                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau planned, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!</p>
+                    <h2 class="heading-violet" style="margin-top: 35px; margin-bottom: 10px;">Das Projekt & Die
+                        Umsetzung</h2>
+                    <p>RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt
+                        bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde
+                        genau planned, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action
+                        ist!</p>
                 </div>
-        
+
             </div>
 
             <div id="grading" class="grading-section">
@@ -470,9 +511,11 @@
                     </div>
 
                     <div class="grading-slider" id="gradingSlider">
-                        <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" class="grading-after">
-                        <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" class="grading-before">
-                        
+                        <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN"
+                            class="grading-after">
+                        <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN"
+                            class="grading-before">
+
                         <div class="grading-handle" id="gradingHandle">
                             <i class="fa-solid fa-arrows-left-right"></i>
                         </div>
@@ -522,16 +565,16 @@
         function updateVolumeAndOverlay() {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
-            
+
             // 1. Abdunkeln & Audio-Fade beim Scrollen
             let fadeProgress = scrollY / (windowH * 0.8);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
-            
+
             if (overlay) {
                 overlay.style.opacity = fadeProgress;
             }
-            
+
             const targetVolume = 1 - fadeProgress;
 
             if (bgVideo && !bgVideo.muted) {
@@ -542,7 +585,7 @@
             if (scrollY > 100) {
                 // "Trailer starten" ausblenden, falls noch da
                 if (startTrailerBtn) startTrailerBtn.classList.add('fade-out');
-                
+
                 // "Ganzer Film" Button ausblenden beim Runterscrollen
                 if (scrollBtn) scrollBtn.classList.add('fade-out-on-scroll');
             } else {
@@ -550,7 +593,7 @@
                 if (startTrailerBtn && (!bgVideo.classList.contains('playing'))) {
                     startTrailerBtn.classList.remove('fade-out');
                 }
-                
+
                 // "Ganzer Film" Button wieder einblenden, falls er eingeblendet sein soll (nach 4sek)
                 if (scrollBtn && scrollBtn.classList.contains('show-btn')) {
                     scrollBtn.classList.remove('fade-out-on-scroll');
@@ -565,7 +608,7 @@
             } else {
                 // Nur weiterspielen, wenn der Trailer bereits einmal gestartet wurde
                 if (bgVideo.paused && bgVideo.classList.contains('playing')) {
-                    bgVideo.play().catch(() => {});
+                    bgVideo.play().catch(() => { });
                 }
             }
         }
@@ -627,7 +670,7 @@
                 }
             });
         }, {
-            threshold: 0.05 
+            threshold: 0.05
         });
 
         document.querySelectorAll('section').forEach((element) => {
@@ -644,7 +687,8 @@
         });
     </script>
 
-    <!-- ─── ZENTRALES HEADER & FOOTER SKRIPT ─── -->   
+    <!-- ─── ZENTRALES HEADER & FOOTER SKRIPT ─── -->
     <script src="header.js"></script>
 </body>
+
 </html>
