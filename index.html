@@ -278,6 +278,7 @@
             overflow-x: auto;
             overflow-y: hidden;
             scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior-x: contain;
             scrollbar-width: none;
@@ -744,7 +745,7 @@
                     const dot = document.createElement('span');
                     dot.className = 'dot' + (idx === 0 ? ' active' : '');
                     dot.addEventListener('click', () => {
-                        goTo(idx + 2, true); // Index 2 ist die erste echte Karte
+                        goTo(idx + totalOrig, true); // erste echte Karte beginnt nach dem vorderen Klon-Set
                     });
                     dotsContainer.appendChild(dot);
                 });
@@ -752,24 +753,19 @@
 
             const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
 
-            // Erstelle je 2 Klone vorne und hinten für absolut nahtloses Durchscrollen
-            const firstClone = origCards[0].cloneNode(true);
-            const secondClone = origCards[1].cloneNode(true);
-            const lastClone = origCards[totalOrig - 1].cloneNode(true);
-            const secondLastClone = origCards[totalOrig - 2].cloneNode(true);
+            // Klone das GESAMTE Set einmal vorne und einmal hinten (statt nur 2 Karten).
+            // Das gibt genug Puffer, damit auch sehr schnelles Klicken/Scrollen nie ins Leere läuft,
+            // bevor der unsichtbare Loop-Sprung greifen kann.
+            const frontClones = origCards.map(card => card.cloneNode(true));
+            const backClones = origCards.map(card => card.cloneNode(true));
 
-            // An das Ende anhängen
-            track.appendChild(firstClone);
-            track.appendChild(secondClone);
-
-            // An den Anfang einfügen
-            track.insertBefore(lastClone, origCards[0]);
-            track.insertBefore(secondLastClone, lastClone);
+            frontClones.forEach(clone => track.insertBefore(clone, origCards[0]));
+            backClones.forEach(clone => track.appendChild(clone));
 
             const allCards = Array.from(track.querySelectorAll('.apple-card'));
 
-            // Startindex ist 2 (die erste echte Karte)
-            let currentIndex = 2;
+            // Startindex ist totalOrig (die erste echte Karte, nach dem vorderen Klon-Set)
+            let currentIndex = totalOrig;
 
             function setActiveIndex(idx) {
                 currentIndex = idx;
@@ -777,7 +773,7 @@
                 allCards.forEach((card, i) => card.classList.toggle('active', i === idx));
 
                 // Echten Index für die Indikator-Punkte berechnen
-                let realIndex = (idx - 2) % totalOrig;
+                let realIndex = (idx - totalOrig) % totalOrig;
                 if (realIndex < 0) realIndex += totalOrig;
 
                 dots.forEach((dot, i) => dot.classList.toggle('active', i === realIndex));
@@ -803,11 +799,12 @@
             }
 
             // Zentriert eine Karte NUR horizontal innerhalb des Tracks (nie die ganze Seite scrollen!)
+            // 'instant' statt 'auto', damit es wirklich sofort passiert, egal was scroll-behavior sagt.
             function centerCard(idx, smooth) {
                 const card = allCards[idx];
                 if (!card) return;
                 const target = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
-                track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'auto' });
+                track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'instant' });
             }
 
             // Unbemerkt und ohne Animation springen für unendlichen Loop
@@ -823,7 +820,16 @@
                 });
             }
 
+            // Hält idx immer innerhalb des geklonten Puffers, damit Klicken/Scrollen
+            // NIE ins Leere läuft, egal wie schnell man unterwegs ist.
+            function wrapIndex(idx) {
+                while (idx < 0) idx += totalOrig;
+                while (idx >= allCards.length) idx -= totalOrig;
+                return idx;
+            }
+
             function goTo(idx, smooth = true) {
+                idx = wrapIndex(idx);
                 const card = allCards[idx];
                 if (!card) return;
                 centerCard(idx, smooth);
@@ -871,14 +877,14 @@
                 if (isJumping) return;
                 const idx = getClosestCardIndex();
 
-                // Wenn am geklonten Ende angekommen -> unsichtbar zur echten Karte am Anfang springen
-                if (idx >= totalOrig + 2) {
+                // Wenn im hinteren Klon-Set angekommen -> unsichtbar zur echten Karte springen
+                if (idx >= totalOrig * 2) {
                     isJumping = true;
                     jumpInstant(idx - totalOrig);
                     setTimeout(() => { isJumping = false; }, 50);
-                } 
-                // Wenn am geklonten Anfang angekommen -> unsichtbar zur echten Karte am Ende springen
-                else if (idx < 2) {
+                }
+                // Wenn im vorderen Klon-Set angekommen -> unsichtbar zur echten Karte springen
+                else if (idx < totalOrig) {
                     isJumping = true;
                     jumpInstant(idx + totalOrig);
                     setTimeout(() => { isJumping = false; }, 50);
@@ -890,46 +896,67 @@
             track.addEventListener('scroll', () => {
                 liveUpdateActive();
                 if (scrollSettleTimer) clearTimeout(scrollSettleTimer);
-                scrollSettleTimer = setTimeout(handleScrollSettled, 90);
+                scrollSettleTimer = setTimeout(handleScrollSettled, 60);
             }, { passive: true });
 
             // Maus-Drag für Desktop
+            // WICHTIG: Der Pointer wird NUR gecaptured, wenn wirklich gezogen wird
+            // (Bewegung > Schwellenwert). Bei einem normalen Klick (kein Drag) wird
+            // niemals setPointerCapture aufgerufen, damit der Klick garantiert ganz
+            // normal (unretargeted) bei der jeweiligen Projekt-Karte ankommt.
+            let pointerActive = false;
             let isDragging = false;
             let dragStartX = 0;
             let dragStartScrollLeft = 0;
             let dragMoved = false;
+            let activePointerId = null;
 
             track.addEventListener('pointerdown', (e) => {
                 if (e.pointerType !== 'mouse') return;
-                isDragging = true;
+                pointerActive = true;
+                isDragging = false;
                 dragMoved = false;
                 dragStartX = e.clientX;
                 dragStartScrollLeft = track.scrollLeft;
-                track.classList.add('is-dragging');
-                if (track.setPointerCapture) {
-                    try { track.setPointerCapture(e.pointerId); } catch (err) { }
-                }
+                activePointerId = e.pointerId;
             });
 
             track.addEventListener('pointermove', (e) => {
-                if (!isDragging) return;
+                if (!pointerActive) return;
                 const dx = e.clientX - dragStartX;
-                if (Math.abs(dx) > 4) dragMoved = true;
+
+                if (!isDragging) {
+                    if (Math.abs(dx) <= 4) return; // noch kein echtes Ziehen -> normaler Klick bleibt möglich
+                    isDragging = true;
+                    dragMoved = true;
+                    track.classList.add('is-dragging');
+                    if (track.setPointerCapture) {
+                        try { track.setPointerCapture(activePointerId); } catch (err) { }
+                    }
+                }
+
                 track.scrollLeft = dragStartScrollLeft - dx;
             });
 
             function endDrag() {
-                if (!isDragging) return;
-                isDragging = false;
-                track.classList.remove('is-dragging');
-                if (dragMoved) {
+                if (!pointerActive) return;
+                pointerActive = false;
+
+                if (isDragging) {
+                    track.classList.remove('is-dragging');
+                    if (track.releasePointerCapture && activePointerId !== null) {
+                        try { track.releasePointerCapture(activePointerId); } catch (err) { }
+                    }
                     goTo(getClosestCardIndex(), true);
                 }
+
+                isDragging = false;
+                activePointerId = null;
             }
 
             track.addEventListener('pointerup', endDrag);
             track.addEventListener('pointercancel', endDrag);
-            track.addEventListener('pointerleave', () => { if (isDragging) endDrag(); });
+            track.addEventListener('pointerleave', () => { if (pointerActive) endDrag(); });
 
             track.addEventListener('click', (e) => {
                 if (dragMoved) {
@@ -940,7 +967,7 @@
             }, true);
 
             // Initiales Setzen auf die erste echte Karte
-            jumpInstant(2);
+            jumpInstant(totalOrig);
 
             window.addEventListener('resize', () => {
                 jumpInstant(currentIndex);
