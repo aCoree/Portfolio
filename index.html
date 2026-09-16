@@ -318,6 +318,13 @@
             }
         }
 
+        /* Nur auf Touchscreen-Geräten (Handy, Tablet, iPod) ausblenden; auf PC (auch schmal) sichtbar lassen */
+        @media (hover: none), (pointer: coarse) {
+            .slider-arrow {
+                display: none !important;
+            }
+        }
+
         .prev-arrow {
             left: 20px;
         }
