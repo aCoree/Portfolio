@@ -27,16 +27,20 @@
             border: none !important;
         }
 
-        /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE ─── */
+        /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE (GPU & MOBILE OPTIMIERT) ─── */
         .bg-video-container {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .bg-video {
@@ -45,6 +49,8 @@
             object-fit: cover;
             opacity: 0;
             transition: opacity 0.5s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .bg-video.playing {
@@ -55,6 +61,8 @@
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             background-image: url('images/run-grading-after.jpg');
@@ -63,6 +71,8 @@
             z-index: 1;
             transition: opacity 0.5s ease;
             opacity: 1;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .bg-image-overlay::after {
@@ -80,12 +90,17 @@
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             background: #0d0d0d;
             opacity: 0;
             transition: opacity 0.1s linear;
             z-index: 2;
+            will-change: opacity;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         /* ─── HERO SECTION ─── */
@@ -122,7 +137,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.5s ease;
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.25s ease, visibility 0.25s ease;
             opacity: 1;
             visibility: visible;
         }
@@ -143,6 +158,44 @@
             pointer-events: none;
         }
 
+        /* ─── NAVIGATION BUTTONS UNIFORM STYLING (.back-btn) ─── */
+        .page-top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-btn i {
+            font-size: 0.85rem;
+            transition: transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            color: #8b7bd8;
+        }
+
+        .back-btn:hover i.fa-arrow-left {
+            transform: translateX(-3px);
+        }
+
+        .back-btn:hover i.fa-arrow-right {
+            transform: translateX(3px);
+        }
+
         /* ─── LAYOUT ANPASSUNGEN ─── */
         .project-detail-page {
             position: relative;
@@ -154,13 +207,6 @@
             position: relative;
             z-index: 1;
             background-color: #0d0d0d;
-        }
-
-        .page-top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
         }
 
         .heading-violet {
@@ -336,8 +382,8 @@
     <section id="content" class="section project-detail-page">
         <div class="container">
             <div class="page-top-nav">
-                <a href="javascript:history.back()" class="back-btn">&#8592; Zurück</a>
-                <a href="projekte.html" class="back-btn">Projekte <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="javascript:history.back()" class="back-btn"><i class="fa-solid fa-arrow-left"></i> <span>Zurück</span></a>
+                <a href="projekte.html" class="back-btn"><span>Projekte</span> <i class="fa-solid fa-arrow-right"></i></a>
             </div>
 
             <div class="project-header">
@@ -351,8 +397,6 @@
                     allowfullscreen>
                 </iframe>
             </div>
-
-    
 
             <div class="project-info-grid">
                 <div class="info-content">
@@ -466,7 +510,7 @@
                     startTrailerBtn.classList.remove('fade-out');
                 }
 
-                if (scrollBtn && scrollBtn.classList.contains('show-btn')) {
+                if (scrollBtn) {
                     scrollBtn.classList.remove('fade-out-on-scroll');
                 }
             }
@@ -482,7 +526,17 @@
             }
         }
 
-        window.addEventListener('scroll', updateVolumeAndOverlay);
+        /* ─── OPTIMIERTER SCROLL LISTENER MIT REQUESTANIMATIONFRAME ─── */
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateVolumeAndOverlay();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     </script>
 
     <!-- ─── COLOR GRADING SLIDER SCRIPT ─── -->
