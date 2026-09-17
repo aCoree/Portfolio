@@ -20,18 +20,10 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-
     <style>
         /* =====================================================
-           SICHERHEIT & BASIS
+           SICHERHEIT & BASIS (SEITENSPEZIFISCH)
            ===================================================== */
-
-        html {
-            scroll-behavior: smooth;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
 
         html,
         body {
@@ -41,8 +33,6 @@
             padding: 0;
             background-color: #0d0d0d;
             color: #ffffff;
-            visibility: visible !important;
-            opacity: 1 !important;
         }
 
         header,
@@ -97,7 +87,7 @@
 
 
         /* =====================================================
-           HERO SECTION & SCROLL-BUTTONS
+           HERO SECTION
            ===================================================== */
 
         .hero-section {
@@ -111,404 +101,244 @@
             pointer-events: none;
         }
 
-        .scroll-down-btn {
-            position: fixed;
-            bottom: 35px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(0);
-            z-index: 100;
-            pointer-events: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.3s ease, color 0.3s ease;
-            will-change: opacity, transform;
-            backface-visibility: hidden;
-        }
-
-        .scroll-down-btn:hover {
-            color: #ffffff;
-            transform: translate(-50%, 3px) translateZ(0);
-        }
-
-        .scroll-down-btn.fade-out-on-scroll {
-            transform: translate(-50%, 10px) translateZ(0) !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-        }
-
-        .scroll-down-btn i,
-        .inline-scroll-btn i {
-            font-size: 1.2rem;
-            animation: bounce 2s infinite;
-        }
-
-        /* In-Page Scroll Button (Unter "Über URBNVIBE") */
-        .inline-scroll-btn {
-            display: inline-flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 8px !important;
-            color: rgba(255, 255, 255, 0.6) !important;
-            text-decoration: none !important;
-            font-size: 0.75rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 2.5px !important;
-            text-transform: uppercase !important;
-            margin-top: 40px !important;
-            transition: color 0.3s ease, transform 0.3s ease !important;
-            cursor: pointer !important;
-        }
-
-        .inline-scroll-btn:hover {
-            color: #ffffff !important;
-            transform: translateY(3px) !important;
-        }
-
-        @keyframes bounce {
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-8px);
-            }
-
-            60% {
-                transform: translateY(-4px);
-            }
-        }
-
 
         /* =====================================================
            HAUPT-CONTAINER
            ===================================================== */
 
         #urbnvibe-page {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            position: relative !important;
-            z-index: 10 !important;
-            background: transparent !important;
-            background-color: transparent !important;
-            width: 100% !important;
-            max-width: 1400px !important;
-            margin: 0 auto !important;
-            padding: 0 40px 130px !important;
-            box-sizing: border-box !important;
+            display: block;
+            position: relative;
+            z-index: 10;
+            background: transparent;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 130px;
+            box-sizing: border-box;
         }
 
         #urbnvibe-page *,
         #urbnvibe-page *::before,
         #urbnvibe-page *::after {
-            box-sizing: border-box !important;
+            box-sizing: border-box;
         }
 
 
         /* =====================================================
-           INTRO-SEKTION (PERFEKT VOLLBILD & ZENTRIERT)
+           INTRO-SEKTION & TYPOGRAFIE-STANDARDS
            ===================================================== */
 
         .urbnvibe-intro-section {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            justify-content: center !important;
-            min-height: 100vh !important;
-            min-height: 100dvh !important;
-            padding: 40px 0 !important;
-            margin-bottom: 120px !important;
-            position: relative !important;
-            z-index: 20 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            box-sizing: border-box !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 40px 0;
+            margin-bottom: 120px;
+            position: relative;
+            z-index: 20;
+            box-sizing: border-box;
         }
 
         .urbnvibe-intro {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 100% !important;
-            max-width: 800px !important;
-            margin: 0 auto !important;
-            text-align: center !important;
-            color: #ffffff !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: #ffffff;
         }
 
-        .urbnvibe-intro .urbnvibe-info-label {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.6 !important;
-            margin: 0 0 18px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: 13px !important;
-            font-weight: 800 !important;
-            line-height: 1.2 !important;
-            letter-spacing: 0.12em !important;
-            text-transform: uppercase !important;
-            color: #ffffff !important;
+        /* Standardisierte Label-Typografie (Barlow Condensed Style) */
+        .urbnvibe-info-label {
+            display: block;
+            opacity: 0.6;
+            margin: 0 0 18px 0;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ffffff;
         }
 
-        .urbnvibe-intro h2 {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            font-family: inherit !important;
-            font-size: clamp(36px, 5vw, 60px) !important;
-            font-weight: 900 !important;
-            margin: 0 0 24px 0 !important;
-            letter-spacing: -0.04em !important;
-            line-height: 1.1 !important;
-            color: #ffffff !important;
+        /* Standardisierte Überschrift-Typografie (Anton Referenz-Look) */
+        .urbnvibe-intro h2,
+        .urbnvibe-info h2 {
+            display: block;
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(36px, 5vw, 60px);
+            font-weight: 400;
+            margin: 0 0 24px 0;
+            letter-spacing: 1px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            color: #ffffff;
         }
 
         .urbnvibe-intro p {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.85 !important;
-            font-family: inherit !important;
-            font-size: 18px !important;
-            line-height: 1.8 !important;
-            margin: 0 !important;
-            color: #ffffff !important;
+            display: block;
+            opacity: 0.85;
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 0;
+            color: #ffffff;
         }
 
 
         /* =====================================================
-           PROJEKT-BEREICH
+           PROJEKT-BEREICH & GRID-LAYOUTS (SEITENSPEZIFISCH)
            ===================================================== */
 
         .urbnvibe-section {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            margin: 0 0 160px 0 !important;
-            padding: 0 !important;
-            background: transparent !important;
+            display: block;
+            width: 100%;
+            margin: 0 0 160px 0;
+            padding: 0;
+            background: transparent;
         }
 
-
-        /* =====================================================
-           2-SPALTEN LAYOUT (Z-PATTERN DESKTOP)
-           ===================================================== */
-
         .urbnvibe-two-column {
-            display: grid !important;
-            grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
-            align-items: center !important;
-            column-gap: 70px !important;
-            row-gap: 50px !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
+            display: grid;
+            grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr);
+            align-items: center;
+            column-gap: 70px;
+            row-gap: 50px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .urbnvibe-two-column.reverse {
-            grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
+            grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr);
         }
 
-
-        /* =====================================================
-           MEDIA CONTAINER & EMBEDS / GRIDS
-           ===================================================== */
-
         .urbnvibe-media {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            position: relative !important;
-            width: 100% !important;
-            min-width: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: visible !important;
+            display: block;
+            position: relative;
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .urbnvibe-video {
-            position: relative !important;
-            display: block !important;
-            width: 100% !important;
-            aspect-ratio: 16 / 9 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden !important;
-            background: transparent !important;
-            border-radius: 12px !important;
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            border-radius: 12px;
         }
 
         .urbnvibe-video iframe {
-            position: absolute !important;
-            display: block !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* Flyer Grid */
         .urbnvibe-flyer-grid {
-            display: grid !important;
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            gap: 18px !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .urbnvibe-flyer-grid img {
-            display: block !important;
-            width: 100% !important;
-            height: auto !important;
-            aspect-ratio: 2 / 3 !important;
-            object-fit: cover !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            border-radius: 6px !important;
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            border-radius: 6px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
 
         /* Logo Container */
         .urbnvibe-logo-container {
-            display: flex !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .urbnvibe-logo-container img {
-            display: block !important;
-            width: min(100%, 600px) !important;
-            height: auto !important;
-            aspect-ratio: 1 / 1 !important;
-            object-fit: cover !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            border-radius: 12px !important;
+            display: block;
+            width: min(100%, 600px);
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 12px;
         }
 
         /* Social Creatives Grid */
         .urbnvibe-creatives-grid {
-            display: grid !important;
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-            gap: 22px !important;
-            width: 100% !important;
-            margin: 0 0 55px 0 !important;
-            padding: 0 !important;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            width: 100%;
+            margin: 0 0 55px 0;
+            padding: 0;
         }
 
         .urbnvibe-creative {
-            display: block !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: visible !important;
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         .urbnvibe-creative img {
-            display: block !important;
-            width: 100% !important;
-            height: auto !important;
-            aspect-ratio: 4 / 5 !important;
-            object-fit: cover !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            border-radius: 8px !important;
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            border-radius: 8px;
         }
 
         .urbnvibe-creatives-info {
-            display: block !important;
-            width: 100% !important;
-            max-width: 700px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+            display: block;
+            width: 100%;
+            max-width: 700px;
+            margin: 0;
+            padding: 0;
         }
-
-
-        /* =====================================================
-           INFO-BEREICH & LABELS
-           ===================================================== */
 
         .urbnvibe-info {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            max-width: 470px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            color: #ffffff !important;
-        }
-
-        .urbnvibe-info-label {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.55 !important;
-            margin: 0 0 18px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: 13px !important;
-            font-weight: 800 !important;
-            line-height: 1.2 !important;
-            letter-spacing: 0.12em !important;
-            text-transform: uppercase !important;
-            color: #ffffff !important;
-        }
-
-        .urbnvibe-info h2 {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            margin: 0 0 22px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: clamp(34px, 4vw, 60px) !important;
-            font-weight: 900 !important;
-            line-height: 1 !important;
-            letter-spacing: -0.04em !important;
-            color: #ffffff !important;
+            display: block;
+            width: 100%;
+            max-width: 470px;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
         }
 
         .urbnvibe-info-description {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.75 !important;
-            margin: 0 0 30px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: 16px !important;
-            font-weight: 400 !important;
-            line-height: 1.75 !important;
-            color: #ffffff !important;
+            display: block;
+            opacity: 0.75;
+            margin: 0 0 30px 0;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.75;
+            color: #ffffff;
         }
 
 
@@ -529,107 +359,88 @@
 
         @media (max-width: 900px) {
             #urbnvibe-page {
-                padding: 0 25px 90px !important;
+                padding: 0 25px 90px;
             }
 
             .urbnvibe-intro-section {
-                min-height: 100vh !important;
-                min-height: 100dvh !important;
-                padding: 30px 0 !important;
-                margin-bottom: 80px !important;
+                min-height: 100vh;
+                min-height: 100dvh;
+                padding: 30px 0;
+                margin-bottom: 80px;
             }
 
             .urbnvibe-intro p {
-                font-size: 16px !important;
-                line-height: 1.7 !important;
-            }
-
-            .inline-scroll-btn {
-                margin-top: 30px !important;
+                font-size: 16px;
+                line-height: 1.7;
             }
 
             .urbnvibe-section {
-                margin-bottom: 90px !important;
+                margin-bottom: 90px;
             }
 
-            /* Grid zu Flex-Spalte umwandeln */
             .urbnvibe-two-column,
             .urbnvibe-two-column.reverse {
-                display: flex !important;
-                flex-direction: column !important;
-                row-gap: 35px !important;
-                column-gap: 0 !important;
+                display: flex;
+                flex-direction: column;
+                row-gap: 35px;
+                column-gap: 0;
             }
 
-            /* Info (Titel & Text) IMMER an 1. Stelle anzeigen */
             .urbnvibe-info {
-                order: 1 !important;
-                max-width: 100% !important;
+                order: 1;
+                max-width: 100%;
             }
 
-            /* Media (Bilder/Video) IMMER an 2. Stelle (darunter) anzeigen */
             .urbnvibe-media {
-                order: 2 !important;
-                width: 100% !important;
+                order: 2;
+                width: 100%;
             }
 
-            /* Social Media Creatives Fix (Text zuerst) */
             .creatives-mobile-fix {
-                display: flex !important;
-                flex-direction: column !important;
+                display: flex;
+                flex-direction: column;
             }
 
             .creatives-mobile-fix .urbnvibe-creatives-info {
-                order: 1 !important;
-                margin-bottom: 30px !important;
+                order: 1;
+                margin-bottom: 30px;
             }
 
             .creatives-mobile-fix .urbnvibe-creatives-grid {
-                order: 2 !important;
-                margin-bottom: 0 !important;
+                order: 2;
+                margin-bottom: 0;
             }
 
-            /* Logo Container Anpassung Mobile */
             .urbnvibe-logo-container {
-                justify-content: flex-start !important;
+                justify-content: flex-start;
             }
 
             .urbnvibe-logo-container img {
-                width: min(100%, 550px) !important;
+                width: min(100%, 550px);
             }
 
             .hero-section {
                 padding-bottom: 24px;
             }
-
-            .scroll-down-btn {
-                font-size: 0.65rem;
-                letter-spacing: 2px;
-                gap: 5px;
-                bottom: 24px;
-            }
-
-            .scroll-down-btn i {
-                font-size: 0.95rem;
-            }
         }
 
         @media (max-width: 600px) {
             #urbnvibe-page {
-                padding: 0 18px 70px !important;
+                padding: 0 18px 70px;
             }
 
             .urbnvibe-flyer-grid {
-                gap: 10px !important;
+                gap: 10px;
             }
 
             .urbnvibe-creatives-grid {
-                grid-template-columns: 1fr !important;
-                gap: 15px !important;
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
 
+            .urbnvibe-intro h2,
             .urbnvibe-info h2 {
-                font-size: 40px !important;
+                font-size: 40px;
             }
         }
     </style>
@@ -661,7 +472,7 @@
     <!-- MAIN CONTENT AREA (TRANSPARENT) -->
     <main id="urbnvibe-page">
 
-        <!-- INTRO SEKTION (PERFEKT IN DER MITTE ZENTRIERT) -->
+        <!-- INTRO SEKTION -->
         <section class="urbnvibe-intro-section" id="intro-section">
             <div class="urbnvibe-intro">
                 <span class="urbnvibe-info-label">Projektübersicht</span>
@@ -673,14 +484,14 @@
                     haben, konnte ich viele neue Erfahrungen im Bereich Design und Social Media sammeln.
                 </p>
                 <!-- ZWEITER SCROLL-BUTTON -->
-                <a href="#flyer-section" class="inline-scroll-btn">
+                <a href="#flyer-section" class="scroll-down-btn inline-scroll-btn">
                     <span>Scrollen</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </a>
             </div>
         </section>
 
-        <!-- FLYER SEKTION (Desktop: Medien links / Text rechts) -->
+        <!-- FLYER SEKTION -->
         <section class="urbnvibe-section" id="flyer-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
@@ -702,7 +513,7 @@
             </div>
         </section>
 
-        <!-- BRANDING / LOGO (Desktop: Text links / Medien rechts via .reverse) -->
+        <!-- BRANDING / LOGO -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
@@ -722,7 +533,7 @@
             </div>
         </section>
 
-        <!-- AWARENESS VIDEO (Desktop: Video links / Text rechts) -->
+        <!-- AWARENESS VIDEO -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
@@ -770,6 +581,7 @@
     <div id="footer-placeholder"></div>
 
     <script src="header.js"></script>
+    <script src="scroll-reveal.js"></script>
 
     <!-- ─── SCROLL & OVERLAY LOGIK SKRIPT ─── -->
     <script>

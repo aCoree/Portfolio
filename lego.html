@@ -12,35 +12,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css?v=1.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Comic+Relief:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Coiny&display=swap" rel="stylesheet">
     <style>
-        /* =====================================================
-           GRUNDLAGEN
-           ===================================================== */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        html,
-        body {
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0 !important;
-            padding: 0 !important;
-            background-color: rgb(36, 36, 36) !important;
-            color: #ffffff !important;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
         /* =====================================================
            FULLSCREEN BACKGROUND VIDEO & OVERLAY
            ===================================================== */
@@ -63,7 +35,6 @@
             transition: opacity 0.5s ease;
         }
 
-        /* Overlay für den Dunkel-Fade beim Scrollen */
         .bg-video-overlay {
             position: absolute;
             top: 0;
@@ -77,7 +48,7 @@
         }
 
         /* =====================================================
-           HERO SECTION & SCROLL BUTTON
+           HERO SECTION
            ===================================================== */
         .hero-section {
             position: relative;
@@ -90,66 +61,6 @@
             pointer-events: none;
         }
 
-        .scroll-down-btn {
-            position: fixed;
-            bottom: 35px;
-            left: 50%;
-            transform: translateX(-50%) translateZ(0);
-            z-index: 100;
-            pointer-events: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.3s ease, color 0.3s ease;
-            will-change: opacity, transform;
-            backface-visibility: hidden;
-        }
-
-        .scroll-down-btn:hover {
-            color: #ffffff;
-            transform: translate(-50%, 3px) translateZ(0);
-        }
-
-        .scroll-down-btn.fade-out-on-scroll {
-            transform: translate(-50%, 10px) translateZ(0) !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-        }
-
-        .scroll-down-btn i {
-            font-size: 1.2rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-8px);
-            }
-
-            60% {
-                transform: translateY(-4px);
-            }
-        }
-
         /* =====================================================
            DARK CONTENT BEREICH (SEKTION 01 - ÜBER DEN KANAL)
            ===================================================== */
@@ -157,7 +68,7 @@
             position: relative !important;
             z-index: 10 !important;
             width: 100% !important;
-            background-color: transparent !important; /* Transparent gemacht für den dynamischen Scroll-Fade */
+            background-color: transparent !important;
             color: #ffffff !important;
             padding-top: 80px !important;
             padding-bottom: 80px !important;
@@ -181,7 +92,7 @@
         }
 
         /* =====================================================
-           LEGO HEADER
+           LEGO BRAND HEADER & OVERRIDES
            ===================================================== */
         body.lego-family-studio .navbar {
             background-color: rgb(248, 214, 78) !important;
@@ -195,9 +106,6 @@
             box-sizing: border-box;
         }
 
-        /* =====================================================
-           HEADER LINKS
-           ===================================================== */
         body.lego-family-studio .navbar a,
         body.lego-family-studio .navbar a:link,
         body.lego-family-studio .navbar a:visited {
@@ -232,9 +140,6 @@
             opacity: 1 !important;
         }
 
-        /* =====================================================
-           HEADER LOGO
-           ===================================================== */
         body.lego-family-studio .navbar .logo,
         body.lego-family-studio .navbar .logo-mark {
             background: transparent !important;
@@ -247,9 +152,7 @@
             opacity: 1 !important;
         }
 
-        /* =====================================================
-           HEADER & MOBILE YOUTUBE ICON
-           ===================================================== */
+        /* HEADER & MOBILE YOUTUBE ICON */
         body.lego-family-studio .navbar .social-icon,
         body.lego-family-studio .navbar .social-icon:link,
         body.lego-family-studio .navbar .social-icon:visited,
@@ -296,7 +199,6 @@
             box-shadow: none !important;
         }
 
-        /* Hover / Focus / Active Zustand */
         body.lego-family-studio .navbar .social-icon:hover,
         body.lego-family-studio .navbar .social-icon:focus,
         body.lego-family-studio .navbar .social-icon:active,
@@ -347,9 +249,6 @@
             border-radius: 50% !important;
         }
 
-        /* =====================================================
-           HAMBURGER
-           ===================================================== */
         body.lego-family-studio .navbar .hamburger {
             pointer-events: auto !important;
             cursor: pointer !important;
@@ -368,9 +267,6 @@
             background: #E30613 !important;
         }
 
-        /* =====================================================
-           MOBILE MENU
-           ===================================================== */
         body.lego-family-studio .mobile-menu {
             background-color: rgb(248, 214, 78) !important;
             background: rgb(248, 214, 78) !important;
@@ -415,7 +311,7 @@
         }
 
         /* =====================================================
-           CONTAINER
+           CONTAINER & LAYOUT GRID
            ===================================================== */
         .lego-container {
             width: 100% !important;
@@ -432,25 +328,17 @@
             box-sizing: border-box !important;
         }
 
-        /* =====================================================
-           SECTIONS
-           ===================================================== */
         .lego-section {
             display: block !important;
             width: 100% !important;
             margin: 0 0 100px 0 !important;
             padding: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
         }
 
         .lego-section:last-child {
             margin-bottom: 0 !important;
         }
 
-        /* =====================================================
-           TRENNLINIE
-           ===================================================== */
         .lego-separator {
             display: block !important;
             width: 100% !important;
@@ -460,13 +348,9 @@
             background-color: rgba(0, 0, 0, 0.15) !important;
         }
 
-        /* =====================================================
-           2-SPALTEN-LAYOUT
-           ===================================================== */
         .lego-two-column {
             display: grid !important;
-            grid-template-columns:
-                minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
+            grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr) !important;
             align-items: center !important;
             column-gap: 70px !important;
             row-gap: 50px !important;
@@ -476,12 +360,11 @@
         }
 
         .lego-two-column.reverse {
-            grid-template-columns:
-                minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
+            grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.65fr) !important;
         }
 
         /* =====================================================
-           MEDIA
+           MEDIA & BILDER / VIDEOS
            ===================================================== */
         .lego-media {
             display: block !important;
@@ -491,15 +374,10 @@
             min-width: 0 !important;
             margin-top: 0 !important;
             padding: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
             overflow: visible !important;
             pointer-events: auto !important;
         }
 
-        /* =====================================================
-           LEGO BILD
-           ===================================================== */
         .lego-card-image {
             display: block !important;
             width: 100% !important;
@@ -520,9 +398,6 @@
             }
         }
 
-        /* =====================================================
-           VIDEO
-           ===================================================== */
         .lego-video {
             position: relative !important;
             display: block !important;
@@ -545,12 +420,10 @@
             margin: 0 !important;
             padding: 0 !important;
             border: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
         }
 
         /* =====================================================
-           INFO-BEREICH
+           TYPOGRAFIE (ANTON & BARLOW CONDENSED)
            ===================================================== */
         .lego-info {
             display: block !important;
@@ -558,50 +431,42 @@
             max-width: 470px !important;
             margin: 0 !important;
             padding: 0 !important;
-            visibility: visible !important;
-            opacity: 1 !important;
         }
 
         .lego-info-label {
             display: block !important;
             margin: 0 0 18px 0 !important;
             padding: 0 !important;
-            font-family: inherit !important;
+            font-family: 'Barlow Condensed', sans-serif !important;
             font-size: 13px !important;
-            font-weight: 800 !important;
+            font-weight: 700 !important;
             line-height: 1.2 !important;
-            letter-spacing: 0.12em !important;
+            letter-spacing: 2px !important;
             text-transform: uppercase !important;
-            visibility: visible !important;
         }
 
         .lego-info h2 {
             display: block !important;
             margin: 0 0 22px 0 !important;
             padding: 0 !important;
-            font-family: inherit !important;
+            font-family: 'Anton', sans-serif !important;
             font-size: clamp(32px, 4vw, 56px) !important;
-            font-weight: 900 !important;
-            line-height: 1.05 !important;
-            letter-spacing: -0.04em !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+            font-weight: 400 !important;
+            line-height: 1.1 !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
         }
 
         .lego-info-description {
             display: block !important;
             margin: 0 0 30px 0 !important;
             padding: 0 !important;
-            font-family: 'Barlow Condensed', sans-serif;
+            font-family: 'Barlow Condensed', sans-serif !important;
             font-size: 16px !important;
             font-weight: 400 !important;
             line-height: 1.75 !important;
-            visibility: visible !important;
         }
 
-        /* =====================================================
-           TITEL-ZEILE MIT BUTTON
-           ===================================================== */
         .lego-info-title-row {
             display: flex !important;
             align-items: center !important;
@@ -615,13 +480,6 @@
             margin: 0 !important;
         }
 
-        .lego-info-title-row .lego-btn {
-            margin-top: 4px !important;
-        }
-
-        /* =====================================================
-           WEISSER BEREICH TEXT 
-           ===================================================== */
         .lego-white-wrapper .lego-info-label {
             color: rgb(234, 51, 35) !important;
         }
@@ -636,7 +494,7 @@
         }
 
         /* =====================================================
-           DETAILS
+           DETAILS LIST
            ===================================================== */
         .lego-details {
             display: block !important;
@@ -653,33 +511,31 @@
             width: 100% !important;
             margin: 0 !important;
             padding: 13px 0 !important;
-            border-top:
-                1px solid rgba(0, 0, 0, 0.15) !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.15) !important;
             color: #000000 !important;
         }
 
         .lego-details li:last-child {
-            border-bottom:
-                1px solid rgba(0, 0, 0, 0.15) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
         }
 
         .lego-detail-name {
             display: block !important;
             color: #000000 !important;
             opacity: 0.65 !important;
-            font-family: inherit !important;
+            font-family: 'Barlow Condensed', sans-serif !important;
             font-size: 12px !important;
-            font-weight: 800 !important;
+            font-weight: 700 !important;
             line-height: 1.4 !important;
             text-transform: uppercase !important;
-            letter-spacing: 0.08em !important;
+            letter-spacing: 1px !important;
         }
 
         .lego-detail-value {
             display: block !important;
             max-width: 55% !important;
             color: #000000 !important;
-            font-family: inherit !important;
+            font-family: 'Barlow Condensed', sans-serif !important;
             font-size: 14px !important;
             font-weight: 600 !important;
             line-height: 1.4 !important;
@@ -687,65 +543,7 @@
         }
 
         /* =====================================================
-           BUTTON DESIGN ("KANAL ANSEHEN")
-           ===================================================== */
-        .lego-btn,
-        body.lego-family-studio .lego-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            position: relative !important;
-            z-index: 20 !important;
-            margin: 0 !important;
-            flex-shrink: 0 !important;
-            white-space: nowrap !important;
-            padding: 12px 32px !important;
-            border-radius: 9999px !important;
-            cursor: pointer !important;
-            background-color: rgba(255, 255, 255, 0.1) !important;
-            background: rgba(255, 255, 255, 0.1) !important;
-            border: 1px solid rgba(255, 255, 255, 0.3) !important;
-            color: #ffffff !important;
-            font-family: inherit !important;
-            font-size: 15px !important;
-            font-weight: 700 !important;
-            text-decoration: none !important;
-            pointer-events: auto !important;
-            box-shadow: none !important;
-            transform: none !important;
-            filter: none !important;
-            outline: none !important;
-            backdrop-filter: blur(6px) !important;
-            -webkit-backdrop-filter: blur(6px) !important;
-            transition: none !important;
-            animation: none !important;
-        }
-
-        .lego-btn::before,
-        .lego-btn::after {
-            display: none !important;
-            content: none !important;
-        }
-
-        .lego-btn:hover,
-        .lego-btn:focus,
-        .lego-btn:active,
-        .lego-btn:visited:hover,
-        body.lego-family-studio .lego-btn:hover,
-        body.lego-family-studio .lego-btn:visited:hover {
-            background-color: #E30613 !important;
-            background: #E30613 !important;
-            color: #ffffff !important;
-            border-color: #E30613 !important;
-            box-shadow: none !important;
-            filter: none !important;
-            transform: none !important;
-            transition: none !important;
-            animation: none !important;
-        }
-
-        /* =====================================================
-           LEGO FOOTER
+           LEGO FOOTER OVERRIDES
            ===================================================== */
         body.lego-family-studio .site-footer,
         body.lego-family-studio footer {
@@ -797,7 +595,6 @@
             animation: none !important;
         }
 
-        /* FOOTER YOUTUBE ICON */
         body.lego-family-studio .site-footer .social-icon,
         body.lego-family-studio .site-footer .social-icon:link,
         body.lego-family-studio .site-footer .social-icon:visited,
@@ -908,7 +705,6 @@
                 column-gap: 0 !important;
             }
 
-            /* HIER WURDE DIE REIHENFOLGE KORRIGIERT: TITEL/INFO IMMER ZUERST (OBEN) */
             .lego-info {
                 order: 1 !important;
                 max-width: 100% !important;
@@ -928,23 +724,9 @@
             }
         }
 
-        /* =====================================================
-           MOBILE SPECIFIC ADJUSTMENTS
-           ===================================================== */
         @media (max-width: 600px) {
             .hero-section {
                 padding-bottom: 20px;
-            }
-
-            .scroll-down-btn {
-                font-size: 0.65rem;
-                letter-spacing: 2px;
-                gap: 5px;
-                bottom: 24px;
-            }
-
-            .scroll-down-btn i {
-                font-size: 0.95rem;
             }
 
             .lego-dark-wrapper {
@@ -1009,7 +791,6 @@
             <source src="lego-loop-h264.mp4" type="video/mp4">
             Ihr Browser unterstützt kein Video.
         </video>
-        <!-- Dunkles Overlay für stufenlosen Fade beim Scrollen -->
         <div id="videoOverlay" class="bg-video-overlay"></div>
     </div>
 
@@ -1021,25 +802,19 @@
         </a>
     </div>
 
-    <!-- ─── SEKTION 01: ÜBER DEN KANAL (SEAMLESS DYNAMIC SCROLL) ─── -->
+    <!-- ─── SEKTION 01: ÜBER DEN KANAL ─── -->
     <div id="content" class="lego-dark-wrapper">
         <div class="lego-container">
             <section class="lego-section">
                 <div class="lego-two-column">
                     <div class="lego-media">
-                        <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio"
-                            class="lego-card-image">
+                        <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio" class="lego-card-image">
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label">
-                            01 / YouTube Channel
-                        </span>
+                        <span class="lego-info-label">01 / YouTube Channel</span>
                         <div class="lego-info-title-row">
-                            <h2>
-                                Über den Kanal
-                            </h2>
-                            <a href="https://www.youtube.com/@legofamilystudio8229" class="lego-btn" target="_blank"
-                                rel="noopener noreferrer">
+                            <h2>Über den Kanal</h2>
+                            <a href="https://www.youtube.com/@legofamilystudio8229" class="btn" target="_blank" rel="noopener noreferrer">
                                 KANAL ANSEHEN
                             </a>
                         </div>
@@ -1068,21 +843,15 @@
         </div>
     </div>
 
-    <!-- ─── SEKTIONEN 02: STOP-MOTION VIDEOS (WEISSER BEREICH) ─── -->
+    <!-- ─── SEKTIONEN 02: STOP-MOTION VIDEOS ─── -->
     <div class="lego-white-wrapper">
         <main class="lego-container">
             <section class="lego-section">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label">
-                            02 / Stop-Motion LEGO Videos
-                        </span>
-                        <h2>
-                            Corona LEGO Time
-                        </h2>
-                        <p class="lego-info-description">
-
-                        </p>
+                        <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
+                        <h2>Corona LEGO Time</h2>
+                        <p class="lego-info-description"></p>
                     </div>
                     <div class="lego-media">
                         <div class="lego-video">
@@ -1094,7 +863,9 @@
                     </div>
                 </div>
             </section>
+
             <div class="lego-separator"></div>
+
             <section class="lego-section">
                 <div class="lego-two-column">
                     <div class="lego-media">
@@ -1106,31 +877,21 @@
                         </div>
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label">
-                            02 / Stop-Motion LEGO Videos
-                        </span>
-                        <h2>
-                            LEGO Street Race
-                        </h2>
-                        <p class="lego-info-description">
-
-                        </p>
+                        <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
+                        <h2>LEGO Street Race</h2>
+                        <p class="lego-info-description"></p>
                     </div>
                 </div>
             </section>
+
             <div class="lego-separator"></div>
+
             <section class="lego-section">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label">
-                            02 / Stop-Motion LEGO Videos
-                        </span>
-                        <h2>
-                            LEGO Hairdresser
-                        </h2>
-                        <p class="lego-info-description">
-
-                        </p>
+                        <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
+                        <h2>LEGO Hairdresser</h2>
+                        <p class="lego-info-description"></p>
                     </div>
                     <div class="lego-media">
                         <div class="lego-video">
@@ -1145,7 +906,7 @@
         </main>
     </div>
 
-    <!-- ─── SCROLL & OVERLAY SKRIPT ─── -->
+    <!-- ─── SEITENSPEZIFISCHES VIDEO/SCROLL-SKRIPT ─── -->
     <script>
         const bgVideo = document.getElementById('bgVideo');
         const scrollBtn = document.getElementById('scrollDownBtn');
@@ -1155,7 +916,6 @@
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
 
-            // 1. Abdunkeln & Audio-Fade synchron mit dem Scrollen
             let fadeProgress = scrollY / (windowH * 0.7);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
@@ -1170,7 +930,6 @@
                 bgVideo.volume = targetVolume;
             }
 
-            // 2. Scroll-Button Ausblenden
             if (scrollY > 100) {
                 if (scrollBtn) scrollBtn.classList.add('fade-out-on-scroll');
             } else {
@@ -1179,7 +938,6 @@
                 }
             }
 
-            // 3. Video pausieren, wenn weit genug gescrollt
             if (scrollY > windowH * 0.9) {
                 if (!bgVideo.paused) {
                     bgVideo.pause();
@@ -1191,37 +949,11 @@
             }
         }
 
-        // Scroll-Event aktivieren
         window.addEventListener('scroll', updateVolumeAndOverlay);
     </script>
 
-    <!-- ─── ANIMATION OBSERVER SCRIPT ─── -->
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, {
-            threshold: 0.05
-        });
-
-        document.querySelectorAll('section').forEach((element) => {
-            observer.observe(element);
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('section').forEach((element) => {
-                const rect = element.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    element.classList.add('active');
-                }
-            });
-        });
-    </script>
-
-    <!-- ─── ZENTRALES HEADER & FOOTER SKRIPT ─── -->
+    <!-- ─── ZENTRALE SKRIPTE ─── -->
+    <script src="scroll-reveal.js"></script>
     <script src="header.js"></script>
 </body>
 

@@ -876,6 +876,8 @@ select {
 }
 
 /* ─── PROJEKT-DETAILSEITE ─── */
+
+
 .project-detail-page {
   padding-top: calc(var(--nav-height) + 40px);
 }
@@ -1020,6 +1022,8 @@ select {
   color: var(--accent-blue);
   margin-bottom: 2px;
 }
+
+
 
 /* ─── COLOR GRADING CARD ─── */
 .grading-card {
@@ -1315,19 +1319,133 @@ select {
   margin-top: 2px;
 }
 
-/* Scroll Fade Animation */
+/* ─── SCROLL-DOWN BUTTON ("Scrollen") ───
+   Wird u.a. auf drone.html per class="scroll-down-btn" verwendet.
+   Der umschliessende Hero-Container gehört dazu (positioniert den Button). */
+.hero-section {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.scroll-down-btn {
+  position: fixed;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%) translateZ(0);
+  z-index: 100;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.6s ease,
+    visibility 0.6s ease,
+    transform 0.3s ease,
+    color 0.3s ease;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.scroll-down-btn:hover {
+  color: #ffffff;
+  transform: translate(-50%, 3px) translateZ(0);
+}
+
+.scroll-down-btn.fade-out-on-scroll {
+  transform: translate(-50%, 10px) translateZ(0) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.scroll-down-btn i {
+  font-size: 1.2rem;
+  animation: btn-bounce 2s infinite;
+}
+
+@keyframes btn-bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-8px);
+  }
+
+  60% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    padding-bottom: 24px;
+  }
+
+  .scroll-down-btn {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    gap: 5px;
+    bottom: 24px;
+  }
+
+  .scroll-down-btn i {
+    font-size: 0.95rem;
+  }
+}
+
+/* ─── EINHEITLICHE SCHRIFT AUF UNTERSEITEN (z.B. drone.html) ───
+   Gleiche Hauptschriften wie im Hero von index.html:
+   Überschriften ("CREATING VISUAL STORIES")  → Anton
+   Fliesstext/Labels ("Filmmaker & Mediamatiker aus der Schweiz") → Barlow Condensed */
+.urbnvibe-info h2 {
+  font-family: "Anton", sans-serif;
+}
+
+.urbnvibe-info-label,
+.urbnvibe-info-description {
+  font-family: "Barlow Condensed", sans-serif;
+}
+
+/* Scroll Fade Animation
+   (translateZ(0) + backface-visibility: hidden erzwingen GPU-Rendering,
+   verhindert Ruckeln/Flackern beim Scrollen auf Handys) */
 section {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(40px) translateZ(0);
+  -webkit-transform: translateY(40px) translateZ(0);
   transition:
     opacity 0.8s ease-out,
     transform 0.8s ease-out;
   will-change: opacity, transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 section.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0);
+  -webkit-transform: translateY(0) translateZ(0);
 }
 
 /* ─── RESPONSIVE DESIGN (MOBIL) ─── */
