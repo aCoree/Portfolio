@@ -385,6 +385,42 @@ body.menu-open {
 }
 
 /* ─── LAYOUT & BUTTONS ─── */
+/* ─── GANZER FILM BUTTON ─── */
+.scroll-down-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Text-Dicke & Schriftgröße */
+.scroll-down-btn span {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 900 !important; /* <-- HIER DIE DICKE ANPASSEN */
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Icon (Pfeil) */
+.scroll-down-btn i {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-size: 0.85rem;
+}
+
+.scroll-down-btn:hover {
+    opacity: 0.75;
+}
+
 .btn {
   display: inline-block;
   align-self: center;
