@@ -57,18 +57,23 @@
 
 
         /* =====================================================
-           FULLSCREEN BACKGROUND VIDEO (EXAKT WIE RUN.HTML)
+           FULLSCREEN BACKGROUND VIDEO (OPTIMIERT FÜR MOBILE & DESKTOP)
            ===================================================== */
 
         .bg-video-container {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform;
         }
 
         .bg-video {
@@ -76,6 +81,8 @@
             height: 100%;
             object-fit: cover;
             transition: opacity 0.5s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         /* Abdunkelungs-Overlay beim Scrollen */
@@ -89,6 +96,9 @@
             opacity: 0;
             transition: opacity 0.1s linear;
             z-index: 2;
+            will-change: opacity;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
 
@@ -254,6 +264,8 @@
             overflow: hidden !important;
             background: transparent !important;
             border-radius: 12px !important;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .urbnvibe-video iframe {
@@ -527,7 +539,7 @@
 
     <script src="header.js"></script>
 
-    <!-- ─── SCROLL & VIDEO LOGIK SKRIPT (EXAKT IDENTISCH ZU RUN.HTML) ─── -->
+    <!-- ─── SCROLL & VIDEO LOGIK SKRIPT (OPTIMIERT FÜR MOBILE PERFORMANCE) ─── -->
     <script>
         const bgVideo = document.getElementById('bgVideo');
         const scrollBtn = document.getElementById('scrollDownBtn');
@@ -572,9 +584,20 @@
             }
         }
 
-        // Initial ausführen & Scroll-Event aktivieren
+        // Performance-Optimierung per requestAnimationFrame & Passive Listener
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateVolumeAndOverlay();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // Initial ausführen
         updateVolumeAndOverlay();
-        window.addEventListener('scroll', updateVolumeAndOverlay);
     </script>
 
 </body>
