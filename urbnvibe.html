@@ -49,18 +49,22 @@
 
 
         /* =====================================================
-           FULLSCREEN BACKGROUND IMAGE (HINTERGRUNDBILD)
+           FULLSCREEN BACKGROUND IMAGE / CONTAINER (PERFORMANCE-OPTIMIERT)
            ===================================================== */
 
         .bg-video-container {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .urbnvibe-hero-picture,
@@ -70,18 +74,25 @@
             height: 100%;
             object-fit: cover;
             transition: opacity 0.5s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
-        /* Abdunkelungs-Overlay beim Scrollen */
+        /* Abdunkelungs-Overlay beim Scrollen (GPU-beschleunigt) */
         .bg-video-overlay {
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             background: #0d0d0d;
             opacity: 0;
             transition: opacity 0.1s linear;
+            will-change: opacity;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
             z-index: 2;
         }
 
@@ -170,7 +181,8 @@
 
         /* Standardisierte Überschrift-Typografie (Anton Referenz-Look) */
         .urbnvibe-intro h2,
-        .urbnvibe-info h2 {
+        .urbnvibe-info h2,
+        .urbnvibe-creatives-info h2 {
             display: block;
             font-family: 'Anton', sans-serif;
             font-size: clamp(36px, 5vw, 60px);
@@ -439,7 +451,8 @@
             }
 
             .urbnvibe-intro h2,
-            .urbnvibe-info h2 {
+            .urbnvibe-info h2,
+            .urbnvibe-creatives-info h2 {
                 font-size: 40px;
             }
         }
@@ -565,7 +578,7 @@
                 <div class="urbnvibe-creative"><img src="images/creative-2.png" alt="URBNVIBE Creative 2"></div>
                 <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3"></div>
             </div>
-            <div class="urbnvibe-creatives-info">
+            <div class="urbnvibe-info urbnvibe-creatives-info">
                 <span class="urbnvibe-info-label">04 / Social Media</span>
                 <h2>Social Media Creatives</h2>
                 <p class="urbnvibe-info-description">
@@ -583,7 +596,7 @@
     <script src="header.js"></script>
     <script src="scroll-reveal.js"></script>
 
-    <!-- ─── SCROLL & OVERLAY LOGIK SKRIPT ─── -->
+    <!-- ─── SCROLL & OVERLAY LOGIK SKRIPT (PERFORMANCE-OPTIMIERT) ─── -->
     <script>
         const scrollBtn = document.getElementById('scrollDownBtn');
         const overlay = document.getElementById('videoOverlay');
@@ -610,9 +623,20 @@
             }
         }
 
-        // Initial ausführen & Scroll-Event aktivieren
+        // Initial ausführen
         updateScrollEffects();
-        window.addEventListener('scroll', updateScrollEffects);
+
+        // Performance-optimierte Scroll-Logik via requestAnimationFrame
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateScrollEffects();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     </script>
 
 </body>
