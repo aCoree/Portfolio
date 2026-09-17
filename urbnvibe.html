@@ -9,7 +9,6 @@
 
     <link rel="preload" as="image" href="cards/card-big-urbnvibe.jpg">
 
-
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -17,161 +16,166 @@
 
     <link rel="manifest" href="/site.webmanifest">
 
-
     <link rel="stylesheet" href="style.css?v=1.1">
-
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-
 
     <style>
         /* =====================================================
-SICHERHEIT & BASIS
-===================================================== */
+           SICHERHEIT & BASIS
+           ===================================================== */
 
         html {
+            scroll-behavior: smooth;
             visibility: visible !important;
             opacity: 1 !important;
-            scroll-behavior: auto;
         }
 
+        html,
         body {
-            visibility: visible !important;
-            opacity: 1 !important;
+            overflow-x: hidden;
+            width: 100%;
             margin: 0;
             padding: 0;
             background-color: #0d0d0d;
             color: #ffffff;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        header,
+        .site-header,
+        nav,
+        .site-header-scrolled,
+        .main-navigation,
+        .navbar {
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
         }
 
 
         /* =====================================================
-SCROLL-ANIMATION-BEREICH (HERO + INTRO TEXT)
-===================================================== */
+           FULLSCREEN BACKGROUND IMAGE (HINTERGRUNDBILD)
+           ===================================================== */
 
-        .scroll-sequence {
-            position: relative;
-            height: 250vh;
-            width: 100%;
-            background-color: #0d0d0d;
-        }
-
-        .sticky-container {
-            position: sticky;
+        .bg-video-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            height: 100dvh;
+            z-index: 0;
             overflow: hidden;
-            background-color: #0d0d0d;
-        }
-
-        .urbnvibe-hero-picture {
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .urbnvibe-hero-img {
-            display: block !important;
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-            object-position: center !important;
-            border-radius: 0 !important;
-            margin: 0 !important;
-        }
-
-        /* Overlay für den Dunkel-Fade */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0d0d0d;
-            opacity: 0;
-            z-index: 2;
-        }
-
-        /* Dezenter, permanenter Schatten unten im Hero-Bild (macht den
-           Scroll-Button besser sichtbar & wirkt hochwertiger) */
-        .hero-bottom-fade {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom,
-                    rgba(13, 13, 13, 0) 0%,
-                    rgba(13, 13, 13, 1) 100%);
-            z-index: 2;
             pointer-events: none;
         }
 
-        /* Container für den Text (kommt von unten hoch und zentriert sich) */
-        .flyer-layer {
+        .urbnvibe-hero-picture,
+        .bg-video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Abdunkelungs-Overlay beim Scrollen */
+        .bg-video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 3;
+            background: #0d0d0d;
+            opacity: 0;
+            transition: opacity 0.1s linear;
+            z-index: 2;
+        }
+
+
+        /* =====================================================
+           HERO SECTION & SCROLL-BUTTONS
+           ===================================================== */
+
+        .hero-section {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: translateY(100vh);
-        }
-
-        .flyer-layer-inner {
-            width: 100%;
-            max-width: 1400px;
-            padding: 0 40px;
             box-sizing: border-box;
+            pointer-events: none;
         }
 
-        /* Scroll-Button auf dem Hero-Bild (identisch zu musik.html / drone.html) */
-        .hero-scroll-indicator {
-            position: absolute;
-            bottom: 40px;
+        .scroll-down-btn {
+            position: fixed;
+            bottom: 35px;
             left: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
+            transform: translateX(-50%) translateZ(0);
+            z-index: 100;
+            pointer-events: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.18em;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.3s ease, color 0.3s ease;
-            user-select: none;
-        }
-
-        .hero-scroll-indicator:hover {
             opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.3s ease, color 0.3s ease;
+            will-change: opacity, transform;
+            backface-visibility: hidden;
+        }
+
+        .scroll-down-btn:hover {
             color: #ffffff;
+            transform: translate(-50%, 3px) translateZ(0);
         }
 
-        .hero-scroll-indicator i {
-            font-size: 13px;
-            animation: bounceDown 2s infinite;
+        .scroll-down-btn.fade-out-on-scroll {
+            transform: translate(-50%, 10px) translateZ(0) !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
         }
 
-        @keyframes bounceDown {
+        .scroll-down-btn i,
+        .inline-scroll-btn i {
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
 
+        /* In-Page Scroll Button (Unter "Über URBNVIBE") */
+        .inline-scroll-btn {
+            display: inline-flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 8px !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            text-decoration: none !important;
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 2.5px !important;
+            text-transform: uppercase !important;
+            margin-top: 40px !important;
+            transition: color 0.3s ease, transform 0.3s ease !important;
+            cursor: pointer !important;
+        }
+
+        .inline-scroll-btn:hover {
+            color: #ffffff !important;
+            transform: translateY(3px) !important;
+        }
+
+        @keyframes bounce {
             0%,
             20%,
             50%,
@@ -181,74 +185,18 @@ SCROLL-ANIMATION-BEREICH (HERO + INTRO TEXT)
             }
 
             40% {
-                transform: translateY(5px);
+                transform: translateY(-8px);
             }
 
             60% {
-                transform: translateY(2px);
+                transform: translateY(-4px);
             }
         }
 
-        /* Button innerhalb des Intro-Textes (identisch zu musik.html) */
-        .intro-scroll-indicator {
-            margin-top: 55px;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 9px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-            user-select: none;
-        }
-
-        .intro-scroll-indicator:hover {
-            color: #ffffff;
-            transform: translateY(3px);
-        }
-
-        .intro-scroll-indicator i {
-            font-size: 13px;
-            animation: bounceDown 2s infinite;
-        }
-
 
         /* =====================================================
-INTRO-BEREICH (Zentriert im Scroll-Effekt)
-===================================================== */
-
-        .urbnvibe-intro {
-            display: block !important;
-            width: 100% !important;
-            max-width: 800px !important;
-            margin: 0 auto !important;
-            text-align: center !important;
-        }
-
-        .urbnvibe-intro h2 {
-            font-family: inherit !important;
-            font-size: clamp(34px, 4vw, 50px) !important;
-            font-weight: 900 !important;
-            margin: 0 0 20px 0 !important;
-            letter-spacing: -0.04em !important;
-        }
-
-        .urbnvibe-intro p {
-            font-family: inherit !important;
-            font-size: 18px !important;
-            line-height: 1.75 !important;
-            opacity: 0.8 !important;
-            margin: 0 !important;
-        }
-
-
-        /* =====================================================
-HAUPT-CONTAINER (Rest der Seite)
-===================================================== */
+           HAUPT-CONTAINER
+           ===================================================== */
 
         #urbnvibe-page {
             display: block !important;
@@ -256,11 +204,12 @@ HAUPT-CONTAINER (Rest der Seite)
             opacity: 1 !important;
             position: relative !important;
             z-index: 10 !important;
-            background-color: #0d0d0d !important;
+            background: transparent !important;
+            background-color: transparent !important;
             width: 100% !important;
             max-width: 1400px !important;
             margin: 0 auto !important;
-            padding: 60px 40px 130px !important;
+            padding: 0 40px 130px !important;
             box-sizing: border-box !important;
         }
 
@@ -272,22 +221,97 @@ HAUPT-CONTAINER (Rest der Seite)
 
 
         /* =====================================================
-PROJEKT-BEREICH
-===================================================== */
+           INTRO-SEKTION (PERFEKT VOLLBILD & ZENTRIERT)
+           ===================================================== */
+
+        .urbnvibe-intro-section {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 100vh !important;
+            min-height: 100dvh !important;
+            padding: 40px 0 !important;
+            margin-bottom: 120px !important;
+            position: relative !important;
+            z-index: 20 !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            box-sizing: border-box !important;
+        }
+
+        .urbnvibe-intro {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+            text-align: center !important;
+            color: #ffffff !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .urbnvibe-intro .urbnvibe-info-label {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.6 !important;
+            margin: 0 0 18px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.12em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .urbnvibe-intro h2 {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            font-family: inherit !important;
+            font-size: clamp(36px, 5vw, 60px) !important;
+            font-weight: 900 !important;
+            margin: 0 0 24px 0 !important;
+            letter-spacing: -0.04em !important;
+            line-height: 1.1 !important;
+            color: #ffffff !important;
+        }
+
+        .urbnvibe-intro p {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.85 !important;
+            font-family: inherit !important;
+            font-size: 18px !important;
+            line-height: 1.8 !important;
+            margin: 0 !important;
+            color: #ffffff !important;
+        }
+
+
+        /* =====================================================
+           PROJEKT-BEREICH
+           ===================================================== */
 
         .urbnvibe-section {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
             width: 100% !important;
-            margin: 0 0 120px 0 !important;
+            margin: 0 0 160px 0 !important;
             padding: 0 !important;
+            background: transparent !important;
         }
 
 
         /* =====================================================
-2-SPALTEN LAYOUT
-===================================================== */
+           2-SPALTEN LAYOUT (Z-PATTERN DESKTOP)
+           ===================================================== */
 
         .urbnvibe-two-column {
             display: grid !important;
@@ -306,8 +330,8 @@ PROJEKT-BEREICH
 
 
         /* =====================================================
-MEDIA CONTAINER
-===================================================== */
+           MEDIA CONTAINER & EMBEDS / GRIDS
+           ===================================================== */
 
         .urbnvibe-media {
             display: block !important;
@@ -319,182 +343,6 @@ MEDIA CONTAINER
             margin: 0 !important;
             padding: 0 !important;
             overflow: visible !important;
-        }
-
-        #urbnvibe-page img {
-            visibility: visible !important;
-            opacity: 1 !important;
-            max-width: 100% !important;
-            border: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-
-        /* =====================================================
-FLYER GRID
-===================================================== */
-
-        .urbnvibe-flyer-grid {
-            display: grid !important;
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-            gap: 18px !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        .urbnvibe-flyer-grid img {
-            display: block !important;
-            width: 100% !important;
-            height: auto !important;
-            aspect-ratio: 2 / 3 !important;
-            object-fit: cover !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            border-radius: 6px !important;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-
-        /* =====================================================
-INFO-BEREICH
-===================================================== */
-
-        .urbnvibe-info {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            max-width: 470px !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        .urbnvibe-info-label {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.55 !important;
-            margin: 0 0 18px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: 13px !important;
-            font-weight: 800 !important;
-            line-height: 1.2 !important;
-            letter-spacing: 0.12em !important;
-            text-transform: uppercase !important;
-            color: inherit !important;
-        }
-
-        .urbnvibe-info h2 {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            margin: 0 0 22px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: clamp(34px, 4vw, 60px) !important;
-            font-weight: 900 !important;
-            line-height: 1 !important;
-            letter-spacing: -0.04em !important;
-            color: inherit !important;
-        }
-
-        .urbnvibe-info-description {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 0.75 !important;
-            margin: 0 0 30px 0 !important;
-            padding: 0 !important;
-            font-family: inherit !important;
-            font-size: 16px !important;
-            font-weight: 400 !important;
-            line-height: 1.75 !important;
-            color: inherit !important;
-        }
-
-
-        /* =====================================================
-DETAILS & LOGO & VIDEO & CREATIVES
-===================================================== */
-
-        header,
-        .site-header,
-        nav,
-        .site-header-scrolled,
-        .main-navigation,
-        .navbar {
-            background-color: transparent !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
-
-        .urbnvibe-details {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            margin: 25px 0 0 0 !important;
-            padding: 0 !important;
-            list-style: none !important;
-        }
-
-        .urbnvibe-details li {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: flex-start !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 13px 0 !important;
-            border-top: 1px solid currentColor !important;
-            color: inherit !important;
-        }
-
-        .urbnvibe-details li:last-child {
-            border-bottom: 1px solid currentColor !important;
-        }
-
-        .urbnvibe-detail-name {
-            display: block !important;
-            font-family: inherit !important;
-            font-size: 12px !important;
-            font-weight: 800 !important;
-            line-height: 1.4 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.08em !important;
-            opacity: 0.55 !important;
-        }
-
-        .urbnvibe-detail-value {
-            display: block !important;
-            max-width: 55% !important;
-            font-family: inherit !important;
-            font-size: 14px !important;
-            font-weight: 600 !important;
-            line-height: 1.4 !important;
-            text-align: right !important;
-            color: inherit !important;
-        }
-
-        .urbnvibe-logo-container {
-            display: flex !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        .urbnvibe-logo-container img {
-            display: block !important;
-            width: min(100%, 600px) !important;
-            height: auto !important;
-            aspect-ratio: 1 / 1 !important;
-            object-fit: cover !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            border-radius: 12px !important;
         }
 
         .urbnvibe-video {
@@ -523,6 +371,50 @@ DETAILS & LOGO & VIDEO & CREATIVES
             opacity: 1 !important;
         }
 
+        /* Flyer Grid */
+        .urbnvibe-flyer-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 18px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .urbnvibe-flyer-grid img {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 2 / 3 !important;
+            object-fit: cover !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            border-radius: 6px !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Logo Container */
+        .urbnvibe-logo-container {
+            display: flex !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .urbnvibe-logo-container img {
+            display: block !important;
+            width: min(100%, 600px) !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            object-fit: cover !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            border-radius: 12px !important;
+        }
+
+        /* Social Creatives Grid */
         .urbnvibe-creatives-grid {
             display: grid !important;
             grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
@@ -563,52 +455,122 @@ DETAILS & LOGO & VIDEO & CREATIVES
 
 
         /* =====================================================
-RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
-===================================================== */
+           INFO-BEREICH & LABELS
+           ===================================================== */
 
-        /* Optimierung für Bildschirme kleiner als 1100px */
-        @media (max-width: 1099px) {
-            .urbnvibe-hero-img {
-                object-fit: cover !important;
-                object-position: center center !important;
-            }
+        .urbnvibe-info {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            max-width: 470px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            color: #ffffff !important;
         }
+
+        .urbnvibe-info-label {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.55 !important;
+            margin: 0 0 18px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            line-height: 1.2 !important;
+            letter-spacing: 0.12em !important;
+            text-transform: uppercase !important;
+            color: #ffffff !important;
+        }
+
+        .urbnvibe-info h2 {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            margin: 0 0 22px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: clamp(34px, 4vw, 60px) !important;
+            font-weight: 900 !important;
+            line-height: 1 !important;
+            letter-spacing: -0.04em !important;
+            color: #ffffff !important;
+        }
+
+        .urbnvibe-info-description {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 0.75 !important;
+            margin: 0 0 30px 0 !important;
+            padding: 0 !important;
+            font-family: inherit !important;
+            font-size: 16px !important;
+            font-weight: 400 !important;
+            line-height: 1.75 !important;
+            color: #ffffff !important;
+        }
+
+
+        /* =====================================================
+           FOOTER Z-INDEX FIX
+           ===================================================== */
+
+        footer,
+        #footer-placeholder {
+            position: relative;
+            z-index: 10;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE (UNTER 900PX & MOBILE)
+           ===================================================== */
 
         @media (max-width: 900px) {
             #urbnvibe-page {
-                padding: 40px 25px 90px !important;
+                padding: 0 25px 90px !important;
             }
 
-            .flyer-layer-inner {
-                padding: 0 25px;
+            .urbnvibe-intro-section {
+                min-height: 100vh !important;
+                min-height: 100dvh !important;
+                padding: 30px 0 !important;
+                margin-bottom: 80px !important;
+            }
+
+            .urbnvibe-intro p {
+                font-size: 16px !important;
+                line-height: 1.7 !important;
+            }
+
+            .inline-scroll-btn {
+                margin-top: 30px !important;
             }
 
             .urbnvibe-section {
                 margin-bottom: 90px !important;
             }
 
-            /* Intro Anpassung Mobile (bleibt zentriert) */
-            .urbnvibe-intro p {
-                font-size: 16px !important;
-                padding: 0 10px !important;
-            }
-
-            /* Mobile Z-Layout Fix: Text immer oben, Bild immer unten */
+            /* Grid zu Flex-Spalte umwandeln */
             .urbnvibe-two-column,
             .urbnvibe-two-column.reverse {
                 display: flex !important;
                 flex-direction: column !important;
+                row-gap: 35px !important;
                 column-gap: 0 !important;
-                row-gap: 45px !important;
             }
 
-            .urbnvibe-two-column .urbnvibe-info {
+            /* Info (Titel & Text) IMMER an 1. Stelle anzeigen */
+            .urbnvibe-info {
                 order: 1 !important;
                 max-width: 100% !important;
             }
 
-            .urbnvibe-two-column .urbnvibe-media {
+            /* Media (Bilder/Video) IMMER an 2. Stelle (darunter) anzeigen */
+            .urbnvibe-media {
                 order: 2 !important;
+                width: 100% !important;
             }
 
             /* Social Media Creatives Fix (Text zuerst) */
@@ -627,7 +589,7 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
                 margin-bottom: 0 !important;
             }
 
-            /* Logo Container Anpassung */
+            /* Logo Container Anpassung Mobile */
             .urbnvibe-logo-container {
                 justify-content: flex-start !important;
             }
@@ -635,15 +597,26 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
             .urbnvibe-logo-container img {
                 width: min(100%, 550px) !important;
             }
+
+            .hero-section {
+                padding-bottom: 24px;
+            }
+
+            .scroll-down-btn {
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+                gap: 5px;
+                bottom: 24px;
+            }
+
+            .scroll-down-btn i {
+                font-size: 0.95rem;
+            }
         }
 
         @media (max-width: 600px) {
             #urbnvibe-page {
-                padding: 30px 18px 70px !important;
-            }
-
-            .flyer-layer-inner {
-                padding: 0 18px;
+                padding: 0 18px 70px !important;
             }
 
             .urbnvibe-flyer-grid {
@@ -658,15 +631,6 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
             .urbnvibe-info h2 {
                 font-size: 40px !important;
             }
-
-            .urbnvibe-details li {
-                gap: 12px !important;
-            }
-
-            .urbnvibe-detail-name,
-            .urbnvibe-detail-value {
-                font-size: 11px !important;
-            }
         }
     </style>
 </head>
@@ -675,52 +639,50 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
 
     <div id="header-placeholder"></div>
 
+    <!-- ─── FULLSCREEN HINTERGRUND BILD (URBNVIBE HERO) ─── -->
+    <div class="bg-video-container">
+        <picture class="urbnvibe-hero-picture">
+            <source media="(max-width: 644px)" srcset="cards/card-small-urbnvibe.jpg">
+            <img src="cards/card-big-urbnvibe.jpg" alt="URBNVIBE Hero Image" class="bg-video">
+        </picture>
+        <!-- Schwarzes Overlay beim Scrollen -->
+        <div id="videoOverlay" class="bg-video-overlay"></div>
+    </div>
 
-    <div class="scroll-sequence">
-        <div class="sticky-container">
-            <picture class="urbnvibe-hero-picture">
-                <source media="(max-width: 644px)" srcset="cards/card-small-urbnvibe.jpg">
-                <img src="cards/card-big-urbnvibe.jpg" alt="URBNVIBE Hero Image" class="urbnvibe-hero-img">
-            </picture>
-            <div class="hero-bottom-fade"></div>
-
-            <div class="hero-overlay"></div>
-
-            <div class="hero-scroll-indicator" onclick="scrollPastHero()">
-                <span>Scrollen</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-
-            <div class="flyer-layer">
-                <div class="flyer-layer-inner">
-
-                    <!-- PERFEKT ZENTRIERTER INTRO TEXT IM SCROLL-EFFEKT -->
-                    <div class="urbnvibe-intro">
-                        <h2>Über URBNVIBE</h2>
-                        <p>
-                            URBNVIBE war ein Projekt aus dem 10. ICT-Schuljahr. Ich habe dabei verschiedene Sachen
-                            designt wie z.B. ein Flyer, ein Logo, eine Social-Media-Präsenz und ein Video. Ich habe
-                            dieses Projekt durch das ganze Schuljahr geführt. Da wir oft mit Adobe Programmen gearbeitet
-                            haben, konnte ich viele neue Erfahrungen im Bereich Design und Social Media sammeln.
-                        </p>
-                        <div class="intro-scroll-indicator" onclick="scrollToProjects()">
-                            <span>Zu den Projekten</span>
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+    <!-- ─── HERO SECTION & HERO SCROLL-BUTTON ─── -->
+    <div class="hero-section">
+        <a href="#intro-section" id="scrollDownBtn" class="scroll-down-btn">
+            <span>Scrollen</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
     </div>
 
 
+    <!-- MAIN CONTENT AREA (TRANSPARENT) -->
     <main id="urbnvibe-page">
 
-        <!-- FLYER SEKTION (Nun der erste normale Abschnitt nach dem Scroll) -->
-        <section class="urbnvibe-section">
-            <div class="urbnvibe-two-column flyer-column">
+        <!-- INTRO SEKTION (PERFEKT IN DER MITTE ZENTRIERT) -->
+        <section class="urbnvibe-intro-section" id="intro-section">
+            <div class="urbnvibe-intro">
+                <span class="urbnvibe-info-label">Projektübersicht</span>
+                <h2>Über URBNVIBE</h2>
+                <p>
+                    URBNVIBE war ein Projekt aus dem 10. ICT-Schuljahr. Ich habe dabei verschiedene Sachen
+                    designt wie z.B. ein Flyer, ein Logo, eine Social-Media-Präsenz und ein Video. Ich habe
+                    dieses Projekt durch das ganze Schuljahr geführt. Da wir oft mit Adobe Programmen gearbeitet
+                    haben, konnte ich viele neue Erfahrungen im Bereich Design und Social Media sammeln.
+                </p>
+                <!-- ZWEITER SCROLL-BUTTON -->
+                <a href="#flyer-section" class="inline-scroll-btn">
+                    <span>Scrollen</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- FLYER SEKTION (Desktop: Medien links / Text rechts) -->
+        <section class="urbnvibe-section" id="flyer-section">
+            <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
                     <div class="urbnvibe-flyer-grid">
                         <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1">
@@ -740,7 +702,7 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
             </div>
         </section>
 
-        <!-- BRANDING / LOGO -->
+        <!-- BRANDING / LOGO (Desktop: Text links / Medien rechts via .reverse) -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
@@ -760,8 +722,7 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
             </div>
         </section>
 
-
-        <!-- AWARENESS VIDEO -->
+        <!-- AWARENESS VIDEO (Desktop: Video links / Text rechts) -->
         <section class="urbnvibe-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
@@ -776,7 +737,7 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
                     <span class="urbnvibe-info-label">03 / Social Media</span>
                     <h2>Awareness Video</h2>
                     <p class="urbnvibe-info-description">
-                        Ein dynamisch geschnittes Video für Social Media, das den urbanen Vibe der Marke in Bewegung
+                        Ein dynamisch geschnittenes Video für Social Media, das den urbanen Vibe der Marke in Bewegung
                         versetzt. In dem Video wird eine kurze Geschichte von zwei Personen vorgestellt die zusammen
                         Videos in den Sozialen Medien schauen. Die eine Person muss plötzlich so fest Lachen, dass die
                         andere Person vom Dach fällt. Doch glücklicherweise fällt die Person auf eine URBNVIBE Jacke und
@@ -786,7 +747,6 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
             </div>
         </section>
 
-
         <!-- SOCIAL MEDIA CREATIVES -->
         <section class="urbnvibe-section creatives-mobile-fix">
             <div class="urbnvibe-creatives-grid">
@@ -795,7 +755,7 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
                 <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3"></div>
             </div>
             <div class="urbnvibe-creatives-info">
-                <span class="urbnvibe-info-label">04 / Social Media </span>
+                <span class="urbnvibe-info-label">04 / Social Media</span>
                 <h2>Social Media Creatives</h2>
                 <p class="urbnvibe-info-description">
                     Eine Serie aus drei Creatives für Social Media. Die Creatives wurden im 4:5-Format gestaltet,
@@ -811,64 +771,36 @@ RESPONSIVE (UNTER 1100PX & TABLET/MOBILE)
 
     <script src="header.js"></script>
 
-
+    <!-- ─── SCROLL & OVERLAY LOGIK SKRIPT ─── -->
     <script>
-        // Klick auf "Scrollen" (Hero) -> scrollt bis der Intro-Text
-        // vollständig eingeblendet ist (identische Logik wie drone.html)
-        function scrollPastHero() {
-            const windowH = window.innerHeight;
-            const slideEnd = windowH * 1.2;
-            window.scrollTo({ top: slideEnd, behavior: 'smooth' });
-        }
+        const scrollBtn = document.getElementById('scrollDownBtn');
+        const overlay = document.getElementById('videoOverlay');
 
-        // Klick auf "Zu den Projekten" -> scrollt zum Hauptinhalt nach der Scroll-Sequenz
-        function scrollToProjects() {
-            const page = document.getElementById('urbnvibe-page');
-            if (page) {
-                page.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        document.addEventListener("scroll", () => {
+        // Overlay-Abdunklung & Scroll-Button Fade beim Scrollen
+        function updateScrollEffects() {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
 
-            const overlay = document.querySelector('.hero-overlay');
-            const flyerLayer = document.querySelector('.flyer-layer');
-            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
-
-            // 1. Fade ins Dunkle
-            let fadeProgress = scrollY / (windowH * 0.7);
+            // 1. Abdunkeln beim Scrollen
+            let fadeProgress = scrollY / (windowH * 0.8);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
+
             if (overlay) {
                 overlay.style.opacity = fadeProgress;
             }
 
-            // 2. Parallax Reveal des Textes (Intro)
-            let slideStart = windowH * 0.3;
-            let slideEnd = windowH * 1.2;
-            let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
-            if (slideProgress > 1) slideProgress = 1;
-            if (slideProgress < 0) slideProgress = 0;
-
-            let easeOut = 1 - Math.pow(1 - slideProgress, 3);
-
-            if (flyerLayer) {
-                let yOffset = 100 - (easeOut * 100);
-                flyerLayer.style.transform = `translateY(${yOffset}vh)`;
-                flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            // 2. Button Verhalten beim Scrollen
+            if (scrollY > 100) {
+                if (scrollBtn) scrollBtn.classList.add('fade-out-on-scroll');
+            } else {
+                if (scrollBtn) scrollBtn.classList.remove('fade-out-on-scroll');
             }
+        }
 
-            // 3. Hero-Scroll-Button ausblenden, sobald man zu scrollen beginnt
-            if (scrollIndicator) {
-                let buttonFade = 1 - (scrollY / (windowH * 0.25));
-                if (buttonFade < 0) buttonFade = 0;
-                if (buttonFade > 1) buttonFade = 1;
-                scrollIndicator.style.opacity = buttonFade;
-                scrollIndicator.style.pointerEvents = buttonFade === 0 ? 'none' : 'auto';
-            }
-        });
+        // Initial ausführen & Scroll-Event aktivieren
+        updateScrollEffects();
+        window.addEventListener('scroll', updateScrollEffects);
     </script>
 
 </body>

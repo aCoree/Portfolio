@@ -26,18 +26,21 @@
            ===================================================== */
 
         html {
+            scroll-behavior: smooth;
             visibility: visible !important;
             opacity: 1 !important;
-            scroll-behavior: auto;
         }
 
+        html,
         body {
-            visibility: visible !important;
-            opacity: 1 !important;
+            overflow-x: hidden;
+            width: 100%;
             margin: 0;
             padding: 0;
             background-color: #0d0d0d;
             color: #ffffff;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
 
         header,
@@ -54,125 +57,98 @@
 
 
         /* =====================================================
-           SCROLL-ANIMATION-BEREICH (HERO + SEKTION 01)
+           FULLSCREEN BACKGROUND VIDEO (EXAKT WIE RUN.HTML)
            ===================================================== */
 
-        .scroll-sequence {
-            position: relative;
-            height: 250vh;
-            width: 100%;
-            background-color: #0d0d0d;
-        }
-
-        .sticky-container {
-            position: sticky;
+        .bg-video-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            height: 100dvh;
+            z-index: 0;
             overflow: hidden;
-            background-color: #0d0d0d;
-        }
-
-        /* Hero Background Video */
-        .urbnvibe-hero-video {
-            display: block !important;
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-            object-position: center !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            z-index: 1 !important;
-            border: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        /* Overlay für den Dunkel-Fade */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0d0d0d;
-            opacity: 0;
-            z-index: 2;
-        }
-
-        /* Dezenter, permanenter Schatten unten im Video (macht den
-           Scroll-Button besser sichtbar, unabhängig vom Scroll-Fade) */
-        .hero-bottom-fade {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom,
-                    rgba(13, 13, 13, 0) 0%,
-                    rgba(13, 13, 13, 1) 100%);
-            z-index: 2;
             pointer-events: none;
         }
 
-        /* Container für die erste Sektion */
-        .flyer-layer {
+        .bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Abdunkelungs-Overlay beim Scrollen */
+        .bg-video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 3;
+            background: #0d0d0d;
+            opacity: 0;
+            transition: opacity 0.1s linear;
+            z-index: 2;
+        }
+
+
+        /* =====================================================
+           HERO SECTION & SCROLL-BUTTON (EXAKT WIE RUN.HTML)
+           ===================================================== */
+
+        .hero-section {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transform: translateY(100vh);
-        }
-
-        .flyer-layer-inner {
-            width: 100%;
-            max-width: 1400px;
-            padding: 0 40px;
             box-sizing: border-box;
+            pointer-events: none;
         }
 
-        /* Scroll-Button auf dem Hero-Video (identisch zu musik.html) */
-        .hero-scroll-indicator {
-            position: absolute;
-            bottom: 40px;
+        .scroll-down-btn {
+            position: fixed;
+            bottom: 35px;
             left: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
+            transform: translateX(-50%) translateZ(0);
+            z-index: 100;
+            pointer-events: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.18em;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.3s ease, color 0.3s ease;
-            user-select: none;
-        }
-
-        .hero-scroll-indicator:hover {
             opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.3s ease, color 0.3s ease;
+            will-change: opacity, transform;
+            backface-visibility: hidden;
+        }
+
+        .scroll-down-btn:hover {
             color: #ffffff;
+            transform: translate(-50%, 3px) translateZ(0);
         }
 
-        .hero-scroll-indicator i {
-            font-size: 13px;
-            animation: bounceDown 2s infinite;
+        .scroll-down-btn.fade-out-on-scroll {
+            transform: translate(-50%, 10px) translateZ(0) !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
         }
 
-        @keyframes bounceDown {
+        .scroll-down-btn i {
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
 
+        @keyframes bounce {
             0%,
             20%,
             50%,
@@ -182,17 +158,17 @@
             }
 
             40% {
-                transform: translateY(5px);
+                transform: translateY(-8px);
             }
 
             60% {
-                transform: translateY(2px);
+                transform: translateY(-4px);
             }
         }
 
 
         /* =====================================================
-           HAUPT-CONTAINER (Rest der Seite)
+           HAUPT-CONTAINER (TRANSPARENT)
            ===================================================== */
 
         #urbnvibe-page {
@@ -201,7 +177,8 @@
             opacity: 1 !important;
             position: relative !important;
             z-index: 10 !important;
-            background-color: #0d0d0d !important;
+            background: transparent !important;
+            background-color: transparent !important;
             width: 100% !important;
             max-width: 1400px !important;
             margin: 0 auto !important;
@@ -227,10 +204,7 @@
             width: 100% !important;
             margin: 0 0 120px 0 !important;
             padding: 0 !important;
-        }
-
-        .flyer-layer-inner .urbnvibe-section {
-            margin-bottom: 0 !important;
+            background: transparent !important;
         }
 
 
@@ -355,17 +329,22 @@
 
 
         /* =====================================================
+           FOOTER Z-INDEX FIX (OHNE EIGENES DESIGN)
+           ===================================================== */
+
+        footer {
+            position: relative;
+            z-index: 10;
+        }
+
+
+        /* =====================================================
            RESPONSIVE (UNTER 900PX & MOBILE)
-           Erzwingt auf Mobile IMMER Titel/Text OBEN und Video UNTEN
            ===================================================== */
 
         @media (max-width: 900px) {
             #urbnvibe-page {
                 padding: 40px 25px 90px !important;
-            }
-
-            .flyer-layer-inner {
-                padding: 0 25px;
             }
 
             .urbnvibe-section {
@@ -392,15 +371,26 @@
                 order: 2 !important;
                 width: 100% !important;
             }
+
+            .hero-section {
+                padding-bottom: 24px;
+            }
+
+            .scroll-down-btn {
+                font-size: 0.65rem;
+                letter-spacing: 2px;
+                gap: 5px;
+                bottom: 24px;
+            }
+
+            .scroll-down-btn i {
+                font-size: 0.95rem;
+            }
         }
 
         @media (max-width: 600px) {
             #urbnvibe-page {
                 padding: 30px 18px 70px !important;
-            }
-
-            .flyer-layer-inner {
-                padding: 0 18px;
             }
 
             .urbnvibe-info h2 {
@@ -414,60 +404,50 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- HERO & SCROLL SEQUENCE -->
-    <div class="scroll-sequence">
-        <div class="sticky-container">
+    <!-- ─── FULLSCREEN HINTERGRUND VIDEO ─── -->
+    <div class="bg-video-container">
+        <video id="bgVideo" src="dji-loop-h264.mp4" autoplay loop muted playsinline class="bg-video"></video>
+        <!-- Schwarzes Overlay beim Scrollen -->
+        <div id="videoOverlay" class="bg-video-overlay"></div>
+    </div>
 
-            <!-- Fullscreen Background Video -->
-            <video class="urbnvibe-hero-video" autoplay loop muted playsinline>
-                <source src="dji-loop-h264.mp4" type="video/mp4">
-                Ihr Browser unterstützt kein Video.
-            </video>
-
-            <div class="hero-bottom-fade"></div>
-
-            <div class="hero-overlay"></div>
-
-            <div class="hero-scroll-indicator" onclick="scrollPastHero()">
-                <span>Scrollen</span>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-
-            <div class="flyer-layer">
-                <div class="flyer-layer-inner">
-                    <!-- VIDEO 1 (Desktop: Video links / Text rechts) -->
-                    <section class="urbnvibe-section">
-                        <div class="urbnvibe-two-column">
-
-                            <div class="urbnvibe-media">
-                                <div class="urbnvibe-video">
-                                    <iframe src="https://www.youtube.com/embed/pE6OSm0zISU" title="Drone Video 1"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowfullscreen>
-                                    </iframe>
-                                </div>
-                            </div>
-
-                            <div class="urbnvibe-info">
-                                <span class="urbnvibe-info-label">01 / Drohnen Videos</span>
-                                <h2>Münchenbuchsee - Schweiz </h2>
-                                <p class="urbnvibe-info-description">
-                                    Aufgenommen mit der DJI Air 3S – goldener Himmel, ruhige Momente und Schweizer
-                                    Schönheit aus der Vogelperspektive.
-                                </p>
-                            </div>
-
-                        </div>
-                    </section>
-                </div>
-            </div>
-
-        </div>
+    <!-- ─── HERO SECTION ─── -->
+    <div class="hero-section">
+        <a href="#urbnvibe-page" id="scrollDownBtn" class="scroll-down-btn">
+            <span>Scrollen</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </a>
     </div>
 
 
     <!-- MAIN CONTENT AREA -->
     <main id="urbnvibe-page">
+
+        <!-- VIDEO 1 (Desktop: Video links / Text rechts) -->
+        <section class="urbnvibe-section">
+            <div class="urbnvibe-two-column">
+
+                <div class="urbnvibe-media">
+                    <div class="urbnvibe-video">
+                        <iframe src="https://www.youtube.com/embed/pE6OSm0zISU" title="Drone Video 1"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="urbnvibe-info">
+                    <span class="urbnvibe-info-label">01 / Drohnen Videos</span>
+                    <h2>Münchenbuchsee - Schweiz </h2>
+                    <p class="urbnvibe-info-description">
+                        Aufgenommen mit der DJI Air 3S – goldener Himmel, ruhige Momente und Schweizer
+                        Schönheit aus der Vogelperspektive.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
 
         <!-- VIDEO 2 (Desktop: Text links / Video rechts) -->
         <section class="urbnvibe-section">
@@ -547,28 +527,19 @@
 
     <script src="header.js"></script>
 
-    <!-- SCROLL ANIMATION SCRIPT -->
+    <!-- ─── SCROLL & VIDEO LOGIK SKRIPT (EXAKT IDENTISCH ZU RUN.HTML) ─── -->
     <script>
-        // Klick auf "Scrollen" -> scrollt genau so weit, bis Sektion 1
-        // (das Parallax-Reveal unten) vollständig eingeblendet ist.
-        // Nutzt bewusst denselben "slideEnd"-Wert wie die Reveal-Animation,
-        // damit Button-Klick & normales Scrollen exakt zusammenpassen.
-        function scrollPastHero() {
-            const windowH = window.innerHeight;
-            const slideEnd = windowH * 1.2;
-            window.scrollTo({ top: slideEnd, behavior: 'smooth' });
-        }
+        const bgVideo = document.getElementById('bgVideo');
+        const scrollBtn = document.getElementById('scrollDownBtn');
+        const overlay = document.getElementById('videoOverlay');
 
-        document.addEventListener("scroll", () => {
+        // Lautstärke & Overlay-Funktion beim Scrollen
+        function updateVolumeAndOverlay() {
             const scrollY = window.scrollY;
             const windowH = window.innerHeight;
 
-            const overlay = document.querySelector('.hero-overlay');
-            const flyerLayer = document.querySelector('.flyer-layer');
-            const scrollIndicator = document.querySelector('.hero-scroll-indicator');
-
-            // 1. Fade ins Dunkle
-            let fadeProgress = scrollY / (windowH * 0.7);
+            // 1. Abdunkeln & Audio-Fade beim Scrollen
+            let fadeProgress = scrollY / (windowH * 0.8);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
 
@@ -576,32 +547,34 @@
                 overlay.style.opacity = fadeProgress;
             }
 
-            // 2. Parallax Reveal der ersten Sektion
-            let slideStart = windowH * 0.3;
-            let slideEnd = windowH * 1.2;
-            let slideProgress = (scrollY - slideStart) / (slideEnd - slideStart);
+            const targetVolume = 1 - fadeProgress;
 
-            if (slideProgress > 1) slideProgress = 1;
-            if (slideProgress < 0) slideProgress = 0;
-
-            let easeOut = 1 - Math.pow(1 - slideProgress, 3);
-
-            if (flyerLayer) {
-                let yOffset = 100 - (easeOut * 100);
-                flyerLayer.style.transform = `translateY(${yOffset}vh)`;
-                flyerLayer.style.opacity = slideProgress > 0 ? (slideProgress + 0.1) : 0;
+            if (bgVideo && !bgVideo.muted) {
+                bgVideo.volume = targetVolume;
             }
 
-            // 3. Scroll-Button ausblenden, sobald man zu scrollen beginnt
-            // (verhindert, dass er über der einblendenden Sektion 1 "schwebt")
-            if (scrollIndicator) {
-                let buttonFade = 1 - (scrollY / (windowH * 0.25));
-                if (buttonFade < 0) buttonFade = 0;
-                if (buttonFade > 1) buttonFade = 1;
-                scrollIndicator.style.opacity = buttonFade;
-                scrollIndicator.style.pointerEvents = buttonFade === 0 ? 'none' : 'auto';
+            // 2. Button Verhalten beim Scrollen
+            if (scrollY > 100) {
+                if (scrollBtn) scrollBtn.classList.add('fade-out-on-scroll');
+            } else {
+                if (scrollBtn) scrollBtn.classList.remove('fade-out-on-scroll');
             }
-        });
+
+            // 3. Video pausieren, wenn man nach unten scrollt
+            if (scrollY > windowH * 0.9) {
+                if (!bgVideo.paused) {
+                    bgVideo.pause();
+                }
+            } else {
+                if (bgVideo.paused) {
+                    bgVideo.play().catch(() => { });
+                }
+            }
+        }
+
+        // Initial ausführen & Scroll-Event aktivieren
+        updateVolumeAndOverlay();
+        window.addEventListener('scroll', updateVolumeAndOverlay);
     </script>
 
 </body>
