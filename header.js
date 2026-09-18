@@ -226,8 +226,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Eine generische Steuerung für beide Stellen: Hover/Fokus auf einen Trigger
     // füllt die zugehörige Erweiterungsfläche mit den Kind-Links und lässt den
     // Header (dieselbe Hintergrundfläche) dafür nach unten wachsen.
-    function setupSubmenuController(navRootEl, expandEl, expandInnerEl, itemsArray, lineTargetEl) {
+    function setupSubmenuController(navRootEl, expandEl, expandInnerEl, itemsArray, options) {
         if (!navRootEl || !expandEl || !expandInnerEl) return;
+        options = options || {};
+        const secondNavbarEl = options.hideSecondNavbar ? document.querySelector('.second-navbar') : null;
 
         let closeTimer = null;
         let activeTrigger = null;
@@ -250,14 +252,14 @@ document.addEventListener("DOMContentLoaded", function() {
             expandInnerEl.style.paddingLeft = Math.max(0, triggerRect.left - expandRect.left) + 'px';
 
             expandEl.classList.add('is-open');
-            if (lineTargetEl) lineTargetEl.classList.add('has-open-submenu');
+            if (secondNavbarEl) secondNavbarEl.classList.add('is-hidden-by-submenu');
         }
 
         function scheduleClose() {
             clearTimeout(closeTimer);
             closeTimer = setTimeout(() => {
                 expandEl.classList.remove('is-open');
-                if (lineTargetEl) lineTargetEl.classList.remove('has-open-submenu');
+                if (secondNavbarEl) secondNavbarEl.classList.remove('is-hidden-by-submenu');
                 if (activeTrigger) {
                     activeTrigger.classList.remove('is-open');
                     activeTrigger = null;
@@ -285,12 +287,15 @@ document.addEventListener("DOMContentLoaded", function() {
         expandEl.addEventListener('focusout', scheduleClose);
     }
 
+    // Nur das Main-Header-Untermenü blendet den Second Header aus (falls
+    // vorhanden), solange es geöffnet ist – funktioniert automatisch für
+    // jeden künftigen Main-Nav-Eintrag mit Untermenü, ohne Sonderfall.
     setupSubmenuController(
         document.querySelector('.nav-center'),
         document.getElementById('mainNavExpand'),
         document.getElementById('mainNavExpandInner'),
         mainNavItems,
-        document.querySelector('.navbar')
+        { hideSecondNavbar: true }
     );
 
     setupSubmenuController(
@@ -377,9 +382,47 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Rendert die aktuell oberste Ebene. direction steuert die Übergangs-
-    // Animation: 'forward' beim Reindrillen, 'back' beim Zurückgehen, null
-    // beim allerersten Öffnen (kein Übergang nötig).
+    // Lässt die Zeilen (Links/Drill-Buttons/Social-Icons) eines Panels
+    // einzeln, nacheinander leicht von unten nach oben einblenden – der
+    // "Apple-artige" saubere vertikale Aufbau. Rein index-basiert (kein
+    // Bezug zu Text/Anzahl/Seite), funktioniert dadurch automatisch für
+    // jede aktuelle und künftige Ebene, ohne Sonderfälle.
+    function animatePanelRowsIn(panelEl) {
+        const rows = panelEl.querySelectorAll('.mobile-nav-link, .mobile-nav-drill, .mobile-social');
+        rows.forEach((row, index) => {
+            row.animate(
+                [
+                    { opacity: 0, transform: 'translateY(8px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ],
+                {
+                    duration: 260,
+                    delay: Math.min(index, 8) * 35,
+                    easing: 'ease',
+                    fill: 'both'
+                }
+            );
+        });
+    }
+
+    // Rendert die aktuell oberste Ebene. direction ist 'forward'/'back' beim
+    // Ebenenwechsel, null beim allerersten Öffnen (kein altes Panel vorhanden).
+    //
+    // WICHTIG zur Position: .mobile-menu-levels (nicht mehr das einzelne
+    // Panel) hat in header.css einen FESTEN top-/left-/right-Wert – ein
+    // konstanter Bezugspunkt, der nie von Inhalt, Textlänge, Anzahl
+    // Einträgen oder der Höhe der vorherigen Ebene abhängt. Alle Panels
+    // liegen zusätzlich per CSS Grid exakt in derselben Zelle übereinander
+    // (grid-area: 1/1) statt sich gegenseitig im normalen Fluss zu
+    // verschieben oder ihre Höhe per JS zu verwalten – der Grid-Layout-
+    // Algorithmus dimensioniert die gemeinsame Zelle automatisch auf die
+    // höhere der beiden gerade sichtbaren Ebenen. Dadurch kann weder eine
+    // horizontale Positionsänderung (fester Rahmen) noch eine vertikale
+    // Startpunkt-Verschiebung (fester "top"-Wert, unabhängig von der Höhe
+    // irgendeiner Ebene) mehr auftreten – unabhängig davon, welche Ebene
+    // geöffnet wird oder wie lang ihr Inhalt ist. Die Animation selbst
+    // verändert ausschliesslich opacity/translateY einzelner Zeilen
+    // innerhalb dieses fixen Rahmens, nie die Position des Rahmens selbst.
     function renderMobileLevel(direction) {
         if (!mobileMenuLevels) return;
         const level = navStack[navStack.length - 1];
@@ -396,9 +439,12 @@ document.addEventListener("DOMContentLoaded", function() {
         newPanel.innerHTML = html;
 
         if (!oldPanel || !direction) {
+            // Erstes Öffnen: kein altes Panel zum Ausblenden, nur die neuen
+            // Zeilen sauber von oben nach unten aufbauen lassen.
             mobileMenuLevels.innerHTML = '';
             mobileMenuLevels.appendChild(newPanel);
             attachLevelHandlers(level, newPanel);
+            animatePanelRowsIn(newPanel);
             return;
         }
 
@@ -413,37 +459,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
         mobileMenuLevels.appendChild(newPanel);
         attachLevelHandlers(level, newPanel);
+        animatePanelRowsIn(newPanel);
 
-        // Web Animations API statt CSS-Klassen-Transition: Eine per Klasse +
-        // erzwungenem Reflow/rAF ausgelöste CSS-Transition hängt davon ab,
-        // dass der Browser die "Start"-Klasse tatsächlich in einem eigenen
-        // Frame malt, bevor die "End"-Klasse gesetzt wird – je nach Geräte-/
-        // Browser-Timing kann dieser Zwischenschritt übersprungen werden,
-        // wodurch die Liste sichtbar an der falschen Position "aufsetzt"
-        // (genau das gemeldete, unregelmässige Verrutschen). element.animate()
-        // erhält die Start- und End-Keyframes dagegen atomar als eine
-        // Animation und kann diesen Frame nie verlieren – dadurch bleibt der
-        // linke Rand während der gesamten Animation garantiert stabil, egal
-        // wie viele/lange Einträge eine Ebene hat oder wie breit der
-        // Bildschirm ist.
-        const distance = direction === 'forward' ? 24 : -24;
-        const duration = 280;
-        const easing = 'cubic-bezier(0.4, 0, 0.2, 1)';
-
-        newPanel.animate(
-            [
-                { transform: `translateX(${distance}px)`, opacity: 0 },
-                { transform: 'translateX(0)', opacity: 1 }
-            ],
-            { duration, easing, fill: 'both' }
-        );
-
+        // Altes Panel verlässt die sichtbare Fläche sauber (Fade + leichter
+        // Zug nach oben) – unabhängig von der Richtung (vorwärts/zurück),
+        // damit sich Vor- und Rückwärtsnavigation identisch ruhig anfühlen.
         const oldAnimation = oldPanel.animate(
             [
-                { transform: 'translateX(0)', opacity: 1 },
-                { transform: `translateX(${-distance}px)`, opacity: 0 }
+                { opacity: 1, transform: 'translateY(0)' },
+                { opacity: 0, transform: 'translateY(-8px)' }
             ],
-            { duration, easing, fill: 'both' }
+            { duration: 200, easing: 'ease', fill: 'both' }
         );
 
         oldAnimation.onfinish = () => {
@@ -502,11 +528,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // ─── 11. SMART STICKY HEADER SCROLL-VERHALTEN ───
-    // Schaltet nur die Klasse .nav-hidden auf der Header-Gruppe um. Was genau
-    // dabei passiert (ganze Gruppe verschwindet vs. nur Main Header klappt weg
-    // und der Second Header bleibt oben sichtbar), entscheidet ausschliesslich
-    // das CSS anhand von body.has-second-header – hier ist keine Fallunter-
-    // scheidung nötig.
+    // Schaltet nur die Klasse .nav-hidden auf der Header-Gruppe um. Main
+    // Header und (falls vorhanden) Second Header sind Teil derselben
+    // .header-group und verschwinden/erscheinen dadurch immer gemeinsam.
     const headerGroup = document.getElementById('headerGroup');
     let lastScrollY = window.scrollY;
 
