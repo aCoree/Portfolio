@@ -108,6 +108,36 @@
         }
 
         /* =====================================================
+           ZU DEN VIDEOS BUTTON (CLEAN & MOBIL-SAFE)
+           ===================================================== */
+        .lego-videos-btn-container {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin-top: 45px !important;
+            margin-bottom: 0 !important;
+            position: relative !important;
+            z-index: 20 !important;
+            clear: both !important;
+        }
+
+        .lego-videos-btn-container .scroll-down-btn {
+            position: relative !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+            transform: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            pointer-events: auto !important;
+            margin: 0 !important;
+        }
+
+        /* =====================================================
            LEGO BRAND HEADER & OVERRIDES
            ===================================================== */
         body.lego-family-studio .navbar {
@@ -701,6 +731,24 @@
                 padding-bottom: 60px !important;
             }
 
+            .lego-dark-wrapper .lego-two-column {
+                display: flex !important;
+                flex-direction: column !important;
+                row-gap: 25px !important;
+            }
+
+            /* Auf Handys: Bild oben (order 1), Text darunter (order 2) */
+            .lego-dark-wrapper .lego-media {
+                order: 1 !important;
+                width: 100% !important;
+                margin-top: 0 !important;
+            }
+
+            .lego-dark-wrapper .lego-info {
+                order: 2 !important;
+                max-width: 100% !important;
+            }
+
             .lego-white-wrapper {
                 padding-top: 60px !important;
                 padding-bottom: 90px !important;
@@ -719,20 +767,20 @@
                 margin-bottom: 45px !important;
             }
 
-            .lego-two-column,
-            .lego-two-column.reverse {
+            .lego-white-wrapper .lego-two-column,
+            .lego-white-wrapper .lego-two-column.reverse {
                 display: flex !important;
                 flex-direction: column !important;
                 row-gap: 22px !important;
                 column-gap: 0 !important;
             }
 
-            .lego-info {
+            .lego-white-wrapper .lego-info {
                 order: 1 !important;
                 max-width: 100% !important;
             }
 
-            .lego-media {
+            .lego-white-wrapper .lego-media {
                 order: 2 !important;
                 width: 100% !important;
                 margin-top: 0 !important;
@@ -774,8 +822,8 @@
                 margin-bottom: 35px !important;
             }
 
-            .lego-two-column,
-            .lego-two-column.reverse {
+            .lego-white-wrapper .lego-two-column,
+            .lego-white-wrapper .lego-two-column.reverse {
                 row-gap: 18px !important;
             }
 
@@ -800,6 +848,10 @@
                 width: 100% !important;
                 height: auto !important;
                 margin: 0 !important;
+            }
+
+            .lego-videos-btn-container {
+                margin-top: 35px !important;
             }
         }
     </style>
@@ -862,8 +914,8 @@
                     </div>
                 </div>
 
-                <!-- ─── BUTTON ZU DEN VIDEOS ─── -->
-                <div style="display: flex; justify-content: center; margin-top: 50px;">
+                <!-- ─── BUTTON ZU DEN VIDEOS (OPTIMIERT FÜR MOBIL & DESKTOP) ─── -->
+                <div class="lego-videos-btn-container">
                     <a href="#videos" class="scroll-down-btn">
                         <span>Zu den Videos</span>
                         <i class="fa-solid fa-chevron-down"></i>
