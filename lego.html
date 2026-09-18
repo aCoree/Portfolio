@@ -14,37 +14,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* =====================================================
-           FULLSCREEN BACKGROUND VIDEO & OVERLAY
+           FULLSCREEN BACKGROUND VIDEO & OVERLAY (OPTIMIERT FÜR MOBIL)
            ===================================================== */
         .bg-video-container {
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             opacity: 1;
             transition: opacity 0.5s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .bg-video-overlay {
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             background: rgb(36, 36, 36);
             opacity: 0;
             transition: opacity 0.1s linear;
+            will-change: opacity;
             z-index: 2;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         /* =====================================================
@@ -407,7 +423,7 @@
             padding: 0 !important;
             overflow: hidden !important;
             background-color: rgba(0, 0, 0, 0.1) !important;
-            border-radius: 4px !important;
+            border-radius: 12px !important;
         }
 
         .lego-video iframe {
@@ -623,7 +639,13 @@
         body.lego-family-studio .site-footer .social-icon *,
         body.lego-family-studio .site-footer .social-icon:visited i,
         body.lego-family-studio .site-footer .social-icon:visited svg,
-        body.lego-family-studio .site-footer .social-icon:visited * {
+        body.lego-family-studio .site-footer .social-icon:visited *,
+        body.lego-family-studio .mobile-menu .social-icon i,
+        body.lego-family-studio .mobile-menu .social-icon svg,
+        body.lego-family-studio .mobile-menu .social-icon *,
+        body.lego-family-studio .mobile-menu .social-icon:visited i,
+        body.lego-family-studio .mobile-menu .social-icon:visited svg,
+        body.lego-family-studio .mobile-menu .social-icon:visited * {
             color: #ffffff !important;
             fill: #ffffff !important;
             transition: none !important;
@@ -839,12 +861,21 @@
                         </p>
                     </div>
                 </div>
+
+                <!-- ─── BUTTON ZU DEN VIDEOS ─── -->
+                <div style="display: flex; justify-content: center; margin-top: 50px;">
+                    <a href="#videos" class="scroll-down-btn">
+                        <span>Zu den Videos</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
+
             </section>
         </div>
     </div>
 
     <!-- ─── SEKTIONEN 02: STOP-MOTION VIDEOS ─── -->
-    <div class="lego-white-wrapper">
+    <div id="videos" class="lego-white-wrapper">
         <main class="lego-container">
             <section class="lego-section">
                 <div class="lego-two-column reverse">
@@ -949,7 +980,16 @@
             }
         }
 
-        window.addEventListener('scroll', updateVolumeAndOverlay);
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    updateVolumeAndOverlay();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     </script>
 
     <!-- ─── ZENTRALE SKRIPTE ─── -->
