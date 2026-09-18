@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* =====================================================
@@ -140,11 +141,26 @@
         /* =====================================================
            LEGO BRAND HEADER & OVERRIDES
            ===================================================== */
+        /* Die Fixed-Positionierung (und damit die Stacking-Wirkung von z-index)
+           liegt seit der Second-Header-Architektur auf .header-group, nicht mehr
+           auf .navbar selbst (die ist jetzt position: static). Der hohe z-index
+           muss deshalb hier gesetzt werden, sonst legt sich das (ebenfalls fixed)
+           .mobile-menu beim Öffnen über den Header und der Hamburger/X ist nicht
+           mehr klickbar. */
+        body.lego-family-studio .header-group {
+            z-index: 100000 !important;
+        }
+
         body.lego-family-studio .navbar {
             background-color: rgb(248, 214, 78) !important;
             background: rgb(248, 214, 78) !important;
             pointer-events: auto !important;
-            z-index: 100000 !important;
+        }
+
+        body.lego-family-studio .second-navbar {
+            background-color: rgb(248, 214, 78) !important;
+            background: rgb(248, 214, 78) !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
         }
 
         body.lego-family-studio .navbar,
@@ -184,6 +200,52 @@
         body.lego-family-studio .navbar .nav-center a.active {
             color: #E30613 !important;
             opacity: 1 !important;
+        }
+
+        /* ─── SECOND HEADER (LEGO-Theme) ───
+           Second Header gehört zur selben gelb/roten Markenwelt wie der
+           Main Header, damit beide wie EIN zusammenhängender Header wirken. */
+        body.lego-family-studio .second-navbar-link,
+        body.lego-family-studio .second-navbar-link:link,
+        body.lego-family-studio .second-navbar-link:visited {
+            color: #000000 !important;
+            text-decoration: none !important;
+        }
+
+        body.lego-family-studio .second-navbar-link:hover,
+        body.lego-family-studio .second-navbar-link:focus,
+        body.lego-family-studio .second-navbar-link.active {
+            color: #E30613 !important;
+        }
+
+        /* ─── HEADER-ERWEITERUNG / UNTERMENÜS (LEGO-Theme) ───
+           Gilt sowohl für das "Projekte"-Untermenü im Main Header als auch
+           für Second-Header-Einträge mit Untermenü (z.B. Stop-Motion Videos) –
+           beide nutzen dieselbe .nav-expand-Fläche. */
+        body.lego-family-studio .nav-expand {
+            background-color: rgb(248, 214, 78) !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
+        }
+
+        body.lego-family-studio .nav-expand-link,
+        body.lego-family-studio .nav-expand-link:link,
+        body.lego-family-studio .nav-expand-link:visited {
+            color: #000000 !important;
+        }
+
+        body.lego-family-studio .nav-expand-link:hover {
+            color: #E30613 !important;
+        }
+
+        /* Second-Header-Einträge & Zurück-Pfeil im Mobile-Menü (Drill-down) */
+        body.lego-family-studio .mobile-menu .mobile-nav-drill,
+        body.lego-family-studio .mobile-back-arrow {
+            color: #000000 !important;
+        }
+
+        body.lego-family-studio .mobile-menu .mobile-nav-drill:hover,
+        body.lego-family-studio .mobile-back-arrow:hover {
+            color: #E30613 !important;
         }
 
         body.lego-family-studio .navbar .logo,
@@ -669,13 +731,7 @@
         body.lego-family-studio .site-footer .social-icon *,
         body.lego-family-studio .site-footer .social-icon:visited i,
         body.lego-family-studio .site-footer .social-icon:visited svg,
-        body.lego-family-studio .site-footer .social-icon:visited *,
-        body.lego-family-studio .mobile-menu .social-icon i,
-        body.lego-family-studio .mobile-menu .social-icon svg,
-        body.lego-family-studio .mobile-menu .social-icon *,
-        body.lego-family-studio .mobile-menu .social-icon:visited i,
-        body.lego-family-studio .mobile-menu .social-icon:visited svg,
-        body.lego-family-studio .mobile-menu .social-icon:visited * {
+        body.lego-family-studio .site-footer .social-icon:visited * {
             color: #ffffff !important;
             fill: #ffffff !important;
             transition: none !important;
@@ -929,7 +985,7 @@
     <!-- ─── SEKTIONEN 02: STOP-MOTION VIDEOS ─── -->
     <div id="videos" class="lego-white-wrapper">
         <main class="lego-container">
-            <section class="lego-section">
+            <section class="lego-section" id="lego-video-corona">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
                         <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
@@ -949,7 +1005,7 @@
 
             <div class="lego-separator"></div>
 
-            <section class="lego-section">
+            <section class="lego-section" id="lego-video-street-race">
                 <div class="lego-two-column">
                     <div class="lego-media">
                         <div class="lego-video">
@@ -969,7 +1025,7 @@
 
             <div class="lego-separator"></div>
 
-            <section class="lego-section">
+            <section class="lego-section" id="lego-video-hairdresser">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
                         <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
@@ -1042,6 +1098,21 @@
                 ticking = true;
             }
         }, { passive: true });
+    </script>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <script>
+        window.secondHeaderItems = [
+            { label: "Über den Kanal", href: "#content" },
+            {
+                label: "Stop-Motion Videos",
+                children: [
+                    { label: "Corona LEGO Time", href: "#lego-video-corona" },
+                    { label: "LEGO Street Race", href: "#lego-video-street-race" },
+                    { label: "LEGO Hairdresser", href: "#lego-video-hairdresser" }
+                ]
+            }
+        ];
     </script>
 
     <!-- ─── ZENTRALE SKRIPTE ─── -->

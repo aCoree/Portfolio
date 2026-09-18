@@ -15,6 +15,7 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="header.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -39,18 +40,6 @@
             color: #ffffff;
             visibility: visible !important;
             opacity: 1 !important;
-        }
-
-        header,
-        .site-header,
-        nav,
-        .site-header-scrolled,
-        .main-navigation,
-        .navbar {
-            background-color: transparent !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
         }
 
 
@@ -317,7 +306,7 @@
     </style>
 </head>
 
-<body>
+<body class="transparent-header">
 
     <div id="header-placeholder"></div>
 
@@ -341,7 +330,7 @@
     <main id="urbnvibe-page">
 
         <!-- VIDEO 1 (Desktop: Video links / Text rechts) -->
-        <section class="urbnvibe-section">
+        <section class="urbnvibe-section" id="video-muenchenbuchsee">
             <div class="urbnvibe-two-column">
 
                 <div class="urbnvibe-media">
@@ -367,7 +356,7 @@
 
 
         <!-- VIDEO 2 (Desktop: Text links / Video rechts) -->
-        <section class="urbnvibe-section">
+        <section class="urbnvibe-section" id="video-finsterhennen">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
                     <span class="urbnvibe-info-label">02 / Drohnen Videos</span>
@@ -394,7 +383,7 @@
 
 
         <!-- VIDEO 3 (Desktop: Video links / Text rechts) -->
-        <section class="urbnvibe-section">
+        <section class="urbnvibe-section" id="video-kerzers">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
                     <div class="urbnvibe-video">
@@ -417,7 +406,7 @@
 
 
         <!-- VIDEO 4 (Desktop: Text links / Video rechts) -->
-        <section class="urbnvibe-section">
+        <section class="urbnvibe-section" id="video-guemmenen">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
                     <span class="urbnvibe-info-label">04 / Drohnen Videos</span>
@@ -441,6 +430,21 @@
 
 
     <div id="footer-placeholder"></div>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <script>
+        window.secondHeaderItems = [
+            {
+                label: "Drohnen Videos",
+                children: [
+                    { label: "Münchenbuchsee", href: "#video-muenchenbuchsee" },
+                    { label: "Finsterhennen", href: "#video-finsterhennen" },
+                    { label: "Kerzers", href: "#video-kerzers" },
+                    { label: "Gümmenen", href: "#video-guemmenen" }
+                ]
+            }
+        ];
+    </script>
 
     <script src="header.js"></script>
     <script src="scroll-reveal.js"></script>

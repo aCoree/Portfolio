@@ -11,25 +11,13 @@
 
     <!-- ZENTRALES STYLESHEET -->
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         .video-wrapper {
             border-radius: 12px !important;
             overflow: hidden !important;
-        }
-
-        /* ─── SEITENSPEZIFISCHER HEADER RESET FÜR VIDEO-HERO ─── */
-        header,
-        .site-header,
-        nav,
-        .site-header-scrolled,
-        .main-navigation,
-        .navbar {
-            background-color: transparent !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
         }
 
         /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE (GPU & MOBILE OPTIMIERT) ─── */
@@ -356,7 +344,7 @@
     </style>
 </head>
 
-<body>
+<body class="transparent-header">
 
     <!-- ─── FULLSCREEN HINTERGRUND VIDEO & Standbild ─── -->
     <div class="bg-video-container">
@@ -375,7 +363,7 @@
     </button>
 
     <!-- ─── HERO SECTION ─── -->
-    <div class="hero-section">
+    <div class="hero-section" id="trailer">
         <!-- "GANZER FILM" BUTTON (VERSCHIEBT PER STYLE.CSS) -->
         <a href="#content" id="scrollDownBtn" class="scroll-down-btn">
             <span>Ganzer Film</span>
@@ -588,6 +576,16 @@
                 setSliderPosition(e.clientX);
             });
         }
+    </script>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <script>
+        window.secondHeaderItems = [
+            { label: "Trailer", href: "#trailer" },
+            { label: "Ganzer Film", href: "#content" },
+            { label: "BTS", href: "bts.html" },
+            { label: "Color Grading", href: "#grading" }
+        ];
     </script>
 
     <!-- ─── ZENTRALE SKRIPTE ─── -->

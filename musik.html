@@ -17,6 +17,7 @@
 
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -38,18 +39,6 @@
         img {
             max-width: 100%;
             height: auto;
-        }
-
-        header,
-        .site-header,
-        nav,
-        .site-header-scrolled,
-        .main-navigation,
-        .navbar {
-            background-color: transparent !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
         }
 
         /* =====================================================
@@ -582,7 +571,7 @@
     </style>
 </head>
 
-<body>
+<body class="transparent-header">
 
     <div id="header-placeholder"></div>
 
@@ -642,7 +631,7 @@
 
         <div id="musik-videos">
 
-            <section class="musik-section themed-bg theme-starwars">
+            <section class="musik-section themed-bg theme-starwars" id="song-force-theme">
                 <div class="musik-two-column">
                     <div class="musik-media">
                         <div class="musik-video">
@@ -660,7 +649,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-inception">
+            <section class="musik-section themed-bg theme-inception" id="song-inception">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
                         <span class="musik-info-label">HANS ZIMMER</span>
@@ -678,7 +667,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-interstellar">
+            <section class="musik-section themed-bg theme-interstellar" id="song-interstellar">
                 <div class="musik-two-column">
                     <div class="musik-media">
                         <div class="musik-video">
@@ -696,7 +685,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-pirates">
+            <section class="musik-section themed-bg theme-pirates" id="song-pirates">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
                         <span class="musik-info-label">KLAUS BADELT</span>
@@ -714,7 +703,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-avengers">
+            <section class="musik-section themed-bg theme-avengers" id="song-avengers">
                 <div class="musik-two-column">
                     <div class="musik-media">
                         <div class="musik-video">
@@ -732,7 +721,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-topgun">
+            <section class="musik-section themed-bg theme-topgun" id="song-topgun">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
                         <span class="musik-info-label">HAROLD FALTERMEYER</span>
@@ -751,7 +740,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-victory">
+            <section class="musik-section themed-bg theme-victory" id="song-victory">
                 <div class="musik-two-column">
                     <div class="musik-media">
                         <div class="musik-video">
@@ -769,7 +758,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-wildflower">
+            <section class="musik-section themed-bg theme-wildflower" id="song-wildflower">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
                         <span class="musik-info-label">BILLIE EILISH</span>
@@ -788,7 +777,7 @@
                 </div>
             </section>
 
-            <section class="musik-section themed-bg theme-notimetodie">
+            <section class="musik-section themed-bg theme-notimetodie" id="song-notimetodie">
                 <div class="musik-two-column">
                     <div class="musik-media">
                         <div class="musik-video">
@@ -812,6 +801,28 @@
     </main>
 
     <div id="footer-placeholder"></div>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <script>
+        window.secondHeaderItems = [
+            { label: "Leidenschaft am Klavier", href: "#musik-intro" },
+            {
+                label: "Klavier Videos",
+                children: [
+                    { label: "The Force Theme", href: "#song-force-theme" },
+                    { label: "Time - Inception", href: "#song-inception" },
+                    { label: "Interstellar", href: "#song-interstellar" },
+                    { label: "Pirates of the Caribbean", href: "#song-pirates" },
+                    { label: "Avengers Main Theme", href: "#song-avengers" },
+                    { label: "Top Gun: Maverick", href: "#song-topgun" },
+                    { label: "Victory", href: "#song-victory" },
+                    { label: "Wildflower", href: "#song-wildflower" },
+                    { label: "No Time To Die", href: "#song-notimetodie" }
+                ]
+            },
+            { label: "Meine Lieder", href: "#musik-videos" }
+        ];
+    </script>
 
     <script src="header.js"></script>
 

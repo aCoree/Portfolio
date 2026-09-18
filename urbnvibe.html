@@ -17,6 +17,7 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="header.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -33,18 +34,6 @@
             padding: 0;
             background-color: #0d0d0d;
             color: #ffffff;
-        }
-
-        header,
-        .site-header,
-        nav,
-        .site-header-scrolled,
-        .main-navigation,
-        .navbar {
-            background-color: transparent !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
         }
 
 
@@ -459,7 +448,7 @@
     </style>
 </head>
 
-<body>
+<body class="transparent-header">
 
     <div id="header-placeholder"></div>
 
@@ -527,7 +516,7 @@
         </section>
 
         <!-- BRANDING / LOGO -->
-        <section class="urbnvibe-section">
+        <section class="urbnvibe-section" id="logo-section">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
                     <span class="urbnvibe-info-label">02 / Branding</span>
@@ -547,7 +536,7 @@
         </section>
 
         <!-- AWARENESS VIDEO -->
-        <section class="urbnvibe-section">
+        <section class="urbnvibe-section" id="awareness-video-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media">
                     <div class="urbnvibe-video">
@@ -572,7 +561,7 @@
         </section>
 
         <!-- SOCIAL MEDIA CREATIVES -->
-        <section class="urbnvibe-section creatives-mobile-fix">
+        <section class="urbnvibe-section creatives-mobile-fix" id="creatives-section">
             <div class="urbnvibe-creatives-grid">
                 <div class="urbnvibe-creative"><img src="images/creative-1.png" alt="URBNVIBE Creative 1"></div>
                 <div class="urbnvibe-creative"><img src="images/creative-2.png" alt="URBNVIBE Creative 2"></div>
@@ -592,6 +581,22 @@
 
 
     <div id="footer-placeholder"></div>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <script>
+        window.secondHeaderItems = [
+            { label: "Über URBNVIBE", href: "#intro-section" },
+            {
+                label: "Arbeiten",
+                children: [
+                    { label: "Flyer", href: "#flyer-section" },
+                    { label: "Logo", href: "#logo-section" },
+                    { label: "Awareness Video", href: "#awareness-video-section" },
+                    { label: "Creatives", href: "#creatives-section" }
+                ]
+            }
+        ];
+    </script>
 
     <script src="header.js"></script>
     <script src="scroll-reveal.js"></script>
