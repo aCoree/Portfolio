@@ -7,7 +7,8 @@
 
     <title>Musik – Klaviervideos</title>
 
-    <link rel="preload" as="image" href="cards/card-big-musik.png">
+    <link rel="preload" as="image" href="cards/card-big-musik.png" media="(min-width: 641px)">
+    <link rel="preload" as="image" href="cards/card-small-musik.png" media="(max-width: 640px)">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -80,23 +81,20 @@
             height: 100%;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
-            background-image: url('cards/card-big-musik.png');
             background-size: cover;
             background-position: center;
             z-index: 1;
             transition: opacity 0.5s ease;
             opacity: 1;
+            /* Desktop Bild (ab 641px) */
+            background-image: url('cards/card-big-musik.png');
         }
 
-        .bg-image-overlay::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0d0d0d;
-            opacity: 0.65;
+        /* Mobile Bild (bis 640px) */
+        @media (max-width: 640px) {
+            .bg-image-overlay {
+                background-image: url('cards/card-small-musik.png');
+            }
         }
 
         .bg-video-overlay {
