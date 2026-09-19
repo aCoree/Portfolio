@@ -11,6 +11,28 @@
   --second-nav-height: 44px;
   --nav-text-idle: rgba(255, 255, 255, 0.55);
   --nav-text-active: #ffffff;
+
+  /* Einheitliche, VOLL DECKENDE Header-Hintergrundfarbe für Main Header,
+     Second Header, die Untermenü-/Such-Erweiterung UND das Mobile Menu:
+     ein kühles, sehr dunkles Blaugrau statt reinem Schwarz – passt zur
+     bestehenden Blau/Violett-Akzentfarbe (--accent-gradient in style.css),
+     bleibt dabei selbst unbunt/zurückhaltend. Bewusst OHNE Alpha-Kanal:
+     der eigentliche Header-/Menübereich darf keinerlei Seiteninhalt
+     durchscheinen lassen (das Blur/Darkening gehört ausschließlich zum
+     Bereich UNTERHALB des Headers, siehe .nav-backdrop). LEGO überschreibt
+     diese Farbe bewusst weiterhin vollständig mit !important (siehe
+     lego.html) und bleibt davon unberührt. */
+  --header-surface: #101217;
+  --header-surface-mobile: #0c0d10;
+
+  /* Apple-artiger Hintergrund-Backdrop hinter geöffneten Submenus/der
+     Suche – liegt UNTER dem (voll deckenden) Header/Menü und blurred/
+     dunkelt ausschließlich den restlichen Seiteninhalt ab, damit der
+     Fokus klar auf dem geöffneten Menü/der Suche liegt, die Website
+     dahinter aber als solche erkennbar bleibt (kein voll deckendes
+     Schwarz). */
+  --nav-backdrop-bg: rgba(4, 5, 8, 0.62);
+  --nav-backdrop-blur: 18px;
 }
 
 /* ─── HEADER-GRUPPE (STICKY-WRAPPER FÜR MAIN HEADER + SECOND HEADER) ───
@@ -55,14 +77,21 @@
   width: 100%;
   height: var(--nav-height);
   overflow: hidden;
-  background-color: rgba(13, 13, 13, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--header-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 0 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.25s ease;
+}
+
+/* Main + Second Header als EIN zusammenhängendes System: keine sichtbare
+   Trennlinie zwischen den beiden, wenn ein Second Header vorhanden ist. */
+body.has-second-header .navbar {
+  border-bottom-color: transparent;
 }
 
 /* Linke Seite: Logo (Desktop) bzw. Logo/Zurück-Pfeil (Mobile) */
@@ -136,10 +165,10 @@
   position: relative;
   padding: 8px 0;
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1.08rem;
+  font-weight: 450;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.4px;
   color: var(--nav-text-idle);
   transition: color 0.25s ease;
 }
@@ -213,6 +242,43 @@
   opacity: 1;
 }
 
+/* ─── SUCH-BUTTON (LUPE) IM HEADER ───
+   Bewusst klein/dezent (keine Kreis-Box/Hintergrund wie .social-icon,
+   nur ein reines Icon) und in derselben Farblogik wie die übrigen
+   Header-Elemente (--nav-text-idle/--nav-text-active). Dieselbe Klasse
+   wird zweimal im Markup verwendet: einmal in .nav-right (Desktop,
+   zwischen "Kontakt" und dem YouTube-Icon) und einmal direkt neben dem
+   Hamburger (Mobile, siehe Media Query unten) – beide steuern denselben
+   Suchzustand. Bewusst KEIN Hover-Hintergrund (kein grauer Kreis) – nur
+   die Icon-Farbe selbst ändert sich bei Hover/aktivem Zustand. */
+.nav-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--nav-text-idle);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.nav-search-toggle:hover,
+.nav-search-toggle:focus-visible,
+.nav-search-toggle.is-active {
+  color: var(--nav-text-active);
+}
+
+/* Nur auf Mobile sichtbar (siehe Media Query) – auf Desktop bereits durch
+   .nav-right (display:none auf Mobile) automatisch die Desktop-Variante
+   ausgeblendet, hier zusätzlich explizit für Klarheit. */
+.nav-search-toggle--mobile {
+  display: none;
+}
+
 /* ─── HEADER-ERWEITERUNG (DESKTOP-UNTERMENÜS) ───
    Gemeinsamer Mechanismus für das "Projekte"-Untermenü im Main Header
    UND für Second-Header-Einträge mit Untermenü. Bekommt bewusst dieselbe
@@ -227,9 +293,9 @@
 .nav-expand {
   display: grid;
   grid-template-rows: 0fr;
-  background-color: rgba(13, 13, 13, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--header-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -264,8 +330,8 @@
 
 .nav-expand-link {
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.94rem;
+  font-weight: 450;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--nav-text-idle);
@@ -289,6 +355,190 @@
    aber optisch Teil derselben Navigation. */
 .nav-expand-link--emphasize {
   margin-bottom: 10px;
+}
+
+/* ─── SUCH-PANEL (WÄCHST WIE EIN NORMALES UNTERMENÜ AUS DEM HEADER) ───
+   Nutzt bewusst dieselbe .nav-expand/.nav-expand-inner-Mechanik wie die
+   Projekte-/Second-Header-Untermenüs (gleiche Höhen-Animation, gleiche
+   Glasfläche) statt eines eigenen Overlays – dadurch fügt sich die Suche
+   optisch nahtlos in den bestehenden Header ein und profitiert automatisch
+   vom selben Backdrop-Mechanismus (siehe .nav-backdrop). */
+.nav-search-inner {
+  align-items: center;
+}
+
+.nav-expand.is-open .nav-search-inner {
+  padding-top: 18px;
+  padding-bottom: 22px;
+}
+
+/* Bewusst KEIN äußeres Container-Rechteck (keine Box/kein Rounded-
+   Rectangle) um Icon + Eingabefeld – die Suche soll sich wie ein
+   natürlicher Bestandteil des geöffneten Headers anfühlen, nicht wie
+   eine zusätzliche Karte. Nur Icon + Eingabefeld inline, darunter eine
+   dünne Trennlinie (.nav-search-divider) zu den Ergebnissen. */
+.nav-search-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-expand.is-open .nav-search-field {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-search-field-icon {
+  color: var(--nav-text-idle);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.nav-search-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: var(--nav-text-active);
+}
+
+.nav-search-input::placeholder {
+  color: var(--nav-text-idle);
+}
+
+.nav-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: var(--nav-text-idle);
+  font-size: 0.8rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-search-clear:hover {
+  color: var(--nav-text-active);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dünne, dezente Trennlinie zwischen Suchfeld und Ergebnissen – ersetzt
+   die frühere Box/Umrandung um den gesamten Suchbereich. */
+.nav-search-divider {
+  width: 100%;
+  max-width: 480px;
+  height: 1px;
+  margin: 14px 0;
+  background-color: rgba(255, 255, 255, 0.14);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.nav-expand.is-open .nav-search-divider {
+  opacity: 1;
+}
+
+.nav-search-results {
+  width: 100%;
+  max-width: 480px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.3s ease;
+}
+
+.nav-search-results.has-results {
+  max-height: 320px;
+  overflow-y: auto;
+  opacity: 1;
+}
+
+.nav-search-result {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 4px;
+  font-family: "Barlow Condensed", sans-serif;
+  color: var(--nav-text-idle);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: color 0.2s ease;
+}
+
+.nav-search-result:last-child {
+  border-bottom: none;
+}
+
+.nav-search-result:hover,
+.nav-search-result:focus-visible {
+  color: var(--nav-text-active);
+}
+
+.nav-search-result-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.nav-search-result-category {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.nav-search-empty {
+  padding: 10px 4px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.9rem;
+  color: var(--nav-text-idle);
+}
+
+/* ─── HINTERGRUND-BACKDROP (APPLE-ARTIG) FÜR GEÖFFNETE SUBMENUS/SUCHE ───
+   Eigenständiges, viewport-fixiertes Element AUSSERHALB von .header-group
+   (bewusst als Geschwister-Element im Markup, siehe header.js) – wäre es
+   ein Kind von .header-group, würde dessen "will-change: transform" einen
+   neuen Containing Block erzeugen und das Backdrop dadurch nur innerhalb
+   der (kleinen) Header-Fläche statt über die ganze Seite "fixed" wirken.
+   Liegt per z-index UNTER dem Header (und damit unter dem gerade scharf
+   bleibenden Untermenü/der Suche), aber ÜBER dem normalen Seiteninhalt.
+   opacity + backdrop-filter werden zusammen mit dem jeweiligen Untermenü/
+   der Suche ein- und ausgeblendet (siehe header.js), nutzen dieselbe
+   Timing-Funktion wie die Untermenü-Höhen-Animation (0.4s, gleiche
+   cubic-bezier) für ein synchrones Öffnen/Schliessen. */
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  background-color: var(--nav-backdrop-bg);
+  backdrop-filter: blur(var(--nav-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--nav-backdrop-blur));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ─── HAMBURGER & MOBILE MENU ─── */
@@ -337,9 +587,9 @@
   width: 100%;
   height: 100vh;
   overflow-y: auto;
-  background-color: rgba(10, 10, 10, 0.98);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: var(--header-surface-mobile);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   z-index: 999;
   opacity: 0;
   transform: translateY(-10px);
@@ -416,7 +666,7 @@
   margin: 0;
   text-align: left;
   font-family: "Anton", sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.34rem;
   font-weight: 400;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -466,6 +716,67 @@ body.menu-open {
   overflow: hidden;
 }
 
+/* ─── MOBILE SUCHE (WIEDERVERWENDET DAS MOBILE-MENU-OVERLAY) ───
+   Kein eigenes zweites Overlay: die Lupe öffnet exakt denselben
+   .mobile-menu-Zustand wie der Hamburger (gleiche Fläche, Farbe, Blur,
+   Abstände, X oben rechts) – nur der Panel-Inhalt unterscheidet sich
+   (Suchfeld statt Navigation), gerendert über dieselbe Panel-Crossfade-
+   Mechanik wie die Nav-Ebenen (siehe header.js: swapMobilePanel). */
+.mobile-search-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Bewusst KEIN äußeres Container-Rechteck (keine Box/kein Rounded-
+   Rectangle) – nur Icon + Eingabefeld inline, darunter die Trennlinie
+   (.mobile-search-divider). Lupe am Anfang, dieselbe Typografie
+   (Barlow Condensed) wie die übrigen interaktiven Header-Elemente. */
+.mobile-search-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.mobile-search-field-icon {
+  color: var(--nav-text-idle);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.mobile-search-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: var(--nav-text-active);
+}
+
+.mobile-search-input::placeholder {
+  color: var(--nav-text-idle);
+}
+
+/* Nur eine dünne, dezente Trennlinie – keine Box/Umrandung um den
+   gesamten Suchbereich. */
+.mobile-search-divider {
+  width: 100%;
+  height: 1px;
+  margin: 24px 0 18px;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.mobile-search-results {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ─── SECOND HEADER (DESKTOP) ───
    Eigene Klassen (second-navbar*), damit dieses Styling niemals
    versehentlich den Main Header (.navbar/.nav-center) beeinflusst.
@@ -476,9 +787,9 @@ body.menu-open {
   width: 100%;
   height: var(--second-nav-height);
   overflow: hidden;
-  background-color: rgba(13, 13, 13, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--header-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
@@ -523,10 +834,10 @@ body.menu-open {
   gap: 4px;
   padding: 6px 0;
   font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 450;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.1px;
   color: var(--nav-text-idle);
   background: none;
   border: none;
@@ -580,6 +891,19 @@ body.transparent-header .nav-expand {
   border-color: transparent !important;
 }
 
+/* Sobald auf einer Video-Hero-Seite ein Submenu/die Suche geöffnet ist
+   (.header-group bekommt dafür in header.js die Klasse .has-open-panel,
+   siehe showBackdrop/hideBackdrop), muss der komplette Header-/Menübereich
+   trotzdem voll deckend werden – sonst schiene das Hero-Video/der
+   Seiteninhalt durch das geöffnete Menü hindurch. Höhere Spezifität als
+   die Regel oben gewinnt automatisch, keine !important-Kollision nötig. */
+body.transparent-header .header-group.has-open-panel .navbar,
+body.transparent-header .header-group.has-open-panel .second-navbar,
+body.transparent-header .header-group.has-open-panel .nav-expand {
+  background-color: var(--header-surface) !important;
+  background: var(--header-surface) !important;
+}
+
 /* ─── ABSTANDS-KOMPENSATION FÜR SEITEN MIT SECOND HEADER ───
    Seiten, die <main>/.page-padding nutzen und einen Second Header
    haben, brauchen zusätzlichen Abstand, damit Inhalt nicht unter der
@@ -592,7 +916,8 @@ body.has-second-header:not(.transparent-header) .page-padding {
 /* ─── RESPONSIVE DESIGN (MOBIL) ─── */
 @media (max-width: 640px) {
   .navbar {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
+    column-gap: 14px;
     height: 65px;
     padding: 0 20px;
   }
@@ -628,5 +953,19 @@ body.has-second-header:not(.transparent-header) .page-padding {
 
   body.mobile-submenu-open .nav-left .mobile-back-arrow {
     display: inline-flex;
+  }
+
+  /* Lupe direkt neben dem Hamburger (eigenes Grid-Item, siehe
+     grid-template-columns oben: nav-left | Lupe | Hamburger). Öffnet auf
+     Mobile NICHT das Desktop-Such-Panel (.nav-search-expand bleibt
+     unerreichbar, da .nav-right hier ausgeblendet ist), sondern denselben
+     .mobile-menu-Zustand wie der Hamburger (siehe header.js). */
+  .nav-search-toggle--mobile {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    padding: 8px;
+    color: #ffffff;
+    font-size: 1.05rem;
   }
 }

@@ -108,6 +108,132 @@ document.addEventListener("DOMContentLoaded", function() {
         return Array.isArray(item.children) && item.children.length > 0;
     }
 
+    // ─── ZENTRALER SUCH-INDEX (SEITENTITEL, PROJEKTE, NAVIGATION, UNTERSEITEN) ───
+    // Baut sich in erster Linie aus der bereits vorhandenen zentralen
+    // Navigations-Datenstruktur (mainNavItems) sowie den Second-Header-
+    // Einträgen DIESER Seite (window.secondHeaderItems) auf – keine
+    // doppelte Pflege der Haupt-Navigation nötig. Untermenü-/Video-
+    // Einträge ANDERER Projektseiten sind zur Laufzeit auf dieser Seite
+    // nicht verfügbar (jede Seite bringt nur ihre eigenen
+    // window.secondHeaderItems mit, es gibt keinen Build-Schritt, der sie
+    // vorab zusammenführen könnte). Diese kleine, bewusst zentrale Liste
+    // spiegelt deshalb die jeweilige Seiten-Konfiguration, damit die Suche
+    // auch von ANDEREN Seiten aus zu Unterseiten/Second-Header-Einträgen
+    // führt. Bei Änderungen an den echten secondHeaderItems einer Seite
+    // bitte diese Liste hier synchron halten.
+    const crossPageSearchSections = [
+        { label: 'Trailer', href: 'run.html#trailer', category: 'RUN' },
+        { label: 'Ganzer Film', href: 'run.html#content', category: 'RUN' },
+        { label: 'BTS', href: 'bts.html', category: 'RUN' },
+        { label: 'Color Grading', href: 'run.html#grading', category: 'RUN' },
+
+        { label: 'Leidenschaft am Klavier', href: 'musik.html#musik-intro', category: 'Musik' },
+        { label: 'Klavier Videos', href: 'musik.html#song-force-theme', category: 'Musik' },
+        { label: 'The Force Theme', href: 'musik.html#song-force-theme', category: 'Klavier Videos' },
+        { label: 'Time - Inception', href: 'musik.html#song-inception', category: 'Klavier Videos' },
+        { label: 'Interstellar', href: 'musik.html#song-interstellar', category: 'Klavier Videos' },
+        { label: 'Pirates of the Caribbean', href: 'musik.html#song-pirates', category: 'Klavier Videos' },
+        { label: 'Avengers Main Theme', href: 'musik.html#song-avengers', category: 'Klavier Videos' },
+        { label: 'Top Gun: Maverick', href: 'musik.html#song-topgun', category: 'Klavier Videos' },
+        { label: 'Victory', href: 'musik.html#song-victory', category: 'Klavier Videos' },
+        { label: 'Wildflower', href: 'musik.html#song-wildflower', category: 'Klavier Videos' },
+        { label: 'No Time To Die', href: 'musik.html#song-notimetodie', category: 'Klavier Videos' },
+        { label: 'Meine Lieder', href: 'musik.html#musik-videos', category: 'Musik' },
+
+        { label: 'Drohnen Videos', href: 'drone.html#video-muenchenbuchsee', category: 'DJI Air 3S' },
+        { label: 'Münchenbuchsee', href: 'drone.html#video-muenchenbuchsee', category: 'Drohnen Videos' },
+        { label: 'Finsterhennen', href: 'drone.html#video-finsterhennen', category: 'Drohnen Videos' },
+        { label: 'Kerzers', href: 'drone.html#video-kerzers', category: 'Drohnen Videos' },
+        { label: 'Gümmenen', href: 'drone.html#video-guemmenen', category: 'Drohnen Videos' },
+
+        { label: 'Über URBNVIBE', href: 'urbnvibe.html#intro-section', category: 'URBNVIBE' },
+        { label: 'Arbeiten', href: 'urbnvibe.html#flyer-section', category: 'URBNVIBE' },
+        { label: 'Flyer', href: 'urbnvibe.html#flyer-section', category: 'Arbeiten' },
+        { label: 'Logo', href: 'urbnvibe.html#logo-section', category: 'Arbeiten' },
+        { label: 'Awareness Video', href: 'urbnvibe.html#awareness-video-section', category: 'Arbeiten' },
+        { label: 'Creatives', href: 'urbnvibe.html#creatives-section', category: 'Arbeiten' },
+
+        { label: 'Über den Kanal', href: 'lego.html#content', category: 'LEGO FAMILY STUDIO' },
+        { label: 'Stop-Motion Videos', href: 'lego.html#lego-video-corona', category: 'LEGO FAMILY STUDIO' },
+        { label: 'Corona LEGO Time', href: 'lego.html#lego-video-corona', category: 'Stop-Motion Videos' },
+        { label: 'LEGO Street Race', href: 'lego.html#lego-video-street-race', category: 'Stop-Motion Videos' },
+        { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: 'Stop-Motion Videos' },
+
+        { label: 'Impressum', href: 'impressum.html', category: 'Rechtliches' },
+        { label: 'Datenschutz', href: 'datenschutz.html', category: 'Rechtliches' }
+    ];
+
+    const currentPageFile = window.location.pathname.split('/').pop() || 'index.html';
+
+    // Wandelt seiteneigene "#anchor"-Hrefs (wie sie window.secondHeaderItems
+    // pro Seite verwendet) in vollqualifizierte Links um, damit Suchtreffer
+    // von JEDER Seite aus funktionieren und sich sauber mit
+    // crossPageSearchSections deduplizieren lassen.
+    function normalizeHref(href) {
+        return href.charAt(0) === '#' ? currentPageFile + href : href;
+    }
+
+    function buildSearchIndex() {
+        const index = [];
+        const seen = new Set();
+
+        function addEntry(label, href, category) {
+            if (!label || !href) return;
+            const key = label.toLowerCase() + '|' + href;
+            if (seen.has(key)) return;
+            seen.add(key);
+            index.push({ label: label, href: href, category: category || '' });
+        }
+
+        mainNavItems.forEach(item => {
+            if (item.href) addEntry(item.label, item.href, 'Navigation');
+            if (hasChildren(item)) {
+                item.children.forEach(child => addEntry(child.label, child.href, item.label));
+            }
+        });
+
+        // Second-Header-Einträge DIESER Seite: direkt aus window.secondHeaderItems,
+        // damit die Suche immer den aktuellsten Stand der Seite widerspiegelt.
+        secondHeaderItems.forEach(item => {
+            if (item.href) addEntry(item.label, normalizeHref(item.href), 'Auf dieser Seite');
+            if (hasChildren(item)) {
+                item.children.forEach(child => addEntry(child.label, normalizeHref(child.href), item.label));
+            }
+        });
+
+        crossPageSearchSections.forEach(entry => addEntry(entry.label, entry.href, entry.category));
+
+        return index;
+    }
+
+    const siteSearchIndex = buildSearchIndex();
+
+    function scoreSearchEntry(entry, query) {
+        const label = entry.label.toLowerCase();
+        const category = entry.category.toLowerCase();
+        if (label.startsWith(query)) return 0;
+        if (label.includes(query)) return 1;
+        if (category.includes(query)) return 2;
+        return -1;
+    }
+
+    function searchSite(query) {
+        const q = query.trim().toLowerCase();
+        if (!q) return [];
+        return siteSearchIndex
+            .map(entry => ({ entry: entry, score: scoreSearchEntry(entry, q) }))
+            .filter(result => result.score >= 0)
+            .sort((a, b) => a.score - b.score || a.entry.label.localeCompare(b.entry.label))
+            .slice(0, 8)
+            .map(result => result.entry);
+    }
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>"']/g, ch => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[ch]));
+    }
+
     // ─── 3. MAIN NAV (DESKTOP): "PROJEKTE" MIT UNTERMENÜ ───
     function buildMainNavHTML() {
         return mainNavItems.map((item, index) => {
@@ -167,8 +293,16 @@ document.addEventListener("DOMContentLoaded", function() {
             <nav class="nav-center">${buildMainNavHTML()}</nav>
 
             <div class="nav-right">
+                <button type="button" class="nav-search-toggle" id="navSearchToggleDesktop" aria-label="Suche öffnen" aria-expanded="false">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
                 <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
             </div>
+
+            <!-- Lupe direkt neben dem Hamburger (nur Mobile, siehe header.css). -->
+            <button type="button" class="nav-search-toggle nav-search-toggle--mobile" id="navSearchToggleMobile" aria-label="Suche öffnen" aria-expanded="false">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
 
             <!-- Hamburger Button (nur Mobile) -->
             <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
@@ -184,8 +318,30 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="nav-expand-inner" id="mainNavExpandInner"></div>
         </div>
 
+        <!-- Such-Panel: nutzt dieselbe nav-expand-Mechanik wie das Projekte-
+             Untermenü (siehe header.css), damit sich die Suche optisch nahtlos
+             in den Header einfügt. Wird sowohl von der Desktop- als auch von
+             der Mobile-Lupe geöffnet. -->
+        <div class="nav-expand" id="navSearchExpand">
+            <div class="nav-expand-inner nav-search-inner" id="navSearchInner">
+                <div class="nav-search-field">
+                    <i class="fa-solid fa-magnifying-glass nav-search-field-icon"></i>
+                    <input type="text" id="navSearchInput" class="nav-search-input" placeholder="Seiten &amp; Projekte durchsuchen…" autocomplete="off" aria-label="Seiten und Projekte durchsuchen">
+                    <button type="button" class="nav-search-clear" id="navSearchClear" aria-label="Suche schließen"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="nav-search-divider"></div>
+                <div class="nav-search-results" id="navSearchResults"></div>
+            </div>
+        </div>
+
         ${buildSecondNavbarHTML()}
     </div>
+
+    <!-- Apple-artiger Hintergrund-Backdrop hinter geöffneten Submenus/der Suche.
+         Bewusst AUSSERHALB von .header-group (siehe header.css: will-change auf
+         .header-group würde sonst den Containing Block für dieses fixed-
+         positionierte Element verändern). -->
+    <div class="nav-backdrop" id="navBackdrop"></div>
 
     <!-- Mobile Menu Overlay: Inhalt wird von renderMobileLevel() dynamisch befüllt -->
     <div class="mobile-menu" id="mobileMenu">
@@ -222,20 +378,79 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.insertAdjacentHTML('afterbegin', headerGroupHTML);
     document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-    // ─── 8. DESKTOP: HEADER-ERWEITERUNG BEI HOVER (PROJEKTE & SECOND-HEADER-EINTRÄGE) ───
+    // ─── 8. APPLE-ARTIGER HINTERGRUND-BACKDROP + GEMEINSAME PANEL-VERWALTUNG ───
+    // Ein einzelnes, wiederverwendetes Backdrop-Element wird von mehreren
+    // "Panels" geteilt (Main-Header-Untermenü, Second-Header-Untermenü,
+    // Such-Panel). Ein einfacher Referenzzähler (statt eines simplen
+    // Booleans) verhindert, dass ein Panel das Backdrop wegnimmt, während
+    // ein anderes es eigentlich noch braucht. panelRegistry sorgt zusätzlich
+    // dafür, dass immer nur EIN Panel gleichzeitig offen ist: sobald eines
+    // öffnet, schliesst es automatisch alle anderen (z.B. Suche öffnen
+    // schliesst ein offenes "Projekte"-Untermenü und umgekehrt).
+    const navBackdrop = document.getElementById('navBackdrop');
+    const headerGroup = document.getElementById('headerGroup');
+    const openBackdropOwners = new Set();
+
+    // Header + Second Header + Untermenü-/Such-Erweiterung sind immer voll
+    // deckend (siehe --header-surface in header.css). Auf Video-Hero-Seiten
+    // (body.transparent-header) ist der Header sonst transparent – die
+    // Klasse .has-open-panel schaltet ihn dort NUR während ein Panel offen
+    // ist zusätzlich auf die deckende Farbe um (siehe header.css), damit
+    // niemals Seiteninhalt durch das geöffnete Menü hindurchscheint.
+    function updateHeaderGroupPanelState() {
+        if (headerGroup) headerGroup.classList.toggle('has-open-panel', openBackdropOwners.size > 0);
+    }
+
+    function showBackdrop(ownerId) {
+        if (!navBackdrop) return;
+        openBackdropOwners.add(ownerId);
+        navBackdrop.classList.add('is-open');
+        updateHeaderGroupPanelState();
+    }
+
+    function hideBackdrop(ownerId) {
+        if (!navBackdrop) return;
+        openBackdropOwners.delete(ownerId);
+        if (openBackdropOwners.size === 0) navBackdrop.classList.remove('is-open');
+        updateHeaderGroupPanelState();
+    }
+
+    const panelClosers = [];
+
+    function registerPanelCloser(fn) {
+        panelClosers.push(fn);
+    }
+
+    function closeOtherPanels(exceptFn) {
+        panelClosers.forEach(fn => {
+            if (fn !== exceptFn) fn();
+        });
+    }
+
+    if (navBackdrop) {
+        navBackdrop.addEventListener('click', () => closeOtherPanels(null));
+    }
+
+    // ─── 9. DESKTOP: HEADER-ERWEITERUNG BEI HOVER (PROJEKTE & SECOND-HEADER-EINTRÄGE) ───
     // Eine generische Steuerung für beide Stellen: Hover/Fokus auf einen Trigger
     // füllt die zugehörige Erweiterungsfläche mit den Kind-Links und lässt den
-    // Header (dieselbe Hintergrundfläche) dafür nach unten wachsen.
+    // Header (dieselbe Hintergrundfläche) dafür nach unten wachsen. Synchron
+    // dazu wird (über showBackdrop/hideBackdrop) der Hintergrund-Backdrop
+    // ein-/ausgeblendet – beide Zustände werden hier an genau derselben
+    // Stelle (openFor / die Close-Funktion) gemeinsam umgeschaltet, laufen
+    // dadurch garantiert synchron.
     function setupSubmenuController(navRootEl, expandEl, expandInnerEl, itemsArray, options) {
         if (!navRootEl || !expandEl || !expandInnerEl) return;
         options = options || {};
         const secondNavbarEl = options.hideSecondNavbar ? document.querySelector('.second-navbar') : null;
+        const backdropId = options.backdropId;
 
         let closeTimer = null;
         let activeTrigger = null;
 
         function openFor(triggerEl, item) {
             clearTimeout(closeTimer);
+            closeOtherPanels(forceClose);
             if (activeTrigger && activeTrigger !== triggerEl) {
                 activeTrigger.classList.remove('is-open');
             }
@@ -253,23 +468,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
             expandEl.classList.add('is-open');
             if (secondNavbarEl) secondNavbarEl.classList.add('is-hidden-by-submenu');
+            if (backdropId) showBackdrop(backdropId);
+        }
+
+        function forceClose() {
+            clearTimeout(closeTimer);
+            expandEl.classList.remove('is-open');
+            if (secondNavbarEl) secondNavbarEl.classList.remove('is-hidden-by-submenu');
+            if (activeTrigger) {
+                activeTrigger.classList.remove('is-open');
+                activeTrigger = null;
+            }
+            if (backdropId) hideBackdrop(backdropId);
         }
 
         function scheduleClose() {
             clearTimeout(closeTimer);
-            closeTimer = setTimeout(() => {
-                expandEl.classList.remove('is-open');
-                if (secondNavbarEl) secondNavbarEl.classList.remove('is-hidden-by-submenu');
-                if (activeTrigger) {
-                    activeTrigger.classList.remove('is-open');
-                    activeTrigger = null;
-                }
-            }, 150);
+            closeTimer = setTimeout(forceClose, 150);
         }
 
         function cancelClose() {
             clearTimeout(closeTimer);
         }
+
+        registerPanelCloser(forceClose);
 
         navRootEl.querySelectorAll('[data-nav-trigger]').forEach(trigger => {
             const item = itemsArray[Number(trigger.dataset.navIndex)];
@@ -295,17 +517,131 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('mainNavExpand'),
         document.getElementById('mainNavExpandInner'),
         mainNavItems,
-        { hideSecondNavbar: true }
+        { hideSecondNavbar: true, backdropId: 'main-submenu' }
     );
 
     setupSubmenuController(
         document.querySelector('.second-navbar-inner'),
         document.getElementById('secondNavExpand'),
         document.getElementById('secondNavExpandInner'),
-        secondHeaderItems
+        secondHeaderItems,
+        { backdropId: 'second-submenu' }
     );
 
-    // ─── 9. MOBILE MENÜ: HAMBURGER + MEHRSTUFIGE NAVIGATION MIT ZURÜCK-PFEIL ───
+    // ─── 10. SUCH-ERGEBNIS-RENDERING (GEMEINSAM FÜR DESKTOP + MOBILE) ───
+    // Eine einzige Rendering-Funktion für Ergebniszeilen, die sowohl vom
+    // Desktop-Such-Panel als auch vom Mobile-Such-Panel (siehe Abschnitt 12,
+    // wiederverwendet dasselbe .mobile-menu wie der Hamburger) mit ihrem
+    // jeweiligen Ziel-Container aufgerufen wird – keine doppelte Render-Logik.
+    function renderSearchResultsInto(container, entries, query) {
+        if (!container) return;
+        if (!query.trim()) {
+            container.innerHTML = '';
+            container.classList.remove('has-results');
+            return;
+        }
+        if (!entries.length) {
+            container.innerHTML = `<p class="nav-search-empty">Keine Treffer für „${escapeHTML(query.trim())}“.</p>`;
+            container.classList.add('has-results');
+            return;
+        }
+        container.innerHTML = entries.map(entry => `
+            <a href="${entry.href}" class="nav-search-result">
+                <span class="nav-search-result-label">${escapeHTML(entry.label)}</span>
+                ${entry.category ? `<span class="nav-search-result-category">${escapeHTML(entry.category)}</span>` : ''}
+            </a>
+        `).join('');
+        container.classList.add('has-results');
+    }
+
+    // ─── 11. DESKTOP-SUCHFUNKTION ───
+    // Nutzt dieselbe nav-expand-Wachstumsmechanik + denselben Backdrop wie
+    // die Untermenüs oben (siehe panelRegistry), ist aber klick- statt
+    // hover-gesteuert und bleibt offen, bis sie explizit geschlossen wird.
+    // Nur die Desktop-Lupe (#navSearchToggleDesktop) steuert dieses Panel –
+    // die Mobile-Lupe verwendet stattdessen das Mobile-Menu-Overlay direkt
+    // (siehe Abschnitt 12), kein zweites Such-System.
+    const navSearchExpand = document.getElementById('navSearchExpand');
+    const navSearchInput = document.getElementById('navSearchInput');
+    const navSearchResults = document.getElementById('navSearchResults');
+    const navSearchClear = document.getElementById('navSearchClear');
+    const navSearchToggleDesktop = document.getElementById('navSearchToggleDesktop');
+    const searchSecondNavbarEl = document.querySelector('.second-navbar');
+
+    let searchOpen = false;
+
+    function setDesktopSearchToggleState(isOpen) {
+        if (!navSearchToggleDesktop) return;
+        navSearchToggleDesktop.classList.toggle('is-active', isOpen);
+        navSearchToggleDesktop.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    function forceCloseSearch() {
+        if (!searchOpen || !navSearchExpand) return;
+        searchOpen = false;
+        navSearchExpand.classList.remove('is-open');
+        if (searchSecondNavbarEl) searchSecondNavbarEl.classList.remove('is-hidden-by-submenu');
+        hideBackdrop('search');
+        setDesktopSearchToggleState(false);
+        if (navSearchInput) navSearchInput.value = '';
+        renderSearchResultsInto(navSearchResults, [], '');
+    }
+
+    function openSearchPanel() {
+        if (!navSearchExpand || searchOpen) return;
+        closeOtherPanels(forceCloseSearch);
+        searchOpen = true;
+        navSearchExpand.classList.add('is-open');
+        if (searchSecondNavbarEl) searchSecondNavbarEl.classList.add('is-hidden-by-submenu');
+        showBackdrop('search');
+        setDesktopSearchToggleState(true);
+        window.requestAnimationFrame(() => {
+            if (navSearchInput) navSearchInput.focus();
+        });
+    }
+
+    function toggleSearchPanel() {
+        if (searchOpen) forceCloseSearch();
+        else openSearchPanel();
+    }
+
+    registerPanelCloser(forceCloseSearch);
+
+    if (navSearchToggleDesktop) {
+        navSearchToggleDesktop.addEventListener('click', toggleSearchPanel);
+    }
+
+    if (navSearchClear) {
+        navSearchClear.addEventListener('click', forceCloseSearch);
+    }
+
+    if (navSearchInput) {
+        navSearchInput.addEventListener('input', () => {
+            const query = navSearchInput.value;
+            renderSearchResultsInto(navSearchResults, searchSite(query), query);
+        });
+
+        navSearchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                forceCloseSearch();
+            } else if (e.key === 'Enter') {
+                const firstResult = navSearchResults && navSearchResults.querySelector('.nav-search-result');
+                if (firstResult) firstResult.click();
+            }
+        });
+    }
+
+    if (navSearchResults) {
+        navSearchResults.addEventListener('click', (e) => {
+            if (e.target.closest('.nav-search-result')) forceCloseSearch();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOpen) forceCloseSearch();
+    });
+
+    // ─── 12. MOBILE MENÜ: HAMBURGER + MEHRSTUFIGE NAVIGATION MIT ZURÜCK-PFEIL ───
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuLevels = document.getElementById('mobileMenuLevels');
@@ -324,13 +660,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function updateSubLevelState() {
         document.body.classList.toggle('mobile-submenu-open', navStack.length > 1);
-    }
-
-    function closeMobileMenu() {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.classList.remove('menu-open');
-        document.body.classList.remove('mobile-submenu-open');
     }
 
     function buildLevelHTML(level) {
@@ -388,7 +717,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Bezug zu Text/Anzahl/Seite), funktioniert dadurch automatisch für
     // jede aktuelle und künftige Ebene, ohne Sonderfälle.
     function animatePanelRowsIn(panelEl) {
-        const rows = panelEl.querySelectorAll('.mobile-nav-link, .mobile-nav-drill, .mobile-social');
+        const rows = panelEl.querySelectorAll('.mobile-nav-link, .mobile-nav-drill, .mobile-social, .mobile-search-field');
         rows.forEach((row, index) => {
             row.animate(
                 [
@@ -405,28 +734,27 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Rendert die aktuell oberste Ebene. direction ist 'forward'/'back' beim
-    // Ebenenwechsel, null beim allerersten Öffnen (kein altes Panel vorhanden).
+    // Tauscht das sichtbare Panel in .mobile-menu-levels gegen neuen HTML-
+    // Inhalt aus – generischer Mechanismus, den sowohl die Nav-Ebenen
+    // (renderMobileLevel) als auch das Mobile-Such-Panel (renderMobile
+    // SearchPanel) nutzen, statt ein zweites Panel-System zu bauen.
     //
-    // WICHTIG zur Position: .mobile-menu-levels (nicht mehr das einzelne
-    // Panel) hat in header.css einen FESTEN top-/left-/right-Wert – ein
+    // WICHTIG zur Position: .mobile-menu-levels (nicht das einzelne Panel)
+    // hat in header.css einen FESTEN top-/left-/right-Wert – ein
     // konstanter Bezugspunkt, der nie von Inhalt, Textlänge, Anzahl
     // Einträgen oder der Höhe der vorherigen Ebene abhängt. Alle Panels
     // liegen zusätzlich per CSS Grid exakt in derselben Zelle übereinander
     // (grid-area: 1/1) statt sich gegenseitig im normalen Fluss zu
-    // verschieben oder ihre Höhe per JS zu verwalten – der Grid-Layout-
-    // Algorithmus dimensioniert die gemeinsame Zelle automatisch auf die
-    // höhere der beiden gerade sichtbaren Ebenen. Dadurch kann weder eine
-    // horizontale Positionsänderung (fester Rahmen) noch eine vertikale
-    // Startpunkt-Verschiebung (fester "top"-Wert, unabhängig von der Höhe
-    // irgendeiner Ebene) mehr auftreten – unabhängig davon, welche Ebene
-    // geöffnet wird oder wie lang ihr Inhalt ist. Die Animation selbst
-    // verändert ausschliesslich opacity/translateY einzelner Zeilen
-    // innerhalb dieses fixen Rahmens, nie die Position des Rahmens selbst.
-    function renderMobileLevel(direction) {
+    // verschieben oder ihre Höhe per JS zu verwalten. Dadurch kann weder
+    // eine horizontale Positionsänderung noch eine vertikale Startpunkt-
+    // Verschiebung mehr auftreten – unabhängig davon, welches Panel
+    // (Navigation ODER Suche) gerade angezeigt wird oder wie lang sein
+    // Inhalt ist. instant=true (erstes Öffnen, egal ob per Hamburger oder
+    // Lupe) baut das Panel sofort sauber auf; sonst (Ebenenwechsel bzw.
+    // Wechsel zwischen Navigation/Suche bei bereits offenem Menü) wird
+    // gekreuzblendet.
+    function swapMobilePanel(html, attachFn, instant) {
         if (!mobileMenuLevels) return;
-        const level = navStack[navStack.length - 1];
-        const html = buildLevelHTML(level);
 
         // Der zuletzt eingefügte Panel ist immer das aktuell sichtbare (jedes
         // ältere ist ein Rest einer noch nicht abgeschlossenen vorherigen
@@ -438,12 +766,12 @@ document.addEventListener("DOMContentLoaded", function() {
         newPanel.className = 'mobile-menu-panel';
         newPanel.innerHTML = html;
 
-        if (!oldPanel || !direction) {
+        if (!oldPanel || instant) {
             // Erstes Öffnen: kein altes Panel zum Ausblenden, nur die neuen
             // Zeilen sauber von oben nach unten aufbauen lassen.
             mobileMenuLevels.innerHTML = '';
             mobileMenuLevels.appendChild(newPanel);
-            attachLevelHandlers(level, newPanel);
+            if (attachFn) attachFn(newPanel);
             animatePanelRowsIn(newPanel);
             return;
         }
@@ -458,12 +786,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         mobileMenuLevels.appendChild(newPanel);
-        attachLevelHandlers(level, newPanel);
+        if (attachFn) attachFn(newPanel);
         animatePanelRowsIn(newPanel);
 
         // Altes Panel verlässt die sichtbare Fläche sauber (Fade + leichter
-        // Zug nach oben) – unabhängig von der Richtung (vorwärts/zurück),
-        // damit sich Vor- und Rückwärtsnavigation identisch ruhig anfühlen.
+        // Zug nach oben) – unabhängig davon, ob es sich um einen Ebenen-
+        // wechsel oder einen Wechsel Navigation↔Suche handelt.
         const oldAnimation = oldPanel.animate(
             [
                 { opacity: 1, transform: 'translateY(0)' },
@@ -475,6 +803,13 @@ document.addEventListener("DOMContentLoaded", function() {
         oldAnimation.onfinish = () => {
             if (oldPanel.parentNode) oldPanel.parentNode.removeChild(oldPanel);
         };
+    }
+
+    // Rendert die aktuell oberste Nav-Ebene. direction ist 'forward'/'back'
+    // beim Ebenenwechsel, null beim allerersten Öffnen.
+    function renderMobileLevel(direction) {
+        const level = navStack[navStack.length - 1];
+        swapMobilePanel(buildLevelHTML(level), panelEl => attachLevelHandlers(level, panelEl), !direction);
     }
 
     function goForward(children) {
@@ -490,23 +825,113 @@ document.addEventListener("DOMContentLoaded", function() {
         updateSubLevelState();
     }
 
-    if (hamburger && mobileMenu) {
-        hamburger.addEventListener('click', () => {
-            const isOpen = hamburger.classList.contains('open');
+    // ─── MOBILE SUCHE: NUTZT DASSELBE MOBILE-MENU-OVERLAY WIE DER HAMBURGER ───
+    // Kein zweites Mobile-Navigationssystem: dieselbe .mobile-menu-Fläche
+    // (Farbe/Blur/Abstände/Position), derselbe Hamburger-Button, der dabei
+    // ebenfalls zu einem X wird, und dieselbe Panel-Crossfade-Mechanik wie
+    // die Nav-Ebenen (swapMobilePanel) – nur der Panel-Inhalt ist die Suche
+    // statt der Navigation. Kein eigenes X im Suchfeld: das X oben rechts
+    // (der Hamburger-Button) schliesst immer den gesamten Zustand.
+    const navSearchToggleMobile = document.getElementById('navSearchToggleMobile');
+    let mobileMenuMode = null; // null | 'nav' | 'search'
 
-            if (isOpen) {
-                closeMobileMenu();
-                return;
+    function setMobileSearchToggleState(isActive) {
+        if (!navSearchToggleMobile) return;
+        navSearchToggleMobile.classList.toggle('is-active', isActive);
+        navSearchToggleMobile.setAttribute('aria-expanded', String(isActive));
+    }
+
+    function buildMobileSearchPanelHTML() {
+        return `
+            <div class="mobile-search-panel">
+                <div class="mobile-search-field">
+                    <i class="fa-solid fa-magnifying-glass mobile-search-field-icon"></i>
+                    <input type="text" class="mobile-search-input" placeholder="Seiten &amp; Projekte durchsuchen…" autocomplete="off" aria-label="Seiten und Projekte durchsuchen">
+                </div>
+                <div class="mobile-search-divider"></div>
+                <div class="mobile-search-results"></div>
+            </div>
+        `;
+    }
+
+    function attachMobileSearchHandlers(panelEl) {
+        const input = panelEl.querySelector('.mobile-search-input');
+        const results = panelEl.querySelector('.mobile-search-results');
+        if (!input || !results) return;
+
+        input.addEventListener('input', () => {
+            renderSearchResultsInto(results, searchSite(input.value), input.value);
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const firstResult = results.querySelector('.nav-search-result');
+                if (firstResult) firstResult.click();
             }
+        });
 
-            hamburger.classList.add('open');
-            mobileMenu.classList.add('open');
-            document.body.classList.add('menu-open');
+        results.addEventListener('click', (e) => {
+            if (e.target.closest('.nav-search-result')) closeMobileMenu();
+        });
 
-            // Jedes Öffnen startet wieder auf der obersten Ebene.
+        window.requestAnimationFrame(() => input.focus());
+    }
+
+    function renderMobileSearchPanel(instant) {
+        swapMobilePanel(buildMobileSearchPanelHTML(), attachMobileSearchHandlers, instant);
+    }
+
+    // Öffnet das Mobile-Menu-Overlay im gegebenen Modus ('nav' oder
+    // 'search') – exakt derselbe Zustand (Hamburger→X, .mobile-menu.open,
+    // body.menu-open) für beide, nur der gerenderte Panel-Inhalt
+    // unterscheidet sich.
+    function openMobileOverlay(mode) {
+        if (!hamburger || !mobileMenu) return;
+        const wasOpen = hamburger.classList.contains('open');
+        closeOtherPanels(null);
+        hamburger.classList.add('open');
+        mobileMenu.classList.add('open');
+        document.body.classList.add('menu-open');
+        mobileMenuMode = mode;
+        setMobileSearchToggleState(mode === 'search');
+
+        if (mode === 'search') {
+            document.body.classList.remove('mobile-submenu-open');
+            renderMobileSearchPanel(!wasOpen);
+        } else {
             navStack = [topLevel()];
             renderMobileLevel(null);
             updateSubLevelState();
+        }
+    }
+
+    function closeMobileMenu() {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        document.body.classList.remove('mobile-submenu-open');
+        mobileMenuMode = null;
+        setMobileSearchToggleState(false);
+    }
+
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+            if (hamburger.classList.contains('open')) {
+                closeMobileMenu();
+                return;
+            }
+            openMobileOverlay('nav');
+        });
+    }
+
+    if (navSearchToggleMobile) {
+        navSearchToggleMobile.addEventListener('click', () => {
+            const isOpen = hamburger.classList.contains('open');
+            if (isOpen && mobileMenuMode === 'search') {
+                closeMobileMenu();
+                return;
+            }
+            openMobileOverlay('search');
         });
     }
 
@@ -514,7 +939,7 @@ document.addEventListener("DOMContentLoaded", function() {
         mobileBackArrow.addEventListener('click', goBack);
     }
 
-    // ─── 10. AKTIVEN LINK AUTOMATISCH HERVORHEBEN ───
+    // ─── 14. AKTIVEN LINK AUTOMATISCH HERVORHEBEN ───
     const currentPath = window.location.pathname.split("/").pop();
     const allNavLinks = document.querySelectorAll('.nav-center a');
 
@@ -527,11 +952,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // ─── 11. SMART STICKY HEADER SCROLL-VERHALTEN ───
+    // ─── 15. SMART STICKY HEADER SCROLL-VERHALTEN ───
     // Schaltet nur die Klasse .nav-hidden auf der Header-Gruppe um. Main
     // Header und (falls vorhanden) Second Header sind Teil derselben
     // .header-group und verschwinden/erscheinen dadurch immer gemeinsam.
-    const headerGroup = document.getElementById('headerGroup');
+    // (headerGroup selbst ist bereits weiter oben in Abschnitt 8 deklariert.)
     let lastScrollY = window.scrollY;
 
     if (headerGroup) {
@@ -548,6 +973,11 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             else if (currentScrollY > lastScrollY && currentScrollY > 60) {
                 headerGroup.classList.add('nav-hidden');
+                // Header (inkl. eines evtl. offenen Untermenüs/der Suche)
+                // schiebt sich beim Scrollen weg – alle Panels + Backdrop
+                // gleich mit schliessen, sonst bliebe der Hintergrund-
+                // Backdrop ohne sichtbaren Auslöser stehen.
+                closeOtherPanels(null);
             }
             else if (currentScrollY < lastScrollY) {
                 headerGroup.classList.remove('nav-hidden');

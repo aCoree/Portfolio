@@ -368,11 +368,16 @@
             opacity: 1 !important;
         }
 
+        /* Hamburger/X bleiben auf LEGO IMMER schwarz (auch geöffnet/Hover/
+           Fokus) – anders als die normalen LEGO-Navigationslinks, die ihre
+           rote Hover-/Active-Farbe behalten. Das "X" ist derselbe Button
+           (nur per CSS-Transform zu einem X gedreht), diese Regel deckt
+           also automatisch auch den X-Zustand ab. */
         body.lego-family-studio .navbar .hamburger:hover span,
         body.lego-family-studio .navbar .hamburger:focus span,
         body.lego-family-studio .navbar .hamburger.open span {
-            background-color: #E30613 !important;
-            background: #E30613 !important;
+            background-color: #000000 !important;
+            background: #000000 !important;
         }
 
         body.lego-family-studio .mobile-menu {
@@ -402,6 +407,82 @@
         body.lego-family-studio .mobile-menu a.active {
             color: #E30613 !important;
             transition: none !important;
+        }
+
+        /* ─── SUCHFUNKTION (LEGO-Theme) ───
+           Das Such-Panel selbst (.nav-expand) ist bereits über die Regel
+           weiter oben gelb eingefärbt (body.lego-family-studio .nav-expand).
+           Hier nur die Lupe (Desktop + Mobile, dieselbe .nav-search-toggle-
+           Klasse) sowie Eingabefeld/Trennlinie/Ergebnisse auf Schwarz
+           umstellen, damit die Suche sich in die bestehende LEGO-Markenwelt
+           einfügt, ohne das Farbschema selbst zu verändern. Die Lupe bleibt
+           bewusst IMMER schwarz (kein Rot, kein Hover-Hintergrund) – anders
+           als die normalen LEGO-Navigationslinks. */
+        body.lego-family-studio .nav-search-toggle,
+        body.lego-family-studio .nav-search-toggle:hover,
+        body.lego-family-studio .nav-search-toggle:focus-visible,
+        body.lego-family-studio .nav-search-toggle.is-active {
+            color: #000000 !important;
+            background-color: transparent !important;
+        }
+
+        body.lego-family-studio .nav-search-divider {
+            background-color: #000000 !important;
+        }
+
+        body.lego-family-studio .nav-search-field-icon,
+        body.lego-family-studio .nav-search-input,
+        body.lego-family-studio .nav-search-clear {
+            color: #000000 !important;
+        }
+
+        body.lego-family-studio .nav-search-input::placeholder {
+            color: rgba(0, 0, 0, 0.55) !important;
+        }
+
+        body.lego-family-studio .nav-search-clear:hover {
+            color: #E30613 !important;
+            background-color: rgba(0, 0, 0, 0.08) !important;
+        }
+
+        body.lego-family-studio .nav-search-result {
+            color: #000000 !important;
+            border-bottom-color: rgba(0, 0, 0, 0.12) !important;
+        }
+
+        body.lego-family-studio .nav-search-result:hover,
+        body.lego-family-studio .nav-search-result:focus-visible {
+            color: #E30613 !important;
+        }
+
+        body.lego-family-studio .nav-search-result-category {
+            color: rgba(0, 0, 0, 0.45) !important;
+        }
+
+        body.lego-family-studio .nav-search-empty {
+            color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        /* Mobile Suche: teilt sich .mobile-menu mit der normalen Mobile-
+           Navigation, dessen gelber Hintergrund bereits weiter oben
+           (body.lego-family-studio .mobile-menu) gesetzt ist. Kein Box-
+           Hintergrund/Rahmen mehr (siehe header.css) – hier nur noch
+           Icon/Eingabetext auf Schwarz umstellen. */
+        body.lego-family-studio .mobile-search-field-icon,
+        body.lego-family-studio .mobile-search-input {
+            color: #000000 !important;
+        }
+
+        body.lego-family-studio .mobile-search-input::placeholder {
+            color: rgba(0, 0, 0, 0.55) !important;
+        }
+
+        /* Divider zu hell (dünnes, kaum sichtbares Schwarz) auf dem gelben
+           Hintergrund: bekommt dieselbe Farbe wie die normalen LEGO-
+           Header-Links (Home/Projekte/…/YouTube-Icon), damit er klar
+           erkennbar ist. */
+        body.lego-family-studio .mobile-search-divider {
+            background-color: #000000 !important;
         }
 
         /* =====================================================
