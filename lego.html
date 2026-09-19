@@ -409,6 +409,18 @@
             transition: none !important;
         }
 
+        /* Trennlinien im Mobile-Menü (zwischen Main- und Second-Header-
+           Einträgen, sowie unter "Alle Projekte") sind standardmäßig ein
+           helles, dezentes Weiß – auf dem gelben LEGO-Hintergrund praktisch
+           unsichtbar. Bekommen dieselbe Farbe wie die normalen LEGO-Links. */
+        body.lego-family-studio .mobile-second-nav {
+            border-top-color: #000000 !important;
+        }
+
+        body.lego-family-studio .mobile-nav-link--emphasize {
+            border-bottom-color: #000000 !important;
+        }
+
         /* ─── SUCHFUNKTION (LEGO-Theme) ───
            Das Such-Panel selbst (.nav-expand) ist bereits über die Regel
            weiter oben gelb eingefärbt (body.lego-family-studio .nav-expand).

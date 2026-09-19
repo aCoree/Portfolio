@@ -92,7 +92,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 { label: 'LEGO FAMILY STUDIO', href: 'lego.html' }
             ]
         },
-        { label: 'Über mich', href: 'index.html#ueber-mich' },
+        {
+            label: 'Über mich',
+            href: 'index.html#ueber-mich',
+            // Zusätzliche, nicht sichtbare Suchbegriffe (siehe buildSearchIndex/
+            // scoreSearchEntry) – erlaubt z.B. "Aurelio", "Beruf" oder
+            // "Mediamatiker" als Treffer für diesen Eintrag, ohne dass diese
+            // Wörter im Label selbst stehen müssen.
+            keywords: 'Aurelio Zingarello Beruf Mediamatiker Lehrjahr Filmmaker Filmemacher Schweiz Design Webentwicklung Kurzfilm Storys'
+        },
         { label: 'Kontakt', href: 'index.html#kontakt' }
     ];
 
@@ -177,18 +185,18 @@ document.addEventListener("DOMContentLoaded", function() {
         const index = [];
         const seen = new Set();
 
-        function addEntry(label, href, category) {
+        function addEntry(label, href, category, keywords) {
             if (!label || !href) return;
             const key = label.toLowerCase() + '|' + href;
             if (seen.has(key)) return;
             seen.add(key);
-            index.push({ label: label, href: href, category: category || '' });
+            index.push({ label: label, href: href, category: category || '', keywords: (keywords || '').toLowerCase() });
         }
 
         mainNavItems.forEach(item => {
-            if (item.href) addEntry(item.label, item.href, 'Navigation');
+            if (item.href) addEntry(item.label, item.href, 'Navigation', item.keywords);
             if (hasChildren(item)) {
-                item.children.forEach(child => addEntry(child.label, child.href, item.label));
+                item.children.forEach(child => addEntry(child.label, child.href, item.label, child.keywords));
             }
         });
 
@@ -213,7 +221,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const category = entry.category.toLowerCase();
         if (label.startsWith(query)) return 0;
         if (label.includes(query)) return 1;
-        if (category.includes(query)) return 2;
+        // Unsichtbare Zusatzbegriffe (siehe z.B. "Über mich" in mainNavItems) –
+        // erlauben Treffer über Inhalt/Kontext statt nur über den sichtbaren
+        // Linktext, z.B. "Aurelio" oder "Mediamatiker" -> "Über mich".
+        if (entry.keywords && entry.keywords.includes(query)) return 2;
+        if (category.includes(query)) return 3;
         return -1;
     }
 

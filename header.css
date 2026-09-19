@@ -665,12 +665,21 @@ body.has-second-header .navbar {
   max-width: 100%;
   margin: 0;
   text-align: left;
-  font-family: "Anton", sans-serif;
+  /* Dieselbe Schriftart/-stärke wie im Desktop-Header (.nav-center a /
+     .second-navbar-link), damit Mobile und Desktop einheitlich aussehen.
+     Nur Familie + Stärke angeglichen – Größe/Letter-Spacing/Text-Transform
+     bleiben wie bisher (eigene Mobile-Größenordnung). */
+  font-family: "Barlow Condensed", sans-serif;
   font-size: 1.34rem;
-  font-weight: 400;
+  font-weight: 450;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--nav-text-idle);
+  /* Im Mobile Header immer volles Weiß statt der gedimmten Desktop-Idle-
+     Farbe (--nav-text-idle) – gilt für die normalen Links (Home/Projekte/
+     Über mich/Kontakt UND die Second-Header-Einträge, die dieselbe Klasse
+     nutzen). LEGO bleibt davon unberührt (eigene !important-Farbregeln in
+     lego.html). */
+  color: #ffffff;
   background: none;
   border: none;
   padding: 0;
@@ -710,6 +719,14 @@ button.mobile-nav-drill {
   display: flex;
   gap: 20px;
   margin-top: 40px;
+}
+
+/* YouTube-Icon im Mobile-Menü immer volles Weiß (statt der gedimmten
+   80%-Deckkraft von .social-icon) – nur im Mobile-Menü, der Desktop-Header
+   (.nav-right .social-icon) bleibt unverändert. LEGO überschreibt Opacity
+   ohnehin bereits per !important und bleibt unberührt. */
+.mobile-social .social-icon {
+  opacity: 1;
 }
 
 body.menu-open {

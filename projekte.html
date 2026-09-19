@@ -37,7 +37,6 @@
         }
 
         body {
-            animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -48,7 +47,17 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* Fade-In läuft bewusst auf main.container statt auf body: header.js
+           fügt .header-group/.mobile-menu/.nav-backdrop (alle position:fixed)
+           als direkte Kinder von body ein. Ein transform/filter AUF body
+           selbst (auch nur vorübergehend während einer Animation) erzeugt
+           einen neuen Containing Block für diese fixed-positionierten
+           Elemente – sie wären dann nicht mehr relativ zum Viewport fixiert,
+           sondern relativ zu body, wodurch Smart-Sticky-Scrollverhalten und
+           der Hintergrund-Backdrop kaputt gehen. main.container enthält
+           keine fixed-positionierten Elemente, ist also dafür sicher. */
         main.container {
+            animation: pageFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             flex: 1 0 auto;
             width: 100%;
             max-width: 1200px;
