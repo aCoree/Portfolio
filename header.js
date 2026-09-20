@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         /* ─── FOOTER STYLES (SCHIEBT SICH AUTOMATISCH NACH UNTEN) ─── */
         .site-footer {
+            position: relative;
             margin-top: auto !important; /* DAS SCHIEBT DEN FOOTER AN DEN BODEN */
             display: flex;
             justify-content: space-between;
@@ -66,7 +67,23 @@ document.addEventListener("DOMContentLoaded", function() {
             font-size: 0.85rem;
             padding: 0 15px;
         }
-        @media (max-width: 640px) {
+        /* Sprachumschalter im Footer existiert als ZWEI Instanzen im Markup
+           (siehe footerHTML weiter unten), von denen per Breakpoint jeweils
+           nur eine sichtbar ist – so bleibt jede Variante ein einfacher,
+           normaler Teil ihres jeweiligen Flex-Kontexts (keine berechnete
+           Positionierung nötig):
+           - .lang-switcher--footer-desktop sitzt verschachtelt in
+             .footer-right, direkt vor dem YouTube-Icon (>888px).
+           - .lang-switcher--footer-mobile ist ein eigenständiges Element in
+             derselben Zeile wie Logo + Icon (<=888px), per space-between
+             automatisch mittig zwischen den beiden. */
+        .site-footer .footer-lang-mobile {
+            display: none;
+        }
+        .lang-switcher--footer-desktop {
+            margin-right: 54px; /* ursprünglich 18px, jetzt verdreifacht */
+        }
+        @media (max-width: 888px) {
             .site-footer {
                 flex-wrap: wrap;
                 row-gap: 16px;
@@ -76,12 +93,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 order: 1;
                 flex: 0 0 auto;
             }
-            .site-footer .footer-right {
+            .site-footer .footer-lang-mobile {
+                display: flex;
                 order: 2;
                 flex: 0 0 auto;
             }
-            .site-footer .footer-center {
+            .site-footer .footer-right {
                 order: 3;
+                flex: 0 0 auto;
+            }
+            .lang-switcher--footer-desktop {
+                display: none;
+            }
+            .site-footer .footer-center {
+                order: 4;
                 flex: 0 0 100%;
                 padding: 0;
                 font-size: 0.78rem;
@@ -437,6 +462,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 </span>
             </a>
         </div>
+        <div class="footer-lang-mobile">
+            ${buildLangSwitcherHTML('lang-switcher--footer-mobile')}
+        </div>
         <div class="footer-center">
             <p style="margin: 0;">${t('footer.copyright', '© {year} Aurelio Zingarello. Alle Rechte vorbehalten.').replace('{year}', new Date().getFullYear())}</p>
             <div style="margin-top: 6px; font-size: 0.8rem;">
@@ -446,7 +474,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
         <div class="footer-right">
-            ${buildLangSwitcherHTML('lang-switcher--footer')}
+            ${buildLangSwitcherHTML('lang-switcher--footer-desktop')}
             <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </footer>

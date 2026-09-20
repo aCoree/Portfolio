@@ -851,18 +851,8 @@ body.menu-open {
   border-color: #ffffff;
 }
 
-.lang-switcher--footer {
-  margin-right: 18px;
-}
-
 .lang-switcher--mobile-menu {
   margin-top: 32px;
-}
-
-@media (max-width: 640px) {
-  .lang-switcher--footer {
-    margin-right: 0;
-  }
 }
 
 /* ─── SECOND HEADER (DESKTOP) ───
