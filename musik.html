@@ -103,19 +103,8 @@
             z-index: 2;
         }
 
-        /* =====================================================
-        HERO SECTION
-        ===================================================== */
-        .hero-section {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            pointer-events: none;
-        }
+        /* .hero-section: zentral in style.css definiert (identisch auf
+           allen Hero-Video-Seiten), hier bewusst nicht mehr dupliziert. */
 
         /* =====================================================
         HAUPT-CONTAINER & INTRO
@@ -496,22 +485,15 @@
             opacity: 1 !important;
         }
 
-        /* =====================================================
-        FOOTER FIX
-        ===================================================== */
-        footer,
-        #footer-placeholder {
-            position: relative !important;
-            z-index: 10 !important;
-        }
+        /* Footer-Z-Index-Fix kommt bereits zentral aus style.css
+           (.site-footer) – hier bewusst nicht mehr dupliziert. */
 
         /* =====================================================
         RESPONSIVE
         ===================================================== */
         @media (max-width: 900px) {
-            .hero-section {
-                padding-bottom: 24px;
-            }
+            /* .hero-section-Padding bei schmaler Breite kommt bereits
+               zentral aus style.css (identisches @media max-width:900px). */
 
             #musik-page {
                 padding: 0 25px 90px !important;
@@ -799,8 +781,6 @@
         </div>
 
     </main>
-
-    <div id="footer-placeholder"></div>
 
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>

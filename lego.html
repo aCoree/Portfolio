@@ -64,19 +64,8 @@
             -webkit-transform: translateZ(0);
         }
 
-        /* =====================================================
-           HERO SECTION
-           ===================================================== */
-        .hero-section {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            pointer-events: none;
-        }
+        /* .hero-section: zentral in style.css definiert (identisch auf
+           allen Hero-Video-Seiten), hier bewusst nicht mehr dupliziert. */
 
         /* =====================================================
            DARK CONTENT BEREICH (SEKTION 01 - ÜBER DEN KANAL)
@@ -471,6 +460,13 @@
             color: rgba(0, 0, 0, 0.45) !important;
         }
 
+        /* Hervorgehobener Suchbegriff innerhalb eines Ergebnis-Labels (siehe
+           highlightMatch in header.js): auf LEGO in Markenrot statt Weiß,
+           sonst wäre er auf dem gelben/schwarzen Kontext kaum lesbar. */
+        body.lego-family-studio .nav-search-highlight {
+            color: #E30613 !important;
+        }
+
         body.lego-family-studio .nav-search-empty {
             color: rgba(0, 0, 0, 0.7) !important;
         }
@@ -695,55 +691,6 @@
         }
 
         /* =====================================================
-           DETAILS LIST
-           ===================================================== */
-        .lego-details {
-            display: block !important;
-            width: 100% !important;
-            margin: 25px 0 0 0 !important;
-            padding: 0 !important;
-            list-style: none !important;
-        }
-
-        .lego-details li {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: flex-start !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 13px 0 !important;
-            border-top: 1px solid rgba(0, 0, 0, 0.15) !important;
-            color: #000000 !important;
-        }
-
-        .lego-details li:last-child {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
-        }
-
-        .lego-detail-name {
-            display: block !important;
-            color: #000000 !important;
-            opacity: 0.65 !important;
-            font-family: 'Barlow Condensed', sans-serif !important;
-            font-size: 12px !important;
-            font-weight: 700 !important;
-            line-height: 1.4 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
-        }
-
-        .lego-detail-value {
-            display: block !important;
-            max-width: 55% !important;
-            color: #000000 !important;
-            font-family: 'Barlow Condensed', sans-serif !important;
-            font-size: 14px !important;
-            font-weight: 600 !important;
-            line-height: 1.4 !important;
-            text-align: right !important;
-        }
-
-        /* =====================================================
            LEGO FOOTER OVERRIDES
            ===================================================== */
         body.lego-family-studio .site-footer,
@@ -871,9 +818,8 @@
            TABLET & MOBILE RESPONSIVE
            ===================================================== */
         @media (max-width: 900px) {
-            .hero-section {
-                padding-bottom: 24px;
-            }
+            /* .hero-section-Padding bei schmaler Breite kommt bereits
+               zentral aus style.css (identisches @media max-width:900px). */
 
             .lego-dark-wrapper {
                 padding-top: 50px !important;
@@ -982,15 +928,6 @@
 
             .lego-info-description {
                 font-size: 14px !important;
-            }
-
-            .lego-details li {
-                gap: 12px !important;
-            }
-
-            .lego-detail-name,
-            .lego-detail-value {
-                font-size: 11px !important;
             }
 
             .lego-card-image {

@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="style.css?v=1.1">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Inter
+         bereits zentral (die Seite nutzt Inter selbst nirgends). -->
 
     <style>
         /* ─── HERO ─── */
@@ -209,7 +210,7 @@
             justify-content: flex-start; /* Auf PC LINKSBÜNDIG */
             padding: 32px 40px;
             box-sizing: border-box;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
         }
 
         .apple-card-content {
@@ -452,6 +453,10 @@
                 padding: 14px !important;
                 justify-content: center !important; /* AUF MOBILE MITTIG */
                 align-items: flex-end !important;
+                /* Auf Mobile nochmals dezenter als Desktop, damit die
+                   Projektbilder (dort hochkant, weniger Fläche) klar
+                   erkennbar bleiben. */
+                background: linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.45) 100%) !important;
             }
 
             .apple-card-content {
@@ -514,10 +519,6 @@
                 font-size: 0.75rem !important;
                 gap: 5px !important;
                 white-space: nowrap !important;
-            }
-
-            .apple-btn i {
-                font-size: 0.7rem !important;
             }
 
             .genre-tag {
@@ -615,7 +616,7 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="run.html" class="apple-btn">
-                                    <i class="fa-solid fa-play"></i> Jetzt ansehen
+                                    Jetzt ansehen
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Action / Kurzfilm</span>
@@ -631,7 +632,7 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="lego.html" class="apple-btn">
-                                    <i class="fa-solid fa-play"></i> Jetzt ansehen
+                                    Jetzt ansehen
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Stop-Motion / Youtube Kanal</span>
@@ -647,7 +648,7 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="urbnvibe.html" class="apple-btn">
-                                    <i class="fa-solid fa-play"></i> Jetzt ansehen
+                                    Jetzt ansehen
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">10. ICT-Schuljahr / Projekt</span>
@@ -663,7 +664,7 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="musik.html" class="apple-btn">
-                                    <i class="fa-solid fa-play"></i> Jetzt ansehen
+                                    Jetzt ansehen
                                 </a>
                                 <div class="apple-card-text">
                                     <span class="genre-tag">Musik / Klavier & Schlagzeug</span>

@@ -86,20 +86,8 @@
         }
 
 
-        /* =====================================================
-           HERO SECTION
-           ===================================================== */
-
-        .hero-section {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            pointer-events: none;
-        }
+        /* .hero-section: zentral in style.css definiert (identisch auf
+           allen Hero-Video-Seiten), hier bewusst nicht mehr dupliziert. */
 
 
         /* =====================================================
@@ -343,15 +331,8 @@
         }
 
 
-        /* =====================================================
-           FOOTER Z-INDEX FIX
-           ===================================================== */
-
-        footer,
-        #footer-placeholder {
-            position: relative;
-            z-index: 10;
-        }
+        /* Footer-Z-Index-Fix kommt bereits zentral aus style.css
+           (.site-footer) – hier bewusst nicht mehr dupliziert. */
 
 
         /* =====================================================
@@ -420,9 +401,8 @@
                 width: min(100%, 550px);
             }
 
-            .hero-section {
-                padding-bottom: 24px;
-            }
+            /* .hero-section-Padding bei schmaler Breite kommt bereits
+               zentral aus style.css (identisches @media max-width:900px). */
         }
 
         @media (max-width: 600px) {
@@ -578,9 +558,6 @@
         </section>
 
     </main>
-
-
-    <div id="footer-placeholder"></div>
 
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>

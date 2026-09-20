@@ -50,9 +50,15 @@
             background: transparent !important;
         }
 
-        .bts-header-col h1, 
+        .bts-header-col h1,
         .bts-header-col .bts-title {
             text-align: left !important;
+            /* Dieselbe Schriftart wie die Überschriften auf allen anderen
+               Seiten (z.B. .project-header h1 in style.css) – .bts-title
+               ist eine seiteneigene Klasse und war dort nicht mit
+               abgedeckt, wodurch die Schrift bisher auf die body-Standard-
+               schrift (Barlow Condensed) zurückfiel statt Anton zu nutzen. */
+            font-family: "Anton", sans-serif;
             font-size: 2.2rem !important;
             letter-spacing: 2px !important;
             text-transform: uppercase !important;

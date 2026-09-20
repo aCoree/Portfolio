@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Inter
+         bereits zentral in Gewicht 400/600/800 – genau das, was
+         .custom-select (unten) braucht. -->
 
     <style>
         /* ─── STICKY FOOTER & PAGE FADE-IN ─── */
@@ -320,9 +322,6 @@
         </div>
 
     </main>
-
-    <!-- PLATZHALTER FÜR FOOTER -->
-    <div id="footer-placeholder"></div>
 
     <!-- ─── JAVASCRIPT EINBINDUNG ─── -->
     <script src="header.js"></script>

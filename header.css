@@ -53,8 +53,15 @@
 .header-group {
   position: fixed;
   top: 0;
+  /* left+right statt left+width:100% – bei einer klassischen (Platz
+     einnehmenden) Scrollbar auf Windows/Linux kann ein fixed-Element mit
+     width:100% ein paar Pixel breiter berechnet werden als der tatsächlich
+     sichtbare Bereich, wodurch zentrierte Inhalte (Nav-Links, Suchfeld)
+     minimal aus der echten Bildschirmmitte wirken. left:0;right:0 spannt
+     das Element stattdessen exakt zwischen die beiden sichtbaren
+     Viewport-Kanten auf. */
   left: 0;
-  width: 100%;
+  right: 0;
   z-index: 1000;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
@@ -152,7 +159,7 @@ body.has-second-header .navbar {
 .nav-center {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 40px;
 }
 
 .nav-center .nav-item {
@@ -496,6 +503,16 @@ body.has-second-header .navbar {
   letter-spacing: 0.3px;
 }
 
+/* Hebt den eingegebenen Suchbegriff innerhalb des Ergebnis-Labels hervor
+   (siehe highlightMatch in header.js) – bewusst kein Standard-<mark>-Gelb,
+   sondern volles Weiß + etwas mehr Gewicht, damit es zur bestehenden
+   Header-Farbwelt passt statt wie ein Fremdkörper zu wirken. */
+.nav-search-highlight {
+  background: none;
+  color: var(--nav-text-active);
+  font-weight: 700;
+}
+
 .nav-search-result-category {
   flex-shrink: 0;
   font-size: 0.72rem;
@@ -584,7 +601,7 @@ body.has-second-header .navbar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   height: 100vh;
   overflow-y: auto;
   background-color: var(--header-surface-mobile);
@@ -832,7 +849,7 @@ body.menu-open {
   display: flex;
   align-items: center;
   height: 100%;
-  gap: 26px;
+  gap: 42px;
 }
 
 /* Wrapper pro Eintrag: gibt der Erweiterung einen stabilen, ganzflächigen

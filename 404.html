@@ -16,75 +16,30 @@
     <!-- Web Manifest für mobile Verknüpfungen -->
     <link rel="manifest" href="/site.webmanifest">
 
+    <!-- Diese Seite wird vom Hosting für JEDE nicht existierende URL
+         ausgeliefert, auch für scheinbar "verschachtelte" Pfade wie
+         /run/irgendwas – die Adresszeile behält dabei diesen (nicht
+         existierenden) Pfad. <base href="/"> sorgt dafür, dass JEDER
+         relative Pfad auf dieser Seite (auch von header.js dynamisch
+         erzeugte Links/Bilder) trotzdem relativ zur Domain-Wurzel aufgelöst
+         wird, statt fälschlich relativ zur URL in der Adresszeile. Dadurch
+         bleiben ganz normale relative Pfade möglich (wie auf jeder anderen
+         Seite), ohne dass 404.html eine Sonderbehandlung in header.js
+         bräuchte. -->
+    <base href="/">
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css?v=2.0">
     <link rel="stylesheet" href="header.css">
     <!-- FontAwesome für Social Media & UI Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter (mit 800 & 900 für maximale Schärfe & Fettschrift) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Anton/
+         Barlow Condensed/Inter bereits zentral, und diese Seite nutzt
+         ausschliesslich Klassen (.btn, .error-code, ...), die Barlow
+         Condensed/Anton verwenden – kein Inter-Text auf dieser Seite. -->
 
     <!-- Header & Footer via JavaScript einbinden -->
     <script src="header.js" defer></script>
-
-    <!-- Apple-Style Pill Button Styling (Clean & Reset) -->
-    <style>
-        .error-actions .btn-pill {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 8px !important;
-            padding: 9px 20px !important; /* Feiner und kompakter */
-            border-radius: 9999px !important; /* Exakte Pillenform */
-            background: transparent !important;
-            background-color: transparent !important;
-            border: 1px solid rgba(255, 255, 255, 0.8) !important; /* Feiner 1px Rand */
-            color: #ffffff !important;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-            font-size: 0.875rem !important; /* 14px – typische Apple-Größe */
-            font-weight: 400 !important;
-            line-height: 1.2 !important;
-            letter-spacing: -0.01em !important;
-            text-decoration: none !important;
-            box-shadow: none !important;
-            text-shadow: none !important;
-            outline: none !important;
-            box-sizing: border-box !important;
-            cursor: pointer !important;
-            -webkit-font-smoothing: antialiased !important;
-            /* Seidenweicher Übergang nur auf Farbe & Hintergrund */
-            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
-        }
-
-        .error-actions .btn-pill i {
-            font-size: 0.8rem !important;
-            color: inherit !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            line-height: 1 !important;
-            transition: none !important;
-        }
-
-        /* Apple Hover: Sauber weiß ausgefüllt, keine Layout-Verschiebung */
-        .error-actions .btn-pill:hover {
-            background-color: #ffffff !important;
-            border-color: #ffffff !important;
-            color: #000000 !important;
-            text-decoration: none !important;
-            box-shadow: none !important;
-            transform: none !important; /* Verhindert jedes Pixel-Zucken */
-        }
-
-        .error-actions .btn-pill:hover i {
-            color: #000000 !important;
-            transform: none !important;
-        }
-
-        /* Dezent gedimmter Klick-Effekt */
-        .error-actions .btn-pill:active {
-            opacity: 0.85 !important;
-        }
-    </style>
 </head>
 <body>
 

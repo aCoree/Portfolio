@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const crossPageSearchSections = [
         { label: 'Trailer', href: 'run.html#trailer', category: 'RUN' },
         { label: 'Ganzer Film', href: 'run.html#content', category: 'RUN' },
-        { label: 'BTS', href: 'bts.html', category: 'RUN' },
+        { label: 'Behind the Scenes', href: 'bts.html', category: 'RUN', keywords: 'BTS' },
         { label: 'Color Grading', href: 'run.html#grading', category: 'RUN' },
 
         { label: 'Leidenschaft am Klavier', href: 'musik.html#musik-intro', category: 'Musik' },
@@ -541,29 +541,113 @@ document.addEventListener("DOMContentLoaded", function() {
     );
 
     // ─── 10. SUCH-ERGEBNIS-RENDERING (GEMEINSAM FÜR DESKTOP + MOBILE) ───
-    // Eine einzige Rendering-Funktion für Ergebniszeilen, die sowohl vom
-    // Desktop-Such-Panel als auch vom Mobile-Such-Panel (siehe Abschnitt 12,
-    // wiederverwendet dasselbe .mobile-menu wie der Hamburger) mit ihrem
-    // jeweiligen Ziel-Container aufgerufen wird – keine doppelte Render-Logik.
-    function renderSearchResultsInto(container, entries, query) {
-        if (!container) return;
-        if (!query.trim()) {
-            container.innerHTML = '';
-            container.classList.remove('has-results');
-            return;
-        }
+    // Baut nur das HTML/den Ziel-Zustand (ob überhaupt etwas angezeigt
+    // werden soll) – wird sowohl von der einfachen (Mobile) als auch der
+    // animierten (Desktop, siehe animateSearchResultsInto) Variante
+    // genutzt, keine doppelte Render-Logik.
+    // Hebt den eingegebenen Suchbegriff INNERHALB des Labels optisch hervor
+    // (z.B. "jekt" in "Projekte"), statt das Label nur unverändert
+    // anzuzeigen – macht auf einen Blick klar, WARUM ein Ergebnis getroffen
+    // hat. Kommt ein Treffer nur über Kategorie/Keywords zustande (das
+    // Label selbst enthält den Begriff nicht), bleibt das Label schlicht
+    // unhervorgehoben.
+    function highlightMatch(label, query) {
+        if (!query) return escapeHTML(label);
+        const matchIndex = label.toLowerCase().indexOf(query.toLowerCase());
+        if (matchIndex === -1) return escapeHTML(label);
+        const before = label.slice(0, matchIndex);
+        const match = label.slice(matchIndex, matchIndex + query.length);
+        const after = label.slice(matchIndex + query.length);
+        return `${escapeHTML(before)}<mark class="nav-search-highlight">${escapeHTML(match)}</mark>${escapeHTML(after)}`;
+    }
+
+    function buildSearchResultsMarkup(entries, query) {
+        const trimmedQuery = query.trim();
+        if (!trimmedQuery) return { html: '', shouldShow: false };
         if (!entries.length) {
-            container.innerHTML = `<p class="nav-search-empty">Keine Treffer für „${escapeHTML(query.trim())}“.</p>`;
-            container.classList.add('has-results');
-            return;
+            return {
+                html: `<p class="nav-search-empty">Keine Treffer für „${escapeHTML(trimmedQuery)}“.</p>`,
+                shouldShow: true
+            };
         }
-        container.innerHTML = entries.map(entry => `
+        const html = entries.map(entry => `
             <a href="${entry.href}" class="nav-search-result">
-                <span class="nav-search-result-label">${escapeHTML(entry.label)}</span>
+                <span class="nav-search-result-label">${highlightMatch(entry.label, trimmedQuery)}</span>
                 ${entry.category ? `<span class="nav-search-result-category">${escapeHTML(entry.category)}</span>` : ''}
             </a>
         `).join('');
-        container.classList.add('has-results');
+        return { html, shouldShow: true };
+    }
+
+    // Einfache, instante Variante (bisheriges Verhalten) – genutzt vom
+    // Mobile-Such-Panel, das ohnehin bereits innerhalb des scrollbaren
+    // .mobile-menu-Overlays sitzt und keine eigene Höhen-Animation braucht.
+    function renderSearchResultsInto(container, entries, query) {
+        if (!container) return;
+        const { html, shouldShow } = buildSearchResultsMarkup(entries, query);
+        container.innerHTML = html;
+        container.classList.toggle('has-results', shouldShow);
+    }
+
+    // Desktop-Variante: animiert JEDE Inhaltsänderung über die tatsächliche
+    // Höhe (nicht nur das erste Öffnen mit leerem Feld) – Tippen, Löschen
+    // oder ein Wechsel auf "keine Treffer" liefen vorher instant/sprunghaft,
+    // weil .has-results (und damit die max-height-Transition in header.css)
+    // nur beim ERSTEN Anzeigen/kompletten Leeren umgeschaltet wurde, nicht
+    // bei einer Änderung INNERHALB des offenen Zustands. Hier wird die
+    // Höhe stattdessen bei jeder Änderung explizit von der alten auf die
+    // neue Content-Höhe animiert (klassische FLIP-Technik): alte Höhe
+    // messen + fixieren + Reflow erzwingen, DANN erst den Inhalt
+    // austauschen (nicht umgekehrt!) -> neue Höhe messen -> übergehen,
+    // damit die CSS-Transition auf max-height (siehe .nav-search-results
+    // in header.css) greift. Wichtig: das Fixieren MUSS vor dem
+    // Inhaltswechsel passieren – sonst hat der Browser beim Locken schon
+    // die neue (oft kürzere) Content-Höhe und es gibt nichts mehr, wovon
+    // aus animiert werden könnte (z.B. beim Wechsel von "5 Treffer" zu
+    // "AX – keine Treffer": beides shouldShow=true, aber deutlich
+    // unterschiedliche Höhe).
+    function animateSearchResultsInto(container, entries, query) {
+        if (!container) return;
+        const { html, shouldShow } = buildSearchResultsMarkup(entries, query);
+
+        // 1. Alte Höhe fixieren, BEVOR der Inhalt sich ändert.
+        const fromHeight = container.getBoundingClientRect().height;
+        container.style.maxHeight = fromHeight + 'px';
+        container.style.opacity = container.classList.contains('has-results') ? '1' : '0';
+        void container.offsetHeight; // Reflow erzwingen
+
+        // 2. Erst jetzt den Inhalt austauschen. Beim Schließen
+        // (shouldShow=false) bewusst NICHT leeren – der bisherige Inhalt
+        // bleibt sichtbar, während die Box kollabiert (siehe
+        // transitionend-Listener unten), statt dass nur eine bereits
+        // leere Fläche schrumpft.
+        if (shouldShow) container.innerHTML = html;
+        const targetHeight = shouldShow ? Math.min(container.scrollHeight, 320) : 0;
+
+        // 3. Auf die neue Ziel-Höhe übergehen -> löst die Transition aus.
+        container.classList.toggle('has-results', shouldShow);
+        container.style.maxHeight = targetHeight + 'px';
+        container.style.opacity = shouldShow ? '1' : '0';
+
+        if (!shouldShow) {
+            // Alten Inhalt erst entfernen, wenn die Höhen-Transition
+            // wirklich vorbei ist: transitionend ist die exakte Quelle,
+            // dazu ein Timeout als Sicherheitsnetz (z.B. falls der Tab im
+            // Hintergrund läuft und CSS-Transitions/transitionend gedrosselt
+            // werden) – was zuerst feuert, räumt auf.
+            window.clearTimeout(container._collapseFallbackTimer);
+            const cleanup = () => {
+                container.removeEventListener('transitionend', onCollapseDone);
+                window.clearTimeout(container._collapseFallbackTimer);
+                if (!container.classList.contains('has-results')) container.innerHTML = '';
+            };
+            const onCollapseDone = (e) => {
+                if (e.target !== container || e.propertyName !== 'max-height') return;
+                cleanup();
+            };
+            container.addEventListener('transitionend', onCollapseDone);
+            container._collapseFallbackTimer = window.setTimeout(cleanup, 400);
+        }
     }
 
     // ─── 11. DESKTOP-SUCHFUNKTION ───
@@ -630,7 +714,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (navSearchInput) {
         navSearchInput.addEventListener('input', () => {
             const query = navSearchInput.value;
-            renderSearchResultsInto(navSearchResults, searchSite(query), query);
+            animateSearchResultsInto(navSearchResults, searchSite(query), query);
         });
 
         navSearchInput.addEventListener('keydown', (e) => {

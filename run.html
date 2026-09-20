@@ -96,17 +96,8 @@
             -webkit-transform: translateZ(0);
         }
 
-        /* ─── HERO SECTION ─── */
-        .hero-section {
-            position: relative;
-            z-index: 10;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            pointer-events: none;
-        }
+        /* .hero-section: zentral in style.css definiert (identisch auf
+           allen Hero-Video-Seiten), hier bewusst nicht mehr dupliziert. */
 
         /* ─── SEITENSPEZIFISCHER TRAILER START BUTTON ─── */
         .start-trailer-btn {
@@ -151,44 +142,6 @@
             pointer-events: none;
         }
 
-        /* ─── NAVIGATION BUTTONS UNIFORM STYLING (.back-btn) ─── */
-        .page-top-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #ffffff;
-            text-decoration: none;
-            font-family: inherit;
-            font-size: 0.95rem;
-            font-weight: 500;
-            line-height: 1;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-
-        .back-btn i {
-            font-size: 0.85rem;
-            transition: transform 0.2s ease;
-        }
-
-        .back-btn:hover {
-            color: #8b7bd8;
-        }
-
-        .back-btn:hover i.fa-arrow-left {
-            transform: translateX(-3px);
-        }
-
-        .back-btn:hover i.fa-arrow-right {
-            transform: translateX(3px);
-        }
-
         /* ─── LAYOUT ANPASSUNGEN ─── */
         .project-detail-page {
             position: relative;
@@ -196,57 +149,15 @@
             background: transparent;
         }
 
-        footer {
-            position: relative;
-            z-index: 1;
-            background-color: #0d0d0d;
-        }
+        /* footer{} kommt bereits zentral aus style.css (.site-footer).
+           Die frühere lokale background-color:#0d0d0d hier hatte ohnehin
+           nie eine Wirkung: eine Klassen-Selektor-Regel (.site-footer)
+           schlägt eine Element-Selektor-Regel (footer) in der Spezifität
+           immer, unabhängig von der Ladereihenfolge – style.css's
+           .site-footer-Hintergrund hat also schon immer gewonnen. */
 
         .heading-violet {
             color: #8b7bd8;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 18px;
-        }
-
-        .grading-apple-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 9px 20px;
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            font-family: inherit;
-            font-size: 0.88rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 9999px;
-            transition: all 0.25s ease;
-            line-height: 1;
-        }
-
-        .grading-apple-btn:hover {
-            background: #ffffff;
-            color: #0d0d0d;
-            border-color: #ffffff;
-        }
-
-        .grading-apple-btn i {
-            font-size: 0.8rem;
-            transition: transform 0.25s ease;
-        }
-
-        .grading-apple-btn:hover i {
-            transform: translateX(2px);
-        }
-
-        .grading-apple-btn.slider-btn:hover i {
-            transform: translateY(2px);
         }
 
         /* ─── COLOR GRADING SLIDER CONTAINER ─── */
@@ -259,11 +170,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto 12px auto;
             padding: 0 4px;
+            box-sizing: border-box;
         }
 
         .grading-label-top {
+            font-family: "Barlow Condensed", sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             letter-spacing: 1.5px;
@@ -271,12 +186,21 @@
             text-transform: uppercase;
         }
 
+        /* Diese Regel lebte bisher in Teilen (max-width/aspect-ratio/border/
+           cursor) auch in style.css und wurde hier nur per Kaskade
+           überschrieben/ergänzt – jetzt an einem einzigen Ort vollständig
+           zusammengeführt (style.css hat keine .grading-*-Regeln mehr). */
         .grading-slider {
             position: relative;
             display: grid;
+            max-width: 900px;
             width: 100%;
+            margin: 0 auto;
+            aspect-ratio: 3024 / 1660;
             overflow: hidden;
             border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: ew-resize;
             user-select: none;
             touch-action: pan-y;
             line-height: 0;
@@ -287,6 +211,7 @@
             grid-area: 1 / 1;
             width: 100%;
             height: auto;
+            object-fit: cover;
             display: block;
             pointer-events: none;
             margin: 0;
@@ -308,7 +233,21 @@
             cursor: ew-resize;
             transform: translateX(-50%);
             z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Unsichtbarer, breiterer Trefferbereich für den Handle (leichteres
+           Greifen beim Ziehen) – zog bisher unbemerkt aus style.css mit ein. */
+        .grading-handle::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -20px;
+            right: -20px;
         }
 
         .grading-handle i {
@@ -329,11 +268,9 @@
         }
 
         /* ─── MOBILE ANPASSUNGEN ─── */
+        /* .hero-section-Padding bei schmaler Breite kommt bereits zentral aus
+           style.css (@media max-width:900px), deckt dieses 768px auch ab. */
         @media (max-width: 768px) {
-            .hero-section {
-                padding-bottom: 24px;
-            }
-
             .start-trailer-btn {
                 padding: 11px 26px;
                 font-size: 0.88rem;
@@ -374,13 +311,6 @@
     <!-- ─── INHALT KURZFILM SEITE ─── -->
     <section id="content" class="section project-detail-page">
         <div class="container">
-            <div class="page-top-nav">
-                <a href="javascript:history.back()" class="back-btn"><i class="fa-solid fa-arrow-left"></i>
-                    <span>Zurück</span></a>
-                <a href="projekte.html" class="back-btn"><span>Projekte</span> <i
-                        class="fa-solid fa-arrow-right"></i></a>
-            </div>
-
             <div class="project-header">
                 <h1>RUN - Ein Kurzfilm</h1>
                 <p class="tagline">Ein cinematischer action Kurzfilm im Seeland der Schweiz.</p>
@@ -401,18 +331,6 @@
                         Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die
                         kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
                     </p>
-
-                    <div class="button-group">
-                        <a href="bts.html" class="grading-apple-btn">
-                            <span>Behind the Scenes</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
-                        <a href="#grading" class="grading-apple-btn slider-btn">
-                            <span>Zum Color Grading Slider</span>
-                            <i class="fa-solid fa-arrow-down"></i>
-                        </a>
-                    </div>
 
                     <h2 class="heading-violet" style="margin-top: 35px; margin-bottom: 10px;">Das Projekt & Die
                         Umsetzung</h2>
@@ -583,7 +501,7 @@
         window.secondHeaderItems = [
             { label: "Trailer", href: "#trailer" },
             { label: "Ganzer Film", href: "#content" },
-            { label: "BTS", href: "bts.html" },
+            { label: "Behind the Scenes", href: "bts.html" },
             { label: "Color Grading", href: "#grading" }
         ];
     </script>

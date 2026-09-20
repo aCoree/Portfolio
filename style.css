@@ -21,6 +21,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* Reserviert die Scrollbar-Spur dauerhaft (statt sie nur bei Bedarf
+     einzublenden). Ohne das kann auf Windows/Linux (klassische, Platz
+     einnehmende Scrollbar) ein position:fixed-Element mit width:100% wie
+     der Header ein paar Pixel breiter berechnet werden als der tatsächlich
+     sichtbare (scrollbar-bereinigte) Inhaltsbereich – zentrierte Elemente
+     wie das Such-Panel wirken dadurch minimal aus der Mitte verschoben.
+     macOS mit Overlay-Scrollbars ist davon ohnehin nicht betroffen. */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -249,117 +257,7 @@ body:not(.has-hero) main,
   margin: 0;
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.project-card {
-  background-color: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 25px;
-  transition:
-    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-  display: block;
-  cursor: pointer;
-}
-
-.project-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-}
-
-.project-img-placeholder {
-  position: relative;
-  height: 200px;
-  background-color: #222;
-  background-size: cover;
-  background-position: center;
-  border-radius: 6px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.project-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.project-card:hover .project-overlay {
-  opacity: 1;
-}
-
-.play-icon {
-  width: 48px;
-  height: 48px;
-  background: #ffffff;
-  color: #0d0d0d;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  padding-left: 3px;
-  transition: transform 0.2s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.project-card:hover .play-icon {
-  transform: scale(1.1);
-}
-
-.project-card h3 {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-}
-
-.project-card p {
-  font-family: "Barlow Condensed", sans-serif;
-  color: #a7a7a7;
-  font-size: 1rem;
-}
-
-.project-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 15px;
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1rem;
-}
-
-.arrow {
-  display: inline-block;
-  color: var(--accent-violet);
-  transition: transform 0.2s ease;
-}
-
-.project-card:hover .arrow {
-  transform: translateX(5px);
-}
-
-/* ─── ÜBER MICH & EQUIPMENT ─── */
+/* ─── ÜBER MICH ─── */
 .about-text {
   max-width: 800px;
   margin: 0 auto 60px auto;
@@ -367,56 +265,6 @@ body:not(.has-hero) main,
   font-family: "Barlow Condensed", sans-serif;
   font-size: 1.2rem;
   color: #cccccc;
-}
-
-.equipment-container {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 50px;
-}
-
-.equipment-container h3 {
-  text-align: center;
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  font-size: 1.9rem;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.gear-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-}
-
-.gear-item {
-  background-color: #0d0d0d;
-  padding: 25px;
-  border-radius: 6px;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.gear-item i {
-  font-size: 2.5rem;
-  color: #b3b3b3;
-  margin-bottom: 15px;
-}
-
-.gear-item h4 {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-  font-size: 1.3rem;
-}
-
-.gear-item p {
-  font-family: "Barlow Condensed", sans-serif;
-  color: #8c8c8c;
-  font-size: 0.95rem;
 }
 
 /* ─── KONTAKT FORMULAR ─── */
@@ -530,119 +378,10 @@ select {
   box-shadow: none !important;
 }
 
-/* ─── COLOR GRADING SLIDER ─── */
-.grading-labels-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto 12px auto;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.grading-label-top {
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #aaaaaa;
-  text-transform: uppercase;
-}
-
-.grading-slider {
-  position: relative;
-  display: grid;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  aspect-ratio: 3024 / 1660;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  cursor: ew-resize;
-  user-select: none;
-  touch-action: pan-y;
-  line-height: 0;
-  --slider-pos: 43%;
-}
-
-.grading-slider img {
-  grid-area: 1 / 1;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  pointer-events: none;
-  margin: 0;
-  padding: 0;
-}
-
-.grading-slider img.grading-before {
-  z-index: 2;
-  clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
-}
-
-.grading-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--slider-pos);
-  width: 3px;
-  background-color: #ffffff;
-  transform: translateX(-50%);
-  cursor: ew-resize;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.grading-handle::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -20px;
-  right: -20px;
-}
-
-.grading-handle i {
-  background-color: #ffffff;
-  color: #0d0d0d;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-}
-
-.grading-label {
-  position: absolute;
-  top: 15px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.grading-label-before {
-  left: 15px;
-}
-.grading-label-after {
-  right: 15px;
-}
+/* ─── COLOR GRADING SLIDER ───
+   Wird ausschliesslich von run.html verwendet – alle .grading-*-Regeln
+   liegen komplett dort (siehe run.html eigenes <style>), nicht mehr
+   aufgeteilt zwischen hier und der Seite. */
 
 /* ─── PROJEKT-DETAILSEITE ─── */
 
@@ -716,31 +455,6 @@ select {
   letter-spacing: 0.5px;
 }
 
-.project-large-banner {
-  width: 100%;
-  height: 450px;
-  border-radius: 8px;
-  background-color: #1a1a1a;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-family: "Anton", sans-serif;
-  font-size: 3rem;
-  color: #444;
-  margin-bottom: 60px;
-}
-
-.project-large-banner span {
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
 .project-info-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -753,119 +467,59 @@ select {
   margin-bottom: 15px;
 }
 
-.info-sidebar {
-  background-color: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 30px;
-  align-self: start;
-}
-
-.info-sidebar h3 {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  font-size: 1.25rem;
-  letter-spacing: 1px;
-}
-
-.info-sidebar ul {
-  list-style: none;
-}
-
-.info-sidebar li {
-  font-family: "Barlow Condensed", sans-serif;
-  margin-bottom: 14px;
-  color: #cccccc;
-  font-size: 1rem;
-}
-
-.info-sidebar li strong {
-  display: block;
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--accent-blue);
-  margin-bottom: 2px;
-}
-
-
-
-/* ─── COLOR GRADING CARD ─── */
-.grading-card {
-  margin-top: 24px;
-  padding: 20px;
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.25);
-  border-radius: 12px;
-  text-align: center;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-}
-
-.grading-card:hover {
-  border-color: rgba(139, 92, 246, 0.5);
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
-  transform: translateY(-2px);
-}
-
-.grading-card-icon {
-  width: 44px;
-  height: 44px;
-  background: rgba(139, 92, 246, 0.15);
-  color: #8b5cf6;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px auto;
-  font-size: 1.1rem;
-}
-
-.grading-card h4 {
-  font-family: "Anton", sans-serif;
-  font-weight: 400;
-  margin: 0 0 6px 0;
-  font-size: 1.15rem;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.grading-card p {
-  font-family: "Barlow Condensed", sans-serif;
-  margin: 0 0 16px 0;
-  font-size: 0.9rem;
-  color: #aaaaaa;
-  line-height: 1.45;
-}
-
-.grading-card-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+/* ─── RECHTLICHE SEITEN (IMPRESSUM & DATENSCHUTZ) ───
+   War bisher auf beiden Seiten fast wortgleich als eigener <style>-Block
+   dupliziert (inkl. eines seiteneigenen html/body/img-Resets, der bereits
+   durch die allgemeinen Regeln oben abgedeckt ist). */
+.legal-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 20px 60px 20px;
+  line-height: 1.7;
+  box-sizing: border-box;
   width: 100%;
-  padding: 10px 16px;
-  background: #8b5cf6;
-  color: #ffffff !important;
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  border-radius: 8px;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
-.grading-card-btn:hover {
-  background: #7c3aed;
-  transform: translateY(-1px);
+.legal-content h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  margin-bottom: 25px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.legal-content h2 {
+  font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #fff;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.legal-content h3 {
+  font-size: clamp(1.05rem, 3vw, 1.2rem);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.legal-content p,
+.legal-content li {
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+.legal-content ul {
+  padding-left: 20px;
+}
+
+@media (max-width: 640px) {
+  .legal-content {
+    padding-top: 90px;
+  }
 }
 
 /* ─── SITE FOOTER ─── */
@@ -882,6 +536,11 @@ select {
   font-family: "Barlow Condensed", sans-serif;
   color: #888;
   font-size: 0.9rem;
+  /* Hält den Footer über den fixed position:fixed Hero-Hintergrundvideos
+     (immer z-index:0) – war bisher auf run/drone/musik/urbnvibe.html
+     einzeln (mit leicht unterschiedlichen Werten) dupliziert. */
+  position: relative;
+  z-index: 10;
 }
 
 .site-footer .footer-left,
@@ -910,15 +569,6 @@ select {
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 24px;
-}
-
-.section-subtitle {
-  font-family: "Barlow Condensed", sans-serif;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  color: #86868b;
 }
 
 .section-title-left {
@@ -1242,10 +892,6 @@ section.active {
   .project-header h1 {
     font-size: 2.1rem;
   }
-  .project-large-banner {
-    height: 200px;
-    margin-bottom: 35px;
-  }
 
   .project-info-grid {
     grid-template-columns: 1fr;
@@ -1379,77 +1025,6 @@ section.active {
   line-height: 1.5;
   margin-bottom: 30px;
   letter-spacing: 0.5px;
-}
-
-/* "ZURÜCK ZUR STARTSEITE" BUTTON (Exakt gleicher Look & Hover) */
-.error-container .btn-pill {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  align-self: center !important;
-  padding: 12px 34px !important;
-  border-radius: 9999px !important;
-
-  font-family: "Barlow Condensed", sans-serif !important;
-  font-size: 16px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.5px !important;
-  text-transform: uppercase !important;
-  text-decoration: none !important;
-  cursor: pointer !important;
-
-  /* Apple Frosted Glass / Blur Effekt (6px) */
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  background-image: none !important;
-  backdrop-filter: blur(6px) !important;
-  -webkit-backdrop-filter: blur(6px) !important;
-
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-
-  /* Alte Effekte komplett blockieren */
-  box-shadow: none !important;
-  transform: none !important;
-  filter: none !important;
-  outline: none !important;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    backdrop-filter 0.2s ease !important;
-}
-
-.error-container .btn-pill::before,
-.error-container .btn-pill::after {
-  display: none !important;
-  content: none !important;
-}
-
-.error-container .btn-pill:hover {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-  backdrop-filter: blur(0px) !important;
-  -webkit-backdrop-filter: blur(0px) !important;
-  color: #000000 !important;
-  border-color: #ffffff !important;
-
-  transform: none !important;
-  box-shadow: none !important;
-  filter: none !important;
-}
-
-.error-container .btn-pill:active {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-.error-container .btn-pill i {
-  font-size: 0.95rem !important;
-  color: inherit !important;
 }
 
 .gradient-text {
