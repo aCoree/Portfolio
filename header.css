@@ -11,6 +11,12 @@
   --second-nav-height: 44px;
   --nav-text-idle: rgba(255, 255, 255, 0.55);
   --nav-text-active: #ffffff;
+  /* EINE Stelle für die Dicke ALLER Navigationslinks (Hauptheader,
+     Second Header, Untermenüs, Mobile-Menü) – dieselbe Variable wird
+     unten bei .nav-center a / .nav-expand-link / .mobile-nav-link /
+     .second-navbar-link referenziert, damit sie garantiert überall
+     exakt gleich dünn sind. */
+  --nav-font-weight: 400;
 
   /* Einheitliche, VOLL DECKENDE Header-Hintergrundfarbe für Main Header,
      Second Header, die Untermenü-/Such-Erweiterung UND das Mobile Menu:
@@ -117,8 +123,8 @@ body.has-second-header .navbar {
 .logo-mark {
   position: relative;
   display: inline-block;
-  height: 41px;
-  width: 41px;
+  height: 48px;
+  width: 48px;
   overflow: hidden;
   vertical-align: middle;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -136,7 +142,7 @@ body.has-second-header .navbar {
 }
 
 .logo:hover .logo-mark {
-  width: 60px;
+  width: 70px;
 }
 
 /* Zurück-Pfeil, der auf tieferen Mobile-Menü-Ebenen an die Stelle des Logos
@@ -173,7 +179,7 @@ body.has-second-header .navbar {
   padding: 8px 0;
   font-family: "Barlow Condensed", sans-serif;
   font-size: 1.08rem;
-  font-weight: 450;
+  font-weight: var(--nav-font-weight);
   text-transform: uppercase;
   letter-spacing: 1.4px;
   color: var(--nav-text-idle);
@@ -214,7 +220,7 @@ body.has-second-header .navbar {
   border-radius: 50%;
   position: relative;
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #ffffff;
   color: #ffffff;
   opacity: 0.8;
   font-size: 1rem;
@@ -338,7 +344,7 @@ body.has-second-header .navbar {
 .nav-expand-link {
   font-family: "Barlow Condensed", sans-serif;
   font-size: 0.94rem;
-  font-weight: 450;
+  font-weight: var(--nav-font-weight);
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--nav-text-idle);
@@ -638,7 +644,7 @@ body.has-second-header .navbar {
    feste Rahmen. */
 .mobile-menu-levels {
   position: absolute;
-  top: 150px;
+  top: 100px;
   left: 24px;
   right: 24px;
   display: grid;
@@ -688,7 +694,7 @@ body.has-second-header .navbar {
      bleiben wie bisher (eigene Mobile-Größenordnung). */
   font-family: "Barlow Condensed", sans-serif;
   font-size: 1.34rem;
-  font-weight: 450;
+  font-weight: var(--nav-font-weight);
   letter-spacing: 1.5px;
   text-transform: uppercase;
   /* Im Mobile Header immer volles Weiß statt der gedimmten Desktop-Idle-
@@ -913,7 +919,7 @@ body.menu-open {
   padding: 6px 0;
   font-family: "Barlow Condensed", sans-serif;
   font-size: 0.9rem;
-  font-weight: 450;
+  font-weight: var(--nav-font-weight);
   text-transform: uppercase;
   letter-spacing: 1.1px;
   color: var(--nav-text-idle);

@@ -21,6 +21,7 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Inter
@@ -534,36 +535,10 @@
             }
         }
 
-        /* ─── SCROLL POP-IN ANIMATION ─── */
-        .az-reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-
-        .az-reveal.az-reveal-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .az-reveal[data-az-delay="1"] { transition-delay: 0.08s; }
-        .az-reveal[data-az-delay="2"] { transition-delay: 0.16s; }
-        .az-reveal[data-az-delay="3"] { transition-delay: 0.24s; }
-        .az-reveal[data-az-delay="4"] { transition-delay: 0.32s; }
-
-        @media (prefers-reduced-motion: reduce) {
-            .az-reveal {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-        }
     </style>
 </head>
 
-<body class="transparent-header">
+<body class="transparent-header header-always-visible">
 
     <section id="home" class="hero section">
 
@@ -579,7 +554,7 @@
             <p class="az-reveal" data-az-delay="1" data-i18n="index.heroSubtitle">Filmmaker & Mediamatiker aus der Schweiz</p>
         </div>
 
-        <div class="scroll-down-btn" onclick="scrollPastHero()">
+        <div class="hero-scroll-indicator" onclick="scrollPastHero()">
             <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </div>
@@ -718,50 +693,9 @@
 
     <script src="header.js"></script>
 
+    <script src="az-reveal.js"></script>
+
     <script>
-        // Fade-In Animation für Sections
-        const fadeObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.05 });
-
-        document.querySelectorAll('section').forEach((element) => {
-            fadeObserver.observe(element);
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('section').forEach((element) => {
-                const rect = element.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    element.classList.add('active');
-                }
-            });
-        });
-
-        // Pop-In beim Scrollen
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('az-reveal-visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.az-reveal').forEach((element) => {
-                const rect = element.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    element.classList.add('az-reveal-visible');
-                } else {
-                    revealObserver.observe(element);
-                }
-            });
-        });
-
         // Scrollspy
         const allowedSections = ['home', 'ueber-mich', 'kontakt'];
         const sections = document.querySelectorAll('section[id]');

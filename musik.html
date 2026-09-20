@@ -17,6 +17,7 @@
 
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -168,12 +169,18 @@
         }
 
         .musik-intro-text {
-            font-family: inherit;
-            font-size: 19px !important;
+            font-family: var(--font-body) !important;
+            font-size: 16px !important;
             font-weight: 400 !important;
-            line-height: 1.6 !important;
-            opacity: 0.8 !important;
+            line-height: 1.8 !important;
             margin-bottom: 20px !important;
+        }
+
+        /* Die Ruhe-Opacity (0.8) greift erst NACH dem az-reveal-Einblenden
+           (siehe az-reveal.css) – sonst würde sie den Start-Zustand
+           (opacity:0) des Pop-up-Effekts überschreiben. */
+        .musik-intro-text.az-reveal-visible {
+            opacity: 0.8;
         }
 
         .musik-intro-highlights {
@@ -427,8 +434,6 @@
 
         .musik-media {
             display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
             position: relative !important;
             width: 100% !important;
             min-width: 0 !important;
@@ -458,8 +463,6 @@
 
         .musik-info-label {
             display: block !important;
-            visibility: visible !important;
-            opacity: 0.6 !important;
             margin: 0 0 14px 0 !important;
             padding: 0 !important;
             font-family: inherit;
@@ -471,10 +474,12 @@
             color: inherit !important;
         }
 
+        .musik-info-label.az-reveal-visible {
+            opacity: 0.6;
+        }
+
         .musik-info h2 {
             display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
             margin: 0 0 20px 0 !important;
             padding: 0 !important;
             font-family: 'Anton', sans-serif !important;
@@ -488,15 +493,17 @@
 
         .musik-info-description {
             display: block !important;
-            visibility: visible !important;
-            opacity: 0.8 !important;
             margin: 0 0 30px 0 !important;
             padding: 0 !important;
-            font-family: inherit;
-            font-size: 17px !important;
+            font-family: var(--font-body) !important;
+            font-size: 15px !important;
             font-weight: 400 !important;
-            line-height: 1.6 !important;
+            line-height: 1.8 !important;
             color: inherit !important;
+        }
+
+        .musik-info-description.az-reveal-visible {
+            opacity: 0.8;
         }
 
         .musik-video {
@@ -550,7 +557,7 @@
             }
 
             .musik-intro-text {
-                font-size: 17px !important;
+                font-size: 15px !important;
             }
 
             .musik-two-column,
@@ -615,22 +622,22 @@
     <main id="musik-page" class="project-detail-page">
 
         <div class="musik-intro" id="musik-intro">
-            <span class="musik-info-label" data-i18n="musik.introLabel">Meine Musik</span>
-            <h1 data-i18n="musik.navIntro">LEIDENSCHAFT AM KLAVIER</h1>
+            <span class="musik-info-label az-reveal" data-i18n="musik.introLabel">Meine Musik</span>
+            <h1 class="az-reveal" data-az-delay="1" data-i18n="musik.navIntro">LEIDENSCHAFT AM KLAVIER</h1>
 
-            <p class="musik-intro-text" data-i18n="musik.introText1">
+            <p class="musik-intro-text az-reveal" data-az-delay="2" data-i18n="musik.introText1">
                 Klavier spielen ist für mich der beste Weg, Emotionen und Geschichten ohne Worte
                 auszudrücken. Ich habe vor einigen Jahren angefangen, mir das Klavierspielen selbst
                 beizubringen – motiviert von der Faszination für Film-Soundtracks wie "Interstellar" aber
                 auch moderne Klavierlieder.
             </p>
-            <p class="musik-intro-text" data-i18n="musik.introText2">
+            <p class="musik-intro-text az-reveal" data-az-delay="2" data-i18n="musik.introText2">
                 Meine Videos nehme ich mit viel Liebe zum Detail auf: Vom Ausarbeiten der Arrangements bis
                 hin zum visuellen Setup versuche ich, jedem Stück seinen eigenen, passenden Vibe zu
                 verleihen, durch Licht und Schatten. Hier findest du eine Auswahl meiner liebsten Cover.
             </p>
 
-            <div class="musik-intro-highlights">
+            <div class="musik-intro-highlights az-reveal" data-az-delay="3">
                 <div class="intro-highlight-item">
                     <span class="intro-highlight-title" data-i18n="musik.sincePiano">Am Klavier seit</span>
                     <span class="intro-highlight-value">2020</span>
@@ -655,18 +662,18 @@
 
             <section class="musik-section themed-bg theme-starwars" id="song-force-theme">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/RECdpPv4btI" title="Klaviervideo 1"
+                            <iframe src="https://www.youtube.com/embed/RECdpPv4btI?enablejsapi=1" title="Klaviervideo 1"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">JOHN WILLIAMS</span>
-                        <h2 class="gradient-title">THE FORCE THEME - STAR WARS</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">JOHN WILLIAMS</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">THE FORCE THEME - STAR WARS</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -674,13 +681,13 @@
             <section class="musik-section themed-bg theme-inception" id="song-inception">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">HANS ZIMMER</span>
-                        <h2 class="gradient-title">TIME - INCEPTION</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">HANS ZIMMER</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">TIME - INCEPTION</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/5K1FmwRreYM" title="Klaviervideo Inception"
+                            <iframe src="https://www.youtube.com/embed/5K1FmwRreYM?enablejsapi=1" title="Klaviervideo Inception"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
@@ -691,18 +698,18 @@
 
             <section class="musik-section themed-bg theme-interstellar" id="song-interstellar">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/12h31h3676767" title="Klaviervideo 2"
+                            <iframe src="https://www.youtube.com/embed/12h31h3676767?enablejsapi=1" title="Klaviervideo 2"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">HANS ZIMMER</span>
-                        <h2 class="gradient-title">INTERSTELLAR</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">HANS ZIMMER</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">INTERSTELLAR</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -710,13 +717,13 @@
             <section class="musik-section themed-bg theme-pirates" id="song-pirates">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">KLAUS BADELT</span>
-                        <h2 class="gradient-title">PIRATES OF THE CARIBBEAN</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">KLAUS BADELT</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">PIRATES OF THE CARIBBEAN</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/tKd6txfWITo" title="Klaviervideo 3"
+                            <iframe src="https://www.youtube.com/embed/tKd6txfWITo?enablejsapi=1" title="Klaviervideo 3"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
@@ -727,18 +734,18 @@
 
             <section class="musik-section themed-bg theme-avengers" id="song-avengers">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/UVepCHof_cQ" title="Klaviervideo Avengers"
+                            <iframe src="https://www.youtube.com/embed/UVepCHof_cQ?enablejsapi=1" title="Klaviervideo Avengers"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">ALAN SILVESTRI</span>
-                        <h2 class="gradient-title">AVENGERS MAIN THEME</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">ALAN SILVESTRI</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">AVENGERS MAIN THEME</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -746,13 +753,13 @@
             <section class="musik-section themed-bg theme-topgun" id="song-topgun">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">HAROLD FALTERMEYER</span>
-                        <h2 class="gradient-title">TOP GUN: MAVERICK</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">HAROLD FALTERMEYER</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">TOP GUN: MAVERICK</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo Top Gun: Maverick"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -764,18 +771,18 @@
 
             <section class="musik-section themed-bg theme-victory" id="song-victory">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER" title="Klaviervideo Victory"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1" title="Klaviervideo Victory"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">TWO STEPS FROM HELL</span>
-                        <h2 class="gradient-title">VICTORY</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">TWO STEPS FROM HELL</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">VICTORY</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -783,13 +790,13 @@
             <section class="musik-section themed-bg theme-wildflower" id="song-wildflower">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">BILLIE EILISH</span>
-                        <h2 class="gradient-title">WILDFLOWER</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">BILLIE EILISH</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">WILDFLOWER</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo Wildflower"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -801,9 +808,9 @@
 
             <section class="musik-section themed-bg theme-notimetodie" id="song-notimetodie">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo No Time To Die"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -811,9 +818,9 @@
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">BILLIE EILISH</span>
-                        <h2 class="gradient-title">NO TIME TO DIE</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">BILLIE EILISH</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">NO TIME TO DIE</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -821,13 +828,13 @@
             <section class="musik-section themed-bg theme-experience" id="song-experience">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">LUDOVICO EINAUDI</span>
-                        <h2 class="gradient-title">EXPERIENCE</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">LUDOVICO EINAUDI</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">EXPERIENCE</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo Experience"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -839,9 +846,9 @@
 
             <section class="musik-section themed-bg theme-sadnessandsorrow" id="song-sadnessandsorrow">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo Sadness and Sorrow"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -849,9 +856,9 @@
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">TAYLOR DAVIS</span>
-                        <h2 class="gradient-title">SADNESS AND SORROW</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">TAYLOR DAVIS</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">SADNESS AND SORROW</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -859,13 +866,13 @@
             <section class="musik-section themed-bg theme-f1" id="song-f1">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">HANS ZIMMER</span>
-                        <h2 class="gradient-title">F1 - MAIN THEME</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">HANS ZIMMER</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">F1 - MAIN THEME</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo F1 - Main Theme"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -877,9 +884,9 @@
 
             <section class="musik-section themed-bg theme-remember" id="song-remember">
                 <div class="musik-two-column">
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo Remember - The Lion King"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -887,9 +894,9 @@
                         </div>
                     </div>
                     <div class="musik-info">
-                        <span class="musik-info-label">HANS ZIMMER</span>
-                        <h2 class="gradient-title">REMEMBER - THE LION KING</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">HANS ZIMMER</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">REMEMBER - THE LION KING</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -897,13 +904,13 @@
             <section class="musik-section themed-bg theme-bohemianrhapsody" id="song-bohemianrhapsody">
                 <div class="musik-two-column reverse">
                     <div class="musik-info">
-                        <span class="musik-info-label">QUEEN</span>
-                        <h2 class="gradient-title">BOHEMIAN RHAPSODY</h2>
-                        <p class="musik-info-description"></p>
+                        <span class="musik-info-label az-reveal">QUEEN</span>
+                        <h2 class="gradient-title az-reveal" data-az-delay="1">BOHEMIAN RHAPSODY</h2>
+                        <p class="musik-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="musik-media">
+                    <div class="musik-media az-reveal">
                         <div class="musik-video">
-                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER?enablejsapi=1"
                                 title="Klaviervideo Bohemian Rhapsody"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
@@ -994,7 +1001,8 @@
     </script>
 
     <!-- ─── ZENTRALE SCROLL-ANIMATION EINBINDEN ─── -->
-    <script src="scroll-reveal.js"></script>
+    <script src="az-reveal.js"></script>
+    <script src="youtube-single-play.js"></script>
 
 </body>
 

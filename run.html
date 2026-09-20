@@ -11,6 +11,7 @@
 
     <!-- ZENTRALES STYLESHEET -->
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -19,6 +20,30 @@
             border-radius: 12px !important;
             overflow: hidden !important;
         }
+
+        /* ─── INFO ICONS: IMMER WEISS & VERSPIELT ─── */
+        .info-icons .info-icon {
+            /* Überschreibt Hover-Effekte aus der style.css: immer weiss und voll sichtbar */
+            filter: brightness(0) invert(1) !important;
+            opacity: 1 !important;
+            transition: none !important; /* Entfernt die Animation komplett */
+        }
+
+        /* Hover-Status sicherheitshalber komplett neutralisieren */
+        .info-icons:hover .info-icon,
+        .info-icon:hover {
+            filter: brightness(0) invert(1) !important;
+            opacity: 1 !important;
+        }
+
+        /* Verspielte, "unperfekte" Ausrichtung (menschlicher Look) */
+        .info-block-left .info-icon:nth-child(1) { transform: rotate(-8deg) translateY(4px) !important; }
+        .info-block-left .info-icon:nth-child(2) { transform: rotate(5deg) translateY(-2px) !important; }
+        .info-block-left .info-icon:nth-child(3) { transform: rotate(-4deg) translateY(6px) !important; }
+
+        .info-block-right .info-icon:nth-child(1) { transform: rotate(7deg) translateY(3px) !important; }
+        .info-block-right .info-icon:nth-child(2) { transform: rotate(-6deg) translateY(-4px) !important; }
+        .info-block-right .info-icon:nth-child(3) { transform: rotate(9deg) translateY(5px) !important; }
 
         /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE (GPU & MOBILE OPTIMIERT) ─── */
         .bg-video-container {
@@ -96,9 +121,6 @@
             -webkit-transform: translateZ(0);
         }
 
-        /* .hero-section: zentral in style.css definiert (identisch auf
-           allen Hero-Video-Seiten), hier bewusst nicht mehr dupliziert. */
-
         /* ─── SEITENSPEZIFISCHER TRAILER START BUTTON ─── */
         .start-trailer-btn {
             position: fixed;
@@ -149,13 +171,6 @@
             background: transparent;
         }
 
-        /* footer{} kommt bereits zentral aus style.css (.site-footer).
-           Die frühere lokale background-color:#0d0d0d hier hatte ohnehin
-           nie eine Wirkung: eine Klassen-Selektor-Regel (.site-footer)
-           schlägt eine Element-Selektor-Regel (footer) in der Spezifität
-           immer, unabhängig von der Ladereihenfolge – style.css's
-           .site-footer-Hintergrund hat also schon immer gewonnen. */
-
         .heading-violet {
             color: #8b7bd8;
         }
@@ -186,10 +201,6 @@
             text-transform: uppercase;
         }
 
-        /* Diese Regel lebte bisher in Teilen (max-width/aspect-ratio/border/
-           cursor) auch in style.css und wurde hier nur per Kaskade
-           überschrieben/ergänzt – jetzt an einem einzigen Ort vollständig
-           zusammengeführt (style.css hat keine .grading-*-Regeln mehr). */
         .grading-slider {
             position: relative;
             display: grid;
@@ -239,8 +250,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Unsichtbarer, breiterer Trefferbereich für den Handle (leichteres
-           Greifen beim Ziehen) – zog bisher unbemerkt aus style.css mit ein. */
         .grading-handle::after {
             content: "";
             position: absolute;
@@ -268,8 +277,6 @@
         }
 
         /* ─── MOBILE ANPASSUNGEN ─── */
-        /* .hero-section-Padding bei schmaler Breite kommt bereits zentral aus
-           style.css (@media max-width:900px), deckt dieses 768px auch ab. */
         @media (max-width: 768px) {
             .start-trailer-btn {
                 padding: 11px 26px;
@@ -312,43 +319,57 @@
     <section id="content" class="section project-detail-page">
         <div class="container">
             <div class="project-header">
-                <h1 data-i18n="run.title">RUN - Ein Kurzfilm</h1>
-                <p class="tagline" data-i18n="run.tagline">Ein cinematischer action Kurzfilm im Seeland der Schweiz.</p>
+                <h1 class="az-reveal" data-i18n="run.title">RUN - Ein Kurzfilm</h1>
+                <p class="tagline az-reveal" data-az-delay="1" data-i18n="run.tagline">Ein cinematischer action Kurzfilm im Seeland der Schweiz.</p>
             </div>
 
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/fetBu3gqFOM" title="RUN – Kurzfilm" data-i18n-attr="title:run.videoTitle" frameborder="0"
+            <div class="video-wrapper az-reveal">
+                <iframe src="https://www.youtube.com/embed/fetBu3gqFOM?enablejsapi=1" title="RUN – Kurzfilm" data-i18n-attr="title:run.videoTitle" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
                 </iframe>
             </div>
 
             <div class="project-info-grid">
-                <div class="info-content info-content-left">
-                    <h2 class="heading-violet" data-i18n="run.projectHeading">DAS PROJEKT & DIE UMSETZUNG</h2>
-                    <p data-i18n="run.projectText">RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt
-                        bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde
-                        genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action
-                        ist!</p>
+                <div class="info-block info-block-left">
+                    <div class="info-content info-content-left">
+                        <h2 class="heading-violet az-reveal" data-i18n="run.projectHeading">DAS PROJEKT & DIE UMSETZUNG</h2>
+                        <p class="az-reveal" data-az-delay="1" data-i18n="run.projectText">RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt
+                            bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde
+                            genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action
+                            ist!</p>
+                    </div>
+                    <div class="info-icons az-reveal" data-az-delay="2">
+                        <img src="icons/umsetzung1.png" alt="" class="info-icon">
+                        <img src="icons/umsetzung2.png" alt="" class="info-icon">
+                        <img src="icons/umsetzung3.png" alt="" class="info-icon">
+                    </div>
                 </div>
 
-                <div class="info-content info-content-right">
-                    <h2 class="heading-violet" data-i18n="run.navBts">BEHIND THE SCENES</h2>
-                    <p data-i18n="run.btsText">
-                        Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute
-                        Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die
-                        kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
-                    </p>
-                    <a href="bts.html" class="info-content-link">
-                        <span data-i18n="run.btsLinkText">Mehr Einblicke im Behind the Scenes</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+                <div class="info-block info-block-right">
+                    <div class="info-icons az-reveal" data-az-delay="2">
+                        <img src="icons/bts1.png" alt="" class="info-icon">
+                        <img src="icons/bts2.png" alt="" class="info-icon">
+                        <img src="icons/bts3.png" alt="" class="info-icon">
+                    </div>
+                    <div class="info-content info-content-right">
+                        <h2 class="heading-violet az-reveal" data-i18n="run.navBts">BEHIND THE SCENES</h2>
+                        <p class="az-reveal" data-az-delay="1" data-i18n="run.btsText">
+                            Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute
+                            Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die
+                            kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
+                        </p>
+                        <a href="bts.html" class="info-content-link az-reveal" data-az-delay="3">
+                            <span data-i18n="run.btsLinkText">Mehr Einblicke im Behind the Scenes</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div id="grading" class="grading-section">
-                <h2 class="section-title" data-i18n="run.navGrading">Color Grading</h2>
-                <p style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: #cccccc;" data-i18n="run.gradingSubtitle">
+                <h2 class="section-title az-reveal" data-i18n="run.navGrading">Color Grading</h2>
+                <p class="az-reveal" data-az-delay="1" style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: #cccccc;" data-i18n="run.gradingSubtitle">
                     Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
                 </p>
 
@@ -516,8 +537,9 @@
     </script>
 
     <!-- ─── ZENTRALE SKRIPTE ─── -->
-    <script src="scroll-reveal.js"></script>
+    <script src="az-reveal.js"></script>
     <script src="header.js"></script>
+    <script src="youtube-single-play.js"></script>
 </body>
 
 </html>

@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -90,7 +91,13 @@
 
         .lego-dark-wrapper .lego-info-description {
             color: #ffffff !important;
-            opacity: 0.9 !important;
+        }
+
+        /* Die Ruhe-Opacity (0.9) greift erst NACH dem az-reveal-Einblenden
+           (siehe az-reveal.css) – sonst würde sie den Start-Zustand
+           (opacity:0) des Pop-up-Effekts überschreiben. */
+        .lego-dark-wrapper .lego-info-description.az-reveal-visible {
+            opacity: 0.9;
         }
 
         .lego-dark-wrapper .lego-section {
@@ -678,10 +685,10 @@
             display: block !important;
             margin: 0 0 30px 0 !important;
             padding: 0 !important;
-            font-family: 'Barlow Condensed', sans-serif !important;
-            font-size: 16px !important;
+            font-family: var(--font-body) !important;
+            font-size: 15px !important;
             font-weight: 400 !important;
-            line-height: 1.75 !important;
+            line-height: 1.8 !important;
         }
 
         /* =====================================================
@@ -694,11 +701,18 @@
             font-size: 12px !important;
             font-weight: 400 !important;
             letter-spacing: 1px !important;
-            opacity: 0.8 !important;
+        }
+
+        .lego-channel-btn.az-reveal-visible {
+            opacity: 0.8;
         }
 
         .lego-channel-btn:hover {
             opacity: 1 !important;
+            background: rgb(234, 51, 35) !important;
+            background-color: rgb(234, 51, 35) !important;
+            border-color: rgb(234, 51, 35) !important;
+            color: #ffffff !important;
         }
 
         .lego-white-wrapper .lego-info-label {
@@ -711,7 +725,10 @@
 
         .lego-white-wrapper .lego-info-description {
             color: #000000 !important;
-            opacity: 0.9 !important;
+        }
+
+        .lego-white-wrapper .lego-info-description.az-reveal-visible {
+            opacity: 0.9;
         }
 
         /* =====================================================
@@ -991,13 +1008,13 @@
         <div class="lego-container">
             <section class="lego-section">
                 <div class="lego-two-column">
-                    <div class="lego-media">
+                    <div class="lego-media az-reveal">
                         <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio" class="lego-card-image">
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label" data-i18n="lego.aboutLabel">01 / YouTube Channel</span>
-                        <h2 data-i18n="lego.navAbout">Über den Kanal</h2>
-                        <p class="lego-info-description" data-i18n-html="lego.aboutTextHtml">
+                        <span class="lego-info-label az-reveal" data-i18n="lego.aboutLabel">01 / YouTube Channel</span>
+                        <h2 class="az-reveal" data-az-delay="1" data-i18n="lego.navAbout">Über den Kanal</h2>
+                        <p class="lego-info-description az-reveal" data-az-delay="2" data-i18n-html="lego.aboutTextHtml">
                             Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video.
                             Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache
                             widmen.
@@ -1016,7 +1033,7 @@
                             Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut
                             und kann es mit Stolz zeigen.
                         </p>
-                        <a href="https://www.youtube.com/@legofamilystudio" class="btn lego-channel-btn" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.youtube.com/@legofamilystudio" class="btn lego-channel-btn az-reveal" data-az-delay="3" target="_blank" rel="noopener noreferrer">
                             <span data-i18n="lego.watchChannel">KANAL ANSEHEN</span>
                         </a>
                     </div>
@@ -1040,13 +1057,13 @@
             <section class="lego-section" id="lego-video-corona">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
-                        <h2>Corona LEGO Time</h2>
-                        <p class="lego-info-description"></p>
+                        <span class="lego-info-label az-reveal" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2 class="az-reveal" data-az-delay="1">Corona LEGO Time</h2>
+                        <p class="lego-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="lego-media">
+                    <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/_BS63yIWLSM"
+                            <iframe src="https://www.youtube.com/embed/_BS63yIWLSM?enablejsapi=1"
                                 title="LEGO Family Studio - Action Brickfilm"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
@@ -1059,18 +1076,18 @@
 
             <section class="lego-section" id="lego-video-street-race">
                 <div class="lego-two-column">
-                    <div class="lego-media">
+                    <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/TY2ys0R0fg0"
+                            <iframe src="https://www.youtube.com/embed/TY2ys0R0fg0?enablejsapi=1"
                                 title="LEGO Family Studio - Build & Showcase"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </div>
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
-                        <h2>LEGO Street Race</h2>
-                        <p class="lego-info-description"></p>
+                        <span class="lego-info-label az-reveal" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2 class="az-reveal" data-az-delay="1">LEGO Street Race</h2>
+                        <p class="lego-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -1080,13 +1097,13 @@
             <section class="lego-section" id="lego-video-hairdresser">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
-                        <h2>LEGO Hairdresser</h2>
-                        <p class="lego-info-description"></p>
+                        <span class="lego-info-label az-reveal" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2 class="az-reveal" data-az-delay="1">LEGO Hairdresser</h2>
+                        <p class="lego-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="lego-media">
+                    <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/LbfMY7M3kZc"
+                            <iframe src="https://www.youtube.com/embed/LbfMY7M3kZc?enablejsapi=1"
                                 title="LEGO Family Studio - Cinematic Short"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
@@ -1099,18 +1116,18 @@
 
             <section class="lego-section" id="lego-video-street-hole">
                 <div class="lego-two-column">
-                    <div class="lego-media">
+                    <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/8mfLECHIH8E"
+                            <iframe src="https://www.youtube.com/embed/8mfLECHIH8E?enablejsapi=1"
                                 title="LEGO Family Studio - LEGO Street Hole"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </div>
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
-                        <h2>LEGO Street Hole</h2>
-                        <p class="lego-info-description"></p>
+                        <span class="lego-info-label az-reveal" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2 class="az-reveal" data-az-delay="1">LEGO Street Hole</h2>
+                        <p class="lego-info-description az-reveal" data-az-delay="2"></p>
                     </div>
                 </div>
             </section>
@@ -1120,13 +1137,13 @@
             <section class="lego-section" id="lego-video-pirate-ship">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
-                        <h2>LEGO Pirate Ship</h2>
-                        <p class="lego-info-description"></p>
+                        <span class="lego-info-label az-reveal" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2 class="az-reveal" data-az-delay="1">LEGO Pirate Ship</h2>
+                        <p class="lego-info-description az-reveal" data-az-delay="2"></p>
                     </div>
-                    <div class="lego-media">
+                    <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/xydyoD4sTT4"
+                            <iframe src="https://www.youtube.com/embed/xydyoD4sTT4?enablejsapi=1"
                                 title="LEGO Family Studio - LEGO Pirate Ship"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
@@ -1215,8 +1232,9 @@
     </script>
 
     <!-- ─── ZENTRALE SKRIPTE ─── -->
-    <script src="scroll-reveal.js"></script>
     <script src="header.js"></script>
+    <script src="youtube-single-play.js"></script>
+    <script src="az-reveal.js"></script>
 </body>
 
 </html>

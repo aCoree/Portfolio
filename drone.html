@@ -15,6 +15,7 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -155,8 +156,6 @@
 
         .urbnvibe-media {
             display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
             position: relative !important;
             width: 100% !important;
             min-width: 0 !important;
@@ -210,8 +209,6 @@
 
         .urbnvibe-info-label {
             display: block !important;
-            visibility: visible !important;
-            opacity: 0.55 !important;
             margin: 0 0 18px 0 !important;
             padding: 0 !important;
             font-size: 13px !important;
@@ -222,10 +219,12 @@
             color: inherit !important;
         }
 
+        .urbnvibe-info-label.az-reveal-visible {
+            opacity: 0.55;
+        }
+
         .urbnvibe-info h2 {
             display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
             margin: 0 0 22px 0 !important;
             padding: 0 !important;
             font-size: clamp(32px, 3.4vw, 46px) !important;
@@ -237,14 +236,16 @@
 
         .urbnvibe-info-description {
             display: block !important;
-            visibility: visible !important;
-            opacity: 0.75 !important;
             margin: 0 0 30px 0 !important;
             padding: 0 !important;
             font-size: 16px !important;
             font-weight: 400 !important;
             line-height: 1.75 !important;
             color: inherit !important;
+        }
+
+        .urbnvibe-info-description.az-reveal-visible {
+            opacity: 0.75;
         }
 
 
@@ -327,9 +328,9 @@
         <section class="urbnvibe-section" id="video-muenchenbuchsee">
             <div class="urbnvibe-two-column">
 
-                <div class="urbnvibe-media">
+                <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-video">
-                        <iframe src="https://www.youtube.com/embed/pE6OSm0zISU" title="Drone Video 1"
+                        <iframe src="https://www.youtube.com/embed/pE6OSm0zISU?enablejsapi=1" title="Drone Video 1"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
@@ -337,9 +338,9 @@
                 </div>
 
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label" data-i18n="drone.label1">01 / Drohnen Videos</span>
-                    <h2 data-i18n="drone.title1">MÜNCHENBUCHSE - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description" data-i18n="drone.text1">
+                    <span class="urbnvibe-info-label az-reveal" data-i18n="drone.label1">01 / Drohnen Videos</span>
+                    <h2 class="az-reveal" data-az-delay="1" data-i18n="drone.title1">MÜNCHENBUCHSE - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description az-reveal" data-az-delay="2" data-i18n="drone.text1">
                         Aufgenommen mit der DJI Air 3S – goldener Himmel, ruhige Momente und Schweizer
                         Schönheit aus der Vogelperspektive.
                     </p>
@@ -353,9 +354,9 @@
         <section class="urbnvibe-section" id="video-finsterhennen">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label" data-i18n="drone.label2">02 / Drohnen Videos</span>
-                    <h2 data-i18n="drone.title2">FINSTERHENNEN - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description" data-i18n="drone.text2">
+                    <span class="urbnvibe-info-label az-reveal" data-i18n="drone.label2">02 / Drohnen Videos</span>
+                    <h2 class="az-reveal" data-az-delay="1" data-i18n="drone.title2">FINSTERHENNEN - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description az-reveal" data-az-delay="2" data-i18n="drone.text2">
                         Während der „Goldenen Stunde“ habe ich filmreife Drohnenaufnahmen der wunderschönen Landschaft
                         von Finsterhennen eingefangen.
                         Dieses Video zeigt die friedliche ländliche Umgebung aus der Vogelperspektive und hebt Natur,
@@ -364,9 +365,9 @@
                         Erlebnis schaffen.
                     </p>
                 </div>
-                <div class="urbnvibe-media">
+                <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-video">
-                        <iframe src="https://www.youtube.com/embed/TpgiEzjr52s" title="Drone Video 2"
+                        <iframe src="https://www.youtube.com/embed/TpgiEzjr52s?enablejsapi=1" title="Drone Video 2"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
@@ -379,18 +380,18 @@
         <!-- VIDEO 3 (Desktop: Video links / Text rechts) -->
         <section class="urbnvibe-section" id="video-kerzers">
             <div class="urbnvibe-two-column">
-                <div class="urbnvibe-media">
+                <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-video">
-                        <iframe src="https://www.youtube.com/embed/uf6SBskgJNk" title="Drone Video 3"
+                        <iframe src="https://www.youtube.com/embed/uf6SBskgJNk?enablejsapi=1" title="Drone Video 3"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
                     </div>
                 </div>
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label" data-i18n="drone.label3">03 / Drohnen Videos</span>
-                    <h2 data-i18n="drone.title3">SONNENBERG, KERZERS - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description" data-i18n="drone.text3">
+                    <span class="urbnvibe-info-label az-reveal" data-i18n="drone.label3">03 / Drohnen Videos</span>
+                    <h2 class="az-reveal" data-az-delay="1" data-i18n="drone.title3">SONNENBERG, KERZERS - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description az-reveal" data-az-delay="2" data-i18n="drone.text3">
                         Cinematic sunset in Switzerland with the DJI Air 3S.
                         The video captures the beauty of the Swiss Seeland Region.
                     </p>
@@ -403,15 +404,15 @@
         <section class="urbnvibe-section" id="video-guemmenen">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label" data-i18n="drone.label4">04 / Drohnen Videos</span>
-                    <h2 data-i18n="drone.title4">GÜMMENEN - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label az-reveal" data-i18n="drone.label4">04 / Drohnen Videos</span>
+                    <h2 class="az-reveal" data-az-delay="1" data-i18n="drone.title4">GÜMMENEN - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description az-reveal" data-az-delay="2">
 
                     </p>
                 </div>
-                <div class="urbnvibe-media">
+                <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-video">
-                        <iframe src="https://www.youtube.com/embed/" title="Drone Video 4"
+                        <iframe src="https://www.youtube.com/embed/?enablejsapi=1" title="Drone Video 4"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>
                         </iframe>
@@ -443,7 +444,8 @@
     </script>
 
     <script src="header.js"></script>
-    <script src="scroll-reveal.js"></script>
+    <script src="az-reveal.js"></script>
+    <script src="youtube-single-play.js"></script>
 
     <!-- ─── SCROLL & VIDEO LOGIK SKRIPT (OPTIMIERT FÜR MOBILE PERFORMANCE) ─── -->
     <script>

@@ -1,0 +1,44 @@
+/* =====================================================================
+   AZ-REVEAL – EINHEITLICHER "POP-UP"-EFFEKT BEIM SCROLLEN
+   =====================================================================
+   Der "clean" Apple-artige Einblendeffekt, ursprünglich aus index.html
+   übernommen: einzelne Elemente (Label, Titel, Text, Bild/Video, Button)
+   schieben sich sanft von unten ein und blenden dabei ein, statt dass
+   eine ganze Sektion auf einmal "aufpoppt". Läuft auf JEDER Seite über
+   genau diese eine Datei + az-reveal.js, damit der Effekt garantiert
+   überall identisch bleibt.
+
+   Einbindung: im <head>, nach style.css:
+       <link rel="stylesheet" href="az-reveal.css">
+   und vor </body>:
+       <script src="az-reveal.js"></script>
+
+   Nutzung: Element die Klasse "az-reveal" geben. Optional
+   data-az-delay="1|2|3|4" für ein gestaffeltes Nacheinander-Einblenden
+   innerhalb derselben Sektion (z.B. Label → Titel → Text → Button). */
+.az-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.az-reveal.az-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.az-reveal[data-az-delay="1"] { transition-delay: 0.08s; }
+.az-reveal[data-az-delay="2"] { transition-delay: 0.16s; }
+.az-reveal[data-az-delay="3"] { transition-delay: 0.24s; }
+.az-reveal[data-az-delay="4"] { transition-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .az-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
 /* ─── GOOGLE FONTS IMPORT ─── */
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,450;0,500;0,600;0,700;1,400&family=Inter:wght@400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,450;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;600;800&display=swap");
 
 /* ─── CSS VARIABLES & ROOT ─── */
 :root {
@@ -10,6 +10,13 @@
     var(--accent-blue),
     var(--accent-violet)
   );
+  /* Fliesstext (Beschreibungen/Absätze, Fusszeile, rechtliche Texte):
+     besser lesbar als die schmale/kondensierte Barlow Condensed, die
+     bewusst nur noch für Titel/Labels/Buttons/Navigation (alles in
+     GROSSBUCHSTABEN) verwendet wird. Ist der body-Standard (siehe
+     unten) – Barlow Condensed wird nur noch dort explizit gesetzt, wo
+     Text in Versalien läuft. */
+  --font-body: "DM Sans", sans-serif;
 }
 
 /* ─── BASIC RESETS & FONTS ─── */
@@ -32,7 +39,7 @@ html {
 }
 
 body {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   background-color: #0d0d0d;
   color: #cbc8c8;
   line-height: 1.6;
@@ -262,8 +269,9 @@ body:not(.has-hero) main,
   max-width: 800px;
   margin: 0 auto 60px auto;
   text-align: center;
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 1.2rem;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.75;
   color: #cccccc;
 }
 
@@ -284,7 +292,7 @@ body:not(.has-hero) main,
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   color: #fff;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
@@ -321,7 +329,7 @@ select {
   align-self: center;
   padding: 12px 34px;
   border-radius: 9999px !important;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -448,20 +456,64 @@ select {
 }
 
 .project-header .tagline {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   color: #cccccc;
   font-size: 1.15rem;
   letter-spacing: 0.5px;
 }
 
+/* Echtes Z-Layout: die beiden Blöcke liegen UNTEREINANDER (nicht
+   nebeneinander in Spalten) und sind jeweils zur gegenüberliegenden
+   Seite ausgerichtet – links block-linksbündig, rechts block-
+   rechtsbündig darunter. Beide dürfen dabei breiter als eine halbe
+   Spalte laufen. */
 .project-info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* .info-block hält Text + Icon-Reihe einer Zeile zusammen. Dank
+   justify-content:space-between wandert der Text an die eine Seite und
+   die Icons füllen automatisch die Lücke auf der anderen – ganz ohne
+   Breiten-/Positions-Berechnung, nur über die DOM-Reihenfolge (Text
+   zuerst = Icons rechts, Icons zuerst = Icons links). */
+.info-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+}
+
+.info-content {
+  width: 100%;
+  max-width: 680px;
+}
+
+.info-icons {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-shrink: 0;
+}
+
+.info-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  opacity: 0.5;
+  transition: opacity 0.25s ease;
+}
+
+.info-icon:hover {
+  opacity: 0.85;
 }
 
 .info-content p {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
   color: #cccccc;
   margin-bottom: 15px;
 }
@@ -475,7 +527,7 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: #999999;
   text-decoration: none;
@@ -558,7 +610,7 @@ select {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.3);
   margin-top: 60px;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   color: #888;
   font-size: 0.9rem;
   /* Hält den Footer über den fixed position:fixed Hero-Hintergrundvideos
@@ -608,7 +660,7 @@ select {
 
 .see-all-link {
   color: #2997ff;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: 0.3px;
@@ -698,7 +750,7 @@ select {
   align-items: center;
   gap: 10px;
   color: #ffffff;
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   font-size: 1.05rem;
 }
 
@@ -757,7 +809,7 @@ select {
 }
 
 .poster-meta {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: #86868b;
   margin-top: 2px;
@@ -861,36 +913,24 @@ select {
 /* ─── EINHEITLICHE SCHRIFT AUF UNTERSEITEN (z.B. drone.html) ───
    Gleiche Hauptschriften wie im Hero von index.html:
    Überschriften ("CREATING VISUAL STORIES")  → Anton
-   Fliesstext/Labels ("Filmmaker & Mediamatiker aus der Schweiz") → Barlow Condensed */
+   Labels ("01 / ...")                        → Barlow Condensed
+   Fliesstext ("Filmmaker & Mediamatiker...")  → besser lesbare --font-body */
 .urbnvibe-info h2 {
   font-family: "Anton", sans-serif;
 }
 
-.urbnvibe-info-label,
-.urbnvibe-info-description {
+.urbnvibe-info-label {
   font-family: "Barlow Condensed", sans-serif;
 }
 
-/* Scroll Fade Animation
-   (translateZ(0) + backface-visibility: hidden erzwingen GPU-Rendering,
-   verhindert Ruckeln/Flackern beim Scrollen auf Handys) */
-section {
-  opacity: 0;
-  transform: translateY(40px) translateZ(0);
-  -webkit-transform: translateY(40px) translateZ(0);
-  transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+.urbnvibe-info-description {
+  font-family: var(--font-body);
 }
 
-section.active {
-  opacity: 1;
-  transform: translateY(0) translateZ(0);
-  -webkit-transform: translateY(0) translateZ(0);
-}
+/* Der "Pop-up"-Scroll-Effekt (einzelne Elemente blenden/schieben sich
+   beim Scrollen ein) lebt jetzt einheitlich in az-reveal.css + az-reveal.js
+   und wird auf jeder Seite über die Klasse "az-reveal" genutzt, damit er
+   garantiert überall exakt gleich aussieht (siehe dort). */
 
 /* ─── RESPONSIVE DESIGN (MOBIL) ─── */
 @media (max-width: 640px) {
@@ -919,13 +959,44 @@ section.active {
   }
 
   .project-info-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 40px;
   }
 
-  .info-content-right,
+  .info-block {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  /* Text kommt auf Mobile immer zuerst, Icon-Reihe danach – unabhängig
+     von der DOM-Reihenfolge (die am Desktop die Links/Rechts-Position
+     über justify-content:space-between steuert). */
+  .info-content {
+    max-width: 100%;
+    order: 1;
+  }
+
+  .info-icons {
+    order: 2;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .info-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Nur der Link (nicht Titel/Text) ist auf Mobile linksbündig,
+     abweichend vom sonst rechtsbündigen "Behind the Scenes"-Block.
+     display:flex (statt inline-flex) + margin-right:auto macht ihn zur
+     Blockbox am linken Rand – text-align der Elternspalte (rechts)
+     betrifft nur Inline-Inhalt und hätte sonst keine Wirkung. */
   .info-content-right .info-content-link {
-    text-align: left;
+    display: flex;
+    width: fit-content;
+    margin-left: 0;
+    margin-right: auto;
     justify-content: flex-start;
   }
 
@@ -1049,7 +1120,7 @@ section.active {
 
 /* Beschreibungstext */
 .error-container p {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 400;
   color: #cccccc;

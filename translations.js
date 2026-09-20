@@ -64,7 +64,7 @@ window.SITE_TRANSLATIONS = {
         run: {
             navTrailer: "Trailer",
             navWholeFilm: "Ganzer Film",
-            navBts: "Behind the Scenes",
+            navBts: "BEHIND THE SCENES",
             navGrading: "Color Grading",
             startTrailer: "Trailer starten",
             title: "RUN - Ein Kurzfilm",
@@ -252,7 +252,7 @@ window.SITE_TRANSLATIONS = {
         run: {
             navTrailer: "Bande-annonce",
             navWholeFilm: "Le film entier",
-            navBts: "Behind the Scenes",
+            navBts: "BEHIND THE SCENES",
             navGrading: "Étalonnage",
             startTrailer: "Lancer la bande-annonce",
             title: "RUN - Un court métrage",
@@ -440,7 +440,7 @@ window.SITE_TRANSLATIONS = {
         run: {
             navTrailer: "Trailer",
             navWholeFilm: "Full film",
-            navBts: "Behind the Scenes",
+            navBts: "BEHIND THE SCENES",
             navGrading: "Color grading",
             startTrailer: "Start trailer",
             title: "RUN - A Short Film",
@@ -628,7 +628,7 @@ window.SITE_TRANSLATIONS = {
         run: {
             navTrailer: "Trailer",
             navWholeFilm: "Film completo",
-            navBts: "Behind the Scenes",
+            navBts: "BEHIND THE SCENES",
             navGrading: "Color grading",
             startTrailer: "Avvia trailer",
             title: "RUN - Un cortometraggio",

@@ -1164,7 +1164,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // (headerGroup selbst ist bereits weiter oben in Abschnitt 8 deklariert.)
     let lastScrollY = window.scrollY;
 
-    if (headerGroup) {
+    // Auf index.html (body.header-always-visible) bleibt der Header beim
+    // Scrollen immer sichtbar statt sich beim Runterscrollen wegzuschieben.
+    const headerAlwaysVisible = document.body.classList.contains('header-always-visible');
+
+    if (headerGroup && !headerAlwaysVisible) {
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
 
