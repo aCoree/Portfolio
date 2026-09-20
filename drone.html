@@ -314,7 +314,7 @@
     <!-- ─── HERO SECTION ─── -->
     <div class="hero-section">
         <a href="#urbnvibe-page" id="scrollDownBtn" class="scroll-down-btn">
-            <span>Scrollen</span>
+            <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
     </div>
@@ -337,9 +337,9 @@
                 </div>
 
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">01 / Drohnen Videos</span>
-                    <h2>MÜNCHENBUCHSE - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label" data-i18n="drone.label1">01 / Drohnen Videos</span>
+                    <h2 data-i18n="drone.title1">MÜNCHENBUCHSE - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description" data-i18n="drone.text1">
                         Aufgenommen mit der DJI Air 3S – goldener Himmel, ruhige Momente und Schweizer
                         Schönheit aus der Vogelperspektive.
                     </p>
@@ -353,9 +353,9 @@
         <section class="urbnvibe-section" id="video-finsterhennen">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">02 / Drohnen Videos</span>
-                    <h2>FINSTERHENNEN - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label" data-i18n="drone.label2">02 / Drohnen Videos</span>
+                    <h2 data-i18n="drone.title2">FINSTERHENNEN - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description" data-i18n="drone.text2">
                         Während der „Goldenen Stunde“ habe ich filmreife Drohnenaufnahmen der wunderschönen Landschaft
                         von Finsterhennen eingefangen.
                         Dieses Video zeigt die friedliche ländliche Umgebung aus der Vogelperspektive und hebt Natur,
@@ -388,9 +388,9 @@
                     </div>
                 </div>
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">03 / Drohnen Videos</span>
-                    <h2>SONNENBERG, KERZERS - SCHWEIZ</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label" data-i18n="drone.label3">03 / Drohnen Videos</span>
+                    <h2 data-i18n="drone.title3">SONNENBERG, KERZERS - SCHWEIZ</h2>
+                    <p class="urbnvibe-info-description" data-i18n="drone.text3">
                         Cinematic sunset in Switzerland with the DJI Air 3S.
                         The video captures the beauty of the Swiss Seeland Region.
                     </p>
@@ -403,8 +403,8 @@
         <section class="urbnvibe-section" id="video-guemmenen">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">04 / Drohnen Videos</span>
-                    <h2>GÜMMENEN - SCHWEIZ</h2>
+                    <span class="urbnvibe-info-label" data-i18n="drone.label4">04 / Drohnen Videos</span>
+                    <h2 data-i18n="drone.title4">GÜMMENEN - SCHWEIZ</h2>
                     <p class="urbnvibe-info-description">
 
                     </p>
@@ -422,11 +422,16 @@
 
     </main>
 
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
             {
-                label: "Drohnen Videos",
+                label: tr('drone.navVideos', "Drohnen Videos"),
                 children: [
                     { label: "Münchenbuchsee", href: "#video-muenchenbuchsee" },
                     { label: "Finsterhennen", href: "#video-finsterhennen" },

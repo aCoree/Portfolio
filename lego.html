@@ -957,7 +957,7 @@
     <!-- ─── HERO SECTION ─── -->
     <div class="hero-section">
         <a href="#content" id="scrollDownBtn" class="scroll-down-btn">
-            <span>Scrollen</span>
+            <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
     </div>
@@ -971,14 +971,14 @@
                         <img src="images/LEGO-FAMILY-STUDIO-poster.png" alt="LEGO Family Studio" class="lego-card-image">
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label">01 / YouTube Channel</span>
+                        <span class="lego-info-label" data-i18n="lego.aboutLabel">01 / YouTube Channel</span>
                         <div class="lego-info-title-row">
-                            <h2>Über den Kanal</h2>
+                            <h2 data-i18n="lego.navAbout">Über den Kanal</h2>
                             <a href="https://www.youtube.com/@legofamilystudio8229" class="btn" target="_blank" rel="noopener noreferrer">
-                                KANAL ANSEHEN
+                                <span data-i18n="lego.watchChannel">KANAL ANSEHEN</span>
                             </a>
                         </div>
-                        <p class="lego-info-description">
+                        <p class="lego-info-description" data-i18n-html="lego.aboutTextHtml">
                             Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video.
                             Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache
                             widmen.
@@ -1003,7 +1003,7 @@
                 <!-- ─── BUTTON ZU DEN VIDEOS (OPTIMIERT FÜR MOBIL & DESKTOP) ─── -->
                 <div class="lego-videos-btn-container">
                     <a href="#videos" class="scroll-down-btn">
-                        <span>Zu den Videos</span>
+                        <span data-i18n="musik.toVideos">Zu den Videos</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </a>
                 </div>
@@ -1018,7 +1018,7 @@
             <section class="lego-section" id="lego-video-corona">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
+                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
                         <h2>Corona LEGO Time</h2>
                         <p class="lego-info-description"></p>
                     </div>
@@ -1046,7 +1046,7 @@
                         </div>
                     </div>
                     <div class="lego-info">
-                        <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
+                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
                         <h2>LEGO Street Race</h2>
                         <p class="lego-info-description"></p>
                     </div>
@@ -1058,7 +1058,7 @@
             <section class="lego-section" id="lego-video-hairdresser">
                 <div class="lego-two-column reverse">
                     <div class="lego-info">
-                        <span class="lego-info-label">02 / Stop-Motion LEGO Videos</span>
+                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
                         <h2>LEGO Hairdresser</h2>
                         <p class="lego-info-description"></p>
                     </div>
@@ -1130,12 +1130,17 @@
         }, { passive: true });
     </script>
 
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
-            { label: "Über den Kanal", href: "#content" },
+            { label: tr('lego.navAbout', "Über den Kanal"), href: "#content" },
             {
-                label: "Stop-Motion Videos",
+                label: tr('lego.navVideos', "Stop-Motion Videos"),
                 children: [
                     { label: "Corona LEGO Time", href: "#lego-video-corona" },
                     { label: "LEGO Street Race", href: "#lego-video-street-race" },

@@ -811,6 +811,60 @@ body.menu-open {
   flex-direction: column;
 }
 
+/* ─── SPRACHUMSCHALTER (DE/FR/EN/IT) ───
+   Eine Instanz sitzt im Footer (jede Seite, siehe header.js), eine
+   zweite in der obersten Ebene des Mobile-Menüs – beide teilen dieselbe
+   Basisklasse, nur .lang-switcher--footer/.lang-switcher--mobile-menu
+   passen Abstand/Größe an ihren jeweiligen Kontext an. */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-switcher-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--nav-text-idle);
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 4px 9px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.lang-switcher-btn:hover {
+  color: var(--nav-text-active);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.lang-switcher-btn.is-active {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+.lang-switcher--footer {
+  margin-right: 18px;
+}
+
+.lang-switcher--mobile-menu {
+  margin-top: 32px;
+}
+
+@media (max-width: 640px) {
+  .lang-switcher--footer {
+    margin-right: 0;
+  }
+}
+
 /* ─── SECOND HEADER (DESKTOP) ───
    Eigene Klassen (second-navbar*), damit dieses Styling niemals
    versehentlich den Main Header (.navbar/.nav-center) beeinflusst.

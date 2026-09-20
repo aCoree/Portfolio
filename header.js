@@ -1,5 +1,27 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    // ─── 0. ÜBERSETZUNGS-HELFER (siehe translations.js/i18n.js) ───
+    // header.js baut Navigation/Footer/Suche/Mobile-Menü direkt in der
+    // aktuell aktiven Sprache auf (statt per data-i18n nachträglich zu
+    // übersetzen) – ein Sprachwechsel lädt die Seite deshalb bewusst neu
+    // (siehe i18n.js: setLanguage()), statt dieses ganze, zustandsbehaftete
+    // System live umzubauen. t(key, fallback) liefert die Übersetzung für
+    // den aktuellen Sprachstand oder – falls translations.js/i18n.js aus
+    // irgendeinem Grund fehlen oder der Key (noch) nicht existiert – den
+    // übergebenen deutschen Fallback-Text, damit die Seite nie ohne Text
+    // dasteht.
+    function t(key, fallback) {
+        if (!key) return fallback;
+        if (window.i18n && typeof window.i18n.translate === 'function') {
+            const value = window.i18n.translate(key);
+            if (value !== undefined) return value;
+        }
+        return fallback;
+    }
+
+    const currentLang = (window.i18n && window.i18n.getCurrentLanguage) ? window.i18n.getCurrentLanguage() : 'de';
+    const SUPPORTED_LANGS = (window.i18n && window.i18n.SUPPORTED) ? window.i18n.SUPPORTED : ['de', 'fr', 'en', 'it'];
+
     // ─── 1. DYNAMISCHE CSS STYLES (FOOTER & AUTOMATISCHER STICKY FOOTER) ───
     const dynamicStyle = document.createElement('style');
     dynamicStyle.textContent = `
@@ -79,12 +101,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Main-Header-Navigation (site-weit, bewusst zentral hier definiert statt
     // pro Seite dupliziert, da auf jeder Seite identisch).
     const mainNavItems = [
-        { label: 'Home', href: 'index.html#home' },
+        { label: t('nav.home', 'Home'), href: 'index.html#home' },
         {
-            label: 'Projekte',
+            label: t('nav.projects', 'Projekte'),
             href: 'projekte.html',
             children: [
-                { label: 'Alle Projekte', href: 'projekte.html', emphasize: true },
+                { label: t('nav.projectsAll', 'Alle Projekte'), href: 'projekte.html', emphasize: true },
                 { label: 'RUN', href: 'run.html' },
                 { label: 'Musik', href: 'musik.html' },
                 { label: 'DJI Air 3S', href: 'drone.html' },
@@ -93,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
             ]
         },
         {
-            label: 'Über mich',
+            label: t('nav.about', 'Über mich'),
             href: 'index.html#ueber-mich',
             // Zusätzliche, nicht sichtbare Suchbegriffe (siehe buildSearchIndex/
             // scoreSearchEntry) – erlaubt z.B. "Aurelio", "Beruf" oder
@@ -101,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Wörter im Label selbst stehen müssen.
             keywords: 'Aurelio Zingarello Beruf Mediamatiker Lehrjahr Filmmaker Filmemacher Schweiz Design Webentwicklung Kurzfilm Storys'
         },
-        { label: 'Kontakt', href: 'index.html#kontakt' }
+        { label: t('nav.contact', 'Kontakt'), href: 'index.html#kontakt' }
     ];
 
     // Second-Header-Konfiguration der Seite (optional, siehe einzelne HTML-Dateien).
@@ -129,46 +151,63 @@ document.addEventListener("DOMContentLoaded", function() {
     // auch von ANDEREN Seiten aus zu Unterseiten/Second-Header-Einträgen
     // führt. Bei Änderungen an den echten secondHeaderItems einer Seite
     // bitte diese Liste hier synchron halten.
+    // Übersetzbare Kategorie-/Abschnittslabels werden über t() aufgelöst;
+    // Eigennamen (Songtitel, Ortsnamen, Projektnamen wie "RUN"/"URBNVIBE")
+    // bleiben bewusst unübersetzt (siehe Kommentar oben in translations.js).
+    const runLabel = t('run.navBts', 'Behind the Scenes');
+    const musikIntroLabel = t('musik.navIntro', 'Leidenschaft am Klavier');
+    const musikVideosLabel = t('musik.navVideos', 'Klavier Videos');
+    const droneVideosLabel = t('drone.navVideos', 'Drohnen Videos');
+    const urbnvibeAboutLabel = t('urbnvibe.navAbout', 'Über URBNVIBE');
+    const urbnvibeWorkLabel = t('urbnvibe.navWork', 'Arbeiten');
+    const legoAboutLabel = t('lego.navAbout', 'Über den Kanal');
+    const legoVideosLabel = t('lego.navVideos', 'Stop-Motion Videos');
+    const legalLabel = t('nav.categoryLegal', 'Rechtliches');
+
     const crossPageSearchSections = [
-        { label: 'Trailer', href: 'run.html#trailer', category: 'RUN' },
-        { label: 'Ganzer Film', href: 'run.html#content', category: 'RUN' },
-        { label: 'Behind the Scenes', href: 'bts.html', category: 'RUN', keywords: 'BTS' },
-        { label: 'Color Grading', href: 'run.html#grading', category: 'RUN' },
+        { label: t('run.navTrailer', 'Trailer'), href: 'run.html#trailer', category: 'RUN' },
+        { label: t('run.navWholeFilm', 'Ganzer Film'), href: 'run.html#content', category: 'RUN' },
+        { label: runLabel, href: 'bts.html', category: 'RUN', keywords: 'BTS' },
+        { label: t('run.navGrading', 'Color Grading'), href: 'run.html#grading', category: 'RUN' },
 
-        { label: 'Leidenschaft am Klavier', href: 'musik.html#musik-intro', category: 'Musik' },
-        { label: 'Klavier Videos', href: 'musik.html#song-force-theme', category: 'Musik' },
-        { label: 'The Force Theme', href: 'musik.html#song-force-theme', category: 'Klavier Videos' },
-        { label: 'Time - Inception', href: 'musik.html#song-inception', category: 'Klavier Videos' },
-        { label: 'Interstellar', href: 'musik.html#song-interstellar', category: 'Klavier Videos' },
-        { label: 'Pirates of the Caribbean', href: 'musik.html#song-pirates', category: 'Klavier Videos' },
-        { label: 'Avengers Main Theme', href: 'musik.html#song-avengers', category: 'Klavier Videos' },
-        { label: 'Top Gun: Maverick', href: 'musik.html#song-topgun', category: 'Klavier Videos' },
-        { label: 'Victory', href: 'musik.html#song-victory', category: 'Klavier Videos' },
-        { label: 'Wildflower', href: 'musik.html#song-wildflower', category: 'Klavier Videos' },
-        { label: 'No Time To Die', href: 'musik.html#song-notimetodie', category: 'Klavier Videos' },
-        { label: 'Meine Lieder', href: 'musik.html#musik-videos', category: 'Musik' },
+        { label: musikIntroLabel, href: 'musik.html#musik-intro', category: 'Musik' },
+        { label: musikVideosLabel, href: 'musik.html#song-force-theme', category: 'Musik' },
+        { label: 'The Force Theme', href: 'musik.html#song-force-theme', category: musikVideosLabel },
+        { label: 'Time - Inception', href: 'musik.html#song-inception', category: musikVideosLabel },
+        { label: 'Interstellar', href: 'musik.html#song-interstellar', category: musikVideosLabel },
+        { label: 'Pirates of the Caribbean', href: 'musik.html#song-pirates', category: musikVideosLabel },
+        { label: 'Avengers Main Theme', href: 'musik.html#song-avengers', category: musikVideosLabel },
+        { label: 'Top Gun: Maverick', href: 'musik.html#song-topgun', category: musikVideosLabel },
+        { label: 'Victory', href: 'musik.html#song-victory', category: musikVideosLabel },
+        { label: 'Wildflower', href: 'musik.html#song-wildflower', category: musikVideosLabel },
+        { label: 'No Time To Die', href: 'musik.html#song-notimetodie', category: musikVideosLabel },
+        { label: 'Experience', href: 'musik.html#song-experience', category: musikVideosLabel },
+        { label: 'Sadness and Sorrow', href: 'musik.html#song-sadnessandsorrow', category: musikVideosLabel },
+        { label: 'F1 - Main Theme', href: 'musik.html#song-f1', category: musikVideosLabel },
+        { label: 'Remember - The Lion King', href: 'musik.html#song-remember', category: musikVideosLabel },
+        { label: 'Bohemian Rhapsody', href: 'musik.html#song-bohemianrhapsody', category: musikVideosLabel },
 
-        { label: 'Drohnen Videos', href: 'drone.html#video-muenchenbuchsee', category: 'DJI Air 3S' },
-        { label: 'Münchenbuchsee', href: 'drone.html#video-muenchenbuchsee', category: 'Drohnen Videos' },
-        { label: 'Finsterhennen', href: 'drone.html#video-finsterhennen', category: 'Drohnen Videos' },
-        { label: 'Kerzers', href: 'drone.html#video-kerzers', category: 'Drohnen Videos' },
-        { label: 'Gümmenen', href: 'drone.html#video-guemmenen', category: 'Drohnen Videos' },
+        { label: droneVideosLabel, href: 'drone.html#video-muenchenbuchsee', category: 'DJI Air 3S' },
+        { label: 'Münchenbuchsee', href: 'drone.html#video-muenchenbuchsee', category: droneVideosLabel },
+        { label: 'Finsterhennen', href: 'drone.html#video-finsterhennen', category: droneVideosLabel },
+        { label: 'Kerzers', href: 'drone.html#video-kerzers', category: droneVideosLabel },
+        { label: 'Gümmenen', href: 'drone.html#video-guemmenen', category: droneVideosLabel },
 
-        { label: 'Über URBNVIBE', href: 'urbnvibe.html#intro-section', category: 'URBNVIBE' },
-        { label: 'Arbeiten', href: 'urbnvibe.html#flyer-section', category: 'URBNVIBE' },
-        { label: 'Flyer', href: 'urbnvibe.html#flyer-section', category: 'Arbeiten' },
-        { label: 'Logo', href: 'urbnvibe.html#logo-section', category: 'Arbeiten' },
-        { label: 'Awareness Video', href: 'urbnvibe.html#awareness-video-section', category: 'Arbeiten' },
-        { label: 'Creatives', href: 'urbnvibe.html#creatives-section', category: 'Arbeiten' },
+        { label: urbnvibeAboutLabel, href: 'urbnvibe.html#intro-section', category: 'URBNVIBE' },
+        { label: urbnvibeWorkLabel, href: 'urbnvibe.html#flyer-section', category: 'URBNVIBE' },
+        { label: t('urbnvibe.navFlyer', 'Flyer'), href: 'urbnvibe.html#flyer-section', category: urbnvibeWorkLabel },
+        { label: t('urbnvibe.navLogo', 'Logo'), href: 'urbnvibe.html#logo-section', category: urbnvibeWorkLabel },
+        { label: t('urbnvibe.navAwareness', 'Awareness Video'), href: 'urbnvibe.html#awareness-video-section', category: urbnvibeWorkLabel },
+        { label: t('urbnvibe.navCreatives', 'Creatives'), href: 'urbnvibe.html#creatives-section', category: urbnvibeWorkLabel },
 
-        { label: 'Über den Kanal', href: 'lego.html#content', category: 'LEGO FAMILY STUDIO' },
-        { label: 'Stop-Motion Videos', href: 'lego.html#lego-video-corona', category: 'LEGO FAMILY STUDIO' },
-        { label: 'Corona LEGO Time', href: 'lego.html#lego-video-corona', category: 'Stop-Motion Videos' },
-        { label: 'LEGO Street Race', href: 'lego.html#lego-video-street-race', category: 'Stop-Motion Videos' },
-        { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: 'Stop-Motion Videos' },
+        { label: legoAboutLabel, href: 'lego.html#content', category: 'LEGO FAMILY STUDIO' },
+        { label: legoVideosLabel, href: 'lego.html#lego-video-corona', category: 'LEGO FAMILY STUDIO' },
+        { label: 'Corona LEGO Time', href: 'lego.html#lego-video-corona', category: legoVideosLabel },
+        { label: 'LEGO Street Race', href: 'lego.html#lego-video-street-race', category: legoVideosLabel },
+        { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: legoVideosLabel },
 
-        { label: 'Impressum', href: 'impressum.html', category: 'Rechtliches' },
-        { label: 'Datenschutz', href: 'datenschutz.html', category: 'Rechtliches' }
+        { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
+        { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel }
     ];
 
     const currentPageFile = window.location.pathname.split('/').pop() || 'index.html';
@@ -194,7 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         mainNavItems.forEach(item => {
-            if (item.href) addEntry(item.label, item.href, 'Navigation', item.keywords);
+            if (item.href) addEntry(item.label, item.href, t('nav.categoryNavigation', 'Navigation'), item.keywords);
             if (hasChildren(item)) {
                 item.children.forEach(child => addEntry(child.label, child.href, item.label, child.keywords));
             }
@@ -203,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Second-Header-Einträge DIESER Seite: direkt aus window.secondHeaderItems,
         // damit die Suche immer den aktuellsten Stand der Seite widerspiegelt.
         secondHeaderItems.forEach(item => {
-            if (item.href) addEntry(item.label, normalizeHref(item.href), 'Auf dieser Seite');
+            if (item.href) addEntry(item.label, normalizeHref(item.href), t('nav.categoryOnThisPage', 'Auf dieser Seite'));
             if (hasChildren(item)) {
                 item.children.forEach(child => addEntry(child.label, normalizeHref(child.href), item.label));
             }
@@ -297,7 +336,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </span>
                 </a>
                 <!-- Ersetzt das Logo auf tieferen Mobile-Menü-Ebenen (siehe JS) -->
-                <button type="button" class="mobile-back-arrow" id="mobileBackArrow" aria-label="Eine Ebene zurück">
+                <button type="button" class="mobile-back-arrow" id="mobileBackArrow" aria-label="${t('nav.ariaBack', 'Eine Ebene zurück')}">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
             </div>
@@ -305,19 +344,19 @@ document.addEventListener("DOMContentLoaded", function() {
             <nav class="nav-center">${buildMainNavHTML()}</nav>
 
             <div class="nav-right">
-                <button type="button" class="nav-search-toggle" id="navSearchToggleDesktop" aria-label="Suche öffnen" aria-expanded="false">
+                <button type="button" class="nav-search-toggle" id="navSearchToggleDesktop" aria-label="${t('nav.ariaSearchOpen', 'Suche öffnen')}" aria-expanded="false">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
                 <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
             </div>
 
             <!-- Lupe direkt neben dem Hamburger (nur Mobile, siehe header.css). -->
-            <button type="button" class="nav-search-toggle nav-search-toggle--mobile" id="navSearchToggleMobile" aria-label="Suche öffnen" aria-expanded="false">
+            <button type="button" class="nav-search-toggle nav-search-toggle--mobile" id="navSearchToggleMobile" aria-label="${t('nav.ariaSearchOpen', 'Suche öffnen')}" aria-expanded="false">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
 
             <!-- Hamburger Button (nur Mobile) -->
-            <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+            <button class="hamburger" id="hamburger" aria-label="${t('nav.ariaMenuOpen', 'Menü öffnen')}">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -338,8 +377,8 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="nav-expand-inner nav-search-inner" id="navSearchInner">
                 <div class="nav-search-field">
                     <i class="fa-solid fa-magnifying-glass nav-search-field-icon"></i>
-                    <input type="text" id="navSearchInput" class="nav-search-input" placeholder="Seiten &amp; Projekte durchsuchen…" autocomplete="off" aria-label="Seiten und Projekte durchsuchen">
-                    <button type="button" class="nav-search-clear" id="navSearchClear" aria-label="Suche schließen"><i class="fa-solid fa-xmark"></i></button>
+                    <input type="text" id="navSearchInput" class="nav-search-input" placeholder="${t('search.placeholder', 'Seiten &amp; Projekte durchsuchen…')}" autocomplete="off" aria-label="${t('search.placeholder', 'Seiten und Projekte durchsuchen')}">
+                    <button type="button" class="nav-search-clear" id="navSearchClear" aria-label="${t('nav.ariaSearchClose', 'Suche schließen')}"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="nav-search-divider"></div>
                 <div class="nav-search-results" id="navSearchResults"></div>
@@ -361,7 +400,33 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
     `;
 
-    // ─── 6. ORIGINAL FOOTER HTML ───
+    // ─── 6. SPRACHUMSCHALTER (DE/FR/EN/IT) ───
+    // Ein und dieselbe kleine Pillen-Reihe wird sowohl im Footer (jede
+    // Seite, Desktop UND Mobile) als auch in der obersten Ebene des
+    // Mobile-Menüs eingesetzt (siehe buildLevelHTML) – nur mit jeweils
+    // einer zusätzlichen Klasse für den Kontext. Der Klick selbst
+    // passiert über Event-Delegation weiter unten (ein Listener pro
+    // vorkommender .lang-switcher-Instanz), da mehrere Instanzen auf
+    // derselben Seite existieren können.
+    const LANG_LABELS = { de: 'DE', fr: 'FR', en: 'EN', it: 'IT' };
+
+    function buildLangSwitcherHTML(extraClass) {
+        const buttons = SUPPORTED_LANGS.map(code => {
+            const activeClass = code === currentLang ? ' is-active' : '';
+            return `<button type="button" class="lang-switcher-btn${activeClass}" data-lang="${code}">${LANG_LABELS[code] || code.toUpperCase()}</button>`;
+        }).join('');
+        return `<div class="lang-switcher${extraClass ? ' ' + extraClass : ''}" role="group" aria-label="${t('lang.ariaLabel', 'Sprache wählen')}">${buttons}</div>`;
+    }
+
+    function wireLangSwitchers(root) {
+        (root || document).querySelectorAll('.lang-switcher-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (window.i18n) window.i18n.setLanguage(btn.dataset.lang);
+            });
+        });
+    }
+
+    // ─── 7. ORIGINAL FOOTER HTML ───
     const footerHTML = `
     <!-- ─── FOOTER ─── -->
     <footer class="site-footer">
@@ -373,24 +438,26 @@ document.addEventListener("DOMContentLoaded", function() {
             </a>
         </div>
         <div class="footer-center">
-            <p style="margin: 0;">&copy; 2026 Aurelio Zingarello. Alle Rechte vorbehalten.</p>
+            <p style="margin: 0;">${t('footer.copyright', '© {year} Aurelio Zingarello. Alle Rechte vorbehalten.').replace('{year}', new Date().getFullYear())}</p>
             <div style="margin-top: 6px; font-size: 0.8rem;">
-                <a href="impressum.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Impressum</a>
+                <a href="impressum.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">${t('footer.impressum', 'Impressum')}</a>
                 <span style="color: #555; margin: 0 6px;">·</span>
-                <a href="datenschutz.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">Datenschutz</a>
+                <a href="datenschutz.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">${t('footer.datenschutz', 'Datenschutz')}</a>
             </div>
         </div>
         <div class="footer-right">
+            ${buildLangSwitcherHTML('lang-switcher--footer')}
             <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </footer>
     `;
 
-    // ─── 7. ELEMENTE IN DEN DOM EINFÜGEN ───
+    // ─── 8. ELEMENTE IN DEN DOM EINFÜGEN ───
     document.body.insertAdjacentHTML('afterbegin', headerGroupHTML);
     document.body.insertAdjacentHTML('beforeend', footerHTML);
+    wireLangSwitchers(document.querySelector('.site-footer'));
 
-    // ─── 8. APPLE-ARTIGER HINTERGRUND-BACKDROP + GEMEINSAME PANEL-VERWALTUNG ───
+    // ─── 9. APPLE-ARTIGER HINTERGRUND-BACKDROP + GEMEINSAME PANEL-VERWALTUNG ───
     // Ein einzelnes, wiederverwendetes Backdrop-Element wird von mehreren
     // "Panels" geteilt (Main-Header-Untermenü, Second-Header-Untermenü,
     // Such-Panel). Ein einfacher Referenzzähler (statt eines simplen
@@ -443,7 +510,7 @@ document.addEventListener("DOMContentLoaded", function() {
         navBackdrop.addEventListener('click', () => closeOtherPanels(null));
     }
 
-    // ─── 9. DESKTOP: HEADER-ERWEITERUNG BEI HOVER (PROJEKTE & SECOND-HEADER-EINTRÄGE) ───
+    // ─── 10. DESKTOP: HEADER-ERWEITERUNG BEI HOVER (PROJEKTE & SECOND-HEADER-EINTRÄGE) ───
     // Eine generische Steuerung für beide Stellen: Hover/Fokus auf einen Trigger
     // füllt die zugehörige Erweiterungsfläche mit den Kind-Links und lässt den
     // Header (dieselbe Hintergrundfläche) dafür nach unten wachsen. Synchron
@@ -540,7 +607,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { backdropId: 'second-submenu' }
     );
 
-    // ─── 10. SUCH-ERGEBNIS-RENDERING (GEMEINSAM FÜR DESKTOP + MOBILE) ───
+    // ─── 11. SUCH-ERGEBNIS-RENDERING (GEMEINSAM FÜR DESKTOP + MOBILE) ───
     // Baut nur das HTML/den Ziel-Zustand (ob überhaupt etwas angezeigt
     // werden soll) – wird sowohl von der einfachen (Mobile) als auch der
     // animierten (Desktop, siehe animateSearchResultsInto) Variante
@@ -565,8 +632,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const trimmedQuery = query.trim();
         if (!trimmedQuery) return { html: '', shouldShow: false };
         if (!entries.length) {
+            const noResultsText = t('search.noResults', 'Keine Treffer für „{query}“.').replace('{query}', escapeHTML(trimmedQuery));
             return {
-                html: `<p class="nav-search-empty">Keine Treffer für „${escapeHTML(trimmedQuery)}“.</p>`,
+                html: `<p class="nav-search-empty">${noResultsText}</p>`,
                 shouldShow: true
             };
         }
@@ -650,7 +718,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // ─── 11. DESKTOP-SUCHFUNKTION ───
+    // ─── 12. DESKTOP-SUCHFUNKTION ───
     // Nutzt dieselbe nav-expand-Wachstumsmechanik + denselben Backdrop wie
     // die Untermenüs oben (siehe panelRegistry), ist aber klick- statt
     // hover-gesteuert und bleibt offen, bis sie explizit geschlossen wird.
@@ -737,7 +805,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (e.key === 'Escape' && searchOpen) forceCloseSearch();
     });
 
-    // ─── 12. MOBILE MENÜ: HAMBURGER + MEHRSTUFIGE NAVIGATION MIT ZURÜCK-PFEIL ───
+    // ─── 13. MOBILE MENÜ: HAMBURGER + MEHRSTUFIGE NAVIGATION MIT ZURÜCK-PFEIL ───
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuLevels = document.getElementById('mobileMenuLevels');
@@ -784,7 +852,9 @@ document.addEventListener("DOMContentLoaded", function() {
             ? `<div class="mobile-social"><a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a></div>`
             : '';
 
-        return `${mainLinksHTML}${itemsNavHTML}${socialHTML}`;
+        const langSwitcherHTML = level.isTop ? buildLangSwitcherHTML('lang-switcher--mobile-menu') : '';
+
+        return `${mainLinksHTML}${itemsNavHTML}${socialHTML}${langSwitcherHTML}`;
     }
 
     function attachLevelHandlers(level, panelEl) {
@@ -805,6 +875,8 @@ document.addEventListener("DOMContentLoaded", function() {
         panelEl.querySelectorAll('a.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => closeMobileMenu());
         });
+
+        wireLangSwitchers(panelEl);
     }
 
     // Lässt die Zeilen (Links/Drill-Buttons/Social-Icons) eines Panels
@@ -942,7 +1014,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="mobile-search-panel">
                 <div class="mobile-search-field">
                     <i class="fa-solid fa-magnifying-glass mobile-search-field-icon"></i>
-                    <input type="text" class="mobile-search-input" placeholder="Seiten &amp; Projekte durchsuchen…" autocomplete="off" aria-label="Seiten und Projekte durchsuchen">
+                    <input type="text" class="mobile-search-input" placeholder="${t('search.placeholder', 'Seiten &amp; Projekte durchsuchen…')}" autocomplete="off" aria-label="${t('search.placeholder', 'Seiten und Projekte durchsuchen')}">
                 </div>
                 <div class="mobile-search-divider"></div>
                 <div class="mobile-search-results"></div>
@@ -1035,7 +1107,7 @@ document.addEventListener("DOMContentLoaded", function() {
         mobileBackArrow.addEventListener('click', goBack);
     }
 
-    // ─── 14. AKTIVEN LINK AUTOMATISCH HERVORHEBEN ───
+    // ─── 15. AKTIVEN LINK AUTOMATISCH HERVORHEBEN ───
     const currentPath = window.location.pathname.split("/").pop();
     const allNavLinks = document.querySelectorAll('.nav-center a');
 
@@ -1048,7 +1120,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // ─── 15. SMART STICKY HEADER SCROLL-VERHALTEN ───
+    // ─── 16. SMART STICKY HEADER SCROLL-VERHALTEN ───
     // Schaltet nur die Klasse .nav-hidden auf der Header-Gruppe um. Main
     // Header und (falls vorhanden) Second Header sind Teil derselben
     // .header-group und verschwinden/erscheinen dadurch immer gemeinsam.

@@ -575,12 +575,12 @@
         </video>
 
         <div class="hero-content">
-            <h1 class="az-reveal">CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
-            <p class="az-reveal" data-az-delay="1">Filmmaker & Mediamatiker aus der Schweiz</p>
+            <h1 class="az-reveal" data-i18n-html="index.heroTitleHtml">CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
+            <p class="az-reveal" data-az-delay="1" data-i18n="index.heroSubtitle">Filmmaker & Mediamatiker aus der Schweiz</p>
         </div>
 
         <div class="scroll-down-btn" onclick="scrollPastHero()">
-            <span>Scrollen</span>
+            <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </div>
 
@@ -591,19 +591,19 @@
 
             <div class="section-header-flex az-reveal">
                 <div>
-                    <h2 class="section-title-left">Meine Projekte</h2>
+                    <h2 class="section-title-left" data-i18n="index.projectsHeading">Meine Projekte</h2>
                 </div>
                 <a href="projekte.html" class="see-all-link">
-                    Alle Projekte ansehen <i class="fa-solid fa-chevron-right"></i>
+                    <span data-i18n="index.projectsSeeAll">Alle Projekte ansehen</span> <i class="fa-solid fa-chevron-right"></i>
                 </a>
             </div>
 
             <div class="apple-slider-container az-reveal" data-az-delay="1">
 
-                <button class="slider-arrow prev-arrow" id="prevBtn" aria-label="Vorheriges Projekt">
+                <button class="slider-arrow prev-arrow" id="prevBtn" data-i18n-attr="aria-label:index.ariaPrevProject" aria-label="Vorheriges Projekt">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button class="slider-arrow next-arrow" id="nextBtn" aria-label="Nächstes Projekt">
+                <button class="slider-arrow next-arrow" id="nextBtn" data-i18n-attr="aria-label:index.ariaNextProject" aria-label="Nächstes Projekt">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
 
@@ -616,10 +616,10 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="run.html" class="apple-btn">
-                                    Jetzt ansehen
+                                    <span data-i18n="common.watchNow">Jetzt ansehen</span>
                                 </a>
                                 <div class="apple-card-text">
-                                    <span class="genre-tag">Action / Kurzfilm</span>
+                                    <span class="genre-tag" data-i18n="index.genreRun">Action / Kurzfilm</span>
                                 </div>
                             </div>
                         </div>
@@ -632,10 +632,10 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="lego.html" class="apple-btn">
-                                    Jetzt ansehen
+                                    <span data-i18n="common.watchNow">Jetzt ansehen</span>
                                 </a>
                                 <div class="apple-card-text">
-                                    <span class="genre-tag">Stop-Motion / Youtube Kanal</span>
+                                    <span class="genre-tag" data-i18n="index.genreLego">Stop-Motion / Youtube Kanal</span>
                                 </div>
                             </div>
                         </div>
@@ -648,10 +648,10 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="urbnvibe.html" class="apple-btn">
-                                    Jetzt ansehen
+                                    <span data-i18n="common.watchNow">Jetzt ansehen</span>
                                 </a>
                                 <div class="apple-card-text">
-                                    <span class="genre-tag">10. ICT-Schuljahr / Projekt</span>
+                                    <span class="genre-tag" data-i18n="index.genreUrbnvibe">10. ICT-Schuljahr / Projekt</span>
                                 </div>
                             </div>
                         </div>
@@ -664,10 +664,10 @@
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
                                 <a href="musik.html" class="apple-btn">
-                                    Jetzt ansehen
+                                    <span data-i18n="common.watchNow">Jetzt ansehen</span>
                                 </a>
                                 <div class="apple-card-text">
-                                    <span class="genre-tag">Musik / Klavier & Schlagzeug</span>
+                                    <span class="genre-tag" data-i18n="index.genreMusik">Musik / Klavier & Schlagzeug</span>
                                 </div>
                             </div>
                         </div>
@@ -688,9 +688,9 @@
 
     <section id="ueber-mich" class="section bg-dark">
         <div class="container">
-            <h2 class="section-title az-reveal">Über mich</h2>
+            <h2 class="section-title az-reveal" data-i18n="index.aboutHeading">Über mich</h2>
             <div class="about-text az-reveal" data-az-delay="1">
-                <p>Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen
+                <p data-i18n="index.aboutText">Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen
                     Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich
                     mit Design, Webentwicklung und verschiedenen digitalen Projekten.</p>
             </div>
@@ -699,18 +699,22 @@
 
     <section id="kontakt" class="section">
         <div class="container">
-            <h2 class="section-title az-reveal">Kontakt</h2>
-            <p class="az-reveal" data-az-delay="1" style="text-align: center; margin-bottom: 30px;">Lust auf eine
+            <h2 class="section-title az-reveal" data-i18n="index.contactHeading">Kontakt</h2>
+            <p class="az-reveal" data-az-delay="1" style="text-align: center; margin-bottom: 30px;" data-i18n="index.contactText">Lust auf eine
                 Zusammenarbeit oder hast du Fragen zu
                 meinen Projekten? Schreib mir!</p>
             <form class="contact-form az-reveal" data-az-delay="2" action="https://formspree.io/f/xojowqvy" method="POST">
-                <input type="text" name="name" placeholder="Dein Name" required>
-                <input type="email" name="email" placeholder="Deine E-Mail" required>
-                <textarea name="message" placeholder="Deine Nachricht..." rows="5" required></textarea>
-                <button type="submit" class="btn">Nachricht senden</button>
+                <input type="text" name="name" placeholder="Dein Name" data-i18n-attr="placeholder:index.namePlaceholder" required>
+                <input type="email" name="email" placeholder="Deine E-Mail" data-i18n-attr="placeholder:index.emailPlaceholder" required>
+                <textarea name="message" placeholder="Deine Nachricht..." data-i18n-attr="placeholder:index.messagePlaceholder" rows="5" required></textarea>
+                <button type="submit" class="btn" data-i18n="index.submit">Nachricht senden</button>
             </form>
         </div>
     </section>
+
+    <script src="translations.js"></script>
+
+    <script src="i18n.js"></script>
 
     <script src="header.js"></script>
 

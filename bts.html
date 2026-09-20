@@ -284,7 +284,7 @@
             <!-- Linke Spalte oben: Titel + Zurück + Bild 1 (Quer) + Bild 2 (Quer) -->
             <div class="bts-header-col">
                 <h1 class="bts-title">BEHIND THE SCENES</h1>
-                <a href="javascript:history.back()" class="bts-back-link">&#8592; Zurück</a>
+                <a href="javascript:history.back()" class="bts-back-link">&#8592; <span data-i18n="bts.back">Zurück</span></a>
                 
                 <!-- Bild 1 (Querformat) -->
                 <div class="bts-item landscape zoom-fix bts-item-first">
@@ -333,19 +333,23 @@
 
     <!-- Lightbox Modal -->
     <div id="bts-lightbox" class="bts-lightbox">
-        <button class="lightbox-btn lightbox-close" id="lightbox-close" aria-label="Schließen">
+        <button class="lightbox-btn lightbox-close" id="lightbox-close" data-i18n-attr="aria-label:bts.close" aria-label="Schließen">
             <i class="fa-solid fa-xmark"></i>
         </button>
-        <button class="lightbox-btn lightbox-prev" id="lightbox-prev" aria-label="Vorheriges Bild">
+        <button class="lightbox-btn lightbox-prev" id="lightbox-prev" data-i18n-attr="aria-label:bts.prevImage" aria-label="Vorheriges Bild">
             <i class="fa-solid fa-chevron-left"></i>
         </button>
         <div class="lightbox-content">
-            <img id="lightbox-img" src="" alt="Behind the Scenes Detailansicht">
+            <img id="lightbox-img" src="" data-i18n-attr="alt:bts.detailAlt" alt="Behind the Scenes Detailansicht">
         </div>
-        <button class="lightbox-btn lightbox-next" id="lightbox-next" aria-label="Nächstes Bild">
+        <button class="lightbox-btn lightbox-next" id="lightbox-next" data-i18n-attr="aria-label:bts.nextImage" aria-label="Nächstes Bild">
             <i class="fa-solid fa-chevron-right"></i>
         </button>
     </div>
+
+    <script src="translations.js"></script>
+
+    <script src="i18n.js"></script>
 
     <script src="header.js"></script>
 

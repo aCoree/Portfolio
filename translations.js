@@ -1,0 +1,560 @@
+/* ─────────────────────────────────────────────────────────────
+   TRANSLATIONS.JS – Zentrales Übersetzungswörterbuch (DE/FR/EN/IT)
+   Wird von i18n.js gelesen (window.SITE_TRANSLATIONS[lang]). Struktur:
+   "nav"/"footer"/"lang"/"search"/"common" sind seitenübergreifend
+   (Header, Footer, Suche, Sprachumschalter), alle anderen Top-Level-
+   Keys entsprechen je einer Seite (z.B. "index", "run", "musik", ...).
+   Eigennamen (Projekt-/Songtitel, Komponisten/Künstler, "RUN",
+   "URBNVIBE", "LEGO FAMILY STUDIO", ...) werden bewusst NICHT
+   übersetzt und bleiben in allen vier Sprachen identisch.
+   ───────────────────────────────────────────────────────────── */
+
+window.SITE_TRANSLATIONS = {
+    de: {
+        nav: {
+            home: "Home",
+            projects: "Projekte",
+            projectsAll: "Alle Projekte",
+            about: "Über mich",
+            contact: "Kontakt",
+            categoryNavigation: "Navigation",
+            categoryOnThisPage: "Auf dieser Seite",
+            categoryLegal: "Rechtliches",
+            ariaMenuOpen: "Menü öffnen",
+            ariaBack: "Eine Ebene zurück",
+            ariaSearchOpen: "Suche öffnen",
+            ariaSearchClose: "Suche schließen"
+        },
+        search: {
+            placeholder: "Seiten & Projekte durchsuchen…",
+            noResults: "Keine Treffer für „{query}“."
+        },
+        footer: {
+            copyright: "© {year} Aurelio Zingarello. Alle Rechte vorbehalten.",
+            impressum: "Impressum",
+            datenschutz: "Datenschutz"
+        },
+        lang: {
+            ariaLabel: "Sprache wählen"
+        },
+        common: {
+            scroll: "Scrollen",
+            watchNow: "Jetzt ansehen"
+        },
+        index: {
+            heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
+            heroSubtitle: "Filmmaker & Mediamatiker aus der Schweiz",
+            projectsHeading: "Meine Projekte",
+            projectsSeeAll: "Alle Projekte ansehen",
+            ariaPrevProject: "Vorheriges Projekt",
+            ariaNextProject: "Nächstes Projekt",
+            genreRun: "Action / Kurzfilm",
+            genreLego: "Stop-Motion / Youtube Kanal",
+            genreUrbnvibe: "10. ICT-Schuljahr / Projekt",
+            genreMusik: "Musik / Klavier & Schlagzeug",
+            aboutHeading: "Über mich",
+            aboutText: "Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich mit Design, Webentwicklung und verschiedenen digitalen Projekten.",
+            contactHeading: "Kontakt",
+            contactText: "Lust auf eine Zusammenarbeit oder hast du Fragen zu meinen Projekten? Schreib mir!",
+            namePlaceholder: "Dein Name",
+            emailPlaceholder: "Deine E-Mail",
+            messagePlaceholder: "Deine Nachricht...",
+            submit: "Nachricht senden"
+        },
+        run: {
+            navTrailer: "Trailer",
+            navWholeFilm: "Ganzer Film",
+            navBts: "Behind the Scenes",
+            navGrading: "Color Grading",
+            startTrailer: "Trailer starten",
+            title: "RUN - Ein Kurzfilm",
+            tagline: "Ein cinematischer action Kurzfilm im Seeland der Schweiz.",
+            videoTitle: "RUN – Kurzfilm",
+            projectHeading: "DAS PROJEKT & DIE UMSETZUNG",
+            projectText: "RUN ist bisher mein aufwendigstes und technisch anspruchsvollstes Projekt. Der Kurzfilm setzt bewusst auf bewegte Kameraführungen und schnelle Cuts, um Spannung aufzubauen. Jede Szene wurde genau geplant, damit der Zuschauer die Flucht von Luca direkt miterlebt und mitten in der Action ist!",
+            btsText: "Da der Film unter schwierigen Lichtbedingungen gedreht wurde, waren die dunklen Szenen eine gute Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.",
+            btsLinkText: "Mehr Einblicke im Behind the Scenes",
+            gradingSubtitle: "Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.",
+            gradingBefore: "VORHER",
+            gradingAfter: "NACHHER",
+            gradingBeforeAlt: "Vorher – ungegradetes Footage aus RUN",
+            gradingAfterAlt: "Nachher – Color Grading aus RUN"
+        },
+        bts: {
+            back: "Zurück",
+            close: "Schließen",
+            prevImage: "Vorheriges Bild",
+            nextImage: "Nächstes Bild",
+            detailAlt: "Behind the Scenes Detailansicht"
+        },
+        musik: {
+            navIntro: "Leidenschaft am Klavier",
+            navVideos: "Klavier Videos",
+            introLabel: "Meine Musik",
+            introText1: "Klavier spielen ist für mich der beste Weg, Emotionen und Geschichten ohne Worte auszudrücken. Ich habe vor einigen Jahren angefangen, mir das Klavierspielen selbst beizubringen – motiviert von der Faszination für Film-Soundtracks wie \"Interstellar\" aber auch moderne Klavierlieder.",
+            introText2: "Meine Videos nehme ich mit viel Liebe zum Detail auf: Vom Ausarbeiten der Arrangements bis hin zum visuellen Setup versuche ich, jedem Stück seinen eigenen, passenden Vibe zu verleihen, durch Licht und Schatten. Hier findest du eine Auswahl meiner liebsten Cover.",
+            sincePiano: "Am Klavier seit",
+            focus: "Fokus",
+            focusValue: "Film-Soundtracks",
+            setup: "Setup",
+            toVideos: "Zu den Videos"
+        },
+        urbnvibe: {
+            navAbout: "Über URBNVIBE",
+            navWork: "Arbeiten",
+            navFlyer: "Flyer",
+            navLogo: "Logo",
+            navAwareness: "Awareness Video",
+            navCreatives: "Creatives",
+            introLabel: "Projektübersicht",
+            introText: "URBNVIBE war ein Projekt aus dem 10. ICT-Schuljahr. Ich habe dabei verschiedene Sachen designt wie z.B. ein Flyer, ein Logo, eine Social-Media-Präsenz und ein Video. Ich habe dieses Projekt durch das ganze Schuljahr geführt. Da wir oft mit Adobe Programmen gearbeitet haben, konnte ich viele neue Erfahrungen im Bereich Design und Social Media sammeln.",
+            flyerLabel: "01 / Print Design",
+            flyerHeading: "Flyer Design",
+            flyerText: "Ein zweiseitiger Flyer für URBNVIBE, entwickelt für den Druck und die visuelle Präsentation der Marke. Die Vorder- und Rückseite sind in Layout, Typografie und Farbgebung perfekt aufeinander abgestimmt, um eine moderne und professionelle Wirkung zu erzielen.",
+            logoLabel: "02 / Branding",
+            logoHeading: "Logo Design",
+            logoText: "Das Logo bildet das Herzstück der visuellen Identität von URBNVIBE. Die Farben wurden passend zu der Altstadt von Bern gewählt, um einen modernen, aber auch einen schönen Look zu erzielen. Der Pfeil bringt Schwung in das Logo und dient als Symbol für die Bewegung der Marke.",
+            awarenessLabel: "03 / Social Media",
+            awarenessText: "Ein dynamisch geschnittenes Video für Social Media, das den urbanen Vibe der Marke in Bewegung versetzt. In dem Video wird eine kurze Geschichte von zwei Personen vorgestellt die zusammen Videos in den Sozialen Medien schauen. Die eine Person muss plötzlich so fest Lachen, dass die andere Person vom Dach fällt. Doch glücklicherweise fällt die Person auf eine URBNVIBE Jacke und wird dadurch gerettet.",
+            creativesLabel: "04 / Social Media",
+            creativesHeading: "Social Media Creatives",
+            creativesText: "Eine Serie aus drei Creatives für Social Media. Die Creatives wurden im 4:5-Format gestaltet, speziell für Instagram."
+        },
+        drone: {
+            navVideos: "Drohnen Videos",
+            label1: "01 / Drohnen Videos",
+            title1: "MÜNCHENBUCHSE - SCHWEIZ",
+            text1: "Aufgenommen mit der DJI Air 3S – goldener Himmel, ruhige Momente und Schweizer Schönheit aus der Vogelperspektive.",
+            label2: "02 / Drohnen Videos",
+            title2: "FINSTERHENNEN - SCHWEIZ",
+            text2: "Während der „Goldenen Stunde“ habe ich filmreife Drohnenaufnahmen der wunderschönen Landschaft von Finsterhennen eingefangen. Dieses Video zeigt die friedliche ländliche Umgebung aus der Vogelperspektive und hebt Natur, Licht und Atmosphäre hervor. Die Aufnahmen zeichnen sich durch sanfte Flugbewegungen aus, die ein ruhiges und fesselndes Erlebnis schaffen.",
+            label3: "03 / Drohnen Videos",
+            title3: "SONNENBERG, KERZERS - SCHWEIZ",
+            text3: "Kinoreifer Sonnenuntergang in der Schweiz mit der DJI Air 3S. Das Video zeigt die Schönheit der Schweizer Seeland-Region.",
+            label4: "04 / Drohnen Videos",
+            title4: "GÜMMENEN - SCHWEIZ"
+        },
+        lego: {
+            navAbout: "Über den Kanal",
+            navVideos: "Stop-Motion Videos",
+            aboutLabel: "01 / YouTube Channel",
+            watchChannel: "KANAL ANSEHEN",
+            videosLabel: "02 / Stop-Motion LEGO Videos",
+            aboutTextHtml: "Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video. Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache widmen.<br><br>So entstand der YouTube-Kanal „Lego Family Studio“.<br><br>In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um LEGO-Figuren, die etwas erlebten. Die Geschichten hatten manchmal auch mit der aktuellen Weltlage zu tun, zum Beispiel mit Corona.<br><br>Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis Schnitt-App zusammengeschnitten. Man war viele Stunden am Arbeiten für die kurzen Videos, die man am Ende hatte.<br><br>Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und kann es mit Stolz zeigen."
+        },
+        projekte: {
+            sortBy: "Sortieren nach:",
+            sortNewest: "Neuste zuerst",
+            sortPopular: "Beliebteste",
+            sortOldest: "Älteste zuerst",
+            sortAlphabetical: "Name (A–Z)",
+            genreRun: "Action Kurzfilm",
+            genreUrbnvibe: "Projekt",
+            genreLego: "Youtube Kanal",
+            genreMusik: "Klavier & Schlagzeug",
+            genreDrone: "Drohnen Videos"
+        }
+    },
+
+    fr: {
+        nav: {
+            home: "Home",
+            projects: "Projets",
+            projectsAll: "Tous les projets",
+            about: "À propos",
+            contact: "Contact",
+            categoryNavigation: "Navigation",
+            categoryOnThisPage: "Sur cette page",
+            categoryLegal: "Mentions légales",
+            ariaMenuOpen: "Ouvrir le menu",
+            ariaBack: "Retour",
+            ariaSearchOpen: "Ouvrir la recherche",
+            ariaSearchClose: "Fermer la recherche"
+        },
+        search: {
+            placeholder: "Rechercher pages & projets…",
+            noResults: "Aucun résultat pour « {query} »."
+        },
+        footer: {
+            copyright: "© {year} Aurelio Zingarello. Tous droits réservés.",
+            impressum: "Mentions légales",
+            datenschutz: "Confidentialité"
+        },
+        lang: {
+            ariaLabel: "Choisir la langue"
+        },
+        common: {
+            scroll: "Défiler",
+            watchNow: "Voir maintenant"
+        },
+        index: {
+            heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
+            heroSubtitle: "Réalisateur & médiamaticien suisse",
+            projectsHeading: "Mes projets",
+            projectsSeeAll: "Voir tous les projets",
+            ariaPrevProject: "Projet précédent",
+            ariaNextProject: "Projet suivant",
+            genreRun: "Action / Court métrage",
+            genreLego: "Stop-motion / Chaîne YouTube",
+            genreUrbnvibe: "10e année ICT / Projet",
+            genreMusik: "Musique / Piano & batterie",
+            aboutHeading: "À propos de moi",
+            aboutText: "Bonjour, je suis Aurelio. Ma passion est d'écrire des histoires, puis de les transformer en courts métrages cinématographiques. Je suis actuellement en 1ère année d'apprentissage en tant que médiamaticien et je m'intéresse au design, au développement web et à divers projets numériques.",
+            contactHeading: "Contact",
+            contactText: "Envie de collaborer ou des questions sur mes projets ? Écris-moi !",
+            namePlaceholder: "Ton nom",
+            emailPlaceholder: "Ton e-mail",
+            messagePlaceholder: "Ton message...",
+            submit: "Envoyer le message"
+        },
+        run: {
+            navTrailer: "Bande-annonce",
+            navWholeFilm: "Le film entier",
+            navBts: "Behind the Scenes",
+            navGrading: "Étalonnage",
+            startTrailer: "Lancer la bande-annonce",
+            title: "RUN - Un court métrage",
+            tagline: "Un court métrage d'action cinématique dans le Seeland suisse.",
+            videoTitle: "RUN – Court métrage",
+            projectHeading: "LE PROJET & SA RÉALISATION",
+            projectText: "RUN est à ce jour mon projet le plus ambitieux et techniquement le plus exigeant. Le court métrage mise volontairement sur des mouvements de caméra dynamiques et des coupes rapides pour créer de la tension. Chaque scène a été planifiée avec précision pour que le spectateur vive directement la fuite de Luca, en plein cœur de l'action !",
+            btsText: "Le film ayant été tourné dans des conditions de lumière difficiles, les scènes sombres se sont révélées être une excellente base pour mon workflow Apple Log 10 bits. En postproduction, j'ai pu ainsi accentuer l'ambiance froide et contrastée qui caractérise le style du film.",
+            btsLinkText: "Plus de coulisses dans le Behind the Scenes",
+            gradingSubtitle: "De l'Apple Log plat à l'étalonnage final – un exemple tiré de RUN.",
+            gradingBefore: "AVANT",
+            gradingAfter: "APRÈS",
+            gradingBeforeAlt: "Avant – image brute non étalonnée de RUN",
+            gradingAfterAlt: "Après – étalonnage couleur de RUN"
+        },
+        bts: {
+            back: "Retour",
+            close: "Fermer",
+            prevImage: "Image précédente",
+            nextImage: "Image suivante",
+            detailAlt: "Vue détaillée du Behind the Scenes"
+        },
+        musik: {
+            navIntro: "Ma passion pour le piano",
+            navVideos: "Vidéos piano",
+            introLabel: "Ma musique",
+            introText1: "Jouer du piano est pour moi la meilleure façon d'exprimer des émotions et des histoires sans mots. J'ai commencé il y a quelques années à apprendre le piano en autodidacte – motivé par ma fascination pour des bandes originales de films comme « Interstellar », mais aussi pour des morceaux de piano modernes.",
+            introText2: "Je réalise mes vidéos avec beaucoup d'attention aux détails : de l'élaboration des arrangements jusqu'à la mise en scène visuelle, j'essaie de donner à chaque morceau son propre style, à travers la lumière et l'ombre. Voici une sélection de mes reprises préférées.",
+            sincePiano: "Au piano depuis",
+            focus: "Focus",
+            focusValue: "Bandes originales de films",
+            setup: "Installation",
+            toVideos: "Voir les vidéos"
+        },
+        urbnvibe: {
+            navAbout: "À propos d'URBNVIBE",
+            navWork: "Travaux",
+            navFlyer: "Flyer",
+            navLogo: "Logo",
+            navAwareness: "Vidéo de sensibilisation",
+            navCreatives: "Créations",
+            introLabel: "Aperçu du projet",
+            introText: "URBNVIBE était un projet réalisé durant la 10e année ICT. J'y ai conçu différents éléments comme un flyer, un logo, une présence sur les réseaux sociaux et une vidéo. J'ai piloté ce projet tout au long de l'année scolaire. Comme nous avons souvent travaillé avec les logiciels Adobe, j'ai pu acquérir de nombreuses nouvelles expériences en design et en réseaux sociaux.",
+            flyerLabel: "01 / Design print",
+            flyerHeading: "Design du flyer",
+            flyerText: "Un flyer recto-verso pour URBNVIBE, conçu pour l'impression et la présentation visuelle de la marque. Le recto et le verso sont parfaitement harmonisés en termes de mise en page, de typographie et de couleurs, pour un rendu moderne et professionnel.",
+            logoLabel: "02 / Branding",
+            logoHeading: "Design du logo",
+            logoText: "Le logo constitue le cœur de l'identité visuelle d'URBNVIBE. Les couleurs ont été choisies en cohérence avec la vieille ville de Berne, pour un rendu à la fois moderne et esthétique. La flèche apporte du dynamisme au logo et symbolise le mouvement de la marque.",
+            awarenessLabel: "03 / Réseaux sociaux",
+            awarenessText: "Une vidéo au montage dynamique pour les réseaux sociaux, qui met en mouvement l'ambiance urbaine de la marque. La vidéo raconte une courte histoire de deux personnes qui regardent ensemble des vidéos sur les réseaux sociaux. L'une d'elles est prise d'un fou rire si intense que l'autre tombe du toit. Heureusement, elle atterrit sur une veste URBNVIBE et est ainsi sauvée.",
+            creativesLabel: "04 / Réseaux sociaux",
+            creativesHeading: "Créations pour les réseaux sociaux",
+            creativesText: "Une série de trois créations pour les réseaux sociaux. Les créations ont été conçues au format 4:5, spécialement pour Instagram."
+        },
+        drone: {
+            navVideos: "Vidéos de drone",
+            label1: "01 / Vidéos de drone",
+            title1: "MÜNCHENBUCHSEE - SUISSE",
+            text1: "Filmé avec le DJI Air 3S – ciel doré, moments paisibles et la beauté de la Suisse vue du ciel.",
+            label2: "02 / Vidéos de drone",
+            title2: "FINSTERHENNEN - SUISSE",
+            text2: "Pendant l'« heure dorée », j'ai capturé des images de drone dignes d'un film du magnifique paysage de Finsterhennen. Cette vidéo montre la paisible campagne vue du ciel et met en valeur la nature, la lumière et l'atmosphère. Les prises de vue se distinguent par des mouvements de vol tout en douceur, créant une expérience calme et captivante.",
+            label3: "03 / Vidéos de drone",
+            title3: "SONNENBERG, KERZERS - SUISSE",
+            text3: "Coucher de soleil cinématique en Suisse avec le DJI Air 3S. La vidéo capture la beauté de la région du Seeland suisse.",
+            label4: "04 / Vidéos de drone",
+            title4: "GÜMMENEN - SUISSE"
+        },
+        lego: {
+            navAbout: "À propos de la chaîne",
+            navVideos: "Vidéos stop-motion",
+            aboutLabel: "01 / Chaîne YouTube",
+            watchChannel: "VOIR LA CHAÎNE",
+            videosLabel: "02 / Vidéos LEGO stop-motion",
+            aboutTextHtml: "Ma sœur et moi avons toujours été très intéressés par le son et la vidéo. Quand le confinement de 2020 est arrivé, nous avons pu y consacrer tout notre temps libre.<br><br>C'est ainsi qu'est née la chaîne YouTube « Lego Family Studio ».<br><br>Dans les vidéos en stop-motion, pour lesquelles nous concevions nous-mêmes les décors et photographiions, sonorisions et montions chaque mouvement, il s'agissait toujours de figurines LEGO vivant une aventure. Les histoires étaient parfois aussi liées à l'actualité mondiale, par exemple au Covid.<br><br>Les images ont été prises avec le vieux téléphone de ma mère et montées avec une application de montage gratuite. On passait de nombreuses heures à travailler pour les courtes vidéos qu'on obtenait au final.<br><br>C'est certes déjà loin, mais pour notre âge de l'époque, je trouve que c'est plutôt réussi et je peux le montrer avec fierté."
+        }
+    },
+
+    en: {
+        nav: {
+            home: "Home",
+            projects: "Projects",
+            projectsAll: "All projects",
+            about: "About me",
+            contact: "Contact",
+            categoryNavigation: "Navigation",
+            categoryOnThisPage: "On this page",
+            categoryLegal: "Legal",
+            ariaMenuOpen: "Open menu",
+            ariaBack: "Back",
+            ariaSearchOpen: "Open search",
+            ariaSearchClose: "Close search"
+        },
+        search: {
+            placeholder: "Search pages & projects…",
+            noResults: "No results for “{query}”."
+        },
+        footer: {
+            copyright: "© {year} Aurelio Zingarello. All rights reserved.",
+            impressum: "Legal notice",
+            datenschutz: "Privacy policy"
+        },
+        lang: {
+            ariaLabel: "Choose language"
+        },
+        common: {
+            scroll: "Scroll",
+            watchNow: "Watch now"
+        },
+        index: {
+            heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
+            heroSubtitle: "Filmmaker & media technologist apprentice from Switzerland",
+            projectsHeading: "My projects",
+            projectsSeeAll: "See all projects",
+            ariaPrevProject: "Previous project",
+            ariaNextProject: "Next project",
+            genreRun: "Action / Short film",
+            genreLego: "Stop-motion / YouTube channel",
+            genreUrbnvibe: "10th grade ICT / Project",
+            genreMusik: "Music / Piano & drums",
+            aboutHeading: "About me",
+            aboutText: "Hi, I'm Aurelio. My hobby is writing stories and then turning them into cinematic short films. I'm currently in my first year of training as a media technologist apprentice, and I enjoy working on design, web development and various digital projects.",
+            contactHeading: "Contact",
+            contactText: "Interested in working together or have questions about my projects? Get in touch!",
+            namePlaceholder: "Your name",
+            emailPlaceholder: "Your email",
+            messagePlaceholder: "Your message...",
+            submit: "Send message"
+        },
+        run: {
+            navTrailer: "Trailer",
+            navWholeFilm: "Full film",
+            navBts: "Behind the Scenes",
+            navGrading: "Color grading",
+            startTrailer: "Start trailer",
+            title: "RUN - A Short Film",
+            tagline: "A cinematic action short film set in the Seeland region of Switzerland.",
+            videoTitle: "RUN – Short Film",
+            projectHeading: "THE PROJECT & THE PROCESS",
+            projectText: "RUN is by far my most ambitious and technically demanding project to date. The short film deliberately relies on dynamic camera work and fast cuts to build tension. Every scene was carefully planned so the viewer experiences Luca's escape first-hand, right in the middle of the action!",
+            btsText: "Since the film was shot under difficult lighting conditions, the dark scenes turned out to be a great foundation for my 10-bit Apple Log workflow. In post-production, this let me bring out the cool, high-contrast mood that defines the film's look.",
+            btsLinkText: "More behind-the-scenes insights",
+            gradingSubtitle: "From flat Apple Log to the final grade – an example from RUN.",
+            gradingBefore: "BEFORE",
+            gradingAfter: "AFTER",
+            gradingBeforeAlt: "Before – ungraded footage from RUN",
+            gradingAfterAlt: "After – color graded footage from RUN"
+        },
+        bts: {
+            back: "Back",
+            close: "Close",
+            prevImage: "Previous image",
+            nextImage: "Next image",
+            detailAlt: "Behind the Scenes detail view"
+        },
+        musik: {
+            navIntro: "My passion for piano",
+            navVideos: "Piano videos",
+            introLabel: "My music",
+            introText1: "Playing the piano is, for me, the best way to express emotions and stories without words. A few years ago I started teaching myself piano – driven by my fascination with film soundtracks like \"Interstellar\", but also modern piano songs.",
+            introText2: "I put a lot of attention to detail into my videos: from working out the arrangements to the visual setup, I try to give each piece its own fitting vibe through light and shadow. Here you'll find a selection of my favorite covers.",
+            sincePiano: "Playing piano since",
+            focus: "Focus",
+            focusValue: "Film soundtracks",
+            setup: "Setup",
+            toVideos: "Go to videos"
+        },
+        urbnvibe: {
+            navAbout: "About URBNVIBE",
+            navWork: "Work",
+            navFlyer: "Flyer",
+            navLogo: "Logo",
+            navAwareness: "Awareness video",
+            navCreatives: "Creatives",
+            introLabel: "Project overview",
+            introText: "URBNVIBE was a project from my 10th grade ICT school year. I designed various things for it, such as a flyer, a logo, a social media presence and a video. I ran this project throughout the entire school year. Since we often worked with Adobe programs, I was able to gain a lot of new experience in design and social media.",
+            flyerLabel: "01 / Print design",
+            flyerHeading: "Flyer design",
+            flyerText: "A two-sided flyer for URBNVIBE, designed for print and the visual presentation of the brand. The front and back are perfectly matched in layout, typography and color scheme to achieve a modern, professional look.",
+            logoLabel: "02 / Branding",
+            logoHeading: "Logo design",
+            logoText: "The logo forms the heart of URBNVIBE's visual identity. The colors were chosen to match Bern's old town, for a look that's both modern and appealing. The arrow adds momentum to the logo and symbolizes the brand's movement.",
+            awarenessLabel: "03 / Social media",
+            awarenessText: "A dynamically edited video for social media that brings the brand's urban vibe to life. The video tells a short story of two people watching videos together on social media. One of them suddenly laughs so hard that the other falls off the roof. Luckily, they land on an URBNVIBE jacket and are saved.",
+            creativesLabel: "04 / Social media",
+            creativesHeading: "Social media creatives",
+            creativesText: "A series of three creatives for social media, designed in a 4:5 format specifically for Instagram."
+        },
+        drone: {
+            navVideos: "Drone videos",
+            label1: "01 / Drone videos",
+            title1: "MÜNCHENBUCHSEE - SWITZERLAND",
+            text1: "Shot with the DJI Air 3S – golden skies, calm moments and Swiss beauty from a bird's-eye view.",
+            label2: "02 / Drone videos",
+            title2: "FINSTERHENNEN - SWITZERLAND",
+            text2: "During the \"golden hour\" I captured cinematic drone footage of the beautiful Finsterhennen landscape. This video shows the peaceful countryside from above, highlighting nature, light and atmosphere. The footage stands out for its smooth flight movements, creating a calm and captivating experience.",
+            label3: "03 / Drone videos",
+            title3: "SONNENBERG, KERZERS - SWITZERLAND",
+            text3: "Cinematic sunset in Switzerland with the DJI Air 3S. The video captures the beauty of the Swiss Seeland region.",
+            label4: "04 / Drone videos",
+            title4: "GÜMMENEN - SWITZERLAND"
+        },
+        lego: {
+            navAbout: "About the channel",
+            navVideos: "Stop-motion videos",
+            aboutLabel: "01 / YouTube Channel",
+            watchChannel: "WATCH CHANNEL",
+            videosLabel: "02 / Stop-Motion LEGO Videos",
+            aboutTextHtml: "My sister and I have always been very interested in sound and video. When the 2020 lockdown hit, we were able to dedicate all our free time to it.<br><br>That's how the YouTube channel \"Lego Family Studio\" came to be.<br><br>In the stop-motion videos, for which we designed the sets ourselves and photographed, scored and edited every single movement, it was always LEGO figures experiencing something. The stories sometimes tied into current world events too, like Covid.<br><br>The shots were taken with my mom's old phone camera and edited together in a free editing app. It took many hours of work for the short videos we ended up with.<br><br>It's been a while now, but for our age at the time, I think it turned out pretty good, and I can show it with pride."
+        }
+    },
+
+    it: {
+        nav: {
+            home: "Home",
+            projects: "Progetti",
+            projectsAll: "Tutti i progetti",
+            about: "Chi sono",
+            contact: "Contatto",
+            categoryNavigation: "Navigazione",
+            categoryOnThisPage: "In questa pagina",
+            categoryLegal: "Note legali",
+            ariaMenuOpen: "Apri il menu",
+            ariaBack: "Indietro",
+            ariaSearchOpen: "Apri ricerca",
+            ariaSearchClose: "Chiudi ricerca"
+        },
+        search: {
+            placeholder: "Cerca pagine e progetti…",
+            noResults: "Nessun risultato per «{query}»."
+        },
+        footer: {
+            copyright: "© {year} Aurelio Zingarello. Tutti i diritti riservati.",
+            impressum: "Note legali",
+            datenschutz: "Privacy"
+        },
+        lang: {
+            ariaLabel: "Scegli la lingua"
+        },
+        common: {
+            scroll: "Scorri",
+            watchNow: "Guarda ora"
+        },
+        index: {
+            heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
+            heroSubtitle: "Filmmaker & mediamatico svizzero",
+            projectsHeading: "I miei progetti",
+            projectsSeeAll: "Vedi tutti i progetti",
+            ariaPrevProject: "Progetto precedente",
+            ariaNextProject: "Progetto successivo",
+            genreRun: "Azione / Cortometraggio",
+            genreLego: "Stop-motion / Canale YouTube",
+            genreUrbnvibe: "10° anno ICT / Progetto",
+            genreMusik: "Musica / Piano e batteria",
+            aboutHeading: "Chi sono",
+            aboutText: "Ciao, sono Aurelio. La mia passione è scrivere storie e trasformarle poi in cortometraggi cinematografici. Attualmente sono al primo anno di apprendistato come mediamatico e mi occupo di design, sviluppo web e vari progetti digitali.",
+            contactHeading: "Contatto",
+            contactText: "Hai voglia di collaborare o domande sui miei progetti? Scrivimi!",
+            namePlaceholder: "Il tuo nome",
+            emailPlaceholder: "La tua email",
+            messagePlaceholder: "Il tuo messaggio...",
+            submit: "Invia messaggio"
+        },
+        run: {
+            navTrailer: "Trailer",
+            navWholeFilm: "Film completo",
+            navBts: "Behind the Scenes",
+            navGrading: "Color grading",
+            startTrailer: "Avvia trailer",
+            title: "RUN - Un cortometraggio",
+            tagline: "Un cortometraggio d'azione cinematico ambientato nel Seeland svizzero.",
+            videoTitle: "RUN – Cortometraggio",
+            projectHeading: "IL PROGETTO & LA REALIZZAZIONE",
+            projectText: "RUN è finora il mio progetto più ambizioso e tecnicamente impegnativo. Il cortometraggio punta volutamente su riprese in movimento e tagli rapidi per creare tensione. Ogni scena è stata pianificata nei dettagli affinché lo spettatore viva in prima persona la fuga di Luca, nel bel mezzo dell'azione!",
+            btsText: "Poiché il film è stato girato in condizioni di luce difficili, le scene buie si sono rivelate un'ottima base per il mio workflow Apple Log a 10 bit. In post-produzione ho potuto così valorizzare l'atmosfera fredda e contrastata che caratterizza lo stile del film.",
+            btsLinkText: "Altri retroscena nel Behind the Scenes",
+            gradingSubtitle: "Dall'Apple Log piatto alla color grading finale – un esempio tratto da RUN.",
+            gradingBefore: "PRIMA",
+            gradingAfter: "DOPO",
+            gradingBeforeAlt: "Prima – riprese di RUN non corrette",
+            gradingAfterAlt: "Dopo – color grading di RUN"
+        },
+        bts: {
+            back: "Indietro",
+            close: "Chiudi",
+            prevImage: "Immagine precedente",
+            nextImage: "Immagine successiva",
+            detailAlt: "Vista dettagliata del Behind the Scenes"
+        },
+        musik: {
+            navIntro: "La mia passione per il piano",
+            navVideos: "Video al piano",
+            introLabel: "La mia musica",
+            introText1: "Suonare il piano è per me il modo migliore per esprimere emozioni e storie senza parole. Alcuni anni fa ho iniziato a imparare da autodidatta – motivato dalla passione per le colonne sonore di film come \"Interstellar\", ma anche per brani pianistici moderni.",
+            introText2: "Realizzo i miei video con molta cura per i dettagli: dall'elaborazione degli arrangiamenti fino al setup visivo, cerco di dare a ogni brano un'atmosfera propria attraverso luce e ombra. Qui trovi una selezione delle mie cover preferite.",
+            sincePiano: "Al piano dal",
+            focus: "Focus",
+            focusValue: "Colonne sonore di film",
+            setup: "Setup",
+            toVideos: "Vai ai video"
+        },
+        urbnvibe: {
+            navAbout: "Chi è URBNVIBE",
+            navWork: "Lavori",
+            navFlyer: "Flyer",
+            navLogo: "Logo",
+            navAwareness: "Video di sensibilizzazione",
+            navCreatives: "Creatività",
+            introLabel: "Panoramica del progetto",
+            introText: "URBNVIBE era un progetto del 10° anno ICT. In quell'ambito ho realizzato diversi elementi come un flyer, un logo, una presenza sui social media e un video. Ho seguito questo progetto durante tutto l'anno scolastico. Lavorando spesso con i programmi Adobe, ho potuto acquisire molte nuove esperienze nel design e nei social media.",
+            flyerLabel: "01 / Design per la stampa",
+            flyerHeading: "Design del flyer",
+            flyerText: "Un flyer a due facciate per URBNVIBE, pensato per la stampa e la presentazione visiva del marchio. Fronte e retro sono perfettamente coordinati per layout, tipografia e colori, per un risultato moderno e professionale.",
+            logoLabel: "02 / Branding",
+            logoHeading: "Design del logo",
+            logoText: "Il logo è il cuore dell'identità visiva di URBNVIBE. I colori sono stati scelti in armonia con il centro storico di Berna, per un look moderno e allo stesso tempo elegante. La freccia dona dinamismo al logo e simboleggia il movimento del marchio.",
+            awarenessLabel: "03 / Social media",
+            awarenessText: "Un video dal montaggio dinamico per i social media, che mette in movimento il vibe urbano del marchio. Il video racconta una breve storia di due persone che guardano insieme video sui social media. Una delle due viene presa da una risata così forte che l'altra cade dal tetto. Per fortuna atterra su una giacca URBNVIBE e si salva.",
+            creativesLabel: "04 / Social media",
+            creativesHeading: "Creatività per i social media",
+            creativesText: "Una serie di tre creatività per i social media, realizzate in formato 4:5 pensato appositamente per Instagram."
+        },
+        drone: {
+            navVideos: "Video drone",
+            label1: "01 / Video drone",
+            title1: "MÜNCHENBUCHSEE - SVIZZERA",
+            text1: "Girato con il DJI Air 3S – cielo dorato, momenti tranquilli e la bellezza della Svizzera vista dall'alto.",
+            label2: "02 / Video drone",
+            title2: "FINSTERHENNEN - SVIZZERA",
+            text2: "Durante l'\"ora dorata\" ho catturato riprese aeree degne di un film del bellissimo paesaggio di Finsterhennen. Questo video mostra la tranquilla campagna vista dall'alto, valorizzando natura, luce e atmosfera. Le riprese si distinguono per movimenti di volo fluidi, che creano un'esperienza calma e coinvolgente.",
+            label3: "03 / Video drone",
+            title3: "SONNENBERG, KERZERS - SVIZZERA",
+            text3: "Tramonto cinematografico in Svizzera con il DJI Air 3S. Il video cattura la bellezza della regione svizzera del Seeland.",
+            label4: "04 / Video drone",
+            title4: "GÜMMENEN - SVIZZERA"
+        },
+        lego: {
+            navAbout: "Il canale",
+            navVideos: "Video stop-motion",
+            aboutLabel: "01 / Canale YouTube",
+            watchChannel: "GUARDA IL CANALE",
+            videosLabel: "02 / Video LEGO stop-motion",
+            aboutTextHtml: "Io e mia sorella siamo sempre stati molto interessati all'audio e al video. Quando è arrivato il lockdown del 2020, abbiamo potuto dedicare tutto il nostro tempo libero a questa passione.<br><br>Così è nato il canale YouTube \"Lego Family Studio\".<br><br>Nei video in stop-motion, per cui progettavamo da soli le scenografie e fotografavamo, sonorizzavamo e montavamo ogni movimento, protagonisti erano sempre personaggi LEGO alle prese con qualche avventura. Le storie a volte erano legate anche all'attualità del momento, ad esempio al Covid.<br><br>Le immagini venivano scattate con il vecchio telefono di mia madre e montate con un'app di editing gratuita. Ci volevano molte ore di lavoro per i brevi video che ne risultavano.<br><br>È passato ormai del tempo, ma per l'età che avevamo allora lo trovo abbastanza riuscito e posso mostrarlo con orgoglio."
+        }
+    }
+};

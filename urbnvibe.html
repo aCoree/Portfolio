@@ -445,7 +445,7 @@
     <!-- ─── HERO SECTION & HERO SCROLL-BUTTON ─── -->
     <div class="hero-section">
         <a href="#intro-section" id="scrollDownBtn" class="scroll-down-btn">
-            <span>Scrollen</span>
+            <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
     </div>
@@ -457,9 +457,9 @@
         <!-- INTRO SEKTION -->
         <section class="urbnvibe-intro-section" id="intro-section">
             <div class="urbnvibe-intro">
-                <span class="urbnvibe-info-label">Projektübersicht</span>
-                <h2>Über URBNVIBE</h2>
-                <p>
+                <span class="urbnvibe-info-label" data-i18n="urbnvibe.introLabel">Projektübersicht</span>
+                <h2 data-i18n="urbnvibe.navAbout">Über URBNVIBE</h2>
+                <p data-i18n="urbnvibe.introText">
                     URBNVIBE war ein Projekt aus dem 10. ICT-Schuljahr. Ich habe dabei verschiedene Sachen
                     designt wie z.B. ein Flyer, ein Logo, eine Social-Media-Präsenz und ein Video. Ich habe
                     dieses Projekt durch das ganze Schuljahr geführt. Da wir oft mit Adobe Programmen gearbeitet
@@ -467,7 +467,7 @@
                 </p>
                 <!-- ZWEITER SCROLL-BUTTON -->
                 <a href="#flyer-section" class="scroll-down-btn inline-scroll-btn">
-                    <span>Scrollen</span>
+                    <span data-i18n="common.scroll">Scrollen</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </a>
             </div>
@@ -484,9 +484,9 @@
                 </div>
 
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">01 / Print Design</span>
-                    <h2>Flyer Design</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label" data-i18n="urbnvibe.flyerLabel">01 / Print Design</span>
+                    <h2 data-i18n="urbnvibe.flyerHeading">Flyer Design</h2>
+                    <p class="urbnvibe-info-description" data-i18n="urbnvibe.flyerText">
                         Ein zweiseitiger Flyer für URBNVIBE, entwickelt für den Druck und die visuelle Präsentation der
                         Marke. Die Vorder- und Rückseite sind in Layout, Typografie und Farbgebung perfekt aufeinander
                         abgestimmt, um eine moderne und professionelle Wirkung zu erzielen.
@@ -499,9 +499,9 @@
         <section class="urbnvibe-section" id="logo-section">
             <div class="urbnvibe-two-column reverse">
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">02 / Branding</span>
-                    <h2>Logo Design</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label" data-i18n="urbnvibe.logoLabel">02 / Branding</span>
+                    <h2 data-i18n="urbnvibe.logoHeading">Logo Design</h2>
+                    <p class="urbnvibe-info-description" data-i18n="urbnvibe.logoText">
                         Das Logo bildet das Herzstück der visuellen Identität von URBNVIBE. Die Farben wurden passend zu
                         der Altstadt von Bern gewählt, um einen modernen, aber auch einen schönen Look zu erzielen. Der
                         Pfeil bringt Schwung in das Logo und dient als Symbol für die Bewegung der Marke.
@@ -527,9 +527,9 @@
                     </div>
                 </div>
                 <div class="urbnvibe-info">
-                    <span class="urbnvibe-info-label">03 / Social Media</span>
-                    <h2>Awareness Video</h2>
-                    <p class="urbnvibe-info-description">
+                    <span class="urbnvibe-info-label" data-i18n="urbnvibe.awarenessLabel">03 / Social Media</span>
+                    <h2 data-i18n="urbnvibe.navAwareness">Awareness Video</h2>
+                    <p class="urbnvibe-info-description" data-i18n="urbnvibe.awarenessText">
                         Ein dynamisch geschnittenes Video für Social Media, das den urbanen Vibe der Marke in Bewegung
                         versetzt. In dem Video wird eine kurze Geschichte von zwei Personen vorgestellt die zusammen
                         Videos in den Sozialen Medien schauen. Die eine Person muss plötzlich so fest Lachen, dass die
@@ -548,9 +548,9 @@
                 <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3"></div>
             </div>
             <div class="urbnvibe-info urbnvibe-creatives-info">
-                <span class="urbnvibe-info-label">04 / Social Media</span>
-                <h2>Social Media Creatives</h2>
-                <p class="urbnvibe-info-description">
+                <span class="urbnvibe-info-label" data-i18n="urbnvibe.creativesLabel">04 / Social Media</span>
+                <h2 data-i18n="urbnvibe.creativesHeading">Social Media Creatives</h2>
+                <p class="urbnvibe-info-description" data-i18n="urbnvibe.creativesText">
                     Eine Serie aus drei Creatives für Social Media. Die Creatives wurden im 4:5-Format gestaltet,
                     speziell für Instagram.
                 </p>
@@ -559,17 +559,22 @@
 
     </main>
 
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
-            { label: "Über URBNVIBE", href: "#intro-section" },
+            { label: tr('urbnvibe.navAbout', "Über URBNVIBE"), href: "#intro-section" },
             {
-                label: "Arbeiten",
+                label: tr('urbnvibe.navWork', "Arbeiten"),
                 children: [
-                    { label: "Flyer", href: "#flyer-section" },
-                    { label: "Logo", href: "#logo-section" },
-                    { label: "Awareness Video", href: "#awareness-video-section" },
-                    { label: "Creatives", href: "#creatives-section" }
+                    { label: tr('urbnvibe.navFlyer', "Flyer"), href: "#flyer-section" },
+                    { label: tr('urbnvibe.navLogo', "Logo"), href: "#logo-section" },
+                    { label: tr('urbnvibe.navAwareness', "Awareness Video"), href: "#awareness-video-section" },
+                    { label: tr('urbnvibe.navCreatives', "Creatives"), href: "#creatives-section" }
                 ]
             }
         ];

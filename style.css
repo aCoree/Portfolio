@@ -393,7 +393,6 @@ select {
 .video-wrapper {
   position: relative;
   width: 100%;
-  max-width: 1000px;
   margin: 0 auto 60px auto;
   aspect-ratio: 16 / 9;
   border-radius: 8px;
@@ -457,7 +456,7 @@ select {
 
 .project-info-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 50px;
 }
 
@@ -465,6 +464,32 @@ select {
   font-family: "Barlow Condensed", sans-serif;
   color: #cccccc;
   margin-bottom: 15px;
+}
+
+/* Z-Layout: linke Spalte linksbündig (Standard), rechte Spalte rechtsbündig. */
+.info-content-right {
+  text-align: right;
+}
+
+.info-content-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.9rem;
+  color: #999999;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.info-content-link:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.info-content-right .info-content-link {
+  justify-content: flex-end;
 }
 
 /* ─── RECHTLICHE SEITEN (IMPRESSUM & DATENSCHUTZ) ───
@@ -896,6 +921,12 @@ section.active {
   .project-info-grid {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  .info-content-right,
+  .info-content-right .info-content-link {
+    text-align: left;
+    justify-content: flex-start;
   }
 
   .site-footer {

@@ -339,6 +339,41 @@
                 radial-gradient(circle at 50% 50%, rgba(15, 15, 15, 0.6) 0%, transparent 70%);
         }
 
+        .theme-experience::before {
+            background:
+                radial-gradient(circle at 25% 30%, rgba(76, 187, 90, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(214, 175, 60, 0.8) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(40, 90, 40, 0.55) 0%, transparent 70%);
+        }
+
+        .theme-sadnessandsorrow::before {
+            background:
+                radial-gradient(circle at 25% 30%, rgba(110, 130, 150, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(70, 95, 120, 0.8) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(35, 45, 55, 0.6) 0%, transparent 70%);
+        }
+
+        .theme-f1::before {
+            background:
+                radial-gradient(circle at 28% 32%, rgba(255, 122, 0, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 74% 66%, rgba(255, 193, 7, 0.8) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(120, 40, 0, 0.55) 0%, transparent 70%);
+        }
+
+        .theme-remember::before {
+            background:
+                radial-gradient(circle at 25% 30%, rgba(255, 176, 59, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(214, 87, 15, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(120, 40, 10, 0.6) 0%, transparent 70%);
+        }
+
+        .theme-bohemianrhapsody::before {
+            background:
+                radial-gradient(circle at 25% 30%, rgba(155, 89, 217, 0.9) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(230, 190, 70, 0.85) 0%, transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(80, 40, 100, 0.55) 0%, transparent 70%);
+        }
+
         /* =====================================================
         GRADIENT-TITEL & LAYOUT (SEITENSPEZIFISCH)
         ===================================================== */
@@ -369,6 +404,11 @@
         .theme-victory .gradient-title { background-image: linear-gradient(90deg, #82c3ff, #4a90ff, #d4ecff, #82c3ff) !important; }
         .theme-wildflower .gradient-title { background-image: linear-gradient(90deg, #e0c2ff, #c896ff, #f5e6ff, #e0c2ff) !important; }
         .theme-notimetodie .gradient-title { background-image: linear-gradient(90deg, #e63946, #6a0000, #ff8a8a, #e63946) !important; }
+        .theme-experience .gradient-title { background-image: linear-gradient(90deg, #7ed957, #d9b84c, #f4e3a1, #7ed957) !important; }
+        .theme-sadnessandsorrow .gradient-title { background-image: linear-gradient(90deg, #8fa8c2, #5b7ca3, #c5d3e0, #8fa8c2) !important; }
+        .theme-f1 .gradient-title { background-image: linear-gradient(90deg, #ff7a00, #ffb300, #fff176, #ff7a00) !important; }
+        .theme-remember .gradient-title { background-image: linear-gradient(90deg, #ffb03b, #d6570f, #ffe0a3, #ffb03b) !important; }
+        .theme-bohemianrhapsody .gradient-title { background-image: linear-gradient(90deg, #9b59d9, #e6be46, #f5e6a8, #9b59d9) !important; }
 
         .musik-two-column {
             display: grid !important;
@@ -566,7 +606,7 @@
     <!-- ─── HERO SECTION ─── -->
     <div class="hero-section">
         <a href="#musik-intro" id="scrollDownBtn" class="scroll-down-btn">
-            <span>Scrollen</span>
+            <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </a>
     </div>
@@ -575,16 +615,16 @@
     <main id="musik-page" class="project-detail-page">
 
         <div class="musik-intro" id="musik-intro">
-            <span class="musik-info-label">Meine Musik</span>
-            <h1>LEIDENSCHAFT AM KLAVIER</h1>
+            <span class="musik-info-label" data-i18n="musik.introLabel">Meine Musik</span>
+            <h1 data-i18n="musik.navIntro">LEIDENSCHAFT AM KLAVIER</h1>
 
-            <p class="musik-intro-text">
+            <p class="musik-intro-text" data-i18n="musik.introText1">
                 Klavier spielen ist für mich der beste Weg, Emotionen und Geschichten ohne Worte
                 auszudrücken. Ich habe vor einigen Jahren angefangen, mir das Klavierspielen selbst
                 beizubringen – motiviert von der Faszination für Film-Soundtracks wie "Interstellar" aber
                 auch moderne Klavierlieder.
             </p>
-            <p class="musik-intro-text">
+            <p class="musik-intro-text" data-i18n="musik.introText2">
                 Meine Videos nehme ich mit viel Liebe zum Detail auf: Vom Ausarbeiten der Arrangements bis
                 hin zum visuellen Setup versuche ich, jedem Stück seinen eigenen, passenden Vibe zu
                 verleihen, durch Licht und Schatten. Hier findest du eine Auswahl meiner liebsten Cover.
@@ -592,21 +632,21 @@
 
             <div class="musik-intro-highlights">
                 <div class="intro-highlight-item">
-                    <span class="intro-highlight-title">Am Klavier seit</span>
+                    <span class="intro-highlight-title" data-i18n="musik.sincePiano">Am Klavier seit</span>
                     <span class="intro-highlight-value">2020</span>
                 </div>
                 <div class="intro-highlight-item">
-                    <span class="intro-highlight-title">Fokus</span>
-                    <span class="intro-highlight-value">Film-Soundtracks</span>
+                    <span class="intro-highlight-title" data-i18n="musik.focus">Fokus</span>
+                    <span class="intro-highlight-value" data-i18n="musik.focusValue">Film-Soundtracks</span>
                 </div>
                 <div class="intro-highlight-item">
-                    <span class="intro-highlight-title">Setup</span>
+                    <span class="intro-highlight-title" data-i18n="musik.setup">Setup</span>
                     <span class="intro-highlight-value">Burger & Jacobi Klavier</span>
                 </div>
             </div>
 
             <div class="intro-scroll-indicator" onclick="scrollToVideos()">
-                <span>Zu den Videos</span>
+                <span data-i18n="musik.toVideos">Zu den Videos</span>
                 <i class="fa-solid fa-chevron-down"></i>
             </div>
         </div>
@@ -778,16 +818,116 @@
                 </div>
             </section>
 
+            <section class="musik-section themed-bg theme-experience" id="song-experience">
+                <div class="musik-two-column reverse">
+                    <div class="musik-info">
+                        <span class="musik-info-label">LUDOVICO EINAUDI</span>
+                        <h2 class="gradient-title">EXPERIENCE</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                                title="Klaviervideo Experience"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-sadnessandsorrow" id="song-sadnessandsorrow">
+                <div class="musik-two-column">
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                                title="Klaviervideo Sadness and Sorrow"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="musik-info">
+                        <span class="musik-info-label">TAYLOR DAVIS</span>
+                        <h2 class="gradient-title">SADNESS AND SORROW</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-f1" id="song-f1">
+                <div class="musik-two-column reverse">
+                    <div class="musik-info">
+                        <span class="musik-info-label">HANS ZIMMER</span>
+                        <h2 class="gradient-title">F1 - MAIN THEME</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                                title="Klaviervideo F1 - Main Theme"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-remember" id="song-remember">
+                <div class="musik-two-column">
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                                title="Klaviervideo Remember - The Lion King"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="musik-info">
+                        <span class="musik-info-label">HANS ZIMMER</span>
+                        <h2 class="gradient-title">REMEMBER - THE LION KING</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="musik-section themed-bg theme-bohemianrhapsody" id="song-bohemianrhapsody">
+                <div class="musik-two-column reverse">
+                    <div class="musik-info">
+                        <span class="musik-info-label">QUEEN</span>
+                        <h2 class="gradient-title">BOHEMIAN RHAPSODY</h2>
+                        <p class="musik-info-description"></p>
+                    </div>
+                    <div class="musik-media">
+                        <div class="musik-video">
+                            <iframe src="https://www.youtube.com/embed/PASTE_VIDEO_ID_HIER"
+                                title="Klaviervideo Bohemian Rhapsody"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
     </main>
 
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
-            { label: "Leidenschaft am Klavier", href: "#musik-intro" },
+            { label: tr('musik.navIntro', "Leidenschaft am Klavier"), href: "#musik-intro" },
             {
-                label: "Klavier Videos",
+                label: tr('musik.navVideos', "Klavier Videos"),
                 children: [
                     { label: "The Force Theme", href: "#song-force-theme" },
                     { label: "Time - Inception", href: "#song-inception" },
@@ -797,10 +937,14 @@
                     { label: "Top Gun: Maverick", href: "#song-topgun" },
                     { label: "Victory", href: "#song-victory" },
                     { label: "Wildflower", href: "#song-wildflower" },
-                    { label: "No Time To Die", href: "#song-notimetodie" }
+                    { label: "No Time To Die", href: "#song-notimetodie" },
+                    { label: "Experience", href: "#song-experience" },
+                    { label: "Sadness and Sorrow", href: "#song-sadnessandsorrow" },
+                    { label: "F1 - Main Theme", href: "#song-f1" },
+                    { label: "Remember - The Lion King", href: "#song-remember" },
+                    { label: "Bohemian Rhapsody", href: "#song-bohemianrhapsody" }
                 ]
-            },
-            { label: "Meine Lieder", href: "#musik-videos" }
+            }
         ];
     </script>
 

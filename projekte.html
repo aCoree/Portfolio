@@ -254,29 +254,29 @@
     <main class="container">
         
         <div class="projects-header-flex">
-            <h1 class="projects-title">Alle Projekte</h1>
-            
+            <h1 class="projects-title" data-i18n="nav.projectsAll">Alle Projekte</h1>
+
             <div class="sort-filter-group">
-                <label for="sortSelect" class="sort-label">Sortieren nach:</label>
+                <label for="sortSelect" class="sort-label" data-i18n="projekte.sortBy">Sortieren nach:</label>
                 <select id="sortSelect" class="custom-select">
-                    <option value="neuste">Neuste zuerst</option>
-                    <option value="beliebteste">Beliebteste</option>
-                    <option value="aelteste">Älteste zuerst</option>
-                    <option value="alphabetisch">Name (A–Z)</option>
+                    <option value="neuste" data-i18n="projekte.sortNewest">Neuste zuerst</option>
+                    <option value="beliebteste" data-i18n="projekte.sortPopular">Beliebteste</option>
+                    <option value="aelteste" data-i18n="projekte.sortOldest">Älteste zuerst</option>
+                    <option value="alphabetisch" data-i18n="projekte.sortAlphabetical">Name (A–Z)</option>
                 </select>
             </div>
         </div>
 
         <!-- ─── MOVIE GRID (4 SPALTEN DESKTOP, 2 SPALTEN MOBILE) ─── -->
         <div class="poster-grid" id="projectsContainer">
-            
+
             <!-- Poster 1: RUN -->
             <a href="run.html" class="poster-card" data-date="2026-06-01" data-views="8000" data-title="RUN">
                 <div class="poster-img-wrapper" style="background-image: url('cards/card-small-run.png');"></div>
                 <div class="poster-info poster-info-single">
-                    <h3 class="poster-title">RUN</h3>   
+                    <h3 class="poster-title">RUN</h3>
                     <span class="dot-separator">·</span>
-                    <span class="poster-meta">Action Kurzfilm</span>
+                    <span class="poster-meta" data-i18n="projekte.genreRun">Action Kurzfilm</span>
                 </div>
             </a>
 
@@ -286,7 +286,7 @@
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">URBNVIBE</h3>
                     <span class="dot-separator">·</span>
-                    <span class="poster-meta">Projekt</span>
+                    <span class="poster-meta" data-i18n="projekte.genreUrbnvibe">Projekt</span>
                 </div>
             </a>
 
@@ -296,7 +296,7 @@
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">LEGO FAMILY STUDIO</h3>
                     <span class="dot-separator">·</span>
-                    <span class="poster-meta">Youtube Kanal</span>
+                    <span class="poster-meta" data-i18n="projekte.genreLego">Youtube Kanal</span>
                 </div>
             </a>
 
@@ -306,7 +306,7 @@
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">MUSIK</h3>
                     <span class="dot-separator">·</span>
-                    <span class="poster-meta">Klavier & Schlagzeug</span>
+                    <span class="poster-meta" data-i18n="projekte.genreMusik">Klavier & Schlagzeug</span>
                 </div>
             </a>
 
@@ -316,7 +316,7 @@
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">DJI AIR 3S</h3>
                     <span class="dot-separator">·</span>
-                    <span class="poster-meta">Drohnen Videos</span>
+                    <span class="poster-meta" data-i18n="projekte.genreDrone">Drohnen Videos</span>
                 </div>
             </a>
         </div>
@@ -324,6 +324,8 @@
     </main>
 
     <!-- ─── JAVASCRIPT EINBINDUNG ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
     <script src="header.js"></script>
 
     <script>
