@@ -410,6 +410,26 @@
             border-bottom-color: #000000 !important;
         }
 
+        /* ─── SPRACH-BUTTONS IM MOBILE-MENÜ (LEGO-Theme) ───
+           Die 4 Sprachbuttons (DE/FR/EN/IT) sind standardmäßig hell/weiß
+           umrandet und kaum lesbar auf dem gelben LEGO-Mobile-Menü-
+           Hintergrund. Bekommen hier eine dunkle/schwarze Optik. */
+        body.lego-family-studio .lang-switcher--mobile-menu .lang-switcher-btn {
+            color: #000000 !important;
+            border-color: rgba(0, 0, 0, 0.4) !important;
+        }
+
+        body.lego-family-studio .lang-switcher--mobile-menu .lang-switcher-btn:hover {
+            color: #000000 !important;
+            border-color: rgba(0, 0, 0, 0.7) !important;
+        }
+
+        body.lego-family-studio .lang-switcher--mobile-menu .lang-switcher-btn.is-active {
+            color: #ffffff !important;
+            background-color: #000000 !important;
+            border-color: #000000 !important;
+        }
+
         /* ─── SUCHFUNKTION (LEGO-Theme) ───
            Das Such-Panel selbst (.nav-expand) ist bereits über die Regel
            weiter oben gelb eingefärbt (body.lego-family-studio .nav-expand).
@@ -664,17 +684,21 @@
             line-height: 1.75 !important;
         }
 
-        .lego-info-title-row {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            flex-wrap: wrap !important;
-            gap: 16px !important;
-            margin: 0 0 22px 0 !important;
+        /* =====================================================
+           "KANAL ANSEHEN"-BUTTON (DEZENT, NACH DEM TEXT)
+           ===================================================== */
+        .lego-channel-btn {
+            display: inline-block !important;
+            margin-top: 8px !important;
+            padding: 8px 22px !important;
+            font-size: 12px !important;
+            font-weight: 400 !important;
+            letter-spacing: 1px !important;
+            opacity: 0.8 !important;
         }
 
-        .lego-info-title-row h2 {
-            margin: 0 !important;
+        .lego-channel-btn:hover {
+            opacity: 1 !important;
         }
 
         .lego-white-wrapper .lego-info-label {
@@ -972,12 +996,7 @@
                     </div>
                     <div class="lego-info">
                         <span class="lego-info-label" data-i18n="lego.aboutLabel">01 / YouTube Channel</span>
-                        <div class="lego-info-title-row">
-                            <h2 data-i18n="lego.navAbout">Über den Kanal</h2>
-                            <a href="https://www.youtube.com/@legofamilystudio8229" class="btn" target="_blank" rel="noopener noreferrer">
-                                <span data-i18n="lego.watchChannel">KANAL ANSEHEN</span>
-                            </a>
-                        </div>
+                        <h2 data-i18n="lego.navAbout">Über den Kanal</h2>
                         <p class="lego-info-description" data-i18n-html="lego.aboutTextHtml">
                             Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video.
                             Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache
@@ -997,6 +1016,9 @@
                             Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut
                             und kann es mit Stolz zeigen.
                         </p>
+                        <a href="https://www.youtube.com/@legofamilystudio" class="btn lego-channel-btn" target="_blank" rel="noopener noreferrer">
+                            <span data-i18n="lego.watchChannel">KANAL ANSEHEN</span>
+                        </a>
                     </div>
                 </div>
 
@@ -1066,6 +1088,46 @@
                         <div class="lego-video">
                             <iframe src="https://www.youtube.com/embed/LbfMY7M3kZc"
                                 title="LEGO Family Studio - Cinematic Short"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="lego-separator"></div>
+
+            <section class="lego-section" id="lego-video-street-hole">
+                <div class="lego-two-column">
+                    <div class="lego-media">
+                        <div class="lego-video">
+                            <iframe src="https://www.youtube.com/embed/8mfLECHIH8E"
+                                title="LEGO Family Studio - LEGO Street Hole"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="lego-info">
+                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2>LEGO Street Hole</h2>
+                        <p class="lego-info-description"></p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="lego-separator"></div>
+
+            <section class="lego-section" id="lego-video-pirate-ship">
+                <div class="lego-two-column reverse">
+                    <div class="lego-info">
+                        <span class="lego-info-label" data-i18n="lego.videosLabel">02 / Stop-Motion LEGO Videos</span>
+                        <h2>LEGO Pirate Ship</h2>
+                        <p class="lego-info-description"></p>
+                    </div>
+                    <div class="lego-media">
+                        <div class="lego-video">
+                            <iframe src="https://www.youtube.com/embed/xydyoD4sTT4"
+                                title="LEGO Family Studio - LEGO Pirate Ship"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </div>
@@ -1144,7 +1206,9 @@
                 children: [
                     { label: "Corona LEGO Time", href: "#lego-video-corona" },
                     { label: "LEGO Street Race", href: "#lego-video-street-race" },
-                    { label: "LEGO Hairdresser", href: "#lego-video-hairdresser" }
+                    { label: "LEGO Hairdresser", href: "#lego-video-hairdresser" },
+                    { label: "LEGO Street Hole", href: "#lego-video-street-hole" },
+                    { label: "LEGO Pirate Ship", href: "#lego-video-pirate-ship" }
                 ]
             }
         ];

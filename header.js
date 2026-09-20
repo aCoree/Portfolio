@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentLang = (window.i18n && window.i18n.getCurrentLanguage) ? window.i18n.getCurrentLanguage() : 'de';
     const SUPPORTED_LANGS = (window.i18n && window.i18n.SUPPORTED) ? window.i18n.SUPPORTED : ['de', 'fr', 'en', 'it'];
 
+    // ─── 0b. LEGO FAMILY STUDIO: SEITENSPEZIFISCHE YOUTUBE-/LOGO-OVERRIDES ───
+    // Nur auf lego.html (body.lego-family-studio) sollen Header/Footer zum
+    // "Lego Family Studio"-Kanal + Lego-Logo verlinken, sonst überall zum
+    // normalen Aurelio-Zingarello-Kanal/-Logo.
+    const isLegoPage = document.body.classList.contains('lego-family-studio');
+    const youtubeUrl = isLegoPage ? 'https://www.youtube.com/@legofamilystudio' : 'https://www.youtube.com/@aureliozingarello';
+    const logoSrc = isLegoPage ? 'images/logo-wide-lego.png' : 'images/logo-wide.png';
+    const logoAlt = isLegoPage ? 'Lego Family Studio Logo' : 'Aurelio Zingarello Logo';
+
     // ─── 1. DYNAMISCHE CSS STYLES (FOOTER & AUTOMATISCHER STICKY FOOTER) ───
     const dynamicStyle = document.createElement('style');
     dynamicStyle.textContent = `
@@ -357,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="nav-left">
                 <a href="index.html#home" class="logo" id="navLogo">
                     <span class="logo-mark">
-                        <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
+                        <img src="${logoSrc}" alt="${logoAlt}">
                     </span>
                 </a>
                 <!-- Ersetzt das Logo auf tieferen Mobile-Menü-Ebenen (siehe JS) -->
@@ -372,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button type="button" class="nav-search-toggle" id="navSearchToggleDesktop" aria-label="${t('nav.ariaSearchOpen', 'Suche öffnen')}" aria-expanded="false">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-                <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
+                <a href="${youtubeUrl}" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a>
             </div>
 
             <!-- Lupe direkt neben dem Hamburger (nur Mobile, siehe header.css). -->
@@ -458,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="footer-left">
             <a href="index.html#home" class="logo">
                 <span class="logo-mark">
-                    <img src="images/logo-wide.png" alt="Aurelio Zingarello Logo">
+                    <img src="${logoSrc}" alt="${logoAlt}">
                 </span>
             </a>
         </div>
@@ -475,7 +484,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
         <div class="footer-right">
             ${buildLangSwitcherHTML('lang-switcher--footer-desktop')}
-            <a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
+            <a href="${youtubeUrl}" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </footer>
     `;
@@ -877,7 +886,7 @@ document.addEventListener("DOMContentLoaded", function() {
             : '';
 
         const socialHTML = level.isTop
-            ? `<div class="mobile-social"><a href="https://www.youtube.com/@aureliozingarello" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a></div>`
+            ? `<div class="mobile-social"><a href="${youtubeUrl}" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a></div>`
             : '';
 
         const langSwitcherHTML = level.isTop ? buildLangSwitcherHTML('lang-switcher--mobile-menu') : '';
