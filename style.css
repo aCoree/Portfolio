@@ -1,5 +1,8 @@
-/* ─── GOOGLE FONTS IMPORT ─── */
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,450;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;600;800&display=swap");
+/* ─── GOOGLE FONTS IMPORT ───
+   Roboto Flex statt normaler Roboto: als Variable Font lässt sich die
+   Strichstärke fein (z.B. 350 statt nur 300/400) einstellen, siehe
+   --font-body-weight unten. */
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,450;0,500;0,600;0,700;1,400&family=Roboto+Flex:opsz,wght@8..144,300..500&family=Inter:wght@400;600;800&display=swap");
 
 /* ─── CSS VARIABLES & ROOT ─── */
 :root {
@@ -15,8 +18,9 @@
      bewusst nur noch für Titel/Labels/Buttons/Navigation (alles in
      GROSSBUCHSTABEN) verwendet wird. Ist der body-Standard (siehe
      unten) – Barlow Condensed wird nur noch dort explizit gesetzt, wo
-     Text in Versalien läuft. */
-  --font-body: "DM Sans", sans-serif;
+     Text in Versalien läuft. Eine Stufe über Light (350 statt 300). */
+  --font-body: "Roboto Flex", sans-serif;
+  --font-body-weight: 350;
 }
 
 /* ─── BASIC RESETS & FONTS ─── */
@@ -40,6 +44,7 @@ html {
 
 body {
   font-family: var(--font-body);
+  font-weight: var(--font-body-weight);
   background-color: #0d0d0d;
   color: #cbc8c8;
   line-height: 1.6;
@@ -131,43 +136,12 @@ body:not(.has-hero) main,
   text-transform: uppercase;
 }
 
-/* ─── LAYOUT & BUTTONS ─── */
-/* ─── GANZER FILM BUTTON ─── */
-.scroll-down-btn {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: #dadada !important;
-    text-decoration: none !important;
-    line-height: 1;
-    cursor: pointer;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-/* Text-Dicke & Schriftgröße */
-.scroll-down-btn span {
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 900 !important; /* <-- HIER DIE DICKE ANPASSEN */
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-}
-
-/* Icon (Pfeil) */
-.scroll-down-btn i {
-    font-family: "Font Awesome 6 Free" !important;
-    font-weight: 900 !important;
-    font-size: 0.85rem;
-}
-
-.scroll-down-btn:hover {
-    color: #ffffff !important;
-}
+/* ─── LAYOUT & BUTTONS ───
+   Die vollständige .scroll-down-btn-Definition (Typografie, Icon-
+   Animation, Fixed-Positionierung, Fade-out beim Scrollen) lebt jetzt
+   an EINER einzigen Stelle weiter unten (Abschnitt "SCROLL-DOWN
+   BUTTON"), damit garantiert jede Seite exakt dieselbe Optik bekommt –
+   hier bewusst nicht mehr dupliziert. */
 
 .btn {
   display: inline-block;
@@ -329,7 +303,7 @@ select {
   align-self: center;
   padding: 12px 34px;
   border-radius: 9999px !important;
-  font-family: var(--font-body);
+  font-family: "Barlow Condensed", sans-serif;
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -384,6 +358,56 @@ select {
   background-color: rgba(255, 255, 255, 0.85) !important;
   transform: none !important;
   box-shadow: none !important;
+}
+
+/* ─── KONTAKTFORMULAR: STATUS-MELDUNG ───
+   Ersetzt die Weiterleitung auf Formsprees eigene Danke-Seite: das
+   Formular wird per fetch() im Hintergrund abgeschickt (siehe
+   index.html), die Antwort erscheint stattdessen dezent direkt unter
+   dem Button. Leer und unsichtbar, solange nichts gesendet wurde. */
+.contact-form-status {
+  /* .contact-form ist ein Flex-Layout mit gap:20px zwischen allen Kindern
+     – margin:-10px hier gleicht genau die Hälfte dieses Gaps auf beiden
+     Seiten aus, solange die Meldung leer/unsichtbar ist, damit zwischen
+     "Deine Nachricht" und dem Button kein zusätzlicher Leerraum entsteht. */
+  max-width: 480px;
+  margin: -10px auto;
+  padding: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  font-family: var(--font-body);
+  font-weight: var(--font-body-weight);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: center;
+  border-radius: 10px;
+  transition: opacity 0.35s ease, height 0.35s ease, padding 0.35s ease, margin 0.35s ease;
+}
+
+.contact-form-status.is-visible {
+  height: auto;
+  opacity: 1;
+  padding: 12px 18px;
+  margin: 0 auto;
+}
+
+.contact-form-status.is-success {
+  color: #8fe3a6;
+  background: rgba(88, 214, 141, 0.12);
+  border: 1px solid rgba(88, 214, 141, 0.3);
+}
+
+.contact-form-status.is-error {
+  color: #f5a3a3;
+  background: rgba(214, 88, 88, 0.12);
+  border: 1px solid rgba(214, 88, 88, 0.3);
+}
+
+.contact-form-status.is-sending {
+  color: #999999;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* ─── COLOR GRADING SLIDER ───
@@ -661,7 +685,7 @@ select {
 .see-all-link {
   color: #2997ff;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: var(--font-body-weight);
   font-size: 1.05rem;
   letter-spacing: 0.3px;
   display: inline-flex;
@@ -864,10 +888,49 @@ select {
 }
 
 .scroll-down-btn.fade-out-on-scroll {
+  /* Schneller weg als die 0.6s/0.3s des normalen (Wieder-)Einblendens –
+     nach einem Klick (der ja selbst schon zur Zielsektion scrollt) soll
+     der Button nicht noch sichtbar lang hinterherhängen. */
+  transition-duration: 0.2s !important;
   transform: translate(-50%, 10px) translateZ(0) !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
+}
+
+/* Modifier: Button läuft im normalen Seitenfluss mit statt am
+   Bildschirmrand zu kleben (z.B. "Zu den Videos" mitten auf der
+   Seite) – Typografie/Icon/Animation bleiben exakt wie beim fixierten
+   Hero-Button, nur die Positionierung wird zurückgesetzt. */
+.scroll-down-btn--inline {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  transform: none;
+  margin: 0;
+}
+
+.scroll-down-btn--inline:hover {
+  transform: translateY(3px);
+}
+
+/* Modifier: Button sitzt fest im Hero-Bereich (position:absolute,
+   scrollt mit dem Hero weg) statt fixed am Viewport zu kleben – für
+   Hero-Sektionen, die selbst schon zentriert/begrenzt sind
+   (z.B. index.html). */
+.scroll-down-btn--hero-absolute {
+  position: absolute;
+  top: auto;
+  bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.scroll-down-btn--hero-absolute:hover {
+  transform: translate(-50%, 3px);
 }
 
 .scroll-down-btn i {
@@ -1122,7 +1185,7 @@ select {
 .error-container p {
   font-family: var(--font-body);
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: var(--font-body-weight);
   color: #cccccc;
   line-height: 1.5;
   margin-bottom: 30px;

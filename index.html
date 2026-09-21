@@ -76,57 +76,11 @@
             z-index: 2;
         }
 
-        /* ─── SCROLL-BUTTON (dynamisch an Mobile-Browser-Leisten angepasst) ─── */
-
-        .hero-scroll-indicator {
-            position: absolute;
-            bottom: calc(40px + env(safe-area-inset-bottom, 0px));
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.3s ease, color 0.3s ease;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .hero-scroll-indicator:hover {
-            opacity: 1;
-            color: #ffffff;
-        }
-
-        .hero-scroll-indicator i {
-            font-size: 13px;
-            animation: bounceDown 2s infinite;
-        }
-
-        @keyframes bounceDown {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(5px);
-            }
-
-            60% {
-                transform: translateY(2px);
-            }
-        }
+        /* Der Scroll-Button selbst (Typografie/Icon-Animation/Position)
+           kommt jetzt komplett von den geteilten Klassen scroll-down-btn +
+           scroll-down-btn--hero-absolute (style.css), damit er exakt wie
+           auf allen anderen Seiten aussieht – hier bewusst nicht mehr
+           dupliziert. */
 
         /* ─── SYSTEM-VARIABLEN ─── */
         :root {
@@ -138,9 +92,6 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
         }
 
         #home.hero {
@@ -554,7 +505,7 @@
             <p class="az-reveal" data-az-delay="1" data-i18n="index.heroSubtitle">Filmmaker & Mediamatiker aus der Schweiz</p>
         </div>
 
-        <div class="hero-scroll-indicator" onclick="scrollPastHero()">
+        <div class="scroll-down-btn scroll-down-btn--hero-absolute hero-scroll-indicator" onclick="scrollPastHero()">
             <span data-i18n="common.scroll">Scrollen</span>
             <i class="fa-solid fa-chevron-down"></i>
         </div>
@@ -678,10 +629,11 @@
             <p class="az-reveal" data-az-delay="1" style="text-align: center; margin-bottom: 30px;" data-i18n="index.contactText">Lust auf eine
                 Zusammenarbeit oder hast du Fragen zu
                 meinen Projekten? Schreib mir!</p>
-            <form class="contact-form az-reveal" data-az-delay="2" action="https://formspree.io/f/xojowqvy" method="POST">
+            <form id="contactForm" class="contact-form az-reveal" data-az-delay="2" action="https://formspree.io/f/xojowqvy" method="POST">
                 <input type="text" name="name" placeholder="Dein Name" data-i18n-attr="placeholder:index.namePlaceholder" required>
                 <input type="email" name="email" placeholder="Deine E-Mail" data-i18n-attr="placeholder:index.emailPlaceholder" required>
                 <textarea name="message" placeholder="Deine Nachricht..." data-i18n-attr="placeholder:index.messagePlaceholder" rows="5" required></textarea>
+                <p id="contactFormStatus" class="contact-form-status" role="status" aria-live="polite"></p>
                 <button type="submit" class="btn" data-i18n="index.submit">Nachricht senden</button>
             </form>
         </div>
@@ -1004,6 +956,63 @@
                 showVideo();
             }
         });
+
+        // ─── KONTAKTFORMULAR: PER AJAX SENDEN (KEINE WEITERLEITUNG) ───
+        // Statt eines normalen Form-Submits (der auf Formsprees eigene
+        // "Danke"-Seite weiterleitet) wird per fetch() im Hintergrund
+        // gesendet und die Antwort direkt unter dem Button eingeblendet.
+        (() => {
+            const form = document.getElementById('contactForm');
+            const status = document.getElementById('contactFormStatus');
+            if (!form || !status) return;
+
+            const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const submitLabel = submitBtn.querySelector('span') || submitBtn;
+            const originalLabelText = submitLabel.textContent;
+            let dismissTimer = null;
+
+            function showStatus(text, state, autoDismiss) {
+                clearTimeout(dismissTimer);
+                status.textContent = text;
+                status.classList.remove('is-success', 'is-error', 'is-sending');
+                status.classList.add('is-visible', state);
+
+                if (autoDismiss) {
+                    dismissTimer = setTimeout(() => {
+                        status.classList.remove('is-visible');
+                    }, 4000);
+                }
+            }
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                submitBtn.disabled = true;
+                submitLabel.textContent = tr('index.sending', 'Wird gesendet...');
+                showStatus(tr('index.sending', 'Wird gesendet...'), 'is-sending');
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        showStatus(tr('index.formSuccess', 'Danke für deine Nachricht! Ich melde mich so bald wie möglich bei dir.'), 'is-success', true);
+                        form.reset();
+                    } else {
+                        showStatus(tr('index.formError', 'Etwas ist schiefgelaufen. Bitte versuch es nochmal oder schreib mir direkt per E-Mail.'), 'is-error', true);
+                    }
+                } catch (err) {
+                    showStatus(tr('index.formError', 'Etwas ist schiefgelaufen. Bitte versuch es nochmal oder schreib mir direkt per E-Mail.'), 'is-error', true);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitLabel.textContent = originalLabelText;
+                }
+            });
+        })();
     </script>
 </body>
 

@@ -59,7 +59,10 @@ window.SITE_TRANSLATIONS = {
             namePlaceholder: "Dein Name",
             emailPlaceholder: "Deine E-Mail",
             messagePlaceholder: "Deine Nachricht...",
-            submit: "Nachricht senden"
+            submit: "Nachricht senden",
+            sending: "Wird gesendet...",
+            formSuccess: "Danke für deine Nachricht! Ich melde mich so bald wie möglich bei dir.",
+            formError: "Etwas ist schiefgelaufen. Bitte versuch es nochmal oder schreib mir direkt per E-Mail."
         },
         run: {
             navTrailer: "Trailer",
@@ -247,7 +250,10 @@ window.SITE_TRANSLATIONS = {
             namePlaceholder: "Ton nom",
             emailPlaceholder: "Ton e-mail",
             messagePlaceholder: "Ton message...",
-            submit: "Envoyer le message"
+            submit: "Envoyer le message",
+            sending: "Envoi en cours...",
+            formSuccess: "Merci pour ton message ! Je te répondrai dès que possible.",
+            formError: "Une erreur s'est produite. Réessaie ou écris-moi directement par e-mail."
         },
         run: {
             navTrailer: "Bande-annonce",
@@ -435,7 +441,10 @@ window.SITE_TRANSLATIONS = {
             namePlaceholder: "Your name",
             emailPlaceholder: "Your email",
             messagePlaceholder: "Your message...",
-            submit: "Send message"
+            submit: "Send message",
+            sending: "Sending...",
+            formSuccess: "Thanks for your message! I'll get back to you as soon as possible.",
+            formError: "Something went wrong. Please try again or email me directly."
         },
         run: {
             navTrailer: "Trailer",
@@ -623,7 +632,10 @@ window.SITE_TRANSLATIONS = {
             namePlaceholder: "Il tuo nome",
             emailPlaceholder: "La tua email",
             messagePlaceholder: "Il tuo messaggio...",
-            submit: "Invia messaggio"
+            submit: "Invia messaggio",
+            sending: "Invio in corso...",
+            formSuccess: "Grazie per il tuo messaggio! Ti risponderò il prima possibile.",
+            formError: "Qualcosa è andato storto. Riprova oppure scrivimi direttamente via e-mail."
         },
         run: {
             navTrailer: "Trailer",

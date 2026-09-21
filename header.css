@@ -186,8 +186,7 @@ body.has-second-header .navbar {
   transition: color 0.25s ease;
 }
 
-.nav-center a:hover,
-.nav-center a.active {
+.nav-center a:hover {
   color: var(--nav-text-active);
 }
 
@@ -211,6 +210,13 @@ body.has-second-header .navbar {
   padding-left: 24px;
 }
 
+/* Kreis-Button bleibt wie gehabt (inkl. Blau/Violett-Verlauf beim
+   Hover) – nur die Ruhefarbe von Rahmen/Icon ist jetzt dieselbe
+   gedimmte Farbe wie die normalen Header-Links (--nav-text-idle),
+   statt fest weiss. Beim Hover wird das Icon (wie die Links) weiss,
+   der Rahmen verschwindet zugunsten des Verlaufs (::after). LEGO
+   überschreibt Rahmenform/-farbe ohnehin komplett per !important und
+   bleibt davon unberührt. */
 .social-icon {
   display: inline-flex;
   align-items: center;
@@ -220,12 +226,11 @@ body.has-second-header .navbar {
   border-radius: 50%;
   position: relative;
   background-color: transparent;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-  opacity: 0.8;
+  border: 1px solid var(--nav-text-idle);
+  color: var(--nav-text-idle);
   font-size: 1rem;
   transition:
-    opacity 0.3s ease,
+    color 0.3s ease,
     box-shadow 0.3s ease,
     border-color 0.3s ease;
   z-index: 1;
@@ -245,13 +250,15 @@ body.has-second-header .navbar {
   transition: opacity 0.3s ease;
 }
 
-.social-icon:hover {
-  opacity: 1;
+.social-icon:hover,
+.social-icon:focus-visible {
+  color: var(--nav-text-active);
   border-color: transparent;
   box-shadow: 0 4px 15px rgba(139, 123, 216, 0.2);
 }
 
-.social-icon:hover::after {
+.social-icon:hover::after,
+.social-icon:focus-visible::after {
   opacity: 1;
 }
 
@@ -489,6 +496,7 @@ body.has-second-header .navbar {
   gap: 12px;
   padding: 10px 4px;
   font-family: "Barlow Condensed", sans-serif;
+  font-weight: 400;
   color: var(--nav-text-idle);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   transition: color 0.2s ease;
@@ -531,6 +539,7 @@ body.has-second-header .navbar {
 .nav-search-empty {
   padding: 10px 4px;
   font-family: "Barlow Condensed", sans-serif;
+  font-weight: 400;
   font-size: 0.9rem;
   color: var(--nav-text-idle);
 }
@@ -641,12 +650,19 @@ body.has-second-header .navbar {
    die höhere der beiden Ebenen gesetzt – ganz ohne dass header.js jemals
    eine Höhe berechnen oder per JS setzen muss. Weder Inhalt noch
    JavaScript bestimmen also die Position der Navigation, nur dieser
-   feste Rahmen. */
+   feste Rahmen.
+
+   Bewusst position:relative + margin statt position:absolute + top: bei
+   vielen Second-Header-Einträgen (z.B. 4 bei run.html) reicht der Inhalt
+   über 100vh hinaus – ein absolut positioniertes Element trägt in
+   manchen Browsern (u.a. Chrome) nicht zuverlässig zur Scroll-Höhe des
+   umgebenden .mobile-menu (overflow-y:auto) bei, wodurch YouTube-Icon +
+   Sprachbuttons am Ende unerreichbar würden. Mit margin bleibt der feste
+   Abstand zum oberen Rand exakt erhalten, das Element zählt aber wieder
+   normal zum scrollbaren Inhalt. */
 .mobile-menu-levels {
-  position: absolute;
-  top: 100px;
-  left: 24px;
-  right: 24px;
+  position: relative;
+  margin: 100px 24px 32px 24px;
   display: grid;
   box-sizing: border-box;
 }
@@ -676,7 +692,7 @@ body.has-second-header .navbar {
   align-items: flex-start;
   width: 100%;
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
 .mobile-nav-link {
@@ -728,8 +744,7 @@ button.mobile-nav-drill {
 }
 
 .mobile-nav-link:hover,
-.mobile-nav-link:active,
-.mobile-nav-link.active {
+.mobile-nav-link:active {
   color: var(--nav-text-active);
 }
 
@@ -738,18 +753,31 @@ button.mobile-nav-drill {
   opacity: 0.6;
 }
 
-.mobile-social {
+/* YouTube-Icon + Sprachbuttons teilen sich eine Zeile (siehe
+   header.js: socialLangRowHTML) statt untereinander zu stehen – spart
+   vertikalen Platz im Mobile-Menü. */
+.mobile-social-lang-row {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 28px;
   margin-top: 40px;
 }
 
-/* YouTube-Icon im Mobile-Menü immer volles Weiß (statt der gedimmten
-   80%-Deckkraft von .social-icon) – nur im Mobile-Menü, der Desktop-Header
-   (.nav-right .social-icon) bleibt unverändert. LEGO überschreibt Opacity
-   ohnehin bereits per !important und bleibt unberührt. */
+.mobile-social {
+  display: flex;
+  gap: 20px;
+}
+
+/* YouTube-Icon im Mobile-Menü immer volles Weiß, genau wie die übrigen
+   Mobile-Nav-Links (.mobile-nav-link – siehe dort) – nur im Mobile-Menü,
+   der Desktop-Header (.nav-right .social-icon) bleibt bei der gedimmten
+   --nav-text-idle-Farbe. LEGO überschreibt die Farbe ohnehin bereits per
+   !important und bleibt unberührt. */
 .mobile-social .social-icon {
-  opacity: 1;
+  color: #ffffff;
+  border-color: #ffffff;
 }
 
 body.menu-open {
@@ -858,7 +886,7 @@ body.menu-open {
 }
 
 .lang-switcher--mobile-menu {
-  margin-top: 32px;
+  margin-top: 0;
 }
 
 /* ─── SECOND HEADER (DESKTOP) ───
@@ -929,8 +957,7 @@ body.menu-open {
   transition: color 0.25s ease;
 }
 
-.second-navbar-link:hover,
-.second-navbar-link.active {
+.second-navbar-link:hover {
   color: var(--nav-text-active);
 }
 
@@ -954,9 +981,15 @@ body.menu-open {
   align-items: flex-start;
   width: 100%;
   gap: 18px;
-  margin-top: 28px;
-  margin-bottom: 40px;
-  padding-top: 24px;
+  /* Trennlinie (border-top) sitzt dank margin-top:0 + padding-top exakt
+     mittig zwischen dem letzten Haupt-Nav-Link (.mobile-nav margin-
+     bottom: 28px) und dem ersten Second-Header-Eintrag – vorher lag sie
+     durch margin-top+padding-top deutlich näher am unteren Block. Der
+     insgesamt kleinere Abstand (28px statt vorher 92px) schafft
+     zusätzlich Platz für YouTube-Icon + Sprachbuttons am Ende. */
+  margin-top: 0;
+  margin-bottom: 28px;
+  padding-top: 28px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 

@@ -885,13 +885,18 @@ document.addEventListener("DOMContentLoaded", function() {
             ? `<nav class="${level.isTop ? 'mobile-second-nav' : 'mobile-nav'}">${itemLinksHTML}</nav>`
             : '';
 
-        const socialHTML = level.isTop
-            ? `<div class="mobile-social"><a href="${youtubeUrl}" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a></div>`
+        // YouTube-Icon + Sprachbuttons teilen sich EINE Zeile (statt
+        // untereinander zu stehen) – spart Höhe, damit bei vielen Second-
+        // Header-Einträgen (z.B. 4 bei run.html) am Ende des Mobile-Menüs
+        // weniger gescrollt werden muss.
+        const socialLangRowHTML = level.isTop
+            ? `<div class="mobile-social-lang-row">
+                <div class="mobile-social"><a href="${youtubeUrl}" target="_blank" class="social-icon"><i class="fa-brands fa-youtube"></i></a></div>
+                ${buildLangSwitcherHTML('lang-switcher--mobile-menu')}
+            </div>`
             : '';
 
-        const langSwitcherHTML = level.isTop ? buildLangSwitcherHTML('lang-switcher--mobile-menu') : '';
-
-        return `${mainLinksHTML}${itemsNavHTML}${socialHTML}${langSwitcherHTML}`;
+        return `${mainLinksHTML}${itemsNavHTML}${socialLangRowHTML}`;
     }
 
     function attachLevelHandlers(level, panelEl) {
@@ -922,7 +927,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Bezug zu Text/Anzahl/Seite), funktioniert dadurch automatisch für
     // jede aktuelle und künftige Ebene, ohne Sonderfälle.
     function animatePanelRowsIn(panelEl) {
-        const rows = panelEl.querySelectorAll('.mobile-nav-link, .mobile-nav-drill, .mobile-social, .mobile-search-field');
+        const rows = panelEl.querySelectorAll('.mobile-nav-link, .mobile-nav-drill, .mobile-social-lang-row, .mobile-search-field');
         rows.forEach((row, index) => {
             row.animate(
                 [
@@ -1090,12 +1095,42 @@ document.addEventListener("DOMContentLoaded", function() {
     // 'search') – exakt derselbe Zustand (Hamburger→X, .mobile-menu.open,
     // body.menu-open) für beide, nur der gerenderte Panel-Inhalt
     // unterscheidet sich.
+    // Sperrt die Seite im Hintergrund komplett (kein Touch-Scroll
+    // "durchgreift" mehr bis zum Seiteninhalt) statt nur body{overflow:
+    // hidden}, was auf vielen mobilen Browsern (v.a. iOS/Android Chrome)
+    // Hintergrund-Scroll per Touch nicht zuverlässig verhindert. body wird
+    // dafür an der aktuellen Scroll-Position fixiert; .mobile-menu bleibt
+    // als eigenes, unabhängig positioniertes Element weiterhin normal
+    // scrollbar (eigenes overflow-y:auto).
+    let lockedScrollY = 0;
+
+    function lockBodyScroll() {
+        lockedScrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${lockedScrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+    }
+
+    function unlockBodyScroll() {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+        window.scrollTo(0, lockedScrollY);
+    }
+
     function openMobileOverlay(mode) {
         if (!hamburger || !mobileMenu) return;
         const wasOpen = hamburger.classList.contains('open');
         closeOtherPanels(null);
         hamburger.classList.add('open');
         mobileMenu.classList.add('open');
+        if (!document.body.classList.contains('menu-open')) {
+            lockBodyScroll();
+        }
         document.body.classList.add('menu-open');
         mobileMenuMode = mode;
         setMobileSearchToggleState(mode === 'search');
@@ -1117,6 +1152,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.classList.remove('mobile-submenu-open');
         mobileMenuMode = null;
         setMobileSearchToggleState(false);
+        unlockBodyScroll();
     }
 
     if (hamburger && mobileMenu) {
@@ -1143,19 +1179,6 @@ document.addEventListener("DOMContentLoaded", function() {
     if (mobileBackArrow) {
         mobileBackArrow.addEventListener('click', goBack);
     }
-
-    // ─── 15. AKTIVEN LINK AUTOMATISCH HERVORHEBEN ───
-    const currentPath = window.location.pathname.split("/").pop();
-    const allNavLinks = document.querySelectorAll('.nav-center a');
-
-    allNavLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (currentPath && href === currentPath) {
-            link.classList.add('active');
-        } else if (!currentPath && href.includes('#home')) {
-            link.classList.add('active');
-        }
-    });
 
     // ─── 16. SMART STICKY HEADER SCROLL-VERHALTEN ───
     // Schaltet nur die Klasse .nav-hidden auf der Header-Gruppe um. Main

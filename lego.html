@@ -119,20 +119,6 @@
             clear: both !important;
         }
 
-        .lego-videos-btn-container .scroll-down-btn {
-            position: relative !important;
-            top: auto !important;
-            bottom: auto !important;
-            left: auto !important;
-            right: auto !important;
-            transform: none !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 10px !important;
-            pointer-events: auto !important;
-            margin: 0 !important;
-        }
 
         /* =====================================================
            LEGO BRAND HEADER & OVERRIDES
@@ -192,8 +178,7 @@
         body.lego-family-studio .navbar .nav-center a:hover,
         body.lego-family-studio .navbar .nav-center a:focus,
         body.lego-family-studio .navbar .nav-center a:active,
-        body.lego-family-studio .navbar .nav-center a:visited:hover,
-        body.lego-family-studio .navbar .nav-center a.active {
+        body.lego-family-studio .navbar .nav-center a:visited:hover {
             color: #E30613 !important;
             opacity: 1 !important;
         }
@@ -209,8 +194,7 @@
         }
 
         body.lego-family-studio .second-navbar-link:hover,
-        body.lego-family-studio .second-navbar-link:focus,
-        body.lego-family-studio .second-navbar-link.active {
+        body.lego-family-studio .second-navbar-link:focus {
             color: #E30613 !important;
         }
 
@@ -399,8 +383,7 @@
 
         body.lego-family-studio .mobile-menu a:hover,
         body.lego-family-studio .mobile-menu a:focus,
-        body.lego-family-studio .mobile-menu a:visited:hover,
-        body.lego-family-studio .mobile-menu a.active {
+        body.lego-family-studio .mobile-menu a:visited:hover {
             color: #E30613 !important;
             transition: none !important;
         }
@@ -687,7 +670,7 @@
             padding: 0 !important;
             font-family: var(--font-body) !important;
             font-size: 15px !important;
-            font-weight: 400 !important;
+            font-weight: var(--font-body-weight) !important;
             line-height: 1.8 !important;
         }
 
@@ -1041,7 +1024,7 @@
 
                 <!-- ─── BUTTON ZU DEN VIDEOS (OPTIMIERT FÜR MOBIL & DESKTOP) ─── -->
                 <div class="lego-videos-btn-container">
-                    <a href="#videos" class="scroll-down-btn">
+                    <a href="#videos" class="scroll-down-btn scroll-down-btn--inline">
                         <span data-i18n="musik.toVideos">Zu den Videos</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </a>

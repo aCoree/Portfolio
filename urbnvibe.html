@@ -144,23 +144,12 @@
             color: #ffffff;
         }
 
-        /* Zweiter "Scrollen"-Button: läuft im normalen Textfluss der Intro
-           mit (statt wie der Hero-Button fixiert am Bildschirmrand zu
-           kleben) – sonst bliebe er beim Scrollen dauerhaft sichtbar und
-           würde später über anderen Inhalt liegen. */
+        /* Zweiter "Scrollen"-Button: nutzt die geteilte Klasse
+           scroll-down-btn--inline (style.css) für die Position im
+           normalen Textfluss – nur der Abstand zum Text davor ist hier
+           noch seitenspezifisch. */
         .inline-scroll-btn {
-            position: relative !important;
-            top: auto !important;
-            bottom: auto !important;
-            left: auto !important;
-            right: auto !important;
-            transform: none !important;
-            display: inline-flex !important;
             margin-top: 45px !important;
-        }
-
-        .inline-scroll-btn:hover {
-            transform: translateY(3px) !important;
         }
 
         /* Standardisierte Label-Typografie (Barlow Condensed Style) */
@@ -496,7 +485,7 @@
                     haben, konnte ich viele neue Erfahrungen im Bereich Design und Social Media sammeln.
                 </p>
                 <!-- ZWEITER SCROLL-BUTTON -->
-                <a href="#flyer-section" class="scroll-down-btn inline-scroll-btn">
+                <a href="#flyer-section" class="scroll-down-btn scroll-down-btn--inline inline-scroll-btn">
                     <span data-i18n="common.scroll">Scrollen</span>
                     <i class="fa-solid fa-chevron-down"></i>
                 </a>

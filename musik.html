@@ -171,7 +171,7 @@
         .musik-intro-text {
             font-family: var(--font-body) !important;
             font-size: 16px !important;
-            font-weight: 400 !important;
+            font-weight: var(--font-body-weight) !important;
             line-height: 1.8 !important;
             margin-bottom: 20px !important;
         }
@@ -216,30 +216,11 @@
             color: #ffffff;
         }
 
+        /* Positionierung/Typografie kommen jetzt von der geteilten Klasse
+           scroll-down-btn--inline (style.css) – hier nur noch der
+           seitenspezifische Abstand zum Text davor. */
         .intro-scroll-indicator {
             margin-top: 50px;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 9px;
-            color: rgba(255, 255, 255, 0.6);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-            user-select: none;
-        }
-
-        .intro-scroll-indicator:hover {
-            color: #ffffff;
-            transform: translateY(3px);
-        }
-
-        .intro-scroll-indicator i {
-            font-size: 13px;
         }
 
         /* =====================================================
@@ -497,7 +478,7 @@
             padding: 0 !important;
             font-family: var(--font-body) !important;
             font-size: 15px !important;
-            font-weight: 400 !important;
+            font-weight: var(--font-body-weight) !important;
             line-height: 1.8 !important;
             color: inherit !important;
         }
@@ -652,10 +633,10 @@
                 </div>
             </div>
 
-            <div class="intro-scroll-indicator" onclick="scrollToVideos()">
+            <a href="#musik-videos" class="scroll-down-btn scroll-down-btn--inline intro-scroll-indicator">
                 <span data-i18n="musik.toVideos">Zu den Videos</span>
                 <i class="fa-solid fa-chevron-down"></i>
-            </div>
+            </a>
         </div>
 
         <div id="musik-videos">
@@ -961,13 +942,6 @@
     <script>
         const scrollBtn = document.getElementById('scrollDownBtn');
         const overlay = document.getElementById('videoOverlay');
-
-        function scrollToVideos() {
-            const videos = document.getElementById('musik-videos');
-            if (videos) {
-                videos.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
 
         function updateOverlayAndButton() {
             const scrollY = window.scrollY;
