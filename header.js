@@ -145,7 +145,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 { label: 'Musik', href: 'musik.html' },
                 { label: 'DJI Air 3S', href: 'drone.html' },
                 { label: 'URBNVIBE', href: 'urbnvibe.html' },
-                { label: 'LEGO FAMILY STUDIO', href: 'lego.html' }
+                { label: 'LEGO FAMILY STUDIO', href: 'lego.html' },
+                { label: t('projekte.genreFotografie', 'Fotografie'), href: 'comingsoon.html' }
             ]
         },
         {
@@ -196,6 +197,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const urbnvibeWorkLabel = t('urbnvibe.navWork', 'Arbeiten');
     const legoAboutLabel = t('lego.navAbout', 'Über den Kanal');
     const legoVideosLabel = t('lego.navVideos', 'Stop-Motion Videos');
+    const fotografieLabel = t('projekte.genreFotografie', 'Fotografie');
     const legalLabel = t('nav.categoryLegal', 'Rechtliches');
 
     const crossPageSearchSections = [
@@ -239,6 +241,12 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: 'Corona LEGO Time', href: 'lego.html#lego-video-corona', category: legoVideosLabel },
         { label: 'LEGO Street Race', href: 'lego.html#lego-video-street-race', category: legoVideosLabel },
         { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: legoVideosLabel },
+
+        { label: fotografieLabel, href: 'commingsoon.html', category: fotografieLabel },
+        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'fotografie.html#landschaften', category: fotografieLabel },
+        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'fotografie.html#street', category: fotografieLabel },
+        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'fotografie.html#wildlife', category: fotografieLabel },
+        { label: t('fotografie.navPortrait', 'Portrait'), href: 'fotografie.html#portrait', category: fotografieLabel },
 
         { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
         { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel }

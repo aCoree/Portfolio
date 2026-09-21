@@ -52,6 +52,7 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Stop-Motion / Youtube Kanal",
             genreUrbnvibe: "10. ICT-Schuljahr / Projekt",
             genreMusik: "Musik / Klavier & Schlagzeug",
+            genreDrone: "Drohnen / DJI Air 3S",
             aboutHeading: "Über mich",
             aboutText: "Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich mit Design, Webentwicklung und verschiedenen digitalen Projekten.",
             contactHeading: "Kontakt",
@@ -143,7 +144,22 @@ window.SITE_TRANSLATIONS = {
             aboutLabel: "01 / YouTube Channel",
             watchChannel: "KANAL ANSEHEN",
             videosLabel: "02 / Stop-Motion LEGO Videos",
-            aboutTextHtml: "Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video. Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache widmen.<br><br>So entstand der YouTube-Kanal „Lego Family Studio“.<br><br>In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um LEGO-Figuren, die etwas erlebten. Die Geschichten hatten manchmal auch mit der aktuellen Weltlage zu tun, zum Beispiel mit Corona.<br><br>Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis Schnitt-App zusammengeschnitten. Man war viele Stunden am Arbeiten für die kurzen Videos, die man am Ende hatte.<br><br>Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und kann es mit Stolz zeigen."
+            aboutTextHtml: "Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video. Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache widmen.<br><br>So entstand der YouTube-Kanal „Lego Family Studio".<br><br>In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um LEGO-Figuren, die etwas erlebten. Die Geschichten hatten manchmal auch mit der aktuellen Weltlage zu tun, zum Beispiel mit Corona.<br><br>Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis Schnitt-App zusammengeschnitten. Man war viele Stunden am Arbeiten für die kurzen Videos, die man am Ende hatte.<br><br>Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und kann es mit Stolz zeigen."
+        },
+        fotografie: {
+            title: "Fotografie",
+            tagline: "Eine Auswahl meiner liebsten Aufnahmen aus verschiedenen Bereichen der Fotografie.",
+            navLandschaften: "Landschaften",
+            navStreet: "Streetfotografie",
+            navWildlife: "Wildlife",
+            navPortrait: "Portrait",
+            catLandschaften: "Landschaften",
+            catStreet: "Streetfotografie",
+            catWildlife: "Wildlife",
+            catPortrait: "Portrait",
+            placeholder: "Bild folgt",
+            lightboxClose: "Schließen",
+            imageAlt: "Fotografie von Aurelio Zingarello"
         },
         projekte: {
             sortBy: "Sortieren nach:",
@@ -155,7 +171,8 @@ window.SITE_TRANSLATIONS = {
             genreUrbnvibe: "Projekt",
             genreLego: "Youtube Kanal",
             genreMusik: "Klavier & Schlagzeug",
-            genreDrone: "Drohnen Videos"
+            genreDrone: "Drohnen Videos",
+            genreFotografie: "Fotografie"
         },
         impressum: {
             contactHeading: "Kontaktadresse",
@@ -243,6 +260,7 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Stop-motion / Chaîne YouTube",
             genreUrbnvibe: "10e année ICT / Projet",
             genreMusik: "Musique / Piano & batterie",
+            genreDrone: "Drone / DJI Air 3S",
             aboutHeading: "À propos de moi",
             aboutText: "Bonjour, je suis Aurelio. Ma passion est d'écrire des histoires, puis de les transformer en courts métrages cinématographiques. Je suis actuellement en 1ère année d'apprentissage en tant que médiamaticien et je m'intéresse au design, au développement web et à divers projets numériques.",
             contactHeading: "Contact",
@@ -336,6 +354,21 @@ window.SITE_TRANSLATIONS = {
             videosLabel: "02 / Vidéos LEGO stop-motion",
             aboutTextHtml: "Ma sœur et moi avons toujours été très intéressés par le son et la vidéo. Quand le confinement de 2020 est arrivé, nous avons pu y consacrer tout notre temps libre.<br><br>C'est ainsi qu'est née la chaîne YouTube « Lego Family Studio ».<br><br>Dans les vidéos en stop-motion, pour lesquelles nous concevions nous-mêmes les décors et photographiions, sonorisions et montions chaque mouvement, il s'agissait toujours de figurines LEGO vivant une aventure. Les histoires étaient parfois aussi liées à l'actualité mondiale, par exemple au Covid.<br><br>Les images ont été prises avec le vieux téléphone de ma mère et montées avec une application de montage gratuite. On passait de nombreuses heures à travailler pour les courtes vidéos qu'on obtenait au final.<br><br>C'est certes déjà loin, mais pour notre âge de l'époque, je trouve que c'est plutôt réussi et je peux le montrer avec fierté."
         },
+        fotografie: {
+            title: "Photographie",
+            tagline: "Une sélection de mes prises de vue préférées dans différents domaines de la photographie.",
+            navLandschaften: "Paysages",
+            navStreet: "Street photography",
+            navWildlife: "Wildlife",
+            navPortrait: "Portrait",
+            catLandschaften: "Paysages",
+            catStreet: "Street photography",
+            catWildlife: "Wildlife",
+            catPortrait: "Portrait",
+            placeholder: "Photo à venir",
+            lightboxClose: "Fermer",
+            imageAlt: "Photographie d'Aurelio Zingarello"
+        },
         projekte: {
             sortBy: "Trier par :",
             sortNewest: "Plus récents",
@@ -346,7 +379,8 @@ window.SITE_TRANSLATIONS = {
             genreUrbnvibe: "Projet",
             genreLego: "Chaîne YouTube",
             genreMusik: "Piano & batterie",
-            genreDrone: "Vidéos de drone"
+            genreDrone: "Vidéos de drone",
+            genreFotografie: "Photographie"
         },
         impressum: {
             contactHeading: "Adresse de contact",
@@ -434,6 +468,7 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Stop-motion / YouTube channel",
             genreUrbnvibe: "10th grade ICT / Project",
             genreMusik: "Music / Piano & drums",
+            genreDrone: "Drone / DJI Air 3S",
             aboutHeading: "About me",
             aboutText: "Hi, I'm Aurelio. My hobby is writing stories and then turning them into cinematic short films. I'm currently in my first year of training as a media technologist apprentice, and I enjoy working on design, web development and various digital projects.",
             contactHeading: "Contact",
@@ -527,6 +562,21 @@ window.SITE_TRANSLATIONS = {
             videosLabel: "02 / Stop-Motion LEGO Videos",
             aboutTextHtml: "My sister and I have always been very interested in sound and video. When the 2020 lockdown hit, we were able to dedicate all our free time to it.<br><br>That's how the YouTube channel \"Lego Family Studio\" came to be.<br><br>In the stop-motion videos, for which we designed the sets ourselves and photographed, scored and edited every single movement, it was always LEGO figures experiencing something. The stories sometimes tied into current world events too, like Covid.<br><br>The shots were taken with my mom's old phone camera and edited together in a free editing app. It took many hours of work for the short videos we ended up with.<br><br>It's been a while now, but for our age at the time, I think it turned out pretty good, and I can show it with pride."
         },
+        fotografie: {
+            title: "Photography",
+            tagline: "A selection of my favorite shots across different areas of photography.",
+            navLandschaften: "Landscapes",
+            navStreet: "Street photography",
+            navWildlife: "Wildlife",
+            navPortrait: "Portrait",
+            catLandschaften: "Landscapes",
+            catStreet: "Street photography",
+            catWildlife: "Wildlife",
+            catPortrait: "Portrait",
+            placeholder: "Photo coming soon",
+            lightboxClose: "Close",
+            imageAlt: "Photography by Aurelio Zingarello"
+        },
         projekte: {
             sortBy: "Sort by:",
             sortNewest: "Newest first",
@@ -537,7 +587,8 @@ window.SITE_TRANSLATIONS = {
             genreUrbnvibe: "Project",
             genreLego: "YouTube channel",
             genreMusik: "Piano & drums",
-            genreDrone: "Drone videos"
+            genreDrone: "Drone videos",
+            genreFotografie: "Photography"
         },
         impressum: {
             contactHeading: "Contact address",
@@ -625,6 +676,7 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Stop-motion / Canale YouTube",
             genreUrbnvibe: "10° anno ICT / Progetto",
             genreMusik: "Musica / Piano e batteria",
+            genreDrone: "Drone / DJI Air 3S",
             aboutHeading: "Chi sono",
             aboutText: "Ciao, sono Aurelio. La mia passione è scrivere storie e trasformarle poi in cortometraggi cinematografici. Attualmente sono al primo anno di apprendistato come mediamatico e mi occupo di design, sviluppo web e vari progetti digitali.",
             contactHeading: "Contatto",
@@ -718,6 +770,21 @@ window.SITE_TRANSLATIONS = {
             videosLabel: "02 / Video LEGO stop-motion",
             aboutTextHtml: "Io e mia sorella siamo sempre stati molto interessati all'audio e al video. Quando è arrivato il lockdown del 2020, abbiamo potuto dedicare tutto il nostro tempo libero a questa passione.<br><br>Così è nato il canale YouTube \"Lego Family Studio\".<br><br>Nei video in stop-motion, per cui progettavamo da soli le scenografie e fotografavamo, sonorizzavamo e montavamo ogni movimento, protagonisti erano sempre personaggi LEGO alle prese con qualche avventura. Le storie a volte erano legate anche all'attualità del momento, ad esempio al Covid.<br><br>Le immagini venivano scattate con il vecchio telefono di mia madre e montate con un'app di editing gratuita. Ci volevano molte ore di lavoro per i brevi video che ne risultavano.<br><br>È passato ormai del tempo, ma per l'età che avevamo allora lo trovo abbastanza riuscito e posso mostrarlo con orgoglio."
         },
+        fotografie: {
+            title: "Fotografia",
+            tagline: "Una selezione dei miei scatti preferiti in diversi ambiti della fotografia.",
+            navLandschaften: "Paesaggi",
+            navStreet: "Street photography",
+            navWildlife: "Wildlife",
+            navPortrait: "Ritratto",
+            catLandschaften: "Paesaggi",
+            catStreet: "Street photography",
+            catWildlife: "Wildlife",
+            catPortrait: "Ritratto",
+            placeholder: "Foto in arrivo",
+            lightboxClose: "Chiudi",
+            imageAlt: "Fotografia di Aurelio Zingarello"
+        },
         projekte: {
             sortBy: "Ordina per:",
             sortNewest: "Più recenti",
@@ -728,7 +795,8 @@ window.SITE_TRANSLATIONS = {
             genreUrbnvibe: "Progetto",
             genreLego: "Canale YouTube",
             genreMusik: "Piano e batteria",
-            genreDrone: "Video drone"
+            genreDrone: "Video drone",
+            genreFotografie: "Fotografia"
         },
         impressum: {
             contactHeading: "Indirizzo di contatto",

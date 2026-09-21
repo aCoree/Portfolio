@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link rel="preload" as="image" href="images/run-banner.jpg">
+    <link rel="preload" as="image" href="images/hero-bg.jpg">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="az-reveal.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+
+            background: #050505 !important;
+        }
+
+        body {
+            color: #fff;
+
+            /* Schwarzer Grund + weicher violett/blauer Glow */
+            background:
+                radial-gradient(
+                    circle at 25% 35%,
+                    rgba(125, 45, 190, 0.38) 0%,
+                    rgba(125, 45, 190, 0.16) 25%,
+                    transparent 55%
+                ),
+                radial-gradient(
+                    circle at 75% 65%,
+                    rgba(70, 170, 255, 0.35) 0%,
+                    rgba(70, 170, 255, 0.14) 25%,
+                    transparent 55%
+                ),
+                #050505 !important;
+
+            position: relative;
+        }
+
+        /* Noch etwas mehr Blur für die Farbfelder */
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 45vw;
+            height: 45vw;
+            max-width: 700px;
+            max-height: 700px;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            top: -15%;
+            left: -10%;
+            background: rgba(130, 45, 200, 0.22);
+        }
+
+        body::after {
+            right: -10%;
+            bottom: -15%;
+            background: rgba(70, 175, 255, 0.20);
+        }
+
+        .coming-soon {
+            position: fixed !important;
+
+            /* EXAKT die Mitte des Bildschirms */
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+
+            width: 100% !important;
+            max-width: none !important;
+
+            margin: 0 !important;
+            padding: 0 !important;
+
+            text-align: center !important;
+
+            z-index: 10;
+        }
+
+        .coming-soon h1 {
+            margin: 0 !important;
+            padding: 0 !important;
+
+            font-family: "Anton", sans-serif !important;
+            font-size: clamp(70px, 12vw, 180px);
+            font-weight: 400;
+            line-height: 0.9;
+
+            color: #ffffff !important;
+            text-align: center !important;
+        }
+
+        .coming-soon p {
+            margin: 25px 0 0 !important;
+            padding: 0 !important;
+
+            font-family: "Roboto", sans-serif !important;
+            font-size: 16px;
+            font-weight: 400;
+
+            color: #bdbdbd !important;
+            text-align: center !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="coming-soon">
+        <h1>COMING SOON</h1>
+        <p>Fotografien werden bald veröffentlicht.</p>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+    <script src="header.js"></script>
+    <script src="az-reveal.js"></script>
+
+</body>
+
+</html>
