@@ -242,11 +242,11 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: 'LEGO Street Race', href: 'lego.html#lego-video-street-race', category: legoVideosLabel },
         { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: legoVideosLabel },
 
-        { label: fotografieLabel, href: 'commingsoon.html', category: fotografieLabel },
-        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'fotografie.html#landschaften', category: fotografieLabel },
-        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'fotografie.html#street', category: fotografieLabel },
-        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'fotografie.html#wildlife', category: fotografieLabel },
-        { label: t('fotografie.navPortrait', 'Portrait'), href: 'fotografie.html#portrait', category: fotografieLabel },
+        { label: fotografieLabel, href: 'comingsoon.html', category: fotografieLabel },
+        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'comingsoon.html', category: fotografieLabel },
+        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'comingsoon.html', category: fotografieLabel },
+        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'comingsoon.html', category: fotografieLabel },
+        { label: t('fotografie.navPortrait', 'Portrait'), href: 'comingsoon.html', category: fotografieLabel },
 
         { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
         { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel }

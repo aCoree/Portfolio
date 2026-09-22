@@ -662,7 +662,9 @@ body.has-second-header .navbar {
    normal zum scrollbaren Inhalt. */
 .mobile-menu-levels {
   position: relative;
-  margin: 100px 24px 32px 24px;
+  width: 100%;
+  margin: 0;
+  padding: 100px 24px 32px 24px;
   display: grid;
   box-sizing: border-box;
 }

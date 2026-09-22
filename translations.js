@@ -41,6 +41,10 @@ window.SITE_TRANSLATIONS = {
             scroll: "Scrollen",
             watchNow: "Jetzt ansehen"
         },
+        comingsoon: {
+            title: "COMING SOON",
+            text: "Fotografien werden bald veröffentlicht."
+        },
         index: {
             heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
             heroSubtitle: "Filmmaker & Mediamatiker aus der Schweiz",
@@ -144,7 +148,7 @@ window.SITE_TRANSLATIONS = {
             aboutLabel: "01 / YouTube Channel",
             watchChannel: "KANAL ANSEHEN",
             videosLabel: "02 / Stop-Motion LEGO Videos",
-            aboutTextHtml: "Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video. Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache widmen.<br><br>So entstand der YouTube-Kanal „Lego Family Studio".<br><br>In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um LEGO-Figuren, die etwas erlebten. Die Geschichten hatten manchmal auch mit der aktuellen Weltlage zu tun, zum Beispiel mit Corona.<br><br>Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis Schnitt-App zusammengeschnitten. Man war viele Stunden am Arbeiten für die kurzen Videos, die man am Ende hatte.<br><br>Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und kann es mit Stolz zeigen."
+            aboutTextHtml: "Meine Schwester und ich waren schon immer sehr interessiert an Ton und Video. Als der Lockdown 2020 kam, konnten wir unsere freie Zeit ganz dieser Sache widmen.<br><br>So entstand der YouTube-Kanal „Lego Family Studio\".<br><br>In den Stop-Motion-Videos, bei denen wir die Kulissen selber entwarfen und jede Bewegung abfotografierten, vertonten und zusammenschnitten, handelte es sich immer um LEGO-Figuren, die etwas erlebten. Die Geschichten hatten manchmal auch mit der aktuellen Weltlage zu tun, zum Beispiel mit Corona.<br><br>Die Bilder wurden mit der alten Handykamera meiner Mutter gemacht und in einer gratis Schnitt-App zusammengeschnitten. Man war viele Stunden am Arbeiten für die kurzen Videos, die man am Ende hatte.<br><br>Es ist zwar schon lange her, aber für unser damaliges Alter finde ich es ziemlich gut und kann es mit Stolz zeigen."
         },
         fotografie: {
             title: "Fotografie",
@@ -248,6 +252,10 @@ window.SITE_TRANSLATIONS = {
         common: {
             scroll: "Défiler",
             watchNow: "Voir maintenant"
+        },
+        comingsoon: {
+            title: "BIENTÔT DISPONIBLE",
+            text: "Les photographies seront bientôt publiées."
         },
         index: {
             heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
@@ -457,6 +465,10 @@ window.SITE_TRANSLATIONS = {
             scroll: "Scroll",
             watchNow: "Watch now"
         },
+        comingsoon: {
+            title: "COMING SOON",
+            text: "Photos will be published soon."
+        },
         index: {
             heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
             heroSubtitle: "Filmmaker & media technologist apprentice from Switzerland",
@@ -664,6 +676,10 @@ window.SITE_TRANSLATIONS = {
         common: {
             scroll: "Scorri",
             watchNow: "Guarda ora"
+        },
+        comingsoon: {
+            title: "PRESTO DISPONIBILE",
+            text: "Le fotografie saranno pubblicate a breve."
         },
         index: {
             heroTitleHtml: "CREATING <span class=\"gradient-text\">VISUAL</span> STORIES",
