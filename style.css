@@ -1222,3 +1222,43 @@ select {
     background-position: 0% 50%;
   }
 }
+/* "New" corner ribbon (top left, same blue as .see-all-link) */
+.poster-card { position: relative; }
+.poster-card:has(.badge-new)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 90px;
+    height: 90px;
+    border-radius: 12px 0 0 0;
+    background: linear-gradient(135deg, #2997ff 0 50%, transparent 50% 100%);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
+    pointer-events: none;
+}
+.badge-new {
+    position: absolute;
+    top: 18px;
+    left: 4px;
+    z-index: 5;
+    width: 50px;
+    text-align: center;
+    transform: rotate(-45deg);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+.badge-new { white-space: nowrap; }
+:lang(fr) > .poster-card .badge-new,
+html:lang(fr) .badge-new {
+    font-size: 0.56rem;
+    letter-spacing: 0;
+}
+html:lang(it) .badge-new {
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+}

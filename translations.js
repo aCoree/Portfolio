@@ -176,7 +176,8 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Youtube Kanal",
             genreMusik: "Klavier & Schlagzeug",
             genreDrone: "Drohnen Videos",
-            genreFotografie: "Fotografie"
+            genreFotografie: "Fotografie",
+            badgeNew: "neu"
         },
         impressum: {
             contactHeading: "Kontaktadresse",
@@ -388,7 +389,8 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Chaîne YouTube",
             genreMusik: "Piano & batterie",
             genreDrone: "Vidéos de drone",
-            genreFotografie: "Photographie"
+            genreFotografie: "Photographie",
+            badgeNew: "nouveau"
         },
         impressum: {
             contactHeading: "Adresse de contact",
@@ -600,7 +602,8 @@ window.SITE_TRANSLATIONS = {
             genreLego: "YouTube channel",
             genreMusik: "Piano & drums",
             genreDrone: "Drone videos",
-            genreFotografie: "Photography"
+            genreFotografie: "Photography",
+            badgeNew: "new"
         },
         impressum: {
             contactHeading: "Contact address",
@@ -812,7 +815,8 @@ window.SITE_TRANSLATIONS = {
             genreLego: "Canale YouTube",
             genreMusik: "Piano e batteria",
             genreDrone: "Video drone",
-            genreFotografie: "Fotografia"
+            genreFotografie: "Fotografia",
+            badgeNew: "nuovo"
         },
         impressum: {
             contactHeading: "Indirizzo di contatto",
