@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurelio Zingarello | Projekte</title>
 
+    <!-- Verhindert, dass der Browser beim Reload die vorherige Scroll-
+         Position wiederherstellt: ohne das landet man nach einem Reload
+         manchmal leicht unterhalb des echten oberen Endes und kann dann
+         nochmals ein Stück hochscrollen, obwohl man "eigentlich" schon
+         ganz oben sein sollte. So ist man nach jedem Reload direkt am
+         Anschlag (scrollY 0). -->
+    <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        window.addEventListener('load', function () {
+            window.scrollTo(0, 0);
+        });
+    </script>
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -71,7 +87,7 @@
         /* ─── HEADER & FILTER LAYOUT ─── */
         
         .projects-header-flex {
-            padding: 110px 0 25px 0;
+            padding: calc(var(--nav-height) + 12px) 0 25px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -205,7 +221,7 @@
             }
 
             .projects-header-flex {
-                padding: 90px 0 20px 0;
+                padding: calc(var(--nav-height) + 8px) 0 20px 0;
             }
 
             .projects-title {
@@ -321,9 +337,10 @@
             </a>
 
             <!-- Poster 6: FOTOGRAFIE -->
-            <a href="comingsoon.html" class="poster-card" data-date="2026-09-24" data-views="4444" data-title="FOTOGRAFIE">
-                <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-fotografie.png');"></div>
+            <a href="fotografie.html" class="poster-card" data-date="2026-09-24" data-views="4444" data-title="FOTOGRAFIE">
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-fotografie.png');">
+                    <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
+                </div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">FOTOGRAFIE</h3>
                     <span class="dot-separator">·</span>

@@ -238,15 +238,96 @@ body:not(.has-hero) main,
   margin: 0;
 }
 
-/* ─── ÜBER MICH ─── */
+/* ─── ÜBER MICH ───
+   Das Bild füllt die ganze Section randlos aus (Höhe/Breite der Section
+   bleiben unverändert, wie zuvor rein über .section-Padding bestimmt),
+   komplett und zentriert (object-fit: cover, kein "contain"/Anpassen),
+   OHNE Ausblenden – es bleibt über die gesamte Breite sichtbar. Der Text
+   steht linksbündig darüber; damit er trotzdem gut lesbar bleibt, liegt
+   ein eigenes Schatten-Overlay (siehe .hero-overlay/.apple-card-overlay
+   für dasselbe Muster an anderer Stelle) über der linken Bildhälfte,
+   das sauber Richtung Bildmitte ausläuft. */
+.about-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.about-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.about-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to right,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.55) 20%,
+      rgba(0, 0, 0, 0.28) 38%,
+      transparent 52%);
+}
+
+.about-container {
+  position: relative;
+  z-index: 2;
+}
+
 .about-text {
-  max-width: 800px;
-  margin: 0 auto 60px auto;
-  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 0 0;
+  text-align: left;
   font-family: var(--font-body);
   font-size: 1.1rem;
   line-height: 1.75;
   color: #cccccc;
+}
+
+.about-text .section-title {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Absatz-Abstand zwischen mehreren <p> im Über-mich-Text */
+.about-text p + p {
+  margin-top: 16px;
+}
+
+/* Hervorgehobene Wörter im Über-mich-Text */
+.about-text .hl {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.about-more-link {
+  margin-top: 28px;
+  justify-content: flex-start;
+}
+
+/* ─── ÜBER MICH – Bild unter dem Text (≤ 818px, wie in index.html/about.html) ─── */
+@media (max-width: 818px) {
+  /* Bild unter dem Text: Position/Zoom kommen aus den Variablen
+     --about-img-x/-y/-zoom, die in index.html bzw. about.html gesetzt
+     werden. object-fit: cover + overflow: hidden + zoom >= 1 sorgen dafür,
+     dass der Rahmen immer komplett gefüllt ist. */
+  .about-bg {
+    overflow: hidden;
+  }
+
+  .about-bg img {
+    object-position: var(--about-img-x, 50%) var(--about-img-y, 50%);
+    transform: scale(max(var(--about-img-zoom, 1), 1));
+    transform-origin: var(--about-img-x, 50%) var(--about-img-y, 50%);
+  }
 }
 
 /* ─── KONTAKT FORMULAR ─── */
@@ -552,16 +633,15 @@ select {
   align-items: center;
   gap: 6px;
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: #999999;
+  font-size: 1rem;
+  color: #ffffff;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.25s ease, border-color 0.25s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: border-color 0.25s ease;
 }
 
 .info-content-link:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: #ffffff;
 }
 
 .info-content-right .info-content-link {
@@ -683,7 +763,7 @@ select {
 }
 
 .see-all-link {
-  color: #2997ff;
+  color: var(--accent-blue);
   font-family: var(--font-body);
   font-weight: var(--font-body-weight);
   font-size: 1.05rem;
@@ -697,7 +777,7 @@ select {
 }
 
 .see-all-link:hover {
-  color: #76baff;
+  color: #82c4ff;
 }
 
 .apple-slider-container {
@@ -806,6 +886,7 @@ select {
 }
 
 .poster-img-wrapper {
+  position: relative;
   width: 100%;
   aspect-ratio: 2 / 3;
   border-radius: 12px;
@@ -1015,6 +1096,31 @@ select {
     margin-bottom: 35px;
   }
 
+  /* Auf schmalen Screens nimmt der Text die volle Breite ein – das
+     Schatten-Overlay reicht darum etwas weiter (bis ~65% statt ~52%),
+     damit der Text über die ganze Zeilenbreite gut lesbar bleibt. */
+  .about-overlay {
+    background: linear-gradient(to right,
+        rgba(0, 0, 0, 0.78) 0%,
+        rgba(0, 0, 0, 0.6) 30%,
+        rgba(0, 0, 0, 0.32) 50%,
+        transparent 65%);
+  }
+
+  .about-text {
+    max-width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+
+  .about-text .section-title {
+    text-align: left;
+  }
+
+  .about-more-link {
+    justify-content: flex-start;
+  }
+
   .project-detail-page {
     padding-top: 90px;
   }
@@ -1222,43 +1328,525 @@ select {
     background-position: 0% 50%;
   }
 }
-/* "New" corner ribbon (top left, same blue as .see-all-link) */
+/* "New" corner ribbon (top left, same blue as .see-all-link) – lebt jetzt
+   INNERHALB von .poster-img-wrapper (statt auf .poster-card), damit das
+   überflüssige overflow:hidden + border-radius des Bildes das Band immer
+   sauber an der Bildkante clippt/rundet. So bleibt es beim Hover-Scale von
+   .poster-card (transform: scale(1.04)) garantiert "clean" an der Ecke –
+   es kann nicht mehr von der abgerundeten Bildkante "abgelöst" wirken,
+   weil Band UND Bild jetzt exakt denselben Clip-Bereich teilen. */
 .poster-card { position: relative; }
-.poster-card:has(.badge-new)::before {
+
+/* ─── NEW-STICKER: komplett proportional zur Kartenbreite ───
+   Alles hängt an EINER Variable --s (Kantenlänge des Eck-Dreiecks), die in
+   cqw (Prozent der Kartenbreite) gesetzt wird. Dreieck, Schriftgröße und
+   Position skalieren dadurch exakt mit der Karte mit – auch beim
+   Hover-/Active-Scale und auf jedem Handy. Gilt für die Poster-Karten
+   (projekte.html) UND die großen/kleinen Karten (index.html). */
+.poster-img-wrapper,
+.apple-card {
+    container-type: inline-size;
+}
+.poster-img-wrapper { --s: 36cqw; }
+.apple-card { --s: 7.5cqw; }
+@media (max-width: 768px) {
+    .poster-img-wrapper { --s: 30cqw; }
+    .apple-card { --s: 26cqw; }
+}
+
+.poster-img-wrapper:has(.badge-new)::before,
+.apple-card:has(.badge-new)::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     z-index: 4;
-    width: 90px;
-    height: 90px;
-    border-radius: 12px 0 0 0;
+    width: var(--s);
+    height: var(--s);
     background: linear-gradient(135deg, #2997ff 0 50%, transparent 50% 100%);
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
+    filter: drop-shadow(calc(var(--s) * 0.022) calc(var(--s) * 0.022) calc(var(--s) * 0.044) rgba(0, 0, 0, 0.4));
     pointer-events: none;
 }
+
+/* Text sitzt immer exakt mittig auf dem Dreieck: sein Mittelpunkt liegt auf
+   dem Schwerpunkt (0.3·s / 0.3·s), danach wird er um genau diesen Punkt
+   gedreht. Egal wie lang das Wort ist (neu / new / nuovo / nouveau) – es
+   wächst symmetrisch nach beiden Seiten statt einseitig. */
 .badge-new {
     position: absolute;
-    top: 18px;
-    left: 4px;
+    top: calc(var(--s) * 0.3);
+    left: calc(var(--s) * 0.3);
     z-index: 5;
-    width: 50px;
-    text-align: center;
-    transform: rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transform-origin: center;
     color: #fff;
-    font-size: 0.8rem;
+    font-size: calc(var(--s) * 0.14);
+    line-height: 1;
     font-weight: 700;
     letter-spacing: 0.05em;
+    text-indent: 0.05em; /* gleicht das nachlaufende letter-spacing aus */
     text-transform: uppercase;
+    text-align: center;
     pointer-events: none;
+    white-space: nowrap;
 }
-.badge-new { white-space: nowrap; }
-:lang(fr) > .poster-card .badge-new,
+/* Längere Übersetzungen bekommen eine kleinere Schrift (relativ zu --s),
+   bleiben aber mittig. */
 html:lang(fr) .badge-new {
-    font-size: 0.56rem;
-    letter-spacing: 0;
+    font-size: calc(var(--s) * 0.11);
+    letter-spacing: 0.02em;
+    text-indent: 0.02em;
 }
 html:lang(it) .badge-new {
-    font-size: 0.7rem;
-    letter-spacing: 0.02em;
+    font-size: calc(var(--s) * 0.12);
+    letter-spacing: 0.03em;
+    text-indent: 0.03em;
+}
+
+/* ─── LIGHTBOX-STEUERUNG (PFEILE & SCHLIESSEN) ───
+   Exakt der gleiche Look wie die Pfeile beim "Meine Projekte"-Slider auf
+   index.html (.slider-arrow) – zentral hier gepflegt und geteilt von der
+   Fotografie-Galerie (landschaften/portrait/wildlife/streetfotografie)
+   sowie bts.html. */
+.lightbox-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateZ(0);
+    -webkit-transform: translateY(-50%) translateZ(0);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000000;
+    transition: background 0.25s ease, border-color 0.25s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .lightbox-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.lightbox-prev-btn {
+    left: 20px;
+}
+
+.lightbox-next-btn {
+    right: 20px;
+}
+
+.lightbox-close-btn {
+    top: 20px;
+    right: 20px;
+    left: auto;
+    transform: translateZ(0);
+}
+
+/* Pfeile ausschliesslich auf echten Touch-Geräten ausblenden (nicht bei
+   schmalen PC-Fenstern, siehe .slider-arrow-Pendant auf index.html) – das
+   X zum Schliessen bleibt dort trotzdem immer sichtbar. */
+@media (hover: none), (pointer: coarse) {
+
+    .lightbox-prev-btn,
+    .lightbox-next-btn {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .lightbox-nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 0.95rem;
+    }
+
+    .lightbox-prev-btn {
+        left: 10px;
+    }
+
+    .lightbox-next-btn {
+        right: 10px;
+    }
+
+    .lightbox-close-btn {
+        top: 12px;
+        right: 12px;
+    }
+}
+
+/* ─── GEMEINSAME GROSSANSICHT (LIGHTBOX) ───
+   Native CSS-Scroll-Snap-Galerie – exakt dasselbe Prinzip wie die
+   Produktbild-Galerie bei Digitec (und wie der "Meine Projekte"-Slider
+   hier auf index.html, .apple-slider-track): Touch-Swipe und der
+   2-Finger-Trackpad-Swipe laufen komplett nativ über den Browser
+   (overflow-x + scroll-snap-type), das gibt die butterweiche, native
+   Physik/Einrasten OHNE eigene Zieh-Berechnung. Nur für die Maus (die
+   kein natives horizontales Wischen kennt) simuliert photo-lightbox.js
+   das Scrollen per Klicken-&-Ziehen, genau wie beim Projekte-Slider. */
+.photo-lightbox {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.96);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    /* Gleicher Öffnen/Schliessen-Übergang wie das Mobile-Menü (siehe
+       .mobile-menu/.mobile-menu.open in header.css): immer display:flex,
+       Ein-/Ausblenden rein über opacity + ein kurzes Verschieben +
+       pointer-events, nie über display – dadurch ist beides animierbar. */
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.photo-lightbox.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.photo-lightbox-content {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: pan-x pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.photo-lightbox-content::-webkit-scrollbar {
+    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .photo-lightbox-content {
+        cursor: grab;
+    }
+}
+
+.photo-lightbox-content.is-dragging {
+    scroll-snap-type: none;
+    cursor: grabbing;
+}
+
+.photo-lightbox-slide {
+    flex: 0 0 100%;
+    width: 100vw;
+    height: 100vh;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.photo-lightbox-slide img {
+    max-width: 96vw;
+    max-height: 95vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    user-select: none;
+    -webkit-user-drag: none;
+    border: none;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+    background: transparent;
+}
+
+@media (max-width: 768px) {
+    .photo-lightbox-slide img {
+        max-width: 98vw;
+        max-height: 94vh;
+    }
+}
+
+/* Etwas weniger Höhe, sobald die Miniatur-Leiste unten sichtbar ist
+   (.has-thumbs, nur bei mehr als 1 Bild – siehe photo-lightbox.js),
+   damit das Bild nicht dahinter verschwindet. */
+.photo-lightbox.has-thumbs .photo-lightbox-slide img {
+    max-height: calc(100vh - 112px);
+}
+
+@media (max-width: 768px) {
+    .photo-lightbox.has-thumbs .photo-lightbox-slide img {
+        max-height: calc(100vh - 96px);
+    }
+}
+
+/* Motiv mit nur einem Foto (.is-single, siehe photo-lightbox.js): Pfeile
+   machen dort keinen Sinn und werden ausgeblendet. */
+.photo-lightbox.is-single .lightbox-prev-btn,
+.photo-lightbox.is-single .lightbox-next-btn {
+    display: none !important;
+}
+
+/* ─── MINIATUR-LEISTE UNTEN IN DER LIGHTBOX ───
+   Kleine quadratische Vorschaubilder zum direkten Springen zwischen den
+   Fotos, ohne erst durchblättern zu müssen. */
+.lightbox-thumbs {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    z-index: 1000000;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 16px;
+    max-width: 100vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.lightbox-thumbs::-webkit-scrollbar {
+    display: none;
+}
+
+.lightbox-thumb {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    padding: 0;
+    background: #111111;
+    opacity: 0.55;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.lightbox-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .lightbox-thumb:hover {
+        opacity: 0.85;
+    }
+}
+
+.lightbox-thumb.active {
+    opacity: 1;
+    border-color: #ffffff;
+}
+
+@media (max-width: 640px) {
+    .lightbox-thumbs {
+        bottom: 12px;
+        gap: 8px;
+    }
+
+    .lightbox-thumb {
+        width: 44px;
+        height: 44px;
+        border-radius: 5px;
+    }
+}
+
+/* ─── FOTOGRAFIE-KATEGORIESEITEN: RASTER ───
+   Instagram-artiges Raster für landschaften.html, portrait.html,
+   wildlife.html, streetfotografie.html sowie bts.html – bewusst OHNE
+   abgerundete Ecken bei den Bildern. 3 Spalten auf PC/Tablet, 2 Spalten
+   auf dem Handy. */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.photo-grid-item {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 0;
+    cursor: pointer;
+    background: #141414;
+}
+
+.photo-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 0;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.photo-grid-item:hover img,
+.photo-grid-item:focus-visible img {
+    transform: scale(1.05);
+}
+
+/* ─── MOTIV-KACHELN (foto-galerie.js) ───
+   Eine Kachel pro Motiv (z.B. Eisvogel) mit Titel unten im Bild – gleiche
+   Typografie wie die Kategorie-Titel auf fotografie.html
+   (.foto-cover-title). Das Bild bekommt nach unten einen dunklen Verlauf,
+   damit der Titel auf jedem Foto lesbar bleibt. */
+.photo-grid-motif,
+.photo-mosaic-item {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.photo-grid-motif::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0.5) 22%,
+            rgba(0, 0, 0, 0.15) 45%,
+            transparent 62%);
+}
+
+.photo-grid-motif:focus-visible,
+.photo-mosaic-item:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: -2px;
+}
+
+.photo-grid-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: 0 22px 20px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* Titel immer auf EINER Zeile: zu lange Titel verkleinert foto-galerie.js
+   (fitTitle) so weit, dass sie genau in die Kachel passen. */
+.photo-grid-title-text {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+    }
+
+    /* 2-Spalten-Raster: Titel etwas kleiner als auf dem PC. */
+    .photo-grid-title {
+        padding: 0 14px 14px;
+        font-size: 1.4rem;
+    }
+}
+
+/* ─── MOTIV-SEITE: MOSAIK (motiv.html) ───
+   foto-galerie.js baut aus den Fotos eines Motivs Blöcke aus verschachtelten
+   Flex-Kisten (siehe dort): Handy = 2 Spalten, ab 641px derselbe Block um
+   90° gedreht = 3 Spalten. Jede Kachel füllt ihren Platz IMMER komplett aus
+   (object-fit: cover) und zeigt die Bildmitte – nichts bleibt leer, nur
+   Ränder des Fotos können abgeschnitten werden (in der Lightbox sieht man
+   das ganze Bild). Abstand zwischen den Kacheln: --mosaic-gap. */
+.photo-mosaic {
+    --mosaic-gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--mosaic-gap);
+    width: 100%;
+}
+
+.photo-mosaic-node {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    gap: var(--mosaic-gap);
+}
+
+.photo-mosaic-node.is-row {
+    flex-direction: row;
+}
+
+.photo-mosaic-node.is-col {
+    flex-direction: column;
+}
+
+.photo-mosaic-block {
+    width: 100%;
+}
+
+.photo-grid-item.photo-mosaic-item {
+    width: auto;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: auto;
+}
+
+.photo-mosaic-item img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 640px) {
+    .photo-mosaic {
+        --mosaic-gap: 8px;
+    }
 }

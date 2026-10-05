@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Grading | Aurelio Zingarello</title>
+
+    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="az-reveal.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: #ffffff;
+        }
+
+        /* ─── COLOR GRADING SLIDER ───
+           1:1 übernommen aus run.html (.grading-container/.grading-slider/
+           .grading-handle), damit der Vorher-Nachher-Slider hier exakt
+           gleich aussieht und sich gleich verhält. */
+        .grading-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .grading-labels-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto 12px auto;
+            padding: 0 4px;
+            box-sizing: border-box;
+        }
+
+        .grading-label-top {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #aaaaaa;
+            text-transform: uppercase;
+        }
+
+        .grading-slider {
+            position: relative;
+            display: grid;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            aspect-ratio: 3024 / 1660;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: ew-resize;
+            user-select: none;
+            touch-action: pan-y;
+            line-height: 0;
+            --slider-pos: 39%;
+        }
+
+        .grading-slider img {
+            grid-area: 1 / 1;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .grading-slider img.grading-before {
+            z-index: 2;
+            clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
+        }
+
+        .grading-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: var(--slider-pos);
+            width: 3px;
+            background: #ffffff;
+            cursor: ew-resize;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .grading-handle::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -20px;
+            right: -20px;
+        }
+
+        .grading-handle i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 38px;
+            height: 38px;
+            background: #ffffff;
+            color: #111111;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ─── PROJEKT-ABSCHNITTE ─── */
+        .grading-project {
+            margin-bottom: 80px;
+        }
+
+        .grading-project:last-child {
+            margin-bottom: 0;
+        }
+
+        .grading-project-title {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        /* ─── 3 KLEINE BEISPIEL-KACHELN ZUM UMSCHALTEN ─── */
+        .grading-examples {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .grading-example-thumb {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            padding: 0;
+            transition: border-color 0.2s ease;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .grading-example-thumb:hover {
+                border-color: rgba(255, 255, 255, 0.45);
+            }
+        }
+
+        .grading-example-thumb.active {
+            border-color: #ffffff;
+        }
+
+        @media (max-width: 640px) {
+            .grading-project {
+                margin-bottom: 56px;
+            }
+
+            .grading-example-thumb {
+                width: 52px;
+                height: 52px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PLATZHALTER FÜR HEADER & MOBILE MENÜ -->
+    <div id="header-placeholder"></div>
+
+    <section class="section project-detail-page">
+        <div class="container">
+            <div class="project-header">
+                <h1 class="az-reveal" data-i18n="colorgrading.title">Color Grading</h1>
+                <p class="tagline az-reveal" data-az-delay="1" data-i18n="colorgrading.tagline">Eine Übersicht über
+                    meine liebsten Color Gradings – aus Kurzfilmen, Fotografie und Drohnenaufnahmen.</p>
+            </div>
+
+            <!-- ─── FOTOGRAFIE ─── -->
+            <div class="grading-project az-reveal" id="grading-fotografie">
+                <h2 class="section-title grading-project-title" data-i18n="fotografie.title">Fotografie</h2>
+                <div class="grading-container">
+                    <div class="grading-labels-top">
+                        <span class="grading-label-top" data-i18n="run.gradingBefore">VORHER</span>
+                        <span class="grading-label-top" data-i18n="run.gradingAfter">NACHHER</span>
+                    </div>
+                    <div class="grading-slider" id="gradingSlider-fotografie">
+                        <img src="colorgradings/run-grading-after.jpg" class="grading-after"
+                            data-i18n-attr="alt:colorgrading.afterAlt" alt="Nachher – Color Grading">
+                        <img src="colorgradings/run-grading-before.jpg" class="grading-before"
+                            data-i18n-attr="alt:colorgrading.beforeAlt" alt="Vorher – ungegradetes Footage">
+                        <div class="grading-handle" id="gradingHandle-fotografie">
+                            <i class="fa-solid fa-arrows-left-right"></i>
+                        </div>
+                    </div>
+                    <div class="grading-examples" data-examples-for="fotografie"></div>
+                </div>
+            </div>
+
+            <!-- ─── RUN ─── -->
+            <div class="grading-project az-reveal" id="grading-run">
+                <h2 class="section-title grading-project-title">RUN</h2>
+                <div class="grading-container">
+                    <div class="grading-labels-top">
+                        <span class="grading-label-top" data-i18n="run.gradingBefore">VORHER</span>
+                        <span class="grading-label-top" data-i18n="run.gradingAfter">NACHHER</span>
+                    </div>
+                    <div class="grading-slider" id="gradingSlider-run">
+                        <img src="colorgradings/run-grading-after.jpg" class="grading-after"
+                            data-i18n-attr="alt:colorgrading.afterAlt" alt="Nachher – Color Grading">
+                        <img src="colorgradings/run-grading-before.jpg" class="grading-before"
+                            data-i18n-attr="alt:colorgrading.beforeAlt" alt="Vorher – ungegradetes Footage">
+                        <div class="grading-handle" id="gradingHandle-run">
+                            <i class="fa-solid fa-arrows-left-right"></i>
+                        </div>
+                    </div>
+                    <div class="grading-examples" data-examples-for="run"></div>
+                </div>
+            </div>
+
+            <!-- ─── DROHNEN VIDEOS ─── -->
+            <div class="grading-project az-reveal" id="grading-drohne">
+                <h2 class="section-title grading-project-title" data-i18n="drone.navVideos">Drohnen Videos</h2>
+                <div class="grading-container">
+                    <div class="grading-labels-top">
+                        <span class="grading-label-top" data-i18n="run.gradingBefore">VORHER</span>
+                        <span class="grading-label-top" data-i18n="run.gradingAfter">NACHHER</span>
+                    </div>
+                    <div class="grading-slider" id="gradingSlider-drohne">
+                        <img src="colorgradings/run-grading-after.jpg" class="grading-after"
+                            data-i18n-attr="alt:colorgrading.afterAlt" alt="Nachher – Color Grading">
+                        <img src="colorgradings/run-grading-before.jpg" class="grading-before"
+                            data-i18n-attr="alt:colorgrading.beforeAlt" alt="Vorher – ungegradetes Footage">
+                        <div class="grading-handle" id="gradingHandle-drohne">
+                            <i class="fa-solid fa-arrows-left-right"></i>
+                        </div>
+                    </div>
+                    <div class="grading-examples" data-examples-for="drohne"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR HEADER.JS LADEN) ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
+    <script src="header.js"></script>
+    <script src="az-reveal.js"></script>
+
+    <!-- ─── COLOR GRADING SLIDER SCRIPT ───
+         Gleiche Zieh-Logik wie in run.html (.grading-slider/.grading-handle),
+         hier nur verallgemeinert, damit sie für alle 3 Projekt-Slider auf
+         dieser Seite wiederverwendet werden kann. Bilder fehlen aktuell noch
+         für Fotografie & Drohnen Videos -> alle 3 Projekte nutzen vorerst
+         überall dieselben RUN-Platzhalterbilder. -->
+    <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
+
+        // STARTPOSITION des Vorher/Nachher-Sliders pro Bild: "pos"
+        // 0 = ganz links (nur Nachher sichtbar), 100 = ganz rechts (nur Vorher sichtbar)
+        // Höhere Zahl = Slider weiter rechts, niedrigere Zahl = weiter links.
+        const gradingProjects = [
+            {
+                id: 'fotografie',
+                examples: [
+                    { before: 'colorgradings/eisvogel-vorher.jpg', after: 'colorgradings/eisvogel-nachher.jpg', pos: 50 },
+                    { before: 'colorgradings/star-vorher.jpg', after: 'colorgradings/star-nachher.jpg', pos: 30 },
+                    { before: 'colorgradings/milan-vorher.jpg', after: 'colorgradings/milan-nachher.jpg', pos: 47 }
+                ]
+            },
+            {
+                id: 'run',
+                examples: [
+                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 },
+                    { before: 'colorgradings/run-grading-before-2.jpg', after: 'colorgradings/run-grading-after-2.jpg', pos: 55 },
+                    { before: 'colorgradings/run-grading-before-3.jpg', after: 'colorgradings/run-grading-after-3.jpg', pos: 32 }
+                ]
+            },
+            {
+                id: 'drohne',
+                examples: [
+                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 },
+                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 },
+                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 }
+                ]
+            }
+        ];
+
+        function initGradingSlider(slider, handle) {
+            let isDragging = false;
+
+            function setSliderPositionPercent(percent) {
+                percent = Math.max(0, Math.min(100, percent));
+                slider.style.setProperty('--slider-pos', percent + '%');
+            }
+
+            function setSliderPosition(x) {
+                const rect = slider.getBoundingClientRect();
+                setSliderPositionPercent(((x - rect.left) / rect.width) * 100);
+            }
+
+            const onStart = () => { isDragging = true; };
+            const onEnd = () => { isDragging = false; };
+            const onMove = (e) => {
+                if (!isDragging) return;
+                setSliderPosition(e.touches ? e.touches[0].clientX : e.clientX);
+            };
+
+            handle.addEventListener('mousedown', onStart);
+            window.addEventListener('mouseup', onEnd);
+            window.addEventListener('mousemove', onMove);
+
+            handle.addEventListener('touchstart', onStart, { passive: true });
+            window.addEventListener('touchend', onEnd);
+            window.addEventListener('touchmove', onMove, { passive: true });
+
+            slider.addEventListener('click', (e) => setSliderPosition(e.clientX));
+
+            return { setPercent: setSliderPositionPercent };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gradingProjects.forEach((project) => {
+                const slider = document.getElementById('gradingSlider-' + project.id);
+                const handle = document.getElementById('gradingHandle-' + project.id);
+                if (!slider || !handle) return;
+
+                const beforeImg = slider.querySelector('.grading-before');
+                const afterImg = slider.querySelector('.grading-after');
+                const { setPercent } = initGradingSlider(slider, handle);
+                const first = project.examples[0];
+                beforeImg.src = first.before;
+                afterImg.src = first.after;
+                setPercent(first.pos);
+
+                const examplesContainer = document.querySelector('.grading-examples[data-examples-for="' + project.id + '"]');
+                if (!examplesContainer) return;
+
+                project.examples.forEach((example, index) => {
+                    const thumb = document.createElement('button');
+                    thumb.type = 'button';
+                    thumb.className = 'grading-example-thumb' + (index === 0 ? ' active' : '');
+                    thumb.style.backgroundImage = "url('" + example.after + "')";
+                    thumb.setAttribute('aria-label', tr('colorgrading.exampleLabel', 'Beispiel') + ' ' + (index + 1));
+
+                    thumb.addEventListener('click', () => {
+                        beforeImg.src = example.before;
+                        afterImg.src = example.after;
+                        setPercent(example.pos);
+                        examplesContainer.querySelectorAll('.grading-example-thumb').forEach((btn) => btn.classList.remove('active'));
+                        thumb.classList.add('active');
+                    });
+
+                    examplesContainer.appendChild(thumb);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -10,7 +10,7 @@
     <link rel="preload" href="run-trailer-small.mp4" as="video" type="video/mp4">
 
     <!-- ZENTRALES STYLESHEET -->
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.3">
     <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -359,18 +359,26 @@
                             Grundlage für meinen 10-Bit Apple Log Workflow. In der Postproduktion konnte ich dadurch die
                             kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
                         </p>
-                        <a href="bts.html" class="info-content-link az-reveal" data-az-delay="3">
-                            <span data-i18n="run.btsLinkText">Mehr Einblicke im Behind the Scenes</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
+                        <div class="az-reveal" data-az-delay="3">
+                            <a href="bts.html" class="info-content-link">
+                                <span data-i18n="run.btsLinkText">Mehr Einblicke im Behind the Scenes</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="grading" class="grading-section">
                 <h2 class="section-title az-reveal" data-i18n="run.navGrading">Color Grading</h2>
-                <p class="az-reveal" data-az-delay="1" style="text-align: center; max-width: 700px; margin: 0 auto 30px auto; color: #cccccc;" data-i18n="run.gradingSubtitle">
+                <p class="az-reveal" data-az-delay="1" style="text-align: center; max-width: 700px; margin: 0 auto 16px auto; color: #cccccc;" data-i18n="run.gradingSubtitle">
                     Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
+                </p>
+                <p class="az-reveal" data-az-delay="2" style="text-align: center; margin: 0 0 30px;">
+                    <a href="colorgrading.html" class="info-content-link">
+                        <span data-i18n="run.gradingCta">Alle Color Gradings ansehen</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
                 </p>
 
                 <div class="grading-container">
@@ -380,9 +388,9 @@
                     </div>
 
                     <div class="grading-slider" id="gradingSlider">
-                        <img src="images/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" data-i18n-attr="alt:run.gradingAfterAlt"
+                        <img src="colorgradings/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" data-i18n-attr="alt:run.gradingAfterAlt"
                             class="grading-after">
-                        <img src="images/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" data-i18n-attr="alt:run.gradingBeforeAlt"
+                        <img src="colorgradings/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" data-i18n-attr="alt:run.gradingBeforeAlt"
                             class="grading-before">
 
                         <div class="grading-handle" id="gradingHandle">

@@ -20,7 +20,7 @@
 
     <link rel="manifest" href="/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.3">
     <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -159,10 +159,11 @@
             -webkit-backface-visibility: hidden;
             display: flex;
             align-items: flex-end;
-            justify-content: flex-start; /* Auf PC LINKSBÜNDIG */
+            justify-content: flex-start;
+            /* Auf PC LINKSBÜNDIG */
             padding: 32px 40px;
             box-sizing: border-box;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
         }
 
         .apple-card-content {
@@ -170,7 +171,8 @@
             align-items: center;
             gap: 16px;
             z-index: 2;
-            justify-content: flex-start; /* Auf PC LINKSBÜNDIG */
+            justify-content: flex-start;
+            /* Auf PC LINKSBÜNDIG */
         }
 
         .apple-btn {
@@ -203,7 +205,8 @@
             letter-spacing: 0.3px;
         }
 
-        .card-desc, .bullet-dot {
+        .card-desc,
+        .bullet-dot {
             display: none !important;
         }
 
@@ -261,7 +264,8 @@
         }
 
         /* Nur auf Touchscreen-Geräten (Handy, Tablet, iPod) ausblenden; auf PC (auch schmal) sichtbar lassen */
-        @media (hover: none), (pointer: coarse) {
+        @media (hover: none),
+        (pointer: coarse) {
             .slider-arrow {
                 display: none !important;
             }
@@ -403,19 +407,21 @@
 
             .apple-card-overlay {
                 padding: 14px !important;
-                justify-content: center !important; /* AUF MOBILE MITTIG */
+                justify-content: center !important;
+                /* AUF MOBILE MITTIG */
                 align-items: flex-end !important;
                 /* Auf Mobile nochmals dezenter als Desktop, damit die
                    Projektbilder (dort hochkant, weniger Fläche) klar
                    erkennbar bleiben. */
-                background: linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,0.45) 100%) !important;
+                background: linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.45) 100%) !important;
             }
 
             .apple-card-content {
                 padding: 6px 10px !important;
                 gap: 8px !important;
                 flex-direction: column !important;
-                align-items: center !important; /* AUF MOBILE MITTIG */
+                align-items: center !important;
+                /* AUF MOBILE MITTIG */
                 justify-content: flex-end !important;
                 width: 100% !important;
             }
@@ -429,7 +435,8 @@
             .apple-card-text {
                 font-size: 0.78rem !important;
                 flex-direction: column !important;
-                align-items: center !important; /* AUF MOBILE MITTIG */
+                align-items: center !important;
+                /* AUF MOBILE MITTIG */
                 text-align: center !important;
                 gap: 0 !important;
             }
@@ -486,6 +493,48 @@
             }
         }
 
+        /* ─── ÜBER MICH (mobile) ───
+           Ab 818px steht das Bild unten dran – im normalen Textfluss nach
+           dem Text (order:2) – statt wie am Desktop als volles
+           Hintergrundbild hinter dem Text zu liegen (gleiches Muster wie
+           #about-intro auf about.html). Bewusst OHNE randloses Ausbrechen:
+           das Bild bleibt exakt so breit wie der Text darüber, mit
+           identischem Abstand links/rechts, statt bis zum Bildschirmrand
+           zu gehen. */
+        @media (max-width: 818px) {
+            #ueber-mich {
+                display: flex;
+                flex-direction: column;
+
+                /* ▼▼▼ BILD-POSITION (nur Mobile, Bild unter dem Text) ▼▼▼
+                   x: 0% = linker Bildrand sichtbar … 100% = rechter Rand
+                   y: 0% = oberer Rand sichtbar … 100% = unterer Rand
+                   zoom: 1 = Bild füllt den Rahmen genau aus, >1 = näher ran
+                   (damit wirkt auch y). Der Rahmen bleibt IMMER komplett
+                   gefüllt (object-fit: cover, zoom nie unter 1). */
+                --about-img-x: 100%;
+                --about-img-y: 50%;
+                --about-img-zoom: 1;
+            }
+
+            #ueber-mich .about-bg {
+                position: relative;
+                inset: auto;
+                order: 2;
+                width: 100%;
+                aspect-ratio: 4 / 3;
+                margin-top: 32px;
+            }
+
+            #ueber-mich .about-overlay {
+                display: none;
+            }
+
+            #ueber-mich .about-container {
+                order: 1;
+                z-index: auto;
+            }
+        }
     </style>
 </head>
 
@@ -501,8 +550,9 @@
         </video>
 
         <div class="hero-content">
-            <h1 class="az-reveal" data-i18n-html="index.heroTitleHtml">CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
-            <p class="az-reveal" data-az-delay="1" data-i18n="index.heroSubtitle">Filmmaker & Mediamatiker aus der Schweiz</p>
+            <h1 class="az-reveal" data-i18n-html="index.heroTitleHtml">CREATING <span
+                    class="gradient-text">VISUAL</span> STORIES</h1>
+            <p class="az-reveal" data-az-delay="1" data-i18n="index.heroSubtitle">Filmemacher, Fotograf & Mediamatiker aus der Schweiz</p>
         </div>
 
         <div class="scroll-down-btn scroll-down-btn--hero-absolute hero-scroll-indicator" onclick="scrollPastHero()">
@@ -520,16 +570,19 @@
                     <h2 class="section-title-left" data-i18n="index.projectsHeading">Meine Projekte</h2>
                 </div>
                 <a href="projekte.html" class="see-all-link">
-                    <span data-i18n="index.projectsSeeAll">Alle Projekte ansehen</span> <i class="fa-solid fa-chevron-right"></i>
+                    <span data-i18n="index.projectsSeeAll">Alle Projekte ansehen</span> <i
+                        class="fa-solid fa-chevron-right"></i>
                 </a>
             </div>
 
             <div class="apple-slider-container az-reveal" data-az-delay="1">
 
-                <button class="slider-arrow prev-arrow" id="prevBtn" data-i18n-attr="aria-label:index.ariaPrevProject" aria-label="Vorheriges Projekt">
+                <button class="slider-arrow prev-arrow" id="prevBtn" data-i18n-attr="aria-label:index.ariaPrevProject"
+                    aria-label="Vorheriges Projekt">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <button class="slider-arrow next-arrow" id="nextBtn" data-i18n-attr="aria-label:index.ariaNextProject" aria-label="Nächstes Projekt">
+                <button class="slider-arrow next-arrow" id="nextBtn" data-i18n-attr="aria-label:index.ariaNextProject"
+                    aria-label="Nächstes Projekt">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
 
@@ -551,37 +604,24 @@
                         </div>
                     </div>
 
-                    <div class="apple-card" onclick="window.location.href='lego.html';">
+                    <div class="apple-card" onclick="window.location.href='fotografie.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-lego.png'); --bg-mobile: url('cards/card-small-lego.png');">
+                            style="--bg-desktop: url('cards/card-big-fotografie.png'); --bg-mobile: url('cards/card-small-fotografie.png');">
                         </div>
+                        <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
-                                <a href="lego.html" class="apple-btn">
+                                <a href="fotografie.html" class="apple-btn">
                                     <span data-i18n="common.watchNow">Jetzt ansehen</span>
                                 </a>
                                 <div class="apple-card-text">
-                                    <span class="genre-tag" data-i18n="index.genreLego">Stop-Motion / Youtube Kanal</span>
+                                    <span class="genre-tag" data-i18n="index.genreFotografie">Fotografie / Wildlife &
+                                        Landschaften</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="apple-card" onclick="window.location.href='urbnvibe.html';">
-                        <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-urbnvibe.jpg'); --bg-mobile: url('cards/card-small-urbnvibe.jpg');">
-                        </div>
-                        <div class="apple-card-overlay">
-                            <div class="apple-card-content">
-                                <a href="urbnvibe.html" class="apple-btn">
-                                    <span data-i18n="common.watchNow">Jetzt ansehen</span>
-                                </a>
-                                <div class="apple-card-text">
-                                    <span class="genre-tag" data-i18n="index.genreUrbnvibe">10. ICT-Schuljahr / Projekt</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="apple-card" onclick="window.location.href='musik.html';">
                         <div class="apple-card-bg"
@@ -593,7 +633,26 @@
                                     <span data-i18n="common.watchNow">Jetzt ansehen</span>
                                 </a>
                                 <div class="apple-card-text">
-                                    <span class="genre-tag" data-i18n="index.genreMusik">Musik / Klavier & Schlagzeug</span>
+                                    <span class="genre-tag" data-i18n="index.genreMusik">Musik / Klavier &
+                                        Schlagzeug</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="apple-card" onclick="window.location.href='lego.html';">
+                        <div class="apple-card-bg"
+                            style="--bg-desktop: url('cards/card-big-lego.png'); --bg-mobile: url('cards/card-small-lego.png');">
+                        </div>
+                        <div class="apple-card-overlay">
+                            <div class="apple-card-content">
+                                <a href="lego.html" class="apple-btn">
+                                    <span data-i18n="common.watchNow">Jetzt ansehen</span>
+                                </a>
+                                <div class="apple-card-text">
+                                    <span class="genre-tag" data-i18n="index.genreLego">Stop-Motion / Youtube
+                                        Kanal</span>
                                 </div>
                             </div>
                         </div>
@@ -629,13 +688,25 @@
         </div>
     </section>
 
-    <section id="ueber-mich" class="section bg-dark">
-        <div class="container">
-            <h2 class="section-title az-reveal" data-i18n="index.aboutHeading">Über mich</h2>
+    <section id="ueber-mich" class="section bg-dark about-section">
+        <div class="about-bg" aria-hidden="true">
+            <img src="images/ueber-mich.jpg" alt="">
+        </div>
+        <div class="about-overlay" aria-hidden="true"></div>
+        <div class="container about-container">
             <div class="about-text az-reveal" data-az-delay="1">
-                <p data-i18n="index.aboutText">Hallo, ich bin Aurelio. Mein Hobby ist es, Storys zu schreiben, und diese danach als cinematischen
-                    Kurzfilm zu produzieren. Ich bin derzeit im 1. Lehrjahr als Mediamatiker tätig und beschäftige mich
-                    mit Design, Webentwicklung und verschiedenen digitalen Projekten.</p>
+                <h2 class="section-title" data-i18n="index.aboutHeading">Über mich</h2>
+                <p data-i18n-html="index.aboutTextP1">Hallo, ich bin <span class="hl">Aurelio</span> – Mediamatiker aus
+                    der
+                    Schweiz mit einer grossen Leidenschaft für <span class="hl">Film</span> und
+                    <span class="hl">Fotografie</span>.
+                </p>
+                <p data-i18n-html="index.aboutTextP2">Aus einer einfachen Idee wird bei mir schnell eine
+                    <span class="hl">Geschichte</span>, die ich mit Kamera, Schnitt und Gestaltung zum Leben erwecke.
+                </p>
+                <a href="about.html" class="see-all-link about-more-link">
+                    <span data-i18n="index.aboutMore">Mehr über mich</span> <i class="fa-solid fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -643,13 +714,18 @@
     <section id="kontakt" class="section">
         <div class="container">
             <h2 class="section-title az-reveal" data-i18n="index.contactHeading">Kontakt</h2>
-            <p class="az-reveal" data-az-delay="1" style="text-align: center; margin-bottom: 30px;" data-i18n="index.contactText">Lust auf eine
+            <p class="az-reveal" data-az-delay="1" style="text-align: center; margin-bottom: 30px;"
+                data-i18n="index.contactText">Lust auf eine
                 Zusammenarbeit oder hast du Fragen zu
                 meinen Projekten? Schreib mir!</p>
-            <form id="contactForm" class="contact-form az-reveal" data-az-delay="2" action="https://formspree.io/f/xojowqvy" method="POST">
-                <input type="text" name="name" placeholder="Dein Name" data-i18n-attr="placeholder:index.namePlaceholder" required>
-                <input type="email" name="email" placeholder="Deine E-Mail" data-i18n-attr="placeholder:index.emailPlaceholder" required>
-                <textarea name="message" placeholder="Deine Nachricht..." data-i18n-attr="placeholder:index.messagePlaceholder" rows="5" required></textarea>
+            <form id="contactForm" class="contact-form az-reveal" data-az-delay="2"
+                action="https://formspree.io/f/xojowqvy" method="POST">
+                <input type="text" name="name" placeholder="Dein Name"
+                    data-i18n-attr="placeholder:index.namePlaceholder" required>
+                <input type="email" name="email" placeholder="Deine E-Mail"
+                    data-i18n-attr="placeholder:index.emailPlaceholder" required>
+                <textarea name="message" placeholder="Deine Nachricht..."
+                    data-i18n-attr="placeholder:index.messagePlaceholder" rows="5" required></textarea>
                 <p id="contactFormStatus" class="contact-form-status" role="status" aria-live="polite"></p>
                 <button type="submit" class="btn" data-i18n="index.submit">Nachricht senden</button>
             </form>

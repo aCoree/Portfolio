@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrait | Aurelio Zingarello</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="az-reveal.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: #ffffff;
+        }
+
+        /* ─── HAUPT-CONTAINER ─── */
+        #foto-sub-page {
+            width: 100%;
+            max-width: 1400px;
+            min-height: 60vh;
+            margin: 0 auto;
+            padding: 150px 40px 130px;
+            box-sizing: border-box;
+        }
+
+        .foto-sub-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 768px) {
+            #foto-sub-page {
+                padding: 120px 18px 90px;
+            }
+
+            .foto-sub-header {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PLATZHALTER FÜR HEADER & MOBILE MENÜ -->
+    <div id="header-placeholder"></div>
+
+    <main id="foto-sub-page">
+        <div class="foto-sub-header project-header">
+            <h1 class="az-reveal" data-i18n="fotografie.catPortrait">Portrait</h1>
+            <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.descPortrait">Menschen und Emotionen
+                im Fokus.</p>
+        </div>
+
+        <!-- Raster wird automatisch aus foto-data.js aufgebaut (eine Kachel pro Motiv).
+             Neue Fotos/Motive bitte dort eintragen, nicht hier. -->
+        <div class="photo-grid az-reveal" data-az-delay="2" data-foto-category="portrait"></div>
+    </main>
+
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION (IDENTISCH AUF FOTOGRAFIE.HTML UND
+         ALLEN KATEGORIESEITEN – VOLLQUALIFIZIERTE LINKS, DAMIT SIE VON JEDER
+         DIESER SEITEN AUS FUNKTIONIEREN) ─── -->
+    <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
+        window.secondHeaderItems = [
+            { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
+            { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
+            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" },
+            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" }
+        ];
+    </script>
+
+    <script src="header.js"></script>
+    <script src="foto-data.js"></script>
+    <script src="foto-galerie.js"></script>
+    <script src="az-reveal.js"></script>
+</body>
+
+</html>

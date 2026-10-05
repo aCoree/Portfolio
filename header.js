@@ -135,23 +135,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // Main-Header-Navigation (site-weit, bewusst zentral hier definiert statt
     // pro Seite dupliziert, da auf jeder Seite identisch).
     const mainNavItems = [
-        { label: t('nav.home', 'Home'), href: 'index.html#home' },
+        { label: t('nav.home', 'Home'), href: 'index.html' },
         {
             label: t('nav.projects', 'Projekte'),
             href: 'projekte.html',
+            // Reihenfolge unterhalb von "Alle Projekte" entspricht bewusst dem
+            // Standard-Filter "Neuste zuerst" aus projekte.html (siehe dort
+            // sortProjects()/data-date je Karte) – kein eigenes Filter-UI hier,
+            // einfach eine statische, nach Datum absteigend sortierte Liste.
             children: [
                 { label: t('nav.projectsAll', 'Alle Projekte'), href: 'projekte.html', emphasize: true },
+                { label: t('projekte.genreFotografie', 'Fotografie'), href: 'fotografie.html' },
                 { label: 'RUN', href: 'run.html' },
                 { label: 'Musik', href: 'musik.html' },
                 { label: 'DJI Air 3S', href: 'drone.html' },
                 { label: 'URBNVIBE', href: 'urbnvibe.html' },
-                { label: 'LEGO FAMILY STUDIO', href: 'lego.html' },
-                { label: t('projekte.genreFotografie', 'Fotografie'), href: 'comingsoon.html' }
+                { label: 'LEGO FAMILY STUDIO', href: 'lego.html' }
             ]
         },
         {
             label: t('nav.about', 'Über mich'),
-            href: 'index.html#ueber-mich',
+            href: 'about.html',
             // Zusätzliche, nicht sichtbare Suchbegriffe (siehe buildSearchIndex/
             // scoreSearchEntry) – erlaubt z.B. "Aurelio", "Beruf" oder
             // "Mediamatiker" als Treffer für diesen Eintrag, ohne dass diese
@@ -205,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: t('run.navWholeFilm', 'Ganzer Film'), href: 'run.html#content', category: 'RUN' },
         { label: runLabel, href: 'bts.html', category: 'RUN', keywords: 'BTS' },
         { label: t('run.navGrading', 'Color Grading'), href: 'run.html#grading', category: 'RUN' },
+        { label: t('colorgrading.title', 'Color Grading'), href: 'colorgrading.html', category: 'RUN', keywords: 'Vorher Nachher Fotografie Drohnen' },
 
         { label: musikIntroLabel, href: 'musik.html#musik-intro', category: 'Musik' },
         { label: musikVideosLabel, href: 'musik.html#song-force-theme', category: 'Musik' },
@@ -242,11 +247,11 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: 'LEGO Street Race', href: 'lego.html#lego-video-street-race', category: legoVideosLabel },
         { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: legoVideosLabel },
 
-        { label: fotografieLabel, href: 'comingsoon.html', category: fotografieLabel },
-        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'comingsoon.html', category: fotografieLabel },
-        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'comingsoon.html', category: fotografieLabel },
-        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'comingsoon.html', category: fotografieLabel },
-        { label: t('fotografie.navPortrait', 'Portrait'), href: 'comingsoon.html', category: fotografieLabel },
+        { label: fotografieLabel, href: 'fotografie.html', category: fotografieLabel },
+        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'fotografie.html', category: fotografieLabel },
+        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'fotografie.html', category: fotografieLabel },
+        { label: t('fotografie.navPortrait', 'Portrait'), href: 'fotografie.html', category: fotografieLabel },
+        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'fotografie.html', category: fotografieLabel },
 
         { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
         { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel }
@@ -372,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <!-- ─── NAVIGATIONBAR ─── -->
         <header class="navbar">
             <div class="nav-left">
-                <a href="index.html#home" class="logo" id="navLogo">
+                <a href="index.html" class="logo" id="navLogo">
                     <span class="logo-mark">
                         <img src="${logoSrc}" alt="${logoAlt}">
                     </span>
@@ -473,7 +478,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <!-- ─── FOOTER ─── -->
     <footer class="site-footer">
         <div class="footer-left">
-            <a href="index.html#home" class="logo">
+            <a href="index.html" class="logo">
                 <span class="logo-mark">
                     <img src="${logoSrc}" alt="${logoAlt}">
                 </span>
@@ -1127,7 +1132,13 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.style.left = '';
         document.body.style.right = '';
         document.body.style.width = '';
-        window.scrollTo(0, lockedScrollY);
+        // behavior:'instant' ist hier Pflicht: ohne das erbt scrollTo() das
+        // globale "html { scroll-behavior: smooth; }" (siehe style.css) und
+        // animiert sichtbar von 0 zurück zu lockedScrollY – wirkt dann wie
+        // ein automatisches Scrollen von ganz oben nach unten beim
+        // Schliessen des Mobile-Menüs, statt einfach an Ort und Stelle zu
+        // bleiben.
+        window.scrollTo({ top: lockedScrollY, left: 0, behavior: 'instant' });
     }
 
     function openMobileOverlay(mode) {

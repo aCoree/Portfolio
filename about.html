@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Über mich | Aurelio Zingarello</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="az-reveal.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+        }
+
+        /* body behält bewusst ihr eigenes, etwas dunkleres Schwarz (die
+           Sections selbst wechseln ja ohnehin zwischen bg-dark und der
+           helleren Standardfarbe – dieser Kontrast, z.B. bei "Mein Weg",
+           ist gewollt und soll erhalten bleiben). <html> bekommt zusätzlich
+           dieselbe Farbe wie die erste Section, als Absicherung für den
+           Rand, der bei elastischem Overscroll/Bounce ganz oben kurz
+           sichtbar werden kann. Der eigentlich sichtbare Bug lag aber
+           anderswo: <main> selbst hat keine eigene Hintergrundfarbe, und
+           "body.has-second-header main" (header.css) reserviert über
+           padding-top IMMER 102px (Hauptheader + Second-Header-Höhe) –
+           auf Mobile ist der echte Header aber nur 65px hoch (die Second-
+           Header-Leiste wandert dort ins Hamburger-Menü). In den
+           verbleibenden ~37px darunter schien bisher also schlicht die
+           body-Farbe durch, sichtbar als dunklerer Rand direkt über der
+           ersten Section – unabhängig von jeglichem Overscroll. Die
+           gezielte Hintergrundfarbe auf <main> (nur hier auf about.html)
+           schliesst genau diese Lücke, ohne body selbst (und damit den
+           Kontrast bei "Mein Weg" weiter unten) zu verändern. */
+        html {
+            background-color: #141414;
+        }
+
+        main {
+            background-color: #141414;
+        }
+
+        /* ─── INTRO ───
+           Nutzt die .about-section/.about-bg/.about-overlay/.about-container/
+           .about-text Klassen aus style.css (gleiches Muster wie die
+           "Über mich"-Sektion auf index.html) – Text-Font kommt darüber
+           ganz normal von .about-text (font-family: var(--font-body) =
+           "Roboto Flex", in style.css :root definiert). Overrides hier sind
+           bewusst an die #about-intro-ID gebunden, damit index.html davon
+           unberührt bleibt: Absatz-Abstand (der globale *{margin:0}-Reset
+           lässt mehrere <p> sonst aneinanderkleben) und, auf Mobile, Bild
+           NACH dem Text statt als Hintergrund dahinter. */
+        #about-intro {
+            padding-top: calc(var(--nav-height) + 40px);
+        }
+
+        /* Schatten reicht bewusst bis zur Bildmitte (50%), statt schon bei
+           38% auszulaufen wie beim globalen .about-overlay-Standard – der
+           Text auf der linken Bildhälfte soll klar lesbar, die rechte
+           Hälfte des Bildes aber unverändert hell sichtbar bleiben. */
+        #about-intro .about-overlay {
+            background: linear-gradient(to right,
+                    rgba(0, 0, 0, 0.9) 0%,
+                    rgba(0, 0, 0, 0.75) 25%,
+                    rgba(0, 0, 0, 0.4) 42%,
+                    transparent 50%);
+        }
+
+        .intro-kicker {
+            display: block;
+            margin-bottom: 12px;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+        }
+
+        #about-intro .about-text p {
+            margin-top: 16px;
+        }
+
+        #about-intro .about-text p:first-of-type {
+            margin-top: 0;
+        }
+
+        @media (max-width: 818px) {
+
+            /* padding-top/-bottom bewusst auf denselben Wert (32px, nur der
+               Header-Clearance-Anteil oben ist zusätzlich nötig) wie der
+               margin-top zwischen Text und Bild gesetzt – sonst hätte das
+               Bild unten einen anderen (vom generischen .section-Padding
+               geerbten) Abstand zum Sectionende als der Text oben zum
+               Header, was unruhig/unharmonisch wirkt. So ist der "Luft"-
+               Abstand rundherum überall exakt gleich gross. */
+            #about-intro {
+                display: flex;
+                flex-direction: column;
+                padding-top: calc(var(--nav-height) + 32px);
+                padding-bottom: 32px;
+
+                /* ▼▼▼ BILD-POSITION (nur Mobile, Bild unter dem Text) ▼▼▼
+                   x: 0% = linker Bildrand sichtbar … 100% = rechter Rand
+                   y: 0% = oberer Rand sichtbar … 100% = unterer Rand
+                   zoom: 1 = Bild füllt den Rahmen genau aus, >1 = näher ran
+                   (damit wirkt auch y). Der Rahmen bleibt IMMER komplett
+                   gefüllt (object-fit: cover, zoom nie unter 1). */
+                --about-img-x: 100%;
+                --about-img-y: 50%;
+                --about-img-zoom: 1;
+            }
+
+            /* Kein randloses Ausbrechen (Breakout) mehr: das Bild bleibt
+               innerhalb des Section-Paddings genau so breit wie der Text
+               darüber – links/rechts exakt derselbe Abstand wie beim Text,
+               statt bis zum Bildschirmrand zu gehen. */
+            #about-intro .about-bg {
+                position: relative;
+                inset: auto;
+                order: 2;
+                width: 100%;
+                aspect-ratio: 4 / 3;
+                margin-top: 32px;
+            }
+
+            #about-intro .about-overlay {
+                display: none;
+            }
+
+            #about-intro .about-container {
+                order: 1;
+                z-index: auto;
+            }
+        }
+
+        /* Ab hier (echte Handy-Breiten) hat der Header keine sichtbare
+           Second-Header-Leiste mehr (die zieht auf Mobile ins Hamburger-
+           Menü um, siehe header.css) und ist dadurch klar niedriger als am
+           PC. Das globale header.css reserviert über "body.has-second-
+           header main" aber immer 102px (Hauptheader + Second-Header-
+           Höhe) Platz auf JEDER Seite mit Second-Header – unabhängig von
+           der Bildschirmgrösse. Zusammen mit dem eigenen padding-top oben
+           ergab das auf dem Handy einen doppelt gezählten, unnötig
+           grossen Abstand (102px generische Reserve + nochmals ~90px on
+           top). Der generische Wert allein reicht auf dieser Breite
+           bereits als Luft übers Menü hinaus, darum hier auf 0 reduziert
+           – NUR in diesem engen Mobile-Bereich, PC/Tablet bleiben
+           unverändert. */
+        @media (max-width: 640px) {
+            #about-intro {
+                padding-top: 0;
+            }
+        }
+
+        /* ─── SKILLS – Diagramm ───
+           Balken laufen erst beim ersten Sichtbarwerden (IntersectionObserver,
+           siehe Script am Seitenende) von 0 auf ihren Ziel-Wert – bewusst
+           langsam (1.6s) und leicht gestaffelt pro Zeile, kein hektisches
+           Reinschiessen. */
+        .skill-chart {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .skill-name {
+            display: block;
+            margin-bottom: 10px;
+            font-family: "Barlow Condensed", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 1.05rem;
+            color: #f5f5f7;
+        }
+
+        .skill-bar {
+            position: relative;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .skill-bar-fill {
+            position: absolute;
+            inset: 0;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+            transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-chart.is-visible .skill-bar-fill {
+            width: var(--level);
+        }
+
+        .skill-chart.is-visible .skill-row:nth-child(1) .skill-bar-fill {
+            transition-delay: 0.05s;
+        }
+
+        .skill-chart.is-visible .skill-row:nth-child(2) .skill-bar-fill {
+            transition-delay: 0.2s;
+        }
+
+        .skill-chart.is-visible .skill-row:nth-child(3) .skill-bar-fill {
+            transition-delay: 0.35s;
+        }
+
+        @media (max-width: 640px) {
+            .skill-chart {
+                gap: 22px;
+            }
+        }
+
+        /* ─── ADOBE-SKILLS – Kreisdiagramme ───
+           Eigene, bewusst schlichte Kreis-Variante NUR für die Adobe-
+           Programme (nicht für Videografie/Fotografie/Drohne oben – die
+           bleiben als Balken). Läuft über dieselbe Sichtbarwerden-Logik
+           wie .skill-chart (siehe Script am Seitenende), nur mit
+           stroke-dashoffset statt width. pathLength="100" auf den
+           <circle>-Elementen macht den Kreisumfang unabhängig vom Radius
+           direkt zu einem 0–100-Wert, genau wie die Prozent-Variable
+           --pct – kein Umrechnen auf den echten Umfang nötig. Die Farbe
+           je Ring (--ring-color) entspricht der offiziellen Icon-Farbe
+           des jeweiligen Programms; in der Mitte sitzt statt eines
+           generischen Icons das echte heruntergeladene App-Icon (PNG,
+           equipment/-Ordner) – sonst werden bewusst nirgends Icons
+           verwendet. */
+        .adobe-skills-title {
+            margin: 56px 0 32px;
+            text-align: center;
+            font-family: "Barlow Condensed", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: normal;
+            color: #9aa8d1;
+        }
+
+        .adobe-skills {
+            max-width: 820px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 48px 40px;
+        }
+
+        .adobe-skill {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 170px;
+        }
+
+        .adobe-ring {
+            position: relative;
+            width: 168px;
+            height: 168px;
+        }
+
+        .adobe-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .adobe-ring-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 5;
+        }
+
+        .adobe-ring-fill {
+            fill: none;
+            stroke: var(--ring-color);
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            transition: stroke-dashoffset 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .adobe-skills.is-visible .adobe-ring-fill {
+            stroke-dashoffset: calc(100 - var(--pct));
+        }
+
+        .adobe-skills.is-visible .adobe-skill:nth-child(1) .adobe-ring-fill {
+            transition-delay: 0.05s;
+        }
+
+        .adobe-skills.is-visible .adobe-skill:nth-child(2) .adobe-ring-fill {
+            transition-delay: 0.2s;
+        }
+
+        .adobe-skills.is-visible .adobe-skill:nth-child(3) .adobe-ring-fill {
+            transition-delay: 0.35s;
+        }
+
+        .adobe-skills.is-visible .adobe-skill:nth-child(4) .adobe-ring-fill {
+            transition-delay: 0.5s;
+        }
+
+        .adobe-ring-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 66px;
+            height: 66px;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .adobe-skill-name {
+            margin-top: 16px;
+            font-family: "Barlow Condensed", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 1.02rem;
+            color: #f5f5f7;
+        }
+
+        /* Mobile: die auf PC vergrösserten Ringe wieder auf die kompaktere
+           Grösse zurücksetzen (die war hier bereits gut, siehe Feedback –
+           nur auf PC sollten sie grösser werden). */
+        @media (max-width: 640px) {
+            .adobe-skills {
+                gap: 36px 28px;
+            }
+
+            .adobe-skill {
+                width: 120px;
+            }
+
+            .adobe-ring {
+                width: 104px;
+                height: 104px;
+            }
+
+            .adobe-ring-bg,
+            .adobe-ring-fill {
+                stroke-width: 7;
+            }
+
+            .adobe-ring-icon {
+                width: 42px;
+                height: 42px;
+                border-radius: 10px;
+            }
+        }
+
+        /* ─── LEBENS-ZEITSTRAHL ("MEIN WEG") ───
+           Echte S-Kurve: die mittlere Spalte ist eine "Schwingzone", jeder
+           Punkt rückt per --side zu seiner Karte hin, ein kleines Script
+           (siehe Ende der Seite) misst die echten Punkt-Positionen und
+           zeichnet eine glatte SVG-Kurve exakt hindurch. Ohne JS bleibt die
+           gerade Linie als Fallback sichtbar (Progressive Enhancement).
+           Bewusst reduziert: kein Kästchen um den Text, kein Glow – nur
+           Linie, Punkt und Text in gedämpftem Blau/Violett. */
+        .timeline {
+            --tl-gutter: 176px;
+            --tl-amp: 56px;
+            position: relative;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1.5px;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom,
+                    transparent,
+                    rgba(255, 255, 255, 0.14) 6%,
+                    rgba(255, 255, 255, 0.14) 94%,
+                    transparent);
+        }
+
+        .timeline--curved::before {
+            display: none;
+        }
+
+        .timeline-spine {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            display: none;
+        }
+
+        .timeline--curved .timeline-spine {
+            display: block;
+        }
+
+        .timeline-spine-line {
+            fill: none;
+            stroke: url(#tl-grad);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            opacity: 0.55;
+        }
+
+        .tl-stop-blue {
+            stop-color: var(--accent-blue);
+        }
+
+        .tl-stop-violet {
+            stop-color: var(--accent-violet);
+        }
+
+        .timeline-item {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr var(--tl-gutter) 1fr;
+            align-items: center;
+            margin-bottom: 48px;
+            --side: 1;
+        }
+
+        .timeline-item:nth-of-type(even) {
+            --side: -1;
+        }
+
+        .timeline-item:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .timeline-marker {
+            grid-column: 2;
+            grid-row: 1;
+            justify-self: center;
+            position: relative;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #8a95c4;
+            box-shadow: 0 0 0 4px #0d0d0d;
+        }
+
+        .timeline--curved .timeline-marker {
+            left: calc(var(--side) * var(--tl-amp));
+        }
+
+        .timeline-content {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .timeline-item:nth-of-type(even) .timeline-content {
+            grid-column: 1;
+        }
+
+        .timeline-year {
+            display: inline-block;
+            font-family: "Barlow Condensed", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+
+            background: linear-gradient(90deg,
+                    var(--accent-blue),
+                    var(--accent-violet));
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timeline-content p {
+            margin: 0;
+            color: #cccccc;
+            font-family: var(--font-body);
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        .timeline-note {
+            font-style: normal;
+            font-size: normal;
+            color: #939393;
+        }
+
+        @media (max-width: 900px) {
+            .timeline {
+                --tl-gutter: 112px;
+                --tl-amp: 34px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .timeline {
+                --tl-amp: 0px;
+            }
+
+            .timeline::before {
+                left: 19px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 40px 1fr;
+                margin-bottom: 30px;
+            }
+
+            .timeline-marker {
+                grid-column: 1;
+            }
+
+            .timeline-content,
+            .timeline-item:nth-of-type(even) .timeline-content {
+                grid-column: 2;
+                margin-left: 16px;
+            }
+        }
+
+        /* ─── EQUIPMENT – Karten-System (.media-grid/.media-card) ───
+           Quadratisches Bild oben, Titel IMMER unterhalb des Bildes (nie
+           als Overlay im Bild selbst), bei manchen Items zusätzlich noch
+           Link-Pillen darunter – bewusst ohne Beschreibungstext, Name +
+           Links reichen. Eckig (kein border-radius), kein Hover-Effekt.
+           Abstand zwischen den Karten (16px) = Seitenabstand des Grids –
+           überall exakt derselbe
+           Wert. Die Section selbst ist strukturell identisch mit Hobbys
+           (nur Titel + Container, kein Banner-Bild davor). */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .media-card {
+            --ph-angle: 145deg;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-card:nth-child(4n+2) {
+            --ph-angle: 200deg;
+        }
+
+        .media-card:nth-child(4n+3) {
+            --ph-angle: 250deg;
+        }
+
+        .media-card-visual {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background:
+                linear-gradient(var(--ph-angle), rgba(74, 168, 255, 0.16) 0%, rgba(139, 123, 216, 0.14) 100%),
+                #16161c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .media-card-visual>img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-card-title {
+            display: block;
+            margin: 0;
+            padding-top: 14px;
+            font-family: "Barlow Condensed", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 1.05rem;
+            color: #f5f5f7;
+        }
+
+        .media-card-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .media-card-links .see-all-link {
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        @media (max-width: 640px) {
+            .media-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* ─── HOBBYS – gleiches Z-Layout wie "Das Projekt & die Umsetzung"/
+           "Behind the Scenes" auf run.html (.project-info-grid/.info-block/
+           .info-content/.info-icons/.info-icon – alle bereits global in
+           style.css definiert, hier 1:1 wiederverwendet statt neu
+           erfunden). Nur die drei Seiten-spezifischen Overrides, die auch
+           run.html lokal setzt, werden hier identisch übernommen:
+           (1) Icons erzwungen weiss + keine Opacity-Hover-Animation,
+           (2) die violette Heading-Farbe, (3) die leicht "unperfekte"
+           Rotation pro Icon für einen menschlicheren Look. */
+        .info-icons .info-icon {
+            filter: brightness(0) invert(1) !important;
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        .heading-violet {
+            color: var(--accent-violet);
+        }
+
+        .info-block-left .info-icon:nth-child(1) {
+            transform: rotate(-8deg) translateY(4px);
+        }
+
+        .info-block-left .info-icon:nth-child(2) {
+            transform: rotate(5deg) translateY(-2px);
+        }
+
+        .info-block-left .info-icon:nth-child(3) {
+            transform: rotate(-4deg) translateY(6px);
+        }
+
+        .info-block-right .info-icon:nth-child(1) {
+            transform: rotate(7deg) translateY(3px);
+        }
+
+        .info-block-right .info-icon:nth-child(2) {
+            transform: rotate(-6deg) translateY(-4px);
+        }
+
+        .info-block-right .info-icon:nth-child(3) {
+            transform: rotate(9deg) translateY(5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PLATZHALTER FÜR HEADER & MOBILE MENÜ -->
+    <div id="header-placeholder"></div>
+
+    <main>
+
+        <!-- ─── INTRO ─── -->
+        <section id="about-intro" class="section bg-dark about-section">
+            <div class="about-bg" aria-hidden="true">
+                <img src="images/ueber-mich.jpg" alt="">
+            </div>
+            <div class="about-overlay" aria-hidden="true"></div>
+            <div class="container about-container">
+                <div class="about-text az-reveal" data-az-delay="1">
+                    <span class="intro-kicker" data-i18n="about.kicker">Filmmaker · Mediamatiker · Schweiz</span>
+                    <h1 class="section-title" data-i18n="about.heading">Über mich</h1>
+                    <p data-i18n-html="about.introP1">Hallo, ich bin <span class="hl">Aurelio</span>.</p>
+                    <p data-i18n-html="about.introP2">Ich komme aus der Schweiz und bin Mediamatiker mit einer grossen
+                        Leidenschaft für <span class="hl">Film</span>, <span class="hl">Fotografie</span> und kreative
+                        Projekte.</p>
+                    <p data-i18n-html="about.introP3">Was als Idee beginnt, wird bei mir schnell zu einer
+                        <span class="hl">Geschichte</span>. Ich liebe es, aus einem einfachen Gedanken etwas Visuelles
+                        zu machen – vom ersten Konzept über die Kamera und den Schnitt bis zum fertigen Film.
+                    </p>
+                    <p data-i18n-html="about.introP4">Neben dem Filmemachen fotografiere ich, fliege Drohne und setze
+                        eigene digitale Projekte um. Mich interessiert besonders, wie Bilder, Musik, Bewegung und
+                        Gestaltung zusammenspielen und so eine bestimmte <span class="hl">Stimmung</span> entstehen
+                        lassen.</p>
+                    <p data-i18n-html="about.introP5">Für mich geht es nicht nur darum, etwas zu produzieren. Es geht
+                        darum, Momente festzuhalten, Geschichten zu erzählen und Ideen sichtbar zu machen.</p>
+                    <p data-i18n-html="about.introP6">Schau dich gern um und lass dich von meinen Projekten
+                        inspirieren.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── SKILLS ─── -->
+        <section id="skills" class="section bg-dark">
+            <div class="container">
+                <h2 class="section-title az-reveal">Skills</h2>
+                <div class="skill-chart">
+                    <div class="skill-row">
+                        <span class="skill-name">Videografie</span>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="--level: 90%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">Drohnen fliegen</span>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="--level: 85%;"></div>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <span class="skill-name">Fotografie</span>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill" style="--level: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="adobe-skills-title">Adobe</h3>
+                <div class="adobe-skills">
+                    <div class="adobe-skill">
+                        <div class="adobe-ring" style="--pct: 90; --ring-color: #9999FF;">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="adobe-ring-bg" cx="60" cy="60" r="50" pathLength="100"></circle>
+                                <circle class="adobe-ring-fill" cx="60" cy="60" r="50" pathLength="100"></circle>
+                            </svg>
+                            <img src="equipment/premiere-pro.png" alt="Premiere Pro" class="adobe-ring-icon">
+                        </div>
+                        <span class="adobe-skill-name">Premiere Pro</span>
+                    </div>
+                    <div class="adobe-skill">
+                        <div class="adobe-ring" style="--pct: 80; --ring-color: #9999FF;">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="adobe-ring-bg" cx="60" cy="60" r="50" pathLength="100"></circle>
+                                <circle class="adobe-ring-fill" cx="60" cy="60" r="50" pathLength="100"></circle>
+                            </svg>
+                            <img src="equipment/after-effects.png" alt="After Effects" class="adobe-ring-icon">
+                        </div>
+                        <span class="adobe-skill-name">After Effects</span>
+                    </div>
+                    <div class="adobe-skill">
+                        <div class="adobe-ring" style="--pct: 60; --ring-color: #31A8FF;">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="adobe-ring-bg" cx="60" cy="60" r="50" pathLength="100"></circle>
+                                <circle class="adobe-ring-fill" cx="60" cy="60" r="50" pathLength="100"></circle>
+                            </svg>
+                            <img src="equipment/photoshop.png" alt="Photoshop" class="adobe-ring-icon">
+                        </div>
+                        <span class="adobe-skill-name">Photoshop</span>
+                    </div>
+                    <div class="adobe-skill">
+                        <div class="adobe-ring" style="--pct: 55; --ring-color: #FF3366;">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="adobe-ring-bg" cx="60" cy="60" r="50" pathLength="100"></circle>
+                                <circle class="adobe-ring-fill" cx="60" cy="60" r="50" pathLength="100"></circle>
+                            </svg>
+                            <img src="equipment/indesign.png" alt="InDesign" class="adobe-ring-icon">
+                        </div>
+                        <span class="adobe-skill-name">InDesign</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── MEIN WEG (Lebens-Zeitstrahl, echte S-Kurve, ohne Kästchen) ─── -->
+        <section id="mein-weg" class="section">
+            <div class="container">
+                <h2 class="section-title az-reveal">Mein Weg</h2>
+
+                <div class="timeline">
+                    <svg class="timeline-spine" aria-hidden="true" focusable="false" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="tl-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000">
+                                <stop offset="0" class="tl-stop-blue" stop-opacity="0" />
+                                <stop offset="0.07" class="tl-stop-blue" />
+                                <stop offset="0.93" class="tl-stop-violet" />
+                                <stop offset="1" class="tl-stop-violet" stop-opacity="0" />
+                            </linearGradient>
+                        </defs>
+                        <path class="timeline-spine-line" d=""></path>
+                    </svg>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content az-reveal" data-az-delay="1">
+                            <span class="timeline-year">2018 - Kindheit</span>
+                            <p>Mit dem Klavier spielen habe ich 2018 angefangen, als ich 8 Jahre alt war. Auch Videos
+                                und Fotos aufzunehmen, hat mir schon damals viel Freude bereitet.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content az-reveal" data-az-delay="2">
+                            <span class="timeline-year">2020 - Lego Family Studio</span>
+                            <p>Während des Lockdowns habe ich zusammen mit meiner Schwester den YouTube-Kanal «Lego
+                                Family Studio» gegründet und wir haben gemeinsam eigene Stop-Motion videos mit
+                                LEGO-Figuren erstellt.</p>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content az-reveal" data-az-delay="2">
+                            <span class="timeline-year">Fotografie & Drohne</span>
+                            <p></p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content az-reveal" data-az-delay="1">
+                            <span class="timeline-year">Erste Kurzfilme</span>
+                            <p>Aus den ersten Experimenten wurde eine echte Leidenschaft: Ich begann, eigene Storys
+                                zu schreiben und als cinematische Kurzfilme umzusetzen – unter anderem RUN.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content az-reveal" data-az-delay="1">
+                            <span class="timeline-year">August 2026 - Lehre als Mediamatiker</span>
+                            <p>Start der Ausbildung – Vertiefung in Design, Webentwicklung und digitalen Projekten
+                                wie URBNVIBE.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content az-reveal" data-az-delay="2">
+                            <span class="timeline-year">Heute</span>
+                            <p>Laufend neue Projekte – von Kurzfilmen über Fotografie bis zu Webprojekten wie dieser
+                                Seite hier.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── HOBBYS ─── -->
+        <section id="hobbys" class="section bg-dark">
+            <div class="container">
+                <h2 class="section-title az-reveal">Hobbys</h2>
+
+                <div class="project-info-grid">
+                    <div class="info-block info-block-left">
+                        <div class="info-content info-content-left">
+                            <h2 class="heading-violet az-reveal">KREATIVE SEITE</h2>
+                            <p class="az-reveal" data-az-delay="1">Die Kamera ist für mich nie nur Werkzeug fürs
+                                Filmemachen – auch privat habe ich sie meistens dabei, um unterwegs Fotos
+                                festzuhalten. Und wenn ich mal keinen Bildschirm vor mir habe, sitze ich gerne am
+                                Klavier oder am Schlagzeug, einfach um den Kopf freizubekommen.</p>
+                        </div>
+                        <div class="info-icons az-reveal" data-az-delay="2">
+                            <img src="icons/hobby1.png" alt="Filmemachen" class="info-icon">
+                            <img src="icons/hobby2.png" alt="Fotografie" class="info-icon">
+                            <img src="icons/hobby6.png" alt="Musik" class="info-icon">
+                        </div>
+                    </div>
+
+                    <div class="info-block info-block-right">
+                        <div class="info-icons az-reveal" data-az-delay="2">
+                            <img src="icons/hobby3.png" alt="Billard" class="info-icon">
+                            <img src="icons/hobby4.png" alt="Ping-Pong" class="info-icon">
+                            <img src="icons/hobby5.png" alt="Klippenspringen" class="info-icon">
+                        </div>
+                        <div class="info-content info-content-right">
+                            <h2 class="heading-violet az-reveal">AKTIVE SEITE</h2>
+                            <p class="az-reveal" data-az-delay="1">Neben der Kamera bin ich auch sportlich unterwegs:
+                                Im Verein spiele ich regelmässig Billard, dazu kommt hin und wieder eine Partie
+                                Ping-Pong. Wenn sich die Gelegenheit bietet, suche ich aber auch den etwas grösseren
+                                Adrenalinkick und springe von einer Klippe ins Wasser.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── EQUIPMENT ─── -->
+        <section id="equipment" class="section bg-dark">
+            <div class="container">
+                <h2 class="section-title az-reveal">Equipment</h2>
+                <div class="media-grid">
+
+                    <article class="media-card az-reveal" data-az-delay="1">
+                        <div class="media-card-visual">
+                            <img src="equipment/kamera.jpg" alt="Sony A6700" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">Sony A6700</h3>
+                        <div class="media-card-links">
+                            <a href="fotografie.html" class="see-all-link"><span>Fotografie</span>
+                                <i class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="2">
+                        <div class="media-card-visual">
+                            <img src="equipment/sony-200-600.png" alt="Sony 200-600mm" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">Sony 200-600mm</h3>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="3">
+                        <div class="media-card-visual">
+                            <img src="equipment/sony-18-135.png" alt="Sony 18-135mm" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">Sony 18-135mm</h3>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="4">
+                        <div class="media-card-visual">
+                            <img src="equipment/drone.jpg" alt="DJI Air 3S Drohne" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">DJI Air 3S</h3>
+                        <div class="media-card-links">
+                            <a href="drone.html" class="see-all-link"><span>Drohnenvideos</span> <i
+                                    class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="1">
+                        <div class="media-card-visual">
+                            <img src="equipment/gimbal.jpg" alt="DJI OM8" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">DJI OM8</h3>
+                        <div class="media-card-links">
+                            <a href="run.html" class="see-all-link"><span>RUN</span> <i
+                                    class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="2">
+                        <div class="media-card-visual">
+                            <img src="equipment/ulanzi.png" alt="Ulanzi Filmog X" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">Ulanzi Filmog X</h3>
+                        <div class="media-card-links">
+                            <a href="run.html" class="see-all-link"><span>RUN</span> <i
+                                    class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="3">
+                        <div class="media-card-visual">
+                            <img src="equipment/iphone.jpg" alt="iPhone 16 Pro" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">iPhone 16 Pro</h3>
+                        <div class="media-card-links">
+                            <a href="run.html" class="see-all-link"><span>RUN</span> <i
+                                    class="fa-solid fa-chevron-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="media-card az-reveal" data-az-delay="4">
+                        <div class="media-card-visual">
+                            <img src="equipment/stativ.png" alt="Hama Stativ" loading="lazy">
+                        </div>
+                        <h3 class="media-card-title">Hama Stativ</h3>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+
+    <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
+        window.secondHeaderItems = [
+            { label: tr('about.navSkills', 'Skills'), href: '#skills' },
+            { label: tr('about.navWeg', 'Mein Weg'), href: '#mein-weg' },
+            { label: tr('about.navHobbys', 'Hobbys'), href: '#hobbys' },
+            { label: tr('about.navEquipment', 'Equipment'), href: '#equipment' }
+        ];
+    </script>
+
+    <script src="header.js"></script>
+    <script src="az-reveal.js"></script>
+
+    <script>
+        /* ─── SKILLS: DIAGRAMM-ANIMATION (einmalig beim ersten Sichtbarwerden) ───
+           Gilt für die Balken (.skill-chart) UND die Adobe-Kreisdiagramme
+           (.adobe-skills) – beide laufen über dieselbe "is-visible"-Logik. */
+        (function () {
+            var charts = document.querySelectorAll('.skill-chart, .adobe-skills');
+            if (!charts.length) return;
+            if (!('IntersectionObserver' in window)) {
+                charts.forEach(function (chart) { chart.classList.add('is-visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.35 });
+            charts.forEach(function (chart) { observer.observe(chart); });
+        })();
+
+        /* ─── "MEIN WEG": S-KURVE ──────────────────────────────────────────
+           Misst die echten Mittelpunkte aller .timeline-marker (offsetTop/Left –
+           ignoriert bewusst die translateY-Transforms von az-reveal) und zeichnet
+           eine glatte SVG-Linie hindurch. Auf Mobile setzt CSS --tl-amp auf 0,
+           dadurch liegen alle Punkte übereinander und dieselbe Formel ergibt
+           automatisch eine gerade Linie. */
+        (function () {
+            var timeline = document.querySelector('.timeline');
+            var svg = timeline && timeline.querySelector('.timeline-spine');
+            if (!svg) return;
+            var markers = timeline.querySelectorAll('.timeline-marker');
+            var paths = svg.querySelectorAll('path');
+            var grad = svg.querySelector('#tl-grad');
+            if (!markers.length) return;
+
+            var K = 0.4; // Henkellänge, 1/3 … 0.5
+
+            timeline.classList.add('timeline--curved');
+
+            function centerWithin(el, ancestor) {
+                var x = el.offsetWidth / 2;
+                var y = el.offsetHeight / 2;
+                var node = el;
+                while (node && node !== ancestor) {
+                    x += node.offsetLeft;
+                    y += node.offsetTop;
+                    node = node.offsetParent;
+                }
+                return node === ancestor ? { x: x, y: y } : null;
+            }
+
+            function r(n) {
+                return Math.round(n * 10) / 10;
+            }
+
+            function sCurvePath(pts, k) {
+                var d = 'M ' + r(pts[0].x) + ' ' + r(pts[0].y);
+                for (var i = 0; i < pts.length - 1; i++) {
+                    var p = pts[i], q = pts[i + 1], dy = q.y - p.y;
+                    d += ' C ' + r(p.x) + ' ' + r(p.y + dy * k) + ', ' +
+                        r(q.x) + ' ' + r(q.y - dy * k) + ', ' +
+                        r(q.x) + ' ' + r(q.y);
+                }
+                return d;
+            }
+
+            function draw() {
+                var w = timeline.clientWidth;
+                var h = timeline.clientHeight;
+                if (!w || !h) return;
+
+                var pts = [];
+                markers.forEach(function (m) {
+                    var c = centerWithin(m, timeline);
+                    if (c) pts.push(c);
+                });
+                if (!pts.length) return;
+
+                var xs = pts.map(function (p) { return p.x; });
+                var axisX = (Math.min.apply(null, xs) + Math.max.apply(null, xs)) / 2;
+                pts.unshift({ x: axisX, y: 0 });
+                pts.push({ x: axisX, y: h });
+
+                var d = sCurvePath(pts, K);
+                svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+                if (grad) grad.setAttribute('y2', h);
+                paths.forEach(function (p) { p.setAttribute('d', d); });
+            }
+
+            var raf = 0;
+            function schedule() {
+                cancelAnimationFrame(raf);
+                raf = requestAnimationFrame(draw);
+            }
+
+            schedule();
+            window.addEventListener('load', schedule);
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(schedule);
+            }
+            if ('ResizeObserver' in window) {
+                var ro = new ResizeObserver(schedule);
+                ro.observe(timeline);
+                timeline.querySelectorAll('.timeline-content').forEach(function (el) { ro.observe(el); });
+            } else {
+                var t;
+                window.addEventListener('resize', function () {
+                    clearTimeout(t);
+                    t = setTimeout(schedule, 120);
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

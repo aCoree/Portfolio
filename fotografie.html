@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fotografie | Aurelio Zingarello</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -13,7 +17,7 @@
 
     <link rel="manifest" href="/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.1">
+    <link rel="stylesheet" href="style.css?v=1.3">
     <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,168 +57,117 @@
 
         /* ─── KATEGORIE ─── */
         .foto-category {
-            margin-bottom: 90px;
+            margin-bottom: 50px;
         }
 
         .foto-category:last-child {
             margin-bottom: 0;
         }
 
-        .foto-category-title {
+        /* ─── COVER-KACHEL: 1 BILD PRO KATEGORIE ───
+           Klick auf die ganze Kachel führt auf die eigene Kategorieseite
+           (siehe wildlife.html, landschaften.html, portrait.html,
+           streetfotografie.html). Querformat auf dem
+           PC, Hochformat auf dem Handy (siehe Mobile-Block) – das Bild
+           füllt die Kachel dabei immer komplett und zentriert aus. Nur die
+           OBEREN Ecken sind abgerundet, unten läuft die Kachel dank der
+           Bild-Ausblendung nahtlos in den dunklen Seitenhintergrund aus. */
+        .foto-cover {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 2.4 / 1;
+            border-radius: 14px 14px 0 0;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            background: #0d0d0d;
+        }
+
+        .foto-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Bild blendet nach unten hin sanft aus (statt eines Schattens
+               obendrauf) – im unteren Bereich, wo Titel/Text/Button stehen,
+               ist praktisch nichts mehr vom Bild zu sehen, stattdessen
+               scheint der dunkle Seitenhintergrund durch. Mehrere Zwischen-
+               schritte sorgen für einen weichen, gleichmäßigen Verlauf. */
+            -webkit-mask-image: linear-gradient(to top,
+                    transparent 0%,
+                    transparent 8%,
+                    rgba(0, 0, 0, 0.12) 20%,
+                    rgba(0, 0, 0, 0.35) 35%,
+                    rgba(0, 0, 0, 0.65) 50%,
+                    rgba(0, 0, 0, 0.88) 65%,
+                    #000 85%);
+            mask-image: linear-gradient(to top,
+                    transparent 0%,
+                    transparent 8%,
+                    rgba(0, 0, 0, 0.12) 20%,
+                    rgba(0, 0, 0, 0.35) 35%,
+                    rgba(0, 0, 0, 0.65) 50%,
+                    rgba(0, 0, 0, 0.88) 65%,
+                    #000 85%);
+        }
+
+        .foto-cover:hover img,
+        .foto-cover:focus-visible img {
+            transform: scale(1.04);
+        }
+
+        /* Positioniert Titel, Kurzbeschreibung und Button unten in der
+           Kachel – der Ausblend-Effekt kommt von der Bild-Maske oben, kein
+           zusätzlicher Schatten mehr nötig. */
+        .foto-cover-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 32px 26px;
+            pointer-events: none;
+        }
+
+        .foto-cover-title {
+            margin: 0;
             font-family: "Barlow Condensed", sans-serif;
-            font-size: 1.9rem;
+            font-size: clamp(1.7rem, 3vw, 2.6rem);
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             color: #ffffff;
-            margin: 0 0 26px 0;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* ─── GRID: 3 SPALTEN AUF PC, 2 SPALTEN AUF HANDY ─── */
-        .foto-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+        .foto-cover-desc {
+            margin: 6px 0 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 480px;
         }
 
-        .foto-item {
-            position: relative;
-            aspect-ratio: 4 / 5;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.03);
+        /* Wiederverwendet das "Mehr Einblicke im Behind the Scenes ->"
+           Button-Design von run.html (.info-content-link aus style.css) –
+           hier aber linksbündig (kein .info-content-right-Modifier) statt
+           rechtsbündig. .foto-cover-btn liefert nur noch den Abstand nach
+           oben; hovert man die ganze Kachel, reagiert der Link mit. */
+        .foto-cover-btn {
+            margin-top: 14px;
         }
 
-        .foto-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        .foto-cover:hover .foto-cover-btn,
+        .foto-cover:focus-visible .foto-cover-btn {
+            border-color: #ffffff;
         }
 
-        .foto-item:hover img,
-        .foto-item:focus-visible img {
-            transform: scale(1.05);
-        }
-
-        /* Platzhalter-Kacheln für Kategorien, die noch ohne Fotos sind –
-           einfach ersetzen: <div class="foto-item"><img ...></div> */
-        .foto-item.foto-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: 1px dashed rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.3);
-            cursor: default;
-        }
-
-        .foto-item.foto-placeholder i {
-            font-size: 1.4rem;
-        }
-
-        .foto-item.foto-placeholder span {
-            font-family: "Barlow Condensed", sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .foto-item.foto-placeholder:hover img {
-            transform: none;
-        }
-
-        /* ─── LIGHTBOX (GROSSANSICHT) ─── */
-        .foto-lightbox {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.96);
-            z-index: 999999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transition: opacity 0.25s ease;
-        }
-
-        .foto-lightbox.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .foto-lightbox-content {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .foto-lightbox-content img {
-            max-width: 92vw;
-            max-height: 90vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 4px;
-            user-select: none;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
-            background: transparent;
-        }
-
-        .foto-lightbox-btn {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-            user-select: none;
-            outline: none;
-            z-index: 1000000;
-            backdrop-filter: blur(4px);
-        }
-
-        .foto-lightbox-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: scale(1.08);
-        }
-
-        .foto-lightbox-prev {
-            left: 20px;
-        }
-
-        .foto-lightbox-next {
-            right: 20px;
-        }
-
-        .foto-lightbox-close {
-            top: 20px;
-            right: 20px;
-            font-size: 1.2rem;
-        }
-
-        /* ─── MOBILE (2 SPALTEN) ─── */
-        @media (max-width: 768px) {
+        /* ─── MOBILE ───
+           Bewusst das Gegenteil vom PC: Hochformat statt Querformat, sonst
+           gleicher Ausblend-Effekt/Aufbau, nur Größen/Abstände fürs Handy
+           angepasst. Erst ab 640px (nicht mehr 768px) – bis 641px bleiben
+           die Querformat-Kacheln vom PC sichtbar. */
+        @media (max-width: 640px) {
             #fotografie-page {
                 padding: 120px 18px 90px;
             }
@@ -224,45 +177,29 @@
             }
 
             .foto-category {
-                margin-bottom: 55px;
+                margin-bottom: 26px;
             }
 
-            .foto-category-title {
-                font-size: 1.4rem;
-                margin-bottom: 18px;
+            .foto-cover {
+                aspect-ratio: 4 / 5;
+                border-radius: 10px 10px 0 0;
             }
 
-            .foto-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
+            .foto-cover-overlay {
+                padding: 0 20px 20px;
             }
 
-            .foto-item {
-                border-radius: 8px;
+            .foto-cover-title {
+                font-size: 1.6rem;
             }
 
-            .foto-lightbox-content img {
-                max-width: 96vw;
-                max-height: 88vh;
+            .foto-cover-desc {
+                font-size: 0.88rem;
+                max-width: 100%;
             }
 
-            .foto-lightbox-btn {
-                width: 42px;
-                height: 42px;
-                font-size: 0.95rem;
-            }
-
-            .foto-lightbox-prev {
-                left: 10px;
-            }
-
-            .foto-lightbox-next {
-                right: 10px;
-            }
-
-            .foto-lightbox-close {
-                top: 12px;
-                right: 12px;
+            .foto-cover-btn {
+                margin-top: 10px;
             }
         }
     </style>
@@ -277,190 +214,107 @@
 
         <div class="fotografie-header project-header">
             <h1 class="az-reveal" data-i18n="fotografie.title">Fotografie</h1>
-            <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.tagline">Eine Auswahl meiner liebsten Aufnahmen aus verschiedenen Bereichen der Fotografie.</p>
+            <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.tagline">Eine Auswahl meiner liebsten
+                Aufnahmen aus verschiedenen Bereichen der Fotografie.</p>
         </div>
-
-        <!-- ─── LANDSCHAFTEN ─── -->
-        <section class="foto-category" id="landschaften">
-            <h2 class="foto-category-title az-reveal" data-i18n="fotografie.catLandschaften">Landschaften</h2>
-            <div class="foto-grid">
-                <!-- Platzhalter: durch <div class="foto-item"><img src="images/fotografie/landschaften-1.jpg" alt="..."></div> ersetzen -->
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-            </div>
-        </section>
-
-        <!-- ─── STREETFOTOGRAFIE ─── -->
-        <section class="foto-category" id="street">
-            <h2 class="foto-category-title az-reveal" data-i18n="fotografie.catStreet">Streetfotografie</h2>
-            <div class="foto-grid">
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-            </div>
-        </section>
 
         <!-- ─── WILDLIFE ─── -->
         <section class="foto-category" id="wildlife">
-            <h2 class="foto-category-title az-reveal" data-i18n="fotografie.catWildlife">Wildlife</h2>
-            <div class="foto-grid">
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-            </div>
+            <a class="foto-cover az-reveal" href="wildlife.html" aria-label="Wildlife">
+                <img src="fotografie/wildlife/eisvogel/eisvogel-2-lq.jpg" data-i18n-attr="alt:fotografie.imageAlt"
+                    alt="Fotografie von Aurelio Zingarello">
+                <div class="foto-cover-overlay">
+                    <div>
+                        <h2 class="foto-cover-title" data-i18n="fotografie.catWildlife">Wildlife</h2>
+                        <p class="foto-cover-desc" data-i18n="fotografie.descWildlife">Tiere in freier Wildbahn,
+                            eingefangen im entscheidenden Moment.</p>
+                        <span class="foto-cover-btn info-content-link">
+                            <span data-i18n="fotografie.viewButton">Ansehen</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </section>
+
+        <!-- ─── LANDSCHAFTEN ─── -->
+        <section class="foto-category" id="landschaften">
+            <a class="foto-cover az-reveal" href="landschaften.html" aria-label="Landschaften">
+                <img src="fotografie/kirche01.png" data-i18n-attr="alt:fotografie.imageAlt"
+                    alt="Fotografie von Aurelio Zingarello">
+                <div class="foto-cover-overlay">
+                    <div>
+                        <h2 class="foto-cover-title" data-i18n="fotografie.catLandschaften">Landschaften</h2>
+                        <p class="foto-cover-desc" data-i18n="fotografie.descLandschaften">Natur und Landschaften in
+                            ihrer schönsten Form.</p>
+                        <span class="foto-cover-btn info-content-link">
+                            <span data-i18n="fotografie.viewButton">Ansehen</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
         </section>
 
         <!-- ─── PORTRAIT ─── -->
         <section class="foto-category" id="portrait">
-            <h2 class="foto-category-title az-reveal" data-i18n="fotografie.catPortrait">Portrait</h2>
-            <div class="foto-grid">
-                <div class="foto-item"><img src="images/foto-shooting-1.png" data-i18n-attr="alt:fotografie.imageAlt" alt="Fotografie von Aurelio Zingarello"></div>
-                <div class="foto-item"><img src="images/foto-shooting-2.png" data-i18n-attr="alt:fotografie.imageAlt" alt="Fotografie von Aurelio Zingarello"></div>
-                <div class="foto-item"><img src="images/foto-shooting-3.png" data-i18n-attr="alt:fotografie.imageAlt" alt="Fotografie von Aurelio Zingarello"></div>
-                <div class="foto-item"><img src="images/foto-shooting-4.png" data-i18n-attr="alt:fotografie.imageAlt" alt="Fotografie von Aurelio Zingarello"></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-                <div class="foto-item foto-placeholder"><i class="fa-solid fa-image"></i><span data-i18n="fotografie.placeholder">Bild folgt</span></div>
-            </div>
+            <a class="foto-cover az-reveal" href="portrait.html" aria-label="Portrait">
+                <img src="fotografie/foto-shooting-2.png" data-i18n-attr="alt:fotografie.imageAlt"
+                    alt="Fotografie von Aurelio Zingarello">
+                <div class="foto-cover-overlay">
+                    <div>
+                        <h2 class="foto-cover-title" data-i18n="fotografie.catPortrait">Portrait</h2>
+                        <p class="foto-cover-desc" data-i18n="fotografie.descPortrait">Menschen und Emotionen im
+                            Fokus.</p>
+                        <span class="foto-cover-btn info-content-link">
+                            <span data-i18n="fotografie.viewButton">Ansehen</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </section>
+
+        <!-- ─── STREETFOTOGRAFIE ─── -->
+        <section class="foto-category" id="street">
+            <a class="foto-cover az-reveal" href="streetfotografie.html" aria-label="Streetfotografie">
+                <img src="fotografie/foto-shooting-1.png" data-i18n-attr="alt:fotografie.imageAlt"
+                    alt="Fotografie von Aurelio Zingarello">
+                <div class="foto-cover-overlay">
+                    <div>
+                        <h2 class="foto-cover-title" data-i18n="fotografie.catStreet">Streetfotografie</h2>
+                        <p class="foto-cover-desc" data-i18n="fotografie.descStreet">Spontane Momente mitten aus dem
+                            Alltag.</p>
+                        <span class="foto-cover-btn info-content-link">
+                            <span data-i18n="fotografie.viewButton">Ansehen</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
         </section>
 
     </main>
-
-    <!-- Lightbox Modal -->
-    <div id="foto-lightbox" class="foto-lightbox">
-        <button class="foto-lightbox-btn foto-lightbox-close" id="foto-lightbox-close" data-i18n-attr="aria-label:fotografie.lightboxClose" aria-label="Schließen">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <button class="foto-lightbox-btn foto-lightbox-prev" id="foto-lightbox-prev" aria-label="Vorheriges Bild">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div class="foto-lightbox-content">
-            <img id="foto-lightbox-img" src="" alt="">
-        </div>
-        <button class="foto-lightbox-btn foto-lightbox-next" id="foto-lightbox-next" aria-label="Nächstes Bild">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
-    </div>
 
     <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
 
-    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <!-- ─── SECOND-HEADER-KONFIGURATION (GLEICH AUF FOTOGRAFIE.HTML UND ALLEN
+         KATEGORIESEITEN – VOLLQUALIFIZIERTE LINKS, DAMIT SIE VON JEDER DIESER
+         SEITEN AUS FUNKTIONIEREN) ─── -->
     <script>
         const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
-            { label: tr('fotografie.navLandschaften', "Landschaften"), href: "#landschaften" },
-            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "#street" },
-            { label: tr('fotografie.navWildlife', "Wildlife"), href: "#wildlife" },
-            { label: tr('fotografie.navPortrait', "Portrait"), href: "#portrait" }
+            { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
+            { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
+            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" },
+            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" }
         ];
     </script>
 
     <script src="header.js"></script>
     <script src="az-reveal.js"></script>
-
-    <!-- ─── LIGHTBOX SCRIPT ─── -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const items = Array.from(document.querySelectorAll('.foto-item:not(.foto-placeholder) img'));
-            const lightbox = document.getElementById('foto-lightbox');
-            const lightboxImg = document.getElementById('foto-lightbox-img');
-            const prevBtn = document.getElementById('foto-lightbox-prev');
-            const nextBtn = document.getElementById('foto-lightbox-next');
-            const closeBtn = document.getElementById('foto-lightbox-close');
-
-            if (!items.length) return;
-
-            let currentIndex = 0;
-
-            function updateLightboxImage() {
-                lightboxImg.src = items[currentIndex].src;
-                lightboxImg.alt = items[currentIndex].alt;
-            }
-
-            function openLightbox(index) {
-                currentIndex = index;
-                updateLightboxImage();
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            function showNext() {
-                currentIndex = (currentIndex + 1) % items.length;
-                updateLightboxImage();
-            }
-
-            function showPrev() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                updateLightboxImage();
-            }
-
-            items.forEach((img, idx) => {
-                img.addEventListener('click', () => openLightbox(idx));
-            });
-
-            closeBtn.addEventListener('click', closeLightbox);
-
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showNext();
-            });
-
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                showPrev();
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox || e.target.classList.contains('foto-lightbox-content')) {
-                    closeLightbox();
-                }
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (!lightbox.classList.contains('active')) return;
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowRight') showNext();
-                if (e.key === 'ArrowLeft') showPrev();
-            });
-
-            let touchStartX = 0;
-            let touchEndX = 0;
-
-            lightbox.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-
-            lightbox.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, { passive: true });
-
-            function handleSwipe() {
-                const threshold = 40;
-                if (touchEndX < touchStartX - threshold) {
-                    showNext();
-                } else if (touchEndX > touchStartX + threshold) {
-                    showPrev();
-                }
-            }
-        });
-    </script>
 </body>
 
 </html>
