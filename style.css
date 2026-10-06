@@ -777,7 +777,10 @@ select {
 }
 
 .see-all-link:hover {
-  color: #82c4ff;
+  color: #91ccff;
+}
+.see-all-link:active {
+  transform: scale(0.95);
 }
 
 .apple-slider-container {
