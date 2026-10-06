@@ -703,46 +703,10 @@ select {
   }
 }
 
-/* ─── SITE FOOTER ─── */
-.site-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 30px;
-  width: 100%;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.3);
-  margin-top: 60px;
-  font-family: var(--font-body);
-  color: #888;
-  font-size: 0.9rem;
-  /* Hält den Footer über den fixed position:fixed Hero-Hintergrundvideos
-     (immer z-index:0) – war bisher auf run/drone/musik/urbnvibe.html
-     einzeln (mit leicht unterschiedlichen Werten) dupliziert. */
-  position: relative;
-  z-index: 10;
-}
-
-.site-footer .footer-left,
-.site-footer .footer-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.site-footer .footer-left {
-  justify-content: flex-start;
-}
-.site-footer .footer-right {
-  justify-content: flex-end;
-}
-
-.site-footer .footer-center {
-  flex: 0 0 auto;
-  text-align: center;
-  padding: 0 15px;
-}
+/* ─── SITE FOOTER ───
+   Markup + Styling des Footers liegen komplett in header.js (dynamisches
+   <style>, Abschnitt 1) – hier bewusst nichts mehr, damit es nur EINE
+   Quelle gibt. */
 
 /* ─── APPLE TV CARDS & GRID ─── */
 .section-header-flex {
@@ -1171,27 +1135,6 @@ select {
     margin-left: 0;
     margin-right: auto;
     justify-content: flex-start;
-  }
-
-  .site-footer {
-    flex-wrap: wrap;
-    row-gap: 16px;
-    padding: 20px;
-  }
-
-  .site-footer .footer-left {
-    order: 1;
-    flex: 0 0 auto;
-  }
-  .site-footer .footer-right {
-    order: 2;
-    flex: 0 0 auto;
-  }
-  .site-footer .footer-center {
-    order: 3;
-    flex: 0 0 100%;
-    padding: 0;
-    font-size: 0.82rem;
   }
 
   .apple-card {

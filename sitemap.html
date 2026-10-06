@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap | Aurelio Zingarello</title>
+    <!-- SEO-BEGIN -->
+    <meta name="description" content="Sitemap von aureliozingarello.ch: alle Seiten und Bereiche von Aurelio Zingarello – Kurzfilm RUN, Musik, Drohnenvideos, URBNVIBE, LEGO FAMILY STUDIO und Fotografie – übersichtlich geordnet.">
+    <link rel="canonical" href="https://aureliozingarello.ch/sitemap.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aurelio Zingarello">
+    <meta property="og:locale" content="de_CH">
+    <meta property="og:url" content="https://aureliozingarello.ch/sitemap.html">
+    <meta property="og:title" content="Sitemap | Aurelio Zingarello">
+    <meta property="og:description" content="Sitemap von aureliozingarello.ch: alle Seiten und Bereiche von Aurelio Zingarello – Kurzfilm RUN, Musik, Drohnenvideos, URBNVIBE, LEGO FAMILY STUDIO und Fotografie – übersichtlich geordnet.">
+    <meta property="og:image" content="https://aureliozingarello.ch/images/hero-bg.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- SEO-END -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="az-reveal.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d0d;
+            color: #ffffff;
+        }
+
+        /* ─── HAUPT-CONTAINER ───
+           Gleicher Abstand nach oben/unten wie fotografie.html bzw. die
+           Unterseiten mit .project-header; der Seitentitel selbst nutzt
+           unverändert .project-header h1 aus style.css (Anton, 3.1rem –
+           exakt wie "RUN - Ein Kurzfilm"). */
+        #sitemap-page {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 150px 40px 130px;
+            box-sizing: border-box;
+        }
+
+        /* Titel + Linie + Spalten bilden EINEN mittig stehenden Block: Titel linksbündig
+           (bündig mit der ersten Spalte), Linie so lang wie die Spalten. */
+        .sitemap-inner {
+            width: max-content;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .sitemap-header {
+            text-align: left;
+            margin-bottom: 28px;
+        }
+
+        .sitemap-header h1 {
+            margin-bottom: 0;
+        }
+
+        .sitemap-rule,
+        .sitemap-divider {
+            height: 1px;
+            width: 100%;
+            margin: 0;
+            border: 0;
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .sitemap-rule {
+            margin-bottom: 56px;
+        }
+
+        /* Trennlinie zwischen den Reihen: über alle Spalten */
+        .sitemap-divider {
+            grid-column: 1 / -1;
+        }
+
+        /* ─── SPALTEN ───
+           Vier feste Spalten, Gruppen untereinander, alles linksbündig –
+           ohne Trennlinien, Ordnung entsteht nur über Abstände. */
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, max-content);
+            justify-content: center;
+            column-gap: 80px;
+            row-gap: 56px;
+            align-items: start;
+        }
+
+        /* Reihe 1: Hauptseiten, Musik, Fotografie, URBNVIBE · Reihe 2: RUN, DJI Air 3S,
+           LEGO FAMILY STUDIO · Reihe 3 (beginnt immer links): YouTube-Kanäle, Rechtliches.
+           Gruppen einer Reihe stehen bündig oben auf derselben Linie. */
+        .sitemap-row-start {
+            grid-column-start: 1;
+        }
+
+        .sitemap-group h2 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin: 0 0 16px;
+        }
+
+        #sitemap-page ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #sitemap-page a {
+            display: inline-block;
+            padding: 5px 0;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            color: #9a9a9a;
+            transition: color 0.2s ease;
+        }
+
+        #sitemap-page a:hover,
+        #sitemap-page a:focus-visible {
+            color: #ffffff;
+        }
+
+        /* Hauptseite einer Gruppe etwas heller als ihre Unterpunkte */
+        #sitemap-page a.sitemap-lead {
+            color: #d6d6d6;
+            font-weight: 500;
+        }
+
+        #sitemap-page a.sitemap-lead:hover,
+        #sitemap-page a.sitemap-lead:focus-visible {
+            color: #ffffff;
+        }
+
+        /* Unterpunkte: kleiner und dunkler, aber bündig mit dem Rest
+           (keine Einrückung, keine Linie) */
+        #sitemap-page .sitemap-sub {
+            margin: 2px 0 10px;
+            padding-left: 0;
+        }
+
+        #sitemap-page .sitemap-sub a {
+            font-size: 0.88rem;
+            padding: 3px 0;
+        }
+
+        .sitemap-soon {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 1px 7px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 5px;
+            vertical-align: 1px;
+        }
+
+        .sitemap-ext i {
+            font-size: 0.7em;
+            margin-left: 6px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 1100px) {
+            .sitemap-grid {
+                grid-template-columns: repeat(2, max-content);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #sitemap-page {
+                padding: 120px 18px 90px;
+            }
+
+            .sitemap-header {
+                margin-bottom: 45px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .sitemap-inner {
+                width: 100%;
+            }
+
+            .sitemap-grid {
+                grid-template-columns: 1fr;
+                justify-content: start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SEO-NAV-BEGIN -->
+    <noscript>
+        <!-- Statische Navigation für Besucher/Crawler ohne JavaScript (die normale Navigation baut header.js auf). -->
+        <nav aria-label="Navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projekte.html">Alle Projekte</a></li>
+            <li><a href="run.html">RUN – Kurzfilm</a></li>
+            <li><a href="bts.html">Behind the Scenes</a></li>
+            <li><a href="colorgrading.html">Color Grading</a></li>
+            <li><a href="musik.html">Klaviervideos</a></li>
+            <li><a href="drone.html">Drohnenvideos (DJI Air 3S)</a></li>
+            <li><a href="urbnvibe.html">URBNVIBE</a></li>
+            <li><a href="lego.html">LEGO FAMILY STUDIO</a></li>
+            <li><a href="fotografie.html">Fotografie</a></li>
+            <li><a href="wildlife.html">Wildlife-Fotografie</a></li>
+            <li><a href="about.html">Über mich</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+        </nav>
+    </noscript>
+    <!-- SEO-NAV-END -->
+
+
+    <!-- Header und Mobile-Menü werden automatisch durch header.js eingefügt -->
+
+    <main id="sitemap-page">
+        <div class="sitemap-inner">
+        <div class="sitemap-header project-header">
+            <h1 class="az-reveal" data-i18n="sitemap.title">Sitemap</h1>
+        </div>
+        <div class="sitemap-rule az-reveal" data-az-delay="1" id="sitemapRule"></div>
+
+        <div class="sitemap-grid az-reveal" data-az-delay="2">
+
+            <!-- ─── ÜBERSICHT (ZEILE 1) ─── -->
+            <section class="sitemap-group">
+                <h2 data-i18n="sitemap.groupMain">Hauptseiten</h2>
+                <ul>
+                    <li><a href="index.html" class="sitemap-lead" data-i18n="nav.home">Home</a></li>
+                    <li><a href="projekte.html" class="sitemap-lead" data-i18n="nav.projectsAll">Alle Projekte</a></li>
+                    <li>
+                        <a href="about.html" class="sitemap-lead" data-i18n="nav.about">Über mich</a>
+                        <ul class="sitemap-sub">
+                            <li><a href="about.html#skills" data-i18n="sitemap.aboutSkills">Skills</a></li>
+                            <li><a href="about.html#mein-weg" data-i18n="sitemap.aboutWeg">Mein Weg</a></li>
+                            <li><a href="about.html#hobbys" data-i18n="sitemap.aboutHobbys">Hobbys</a></li>
+                            <li><a href="about.html#equipment" data-i18n="sitemap.aboutEquipment">Equipment</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#kontakt" class="sitemap-lead" data-i18n="nav.contact">Kontakt</a></li>
+                </ul>
+            </section>
+
+            <!-- ─── MUSIK ─── -->
+            <section class="sitemap-group">
+                <h2 data-i18n="sitemap.groupMusic">Musik</h2>
+                <ul>
+                    <li><a href="musik.html" class="sitemap-lead" data-i18n="sitemap.groupMusic">Musik</a></li>
+                    <li><a href="musik.html#musik-intro" class="sitemap-lead" data-i18n="musik.navIntro">Leidenschaft am Klavier</a></li>
+                    <li>
+                        <a href="musik.html#song-force-theme" class="sitemap-lead" data-i18n="musik.navVideos">Klavier Videos</a>
+                        <ul class="sitemap-sub">
+                            <li><a href="musik.html#song-force-theme">The Force Theme</a></li>
+                            <li><a href="musik.html#song-inception">Time - Inception</a></li>
+                            <li><a href="musik.html#song-interstellar">Interstellar</a></li>
+                            <li><a href="musik.html#song-pirates">Pirates of the Caribbean</a></li>
+                            <li><a href="musik.html#song-avengers">Avengers Main Theme</a></li>
+                            <li><a href="musik.html#song-topgun">Top Gun: Maverick</a></li>
+                            <li><a href="musik.html#song-victory">Victory</a></li>
+                            <li><a href="musik.html#song-wildflower">Wildflower</a></li>
+                            <li><a href="musik.html#song-notimetodie">No Time To Die</a></li>
+                            <li><a href="musik.html#song-experience">Experience</a></li>
+                            <li><a href="musik.html#song-sadnessandsorrow">Sadness and Sorrow</a></li>
+                            <li><a href="musik.html#song-f1">F1 - Main Theme</a></li>
+                            <li><a href="musik.html#song-remember">Remember - The Lion King</a></li>
+                            <li><a href="musik.html#song-bohemianrhapsody">Bohemian Rhapsody</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ─── FOTOGRAFIE ─── -->
+            <section class="sitemap-group">
+                <h2 data-i18n="projekte.genreFotografie">Fotografie</h2>
+                <ul>
+                    <li><a href="fotografie.html" class="sitemap-lead" data-i18n="projekte.genreFotografie">Fotografie</a></li>
+                    <li>
+                        <a href="wildlife.html" class="sitemap-lead" data-i18n="fotografie.navWildlife">Wildlife</a>
+                        <!-- Motive: statische Liste für Besucher/Crawler ohne JavaScript; mit JavaScript
+                             baut das Skript unten sie aus foto-data.js neu auf (neue Motive erscheinen
+                             dann automatisch, in der gewählten Sprache). -->
+                        <ul class="sitemap-sub" id="sitemapWildlifeMotifs">
+                            <li><a href="motiv.html?k=wildlife&amp;m=eisvogel">Eisvogel</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=milan">Milan</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=moewe">Möwe</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=star">Star</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=blaumeise">Blaumeise</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=kohlmeise">Kohlmeise</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=hausrotschwanz">Hausrotschwanz</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="comingsoon.html" class="sitemap-lead"><span data-i18n="fotografie.navLandschaften">Landschaften</span><span class="sitemap-soon" data-i18n="sitemap.soon">bald</span></a></li>
+                    <li><a href="comingsoon.html" class="sitemap-lead"><span data-i18n="fotografie.navPortrait">Portrait</span><span class="sitemap-soon" data-i18n="sitemap.soon">bald</span></a></li>
+                    <li><a href="comingsoon.html" class="sitemap-lead"><span data-i18n="fotografie.navStreet">Streetfotografie</span><span class="sitemap-soon" data-i18n="sitemap.soon">bald</span></a></li>
+                </ul>
+            </section>
+
+            <!-- ─── URBNVIBE ─── -->
+            <section class="sitemap-group">
+                <h2>URBNVIBE</h2>
+                <ul>
+                    <li><a href="urbnvibe.html#intro-section" class="sitemap-lead" data-i18n="urbnvibe.navAbout">Über URBNVIBE</a></li>
+                    <li>
+                        <a href="urbnvibe.html#flyer-section" class="sitemap-lead" data-i18n="urbnvibe.navWork">Arbeiten</a>
+                        <ul class="sitemap-sub">
+                            <li><a href="urbnvibe.html#flyer-section" data-i18n="urbnvibe.navFlyer">Flyer</a></li>
+                            <li><a href="urbnvibe.html#logo-section" data-i18n="urbnvibe.navLogo">Logo</a></li>
+                            <li><a href="urbnvibe.html#awareness-video-section" data-i18n="urbnvibe.navAwareness">Awareness Video</a></li>
+                            <li><a href="urbnvibe.html#creatives-section" data-i18n="urbnvibe.navCreatives">Creatives</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <hr class="sitemap-divider">
+
+            <!-- ─── RUN (ZEILE 2) ─── -->
+            <section class="sitemap-group">
+                <h2>RUN</h2>
+                <ul>
+                    <li>
+                        <a href="run.html" class="sitemap-lead">RUN</a>
+                        <ul class="sitemap-sub">
+                            <li><a href="run.html#trailer" data-i18n="run.navTrailer">Trailer</a></li>
+                            <li><a href="run.html#content" data-i18n="run.navWholeFilm">Ganzer Film</a></li>
+                            <li><a href="run.html#grading" data-i18n="run.navGrading">Color Grading</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="bts.html" class="sitemap-lead">Behind the Scenes</a></li>
+                    <li><a href="colorgrading.html" class="sitemap-lead" data-i18n="sitemap.allGradings">Alle Color Gradings</a></li>
+                </ul>
+            </section>
+
+            <!-- ─── DJI AIR 3S ─── -->
+            <section class="sitemap-group">
+                <h2>DJI Air 3S</h2>
+                <ul>
+                    <li>
+                        <a href="drone.html" class="sitemap-lead" data-i18n="drone.navVideos">Drohnen Videos</a>
+                        <ul class="sitemap-sub">
+                            <li><a href="drone.html#video-muenchenbuchsee">Münchenbuchsee</a></li>
+                            <li><a href="drone.html#video-finsterhennen">Finsterhennen</a></li>
+                            <li><a href="drone.html#video-kerzers">Kerzers</a></li>
+                            <li><a href="drone.html#video-guemmenen">Gümmenen</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ─── LEGO FAMILY STUDIO ─── -->
+            <section class="sitemap-group">
+                <h2>LEGO FAMILY STUDIO</h2>
+                <ul>
+                    <li><a href="lego.html#content" class="sitemap-lead" data-i18n="lego.navAbout">Über den Kanal</a></li>
+                    <li>
+                        <a href="lego.html#lego-video-corona" class="sitemap-lead" data-i18n="lego.navVideos">Stop-Motion Videos</a>
+                        <ul class="sitemap-sub">
+                            <li><a href="lego.html#lego-video-corona">Corona LEGO Time</a></li>
+                            <li><a href="lego.html#lego-video-street-race">LEGO Street Race</a></li>
+                            <li><a href="lego.html#lego-video-hairdresser">LEGO Hairdresser</a></li>
+                            <li><a href="lego.html#lego-video-street-hole">LEGO Street Hole</a></li>
+                            <li><a href="lego.html#lego-video-pirate-ship">LEGO Pirate Ship</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <hr class="sitemap-divider">
+
+            <!-- ─── YOUTUBE-KANÄLE (ZEILE 3) ─── -->
+            <section class="sitemap-group sitemap-row-start">
+                <h2 data-i18n="sitemap.groupChannels">YouTube-Kanäle</h2>
+                <ul>
+                    <li><a href="https://www.youtube.com/@aureliozingarello" target="_blank" rel="noopener" class="sitemap-lead sitemap-ext">Aurelio Zingarello<i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                    <li><a href="https://www.youtube.com/@legofamilystudio" target="_blank" rel="noopener" class="sitemap-lead sitemap-ext">LEGO FAMILY STUDIO<i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                </ul>
+            </section>
+
+            <!-- ─── RECHTLICHES ─── -->
+            <section class="sitemap-group">
+                <h2 data-i18n="nav.categoryLegal">Rechtliches</h2>
+                <ul>
+                    <li><a href="impressum.html" class="sitemap-lead" data-i18n="footer.impressum">Impressum</a></li>
+                    <li><a href="datenschutz.html" class="sitemap-lead" data-i18n="footer.datenschutz">Datenschutz</a></li>
+                    <li><a href="sitemap.html" class="sitemap-lead" data-i18n="footer.sitemap">Sitemap</a></li>
+                </ul>
+            </section>
+
+        </div>
+        </div>
+    </main>
+
+    <!-- Footer wird automatisch durch header.js am Ende des body eingefügt -->
+
+    <script src="translations.js"></script>
+    <script src="i18n.js"></script>
+    <script src="header.js"></script>
+    <script src="foto-data.js"></script>
+    <script>
+        /* Wildlife-Motive aus foto-data.js (gleiche Titel-/Adress-Logik wie foto-galerie.js) –
+           so bleibt die Sitemap automatisch aktuell. Fehlt die Datei/Kategorie, bleibt die
+           statische Liste oben stehen. */
+        (function () {
+            var list = document.getElementById('sitemapWildlifeMotifs');
+            var motifs = window.FOTO_GALERIE && window.FOTO_GALERIE.wildlife;
+            if (!list || !motifs || !motifs.length) return;
+            var lang = (window.i18n && window.i18n.getCurrentLanguage && window.i18n.getCurrentLanguage()) || 'de';
+            function slugify(text) {
+                return String(text || '').toLowerCase()
+                    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+                    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+                    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+            }
+            function pick(title) {
+                if (title && typeof title === 'object') return title[lang] || title.de || title[Object.keys(title)[0]] || '';
+                return title || '';
+            }
+            list.innerHTML = '';
+            motifs.forEach(function (motif) {
+                var de = motif.title && typeof motif.title === 'object' ? (motif.title.de || motif.title[Object.keys(motif.title)[0]]) : motif.title;
+                var slug = slugify(motif.id || de);
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = 'motiv.html?k=wildlife&m=' + encodeURIComponent(slug);
+                a.textContent = pick(motif.title);
+                li.appendChild(a);
+                list.appendChild(li);
+            });
+        })();
+    </script>
+    <script src="az-reveal.js"></script>
+</body>
+</html>

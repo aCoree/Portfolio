@@ -24,89 +24,15 @@
     <link rel="stylesheet" href="style.css?v=1.3">
     <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="glow-page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        html,
-        body {
-            width: 100% !important;
-            height: 100% !important;
-            min-height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: hidden;
-
-            background: #050505 !important;
-        }
-
-        body {
-            color: #fff;
-
-            /* Schwarzer Grund + weicher violett/blauer Glow */
-            background:
-                radial-gradient(
-                    circle at 25% 35%,
-                    rgba(125, 45, 190, 0.38) 0%,
-                    rgba(125, 45, 190, 0.16) 25%,
-                    transparent 55%
-                ),
-                radial-gradient(
-                    circle at 75% 65%,
-                    rgba(70, 170, 255, 0.35) 0%,
-                    rgba(70, 170, 255, 0.14) 25%,
-                    transparent 55%
-                ),
-                #050505 !important;
-
-            position: relative;
-        }
-
-        /* Noch etwas mehr Blur für die Farbfelder */
-        body::before,
-        body::after {
-            content: "";
-            position: fixed;
-            width: 45vw;
-            height: 45vw;
-            max-width: 700px;
-            max-height: 700px;
-            border-radius: 50%;
-            filter: blur(100px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::before {
-            top: -15%;
-            left: -10%;
-            background: rgba(130, 45, 200, 0.22);
-        }
-
-        body::after {
-            right: -10%;
-            bottom: -15%;
-            background: rgba(70, 175, 255, 0.20);
-        }
-
+        /* Hintergrund (Lichtkreise) + Vollbild-Bereich: siehe glow-page.css */
         .coming-soon {
-            position: fixed !important;
-
-            /* EXAKT die Mitte des Bildschirms */
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-
-            width: 100% !important;
-            max-width: none !important;
-
-            margin: 0 !important;
-            padding: 0 !important;
-
-            text-align: center !important;
-
-            z-index: 10;
+            width: 100%;
         }
 
         .coming-soon h1 {
@@ -161,9 +87,9 @@
     </style>
 </head>
 
-<body>
+<body class="glow-page">
 
-    <main class="coming-soon">
+    <main class="coming-soon glow-hero">
         <h1 data-i18n="comingsoon.title">COMING SOON</h1>
         <p data-i18n="comingsoon.text">Fotografien werden bald veröffentlicht.</p>
         <a href="fotografie.html" class="coming-soon-back"><i class="fa-solid fa-chevron-left"></i> <span data-i18n="comingsoon.back">Zurück</span></a>

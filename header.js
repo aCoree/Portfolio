@@ -51,82 +51,152 @@ document.addEventListener("DOMContentLoaded", function() {
             margin: 0;
         }
 
-        /* ─── FOOTER STYLES (SCHIEBT SICH AUTOMATISCH NACH UNTEN) ─── */
+        /* ─── FOOTER (SCHIEBT SICH AUTOMATISCH NACH UNTEN) ───
+           Aufbau: oben drei Spalten (Folge mir / Navigation / Kontakt) als
+           mittig stehender Block, dessen Spalten linksbündig laufen; darunter
+           mittig Logo, Copyright + rechtliche Links und die Sprachwahl. */
         .site-footer {
             position: relative;
+            z-index: 10;
             margin-top: auto !important; /* DAS SCHIEBT DEN FOOTER AN DEN BODEN */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px 24px;
             width: 100%;
             box-sizing: border-box;
+            padding: 64px 24px 34px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(0, 0, 0, 0.3);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: #888;
         }
-        .site-footer .footer-left,
-        .site-footer .footer-right {
-            flex: 1;
+        .site-footer .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(3, max-content);
+            justify-content: center;
+            column-gap: 96px;
+            row-gap: 40px;
+        }
+        .site-footer .footer-col h3 {
+            margin: 0 0 14px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+        .site-footer .footer-col ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .site-footer .footer-col a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #8f8f8f;
+            transition: color 0.2s ease;
+        }
+        /* Navigation in zwei Zeilen: Home/Projekte links, Über mich/Kontakt
+           daneben (Spaltenweise gefüllt) – auch auf Mobile */
+        .site-footer .footer-links-2col {
+            display: grid;
+            grid-template-rows: repeat(2, auto);
+            grid-auto-flow: column;
+            column-gap: 40px;
+        }
+        .site-footer .footer-col a i {
+            width: 16px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .site-footer .footer-col a:hover,
+        .site-footer .footer-col a:focus-visible {
+            color: #ffffff;
+        }
+        .site-footer .footer-bottom {
+            margin-top: 56px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 22px 56px;
+        }
+        /* Logo: feste Platzbreite, damit das Aufgehen beim Hover (Logo wird
+           breiter, siehe header.css .logo:hover .logo-mark) nach links UND rechts
+           über die Nachbarn hinausragt, statt den ganzen Block zu verschieben. */
+        .site-footer .footer-bottom .logo {
+            width: var(--nav-logo-width, 48px);
+            flex: none;
+            justify-content: center;
+        }
+        .site-footer .footer-bottom .logo-mark {
+            flex: none;
+        }
+        .site-footer .footer-meta {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .site-footer .footer-meta p {
+            margin: 0;
+        }
+        .site-footer .footer-legal {
+            margin-top: 8px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
         }
-        .site-footer .footer-left {
-            justify-content: flex-start;
-        }
-        .site-footer .footer-right {
-            justify-content: flex-end;
-        }
-        .site-footer .footer-center {
-            flex: 0 0 auto;
-            text-align: center;
+        .site-footer .footer-legal a {
             color: #888;
-            font-size: 0.85rem;
-            padding: 0 15px;
+            transition: color 0.2s ease;
         }
-        /* Sprachumschalter im Footer existiert als ZWEI Instanzen im Markup
-           (siehe footerHTML weiter unten), von denen per Breakpoint jeweils
-           nur eine sichtbar ist – so bleibt jede Variante ein einfacher,
-           normaler Teil ihres jeweiligen Flex-Kontexts (keine berechnete
-           Positionierung nötig):
-           - .lang-switcher--footer-desktop sitzt verschachtelt in
-             .footer-right, direkt vor dem YouTube-Icon (>888px).
-           - .lang-switcher--footer-mobile ist ein eigenständiges Element in
-             derselben Zeile wie Logo + Icon (<=888px), per space-between
-             automatisch mittig zwischen den beiden. */
-        .site-footer .footer-lang-mobile {
-            display: none;
+        .site-footer .footer-legal a:hover,
+        .site-footer .footer-legal a:focus-visible {
+            color: #ffffff;
         }
-        .lang-switcher--footer-desktop {
-            margin-right: 54px; /* ursprünglich 18px, jetzt verdreifacht */
+        /* Schmaler, heller senkrechter Strich statt Mittelpunkt zwischen den rechtlichen Links */
+        .site-footer .footer-sep {
+            width: 1px;
+            height: 0.95em;
+            margin: 0 14px;
+            background: rgba(255, 255, 255, 0.28);
         }
-        @media (max-width: 888px) {
+        @media (max-width: 820px) {
+            .site-footer .footer-cols {
+                column-gap: 56px;
+            }
+        }
+        /* Schmalere Fenster: Logo + Sprachbuttons bleiben auf EINER Reihe (nicht mehr
+           ganz unten), Copyright + rechtliche Links darunter. */
+        @media (max-width: 860px) {
+            .site-footer .footer-bottom {
+                gap: 22px 40px;
+            }
+            .site-footer .footer-bottom .logo { order: 1; }
+            .site-footer .footer-bottom .lang-switcher { order: 2; }
+            .site-footer .footer-bottom .footer-meta { order: 3; flex: 0 0 100%; }
+        }
+        @media (max-width: 640px) {
             .site-footer {
-                flex-wrap: wrap;
-                row-gap: 16px;
-                padding: 20px 20px;
+                padding: 48px 24px 30px;
             }
-            .site-footer .footer-left {
-                order: 1;
-                flex: 0 0 auto;
+            .site-footer .footer-cols {
+                grid-template-columns: 1fr;
+                justify-content: start;
+                row-gap: 32px;
             }
-            .site-footer .footer-lang-mobile {
-                display: flex;
-                order: 2;
-                flex: 0 0 auto;
+            .site-footer .footer-bottom {
+                justify-content: space-between;
+                gap: 22px 16px;
+                margin-top: 44px;
             }
-            .site-footer .footer-right {
-                order: 3;
-                flex: 0 0 auto;
-            }
-            .lang-switcher--footer-desktop {
-                display: none;
-            }
-            .site-footer .footer-center {
-                order: 4;
-                flex: 0 0 100%;
-                padding: 0;
-                font-size: 0.78rem;
-            }
+            .site-footer .footer-bottom .logo { order: 1; }
+            .site-footer .footer-bottom .lang-switcher { order: 2; }
+            .site-footer .footer-bottom .footer-meta { order: 3; flex: 0 0 100%; }
         }
     `;
     document.head.appendChild(dynamicStyle);
@@ -261,7 +331,8 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'fotografie.html', category: fotografieLabel },
 
         { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
-        { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel }
+        { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel },
+        { label: t('footer.sitemap', 'Sitemap'), href: 'sitemap.html', category: legalLabel, keywords: 'Seitenübersicht Übersicht alle Seiten' }
     ];
 
     const currentPageFile = window.location.pathname.split('/').pop() || 'index.html';
@@ -467,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // ─── 6. SPRACHUMSCHALTER (DE/FR/EN/IT) ───
     // Ein und dieselbe kleine Pillen-Reihe wird sowohl im Footer (jede
-    // Seite, Desktop UND Mobile) als auch in der obersten Ebene des
+    // Seite) als auch in der obersten Ebene des
     // Mobile-Menüs eingesetzt (siehe buildLevelHTML) – nur mit jeweils
     // einer zusätzlichen Klasse für den Kontext. Der Klick selbst
     // passiert über Event-Delegation weiter unten (ein Listener pro
@@ -489,31 +560,51 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // ─── 7. ORIGINAL FOOTER HTML ───
+    // ─── 7. FOOTER HTML ───
     const footerHTML = `
     <!-- ─── FOOTER ─── -->
     <footer class="site-footer">
-        <div class="footer-left">
+        <div class="footer-cols">
+            <div class="footer-col">
+                <h3>${t('footer.findMe', 'Folge mir')}</h3>
+                <ul>
+                    <li><a href="https://www.youtube.com/@aureliozingarello" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i>Aurelio Zingarello</a></li>
+                    <li><a href="https://www.youtube.com/@legofamilystudio" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i>LEGO FAMILY STUDIO</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>${t('footer.sitemap', 'Sitemap')}</h3>
+                <ul class="footer-links-2col">
+                    <li><a href="index.html">${t('nav.home', 'Home')}</a></li>
+                    <li><a href="projekte.html">${t('nav.projects', 'Projekte')}</a></li>
+                    <li><a href="about.html">${t('nav.about', 'Über mich')}</a></li>
+                    <li><a href="index.html#kontakt">${t('nav.contact', 'Kontakt')}</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>${t('nav.contact', 'Kontakt')}</h3>
+                <ul>
+                    <li><a href="mailto:aureliozingarello@gmail.com"><i class="fa-solid fa-envelope"></i>aureliozingarello@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
             <a href="index.html" class="logo">
                 <span class="logo-mark">
                     <img src="${logoSrc}" alt="${logoAlt}">
                 </span>
             </a>
-        </div>
-        <div class="footer-lang-mobile">
-            ${buildLangSwitcherHTML('lang-switcher--footer-mobile')}
-        </div>
-        <div class="footer-center">
-            <p style="margin: 0;">${t('footer.copyright', '© {year} Aurelio Zingarello. Alle Rechte vorbehalten.').replace('{year}', new Date().getFullYear())}</p>
-            <div style="margin-top: 6px; font-size: 0.8rem;">
-                <a href="impressum.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">${t('footer.impressum', 'Impressum')}</a>
-                <span style="color: #555; margin: 0 6px;">·</span>
-                <a href="datenschutz.html" style="color: #888; text-decoration: underline; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">${t('footer.datenschutz', 'Datenschutz')}</a>
+            <div class="footer-meta">
+                <p>${t('footer.copyright', '© {year} Aurelio Zingarello. Alle Rechte vorbehalten.').replace('{year}', new Date().getFullYear())}</p>
+                <div class="footer-legal">
+                    <a href="impressum.html">${t('footer.impressum', 'Impressum')}</a>
+                    <span class="footer-sep" aria-hidden="true"></span>
+                    <a href="datenschutz.html">${t('footer.datenschutz', 'Datenschutz')}</a>
+                    <span class="footer-sep" aria-hidden="true"></span>
+                    <a href="sitemap.html">${t('footer.sitemap', 'Sitemap')}</a>
+                </div>
             </div>
-        </div>
-        <div class="footer-right">
-            ${buildLangSwitcherHTML('lang-switcher--footer-desktop')}
-            <a href="${youtubeUrl}" target="_blank" class="social-icon" style="margin-right: 2px;"><i class="fa-brands fa-youtube"></i></a>
+            ${buildLangSwitcherHTML('lang-switcher--footer')}
         </div>
     </footer>
     `;

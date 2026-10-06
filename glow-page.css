@@ -1,0 +1,72 @@
+/* ─────────────────────────────────────────────────────────────
+   GLOW-PAGE.CSS
+   Violett/blauer Farbverlauf-Hintergrund (zwei weiche Lichtkreise auf
+   fast schwarzem Grund) + Vollbild-Bereich für schlichte Hinweisseiten
+   (comingsoon.html, 404.html). Der Footer liegt dabei absichtlich UNTER
+   der ersten Bildschirmhöhe und erscheint erst beim Runterscrollen.
+   Verwendung: <body class="glow-page"> und <main class="… glow-hero">.
+   ───────────────────────────────────────────────────────────── */
+
+body.glow-page {
+    color: #fff;
+    position: relative;
+    /* fixed: der Verlauf bleibt beim Scrollen am Bildschirm stehen */
+    background:
+        radial-gradient(
+            circle at 25% 35%,
+            rgba(125, 45, 190, 0.38) 0%,
+            rgba(125, 45, 190, 0.16) 25%,
+            transparent 55%
+        ),
+        radial-gradient(
+            circle at 75% 65%,
+            rgba(70, 170, 255, 0.35) 0%,
+            rgba(70, 170, 255, 0.14) 25%,
+            transparent 55%
+        ),
+        #050505 !important;
+    background-attachment: fixed !important;
+}
+
+/* Noch etwas mehr Blur für die Farbfelder */
+body.glow-page::before,
+body.glow-page::after {
+    content: "";
+    position: fixed;
+    width: 45vw;
+    height: 45vw;
+    max-width: 700px;
+    max-height: 700px;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.glow-page::before {
+    top: -15%;
+    left: -10%;
+    background: rgba(130, 45, 200, 0.22);
+}
+
+body.glow-page::after {
+    right: -10%;
+    bottom: -15%;
+    background: rgba(70, 175, 255, 0.20);
+}
+
+/* Inhalt: exakt eine Bildschirmhöhe, mittig – der Footer folgt darunter */
+body.glow-page .glow-hero {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 58px 1.5rem 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

@@ -33,6 +33,8 @@ window.SITE_TRANSLATIONS = {
       copyright: "© {year} Aurelio Zingarello. Alle Rechte vorbehalten.",
       impressum: "Impressum",
       datenschutz: "Datenschutz",
+      sitemap: "Sitemap",
+      findMe: "Folge mir",
     },
     lang: {
       ariaLabel: "Sprache wählen",
@@ -45,6 +47,19 @@ window.SITE_TRANSLATIONS = {
       title: "COMING SOON",
       text: "Fotografien werden bald veröffentlicht.",
       back: "Zurück",
+    },
+    sitemap: {
+      title: "Sitemap",
+      intro: "Alle Seiten und Bereiche dieser Website auf einen Blick.",
+      groupMain: "Hauptseiten",
+      aboutSkills: "Skills",
+      aboutWeg: "Mein Weg",
+      aboutHobbys: "Hobbys",
+      aboutEquipment: "Equipment",
+      allGradings: "Alle Color Gradings",
+      groupMusic: "Musik",
+      groupChannels: "YouTube-Kanäle",
+      soon: "bald",
     },
     index: {
       heroTitleHtml:
@@ -313,6 +328,8 @@ window.SITE_TRANSLATIONS = {
       copyright: "© {year} Aurelio Zingarello. Tous droits réservés.",
       impressum: "Mentions légales",
       datenschutz: "Confidentialité",
+      sitemap: "Plan du site",
+      findMe: "Suivez-moi",
     },
     lang: {
       ariaLabel: "Choisir la langue",
@@ -325,6 +342,19 @@ window.SITE_TRANSLATIONS = {
       title: "BIENTÔT DISPONIBLE",
       text: "Les photographies seront bientôt publiées.",
       back: "Retour",
+    },
+    sitemap: {
+      title: "Plan du site",
+      intro: "Toutes les pages et rubriques de ce site en un coup d'œil.",
+      groupMain: "Pages principales",
+      aboutSkills: "Compétences",
+      aboutWeg: "Mon parcours",
+      aboutHobbys: "Loisirs",
+      aboutEquipment: "Équipement",
+      allGradings: "Tous les étalonnages",
+      groupMusic: "Musique",
+      groupChannels: "Chaînes YouTube",
+      soon: "bientôt",
     },
     index: {
       heroTitleHtml:
@@ -591,6 +621,8 @@ window.SITE_TRANSLATIONS = {
       copyright: "© {year} Aurelio Zingarello. All rights reserved.",
       impressum: "Legal notice",
       datenschutz: "Privacy policy",
+      sitemap: "Sitemap",
+      findMe: "Find me",
     },
     lang: {
       ariaLabel: "Choose language",
@@ -603,6 +635,19 @@ window.SITE_TRANSLATIONS = {
       title: "COMING SOON",
       text: "Photos will be published soon.",
       back: "Back",
+    },
+    sitemap: {
+      title: "Sitemap",
+      intro: "All pages and sections of this website at a glance.",
+      groupMain: "Main pages",
+      aboutSkills: "Skills",
+      aboutWeg: "My journey",
+      aboutHobbys: "Hobbies",
+      aboutEquipment: "Equipment",
+      allGradings: "All color gradings",
+      groupMusic: "Music",
+      groupChannels: "YouTube channels",
+      soon: "soon",
     },
     index: {
       heroTitleHtml:
@@ -871,6 +916,8 @@ window.SITE_TRANSLATIONS = {
       copyright: "© {year} Aurelio Zingarello. Tutti i diritti riservati.",
       impressum: "Note legali",
       datenschutz: "Privacy",
+      sitemap: "Mappa del sito",
+      findMe: "Seguimi",
     },
     lang: {
       ariaLabel: "Scegli la lingua",
@@ -883,6 +930,19 @@ window.SITE_TRANSLATIONS = {
       title: "PRESTO DISPONIBILE",
       text: "Le fotografie saranno pubblicate a breve.",
       back: "Indietro",
+    },
+    sitemap: {
+      title: "Mappa del sito",
+      intro: "Tutte le pagine e le sezioni di questo sito in un colpo d'occhio.",
+      groupMain: "Pagine principali",
+      aboutSkills: "Competenze",
+      aboutWeg: "Il mio percorso",
+      aboutHobbys: "Hobby",
+      aboutEquipment: "Attrezzatura",
+      allGradings: "Tutti i color grading",
+      groupMusic: "Musica",
+      groupChannels: "Canali YouTube",
+      soon: "a breve",
     },
     index: {
       heroTitleHtml:
