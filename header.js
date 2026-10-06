@@ -22,6 +22,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentLang = (window.i18n && window.i18n.getCurrentLanguage) ? window.i18n.getCurrentLanguage() : 'de';
     const SUPPORTED_LANGS = (window.i18n && window.i18n.SUPPORTED) ? window.i18n.SUPPORTED : ['de', 'fr', 'en', 'it'];
 
+    // Kürzel (Anzeige im Header) + Eigenbezeichnung (ausgeschrieben im Sprach-Panel,
+    // bewusst IMMER in der jeweils eigenen Sprache, nie übersetzt) je Sprache.
+    // Bewusst hier oben: wird sowohl vom Header-Markup (Sprachwahl im Desktop-
+    // Header) als auch vom Footer-/Mobile-Sprachumschalter weiter unten genutzt.
+    const LANG_LABELS = { de: 'DE', fr: 'FR', en: 'EN', it: 'IT' };
+    const LANG_NAMES = { de: 'Deutsch', fr: 'Français', en: 'English', it: 'Italiano' };
+
     // ─── 0b. LEGO FAMILY STUDIO: SEITENSPEZIFISCHE YOUTUBE-/LOGO-OVERRIDES ───
     // Nur auf lego.html (body.lego-family-studio) sollen Header/Footer zum
     // "Lego Family Studio"-Kanal + Lego-Logo verlinken, sonst überall zum
@@ -386,6 +393,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button type="button" class="mobile-back-arrow" id="mobileBackArrow" aria-label="${t('nav.ariaBack', 'Eine Ebene zurück')}">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
+                <!-- Sprachwahl (nur Desktop, siehe header.css .nav-lang): zeigt die
+                     aktuelle Sprache, ein Klick öffnet das Panel #langNavExpand. -->
+                <div class="nav-lang">
+                    <button type="button" class="nav-lang-toggle" id="navLangToggle" aria-haspopup="true" aria-expanded="false" aria-label="${t('lang.ariaLabel', 'Sprache wählen')} (${LANG_NAMES[currentLang] || currentLang})">${LANG_LABELS[currentLang] || currentLang.toUpperCase()}</button>
+                </div>
             </div>
 
             <nav class="nav-center">${buildMainNavHTML()}</nav>
@@ -432,6 +444,12 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         </div>
 
+        <!-- Sprach-Panel: wie die Suche ein klickgesteuertes nav-expand-Panel.
+             Die Einträge (alle Sprachen ausser der aktuellen) füllt header.js. -->
+        <div class="nav-expand" id="langNavExpand">
+            <div class="nav-expand-inner" id="langNavExpandInner"></div>
+        </div>
+
         ${buildSecondNavbarHTML()}
     </div>
 
@@ -455,8 +473,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // passiert über Event-Delegation weiter unten (ein Listener pro
     // vorkommender .lang-switcher-Instanz), da mehrere Instanzen auf
     // derselben Seite existieren können.
-    const LANG_LABELS = { de: 'DE', fr: 'FR', en: 'EN', it: 'IT' };
-
     function buildLangSwitcherHTML(extraClass) {
         const buttons = SUPPORTED_LANGS.map(code => {
             const activeClass = code === currentLang ? ' is-active' : '';
@@ -853,6 +869,75 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && searchOpen) forceCloseSearch();
+    });
+
+    // ─── 12b. DESKTOP-SPRACHWAHL (KÜRZEL ZWISCHEN LOGO UND "HOME") ───
+    // Gleiche Mechanik wie die Suche (klickgesteuert, bleibt offen bis zum
+    // erneuten Klick/Escape/Backdrop-Klick, schliesst alle anderen Panels,
+    // blendet den Second Header aus und blurt den Hintergrund) – nur der
+    // Panel-Inhalt ist eine kurze Liste mit den ÜBRIGEN Sprachen, die
+    // linksbündig unter dem Kürzel der aktuellen Sprache beginnt.
+    const langNavExpand = document.getElementById('langNavExpand');
+    const langNavExpandInner = document.getElementById('langNavExpandInner');
+    const navLangToggle = document.getElementById('navLangToggle');
+    const langSecondNavbarEl = document.querySelector('.second-navbar');
+
+    let langPanelOpen = false;
+
+    function forceCloseLangPanel() {
+        if (!langPanelOpen || !langNavExpand) return;
+        langPanelOpen = false;
+        langNavExpand.classList.remove('is-open');
+        if (langSecondNavbarEl) langSecondNavbarEl.classList.remove('is-hidden-by-submenu');
+        hideBackdrop('lang');
+        if (navLangToggle) navLangToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function openLangPanel() {
+        if (!langNavExpand || !langNavExpandInner || !navLangToggle || langPanelOpen) return;
+        closeOtherPanels(forceCloseLangPanel);
+        langPanelOpen = true;
+
+        langNavExpandInner.innerHTML = SUPPORTED_LANGS
+            .filter(code => code !== currentLang)
+            .map(code => `<button type="button" class="nav-expand-link nav-lang-option" data-lang="${code}" lang="${code}">${LANG_NAMES[code] || code.toUpperCase()}</button>`)
+            .join('');
+
+        // Liste beginnt exakt unter dem Kürzel der aktuellen Sprache (gleiche
+        // Technik wie bei den Untermenüs weiter oben).
+        const toggleRect = navLangToggle.getBoundingClientRect();
+        const expandRect = langNavExpand.getBoundingClientRect();
+        langNavExpandInner.style.paddingLeft = Math.max(0, toggleRect.left - expandRect.left) + 'px';
+
+        langNavExpand.classList.add('is-open');
+        if (langSecondNavbarEl) langSecondNavbarEl.classList.add('is-hidden-by-submenu');
+        showBackdrop('lang');
+        navLangToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    registerPanelCloser(forceCloseLangPanel);
+
+    if (navLangToggle) {
+        navLangToggle.addEventListener('click', () => {
+            if (langPanelOpen) forceCloseLangPanel();
+            else openLangPanel();
+        });
+    }
+
+    if (langNavExpandInner) {
+        langNavExpandInner.addEventListener('click', (e) => {
+            const option = e.target.closest('.nav-lang-option');
+            if (!option) return;
+            forceCloseLangPanel();
+            if (window.i18n) window.i18n.setLanguage(option.dataset.lang);
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && langPanelOpen) {
+            forceCloseLangPanel();
+            if (navLangToggle) navLangToggle.focus();
+        }
     });
 
     // ─── 13. MOBILE MENÜ: HAMBURGER + MEHRSTUFIGE NAVIGATION MIT ZURÜCK-PFEIL ───

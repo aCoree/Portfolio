@@ -4,7 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEGO FAMILY STUDIO – Projekte</title>
+    <title>LEGO FAMILY STUDIO – Stop-Motion YouTube-Kanal | Aurelio Zingarello</title>
+    <!-- SEO-BEGIN -->
+    <meta name="description" content="LEGO FAMILY STUDIO – Stop-Motion-YouTube-Kanal von Aurelio Zingarello mit LEGO-Videos wie Corona LEGO Time, LEGO Street Race und LEGO Hairdresser.">
+    <link rel="canonical" href="https://aureliozingarello.ch/lego.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aurelio Zingarello">
+    <meta property="og:locale" content="de_CH">
+    <meta property="og:url" content="https://aureliozingarello.ch/lego.html">
+    <meta property="og:title" content="LEGO FAMILY STUDIO – Stop-Motion YouTube-Kanal | Aurelio Zingarello">
+    <meta property="og:description" content="LEGO FAMILY STUDIO – Stop-Motion-YouTube-Kanal von Aurelio Zingarello mit LEGO-Videos wie Corona LEGO Time, LEGO Street Race und LEGO Hairdresser.">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/card-big-lego.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- SEO-END -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -435,6 +447,24 @@
         body.lego-family-studio .nav-search-toggle.is-active {
             color: #000000 !important;
             background-color: transparent !important;
+        }
+
+        /* Sprachwahl im Desktop-Header: schwarze Box/Schrift, beim Hover/
+           geöffneten Panel LEGO-Rot (die Auswahl-Einträge erben zusätzlich
+           die Farbe von .nav-expand-link weiter oben). */
+        body.lego-family-studio .nav-lang-toggle,
+        body.lego-family-studio .nav-lang-option {
+            color: #000000 !important;
+            border-color: rgba(0, 0, 0, 0.35) !important;
+        }
+
+        body.lego-family-studio .nav-lang-toggle:hover,
+        body.lego-family-studio .nav-lang-toggle:focus-visible,
+        body.lego-family-studio .nav-lang-toggle[aria-expanded="true"],
+        body.lego-family-studio .nav-lang-option:hover,
+        body.lego-family-studio .nav-lang-option:focus-visible {
+            color: #E30613 !important;
+            border-color: #E30613 !important;
         }
 
         body.lego-family-studio .nav-search-divider {
@@ -968,6 +998,30 @@
 </head>
 
 <body class="lego-family-studio">
+    <!-- SEO-NAV-BEGIN -->
+    <noscript>
+        <!-- Statische Navigation für Besucher/Crawler ohne JavaScript (die normale Navigation baut header.js auf). -->
+        <nav aria-label="Navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projekte.html">Alle Projekte</a></li>
+            <li><a href="run.html">RUN – Kurzfilm</a></li>
+            <li><a href="bts.html">Behind the Scenes</a></li>
+            <li><a href="colorgrading.html">Color Grading</a></li>
+            <li><a href="musik.html">Klaviervideos</a></li>
+            <li><a href="drone.html">Drohnenvideos (DJI Air 3S)</a></li>
+            <li><a href="urbnvibe.html">URBNVIBE</a></li>
+            <li><a href="lego.html">LEGO FAMILY STUDIO</a></li>
+            <li><a href="fotografie.html">Fotografie</a></li>
+            <li><a href="wildlife.html">Wildlife-Fotografie</a></li>
+            <li><a href="about.html">Über mich</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+        </nav>
+    </noscript>
+    <!-- SEO-NAV-END -->
+
 
     <!-- ─── FULLSCREEN HINTERGRUND VIDEO & OVERLAY ─── -->
     <div class="bg-video-container">

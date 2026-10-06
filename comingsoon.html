@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
+    <title>Coming Soon | Aurelio Zingarello</title>
+    <meta name="robots" content="noindex, follow">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,6 +133,31 @@
             color: #bdbdbd !important;
             text-align: center !important;
         }
+
+        /* Zurück zur Fotografie-Übersicht – gleiche Box-Optik wie die
+           Sprachbuttons (siehe header.css .lang-switcher-btn). */
+        .coming-soon .coming-soon-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 38px;
+            padding: 10px 22px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .coming-soon .coming-soon-back:hover,
+        .coming-soon .coming-soon-back:focus-visible {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 
@@ -140,6 +166,7 @@
     <main class="coming-soon">
         <h1 data-i18n="comingsoon.title">COMING SOON</h1>
         <p data-i18n="comingsoon.text">Fotografien werden bald veröffentlicht.</p>
+        <a href="fotografie.html" class="coming-soon-back"><i class="fa-solid fa-chevron-left"></i> <span data-i18n="comingsoon.back">Zurück</span></a>
     </main>
 
     <!-- JavaScript -->

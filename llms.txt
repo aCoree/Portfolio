@@ -1,0 +1,34 @@
+# Aurelio Zingarello
+
+> Persönliche Portfolio-Website von Aurelio Zingarello, Filmemacher, Fotograf und Mediamatiker aus der Schweiz (Kanton Bern). Sie zeigt den Kurzfilm RUN, Fotografie, Klaviervideos, Drohnenvideos, Design-Projekte (URBNVIBE) und den Stop-Motion-YouTube-Kanal LEGO FAMILY STUDIO. Die Seite ist auf Deutsch, Französisch, Englisch und Italienisch verfügbar (Sprachwahl im Header; Standard Deutsch).
+
+## Seiten
+
+- [Home](https://aureliozingarello.ch/): Portfolio von Aurelio Zingarello – Filmemacher, Fotograf und Mediamatiker aus der Schweiz. Kurzfilm RUN, Fotografie, Klaviervideos, Stop-Motion, Drohnenvideos und mehr.
+- [Alle Projekte](https://aureliozingarello.ch/projekte.html): Alle Projekte von Aurelio Zingarello im Überblick: Kurzfilm RUN, Fotografie, Musik, DJI-Drohnenvideos, URBNVIBE und LEGO FAMILY STUDIO.
+- [RUN – Kurzfilm](https://aureliozingarello.ch/run.html): RUN – ein cinematischer Action-Kurzfilm im Seeland der Schweiz von Aurelio Zingarello: Trailer, ganzer Film, Behind the Scenes und Color Grading.
+- [Behind the Scenes](https://aureliozingarello.ch/bts.html): Behind the Scenes zum Kurzfilm RUN von Aurelio Zingarello: Bilder und Einblicke vom Dreh.
+- [Color Grading](https://aureliozingarello.ch/colorgrading.html): Color Grading Vorher/Nachher: Vergleich von Fotografien, dem Kurzfilm RUN und Drohnenvideos von Aurelio Zingarello.
+- [Klaviervideos](https://aureliozingarello.ch/musik.html): Klaviervideos von Aurelio Zingarello: Film- und Soundtrack-Stücke wie The Force Theme, Interstellar, Pirates of the Caribbean, Avengers Main Theme und Bohemian Rhapsody.
+- [Drohnenvideos (DJI Air 3S)](https://aureliozingarello.ch/drone.html): Drohnenvideos mit der DJI Air 3S von Aurelio Zingarello: Aufnahmen aus Münchenbuchsee, Finsterhennen, Kerzers und Gümmenen in der Schweiz.
+- [URBNVIBE](https://aureliozingarello.ch/urbnvibe.html): URBNVIBE – Projekte von Aurelio Zingarello: Flyer-Design, Logo-Design, Awareness-Video und Social-Media-Creatives.
+- [LEGO FAMILY STUDIO](https://aureliozingarello.ch/lego.html): LEGO FAMILY STUDIO – Stop-Motion-YouTube-Kanal von Aurelio Zingarello mit LEGO-Videos wie Corona LEGO Time, LEGO Street Race und LEGO Hairdresser.
+- [Fotografie](https://aureliozingarello.ch/fotografie.html): Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.); Landschaften, Portrait und Streetfotografie folgen bald.
+- [Wildlife-Fotografie](https://aureliozingarello.ch/wildlife.html): Wildlife-Fotografie von Aurelio Zingarello: Eisvogel, Milan, Möwe, Star, Blaumeise, Kohlmeise und Hausrotschwanz in freier Wildbahn.
+- [Über mich](https://aureliozingarello.ch/about.html): Über Aurelio Zingarello: Filmemacher, Fotograf und Mediamatiker aus der Schweiz – Skills, Werdegang, Hobbys und Leidenschaft für Film, Fotografie und kreative Projekte.
+
+## Rechtliches
+
+- [Impressum](https://aureliozingarello.ch/impressum.html): Kontaktadresse und rechtliche Hinweise
+- [Datenschutz](https://aureliozingarello.ch/datenschutz.html): Datenschutzerklärung
+
+## Weitere Kanäle
+
+- YouTube: https://www.youtube.com/@aureliozingarello
+- YouTube (LEGO FAMILY STUDIO): https://www.youtube.com/@legofamilystudio
+
+## Hinweise für KI-Assistenten
+
+- Alle Seiten sind statisches HTML; Navigation und Sprachumschaltung werden per JavaScript ergänzt, die Inhalte stehen aber im HTML.
+- Bilder haben beschreibende Alt-Texte; die Wildlife-Galerie ist zusätzlich in der Sitemap (sitemap.xml) mit Bild-Einträgen aufgeführt.
+- Die Fotokategorien Landschaften, Portrait und Streetfotografie sind noch nicht veröffentlicht (Coming Soon).

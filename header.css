@@ -39,6 +39,28 @@
      Schwarz). */
   --nav-backdrop-bg: rgba(4, 5, 8, 0.62);
   --nav-backdrop-blur: 18px;
+
+  /* ─── DESKTOP-HEADER: SYMMETRIE LINKS ↔ RECHTS ───
+     Die Navigation (Home … Kontakt) steht dank grid 1fr/auto/1fr exakt in
+     der Mitte. Damit das AZ-Logo links GENAU so weit vom Rand entfernt ist
+     wie das YouTube-Icon rechts, müssen die Breiten der beiden Seiten-
+     gruppen identisch sein:
+       links  = Logo + Abstand + Sprach-Kürzel + Abstand zur Nav
+       rechts = Abstand zur Nav + Lupe + Abstand + YouTube-Icon
+     Der Abstand Logo ↔ Sprach-Kürzel (--nav-lang-gap) wird deshalb NICHT
+     von Hand gesetzt, sondern aus den übrigen Werten berechnet – ändert
+     sich eine Grösse (Lupe, YouTube-Icon, Kürzel-Breite, Gap), bleibt die
+     Symmetrie automatisch exakt erhalten. */
+  --nav-side-gap: 24px;
+  --nav-icon-gap: 28px;
+  --nav-logo-width: 48px;
+  --nav-search-size: 30px;
+  --nav-yt-size: 34px;
+  --nav-lang-width: 30px;
+  --nav-lang-gap: calc(
+    var(--nav-search-size) + var(--nav-icon-gap) + var(--nav-yt-size) -
+      var(--nav-logo-width) - var(--nav-lang-width)
+  );
 }
 
 /* ─── HEADER-GRUPPE (STICKY-WRAPPER FÜR MAIN HEADER + SECOND HEADER) ───
@@ -107,6 +129,30 @@ body.has-second-header .navbar {
   border-bottom-color: transparent;
 }
 
+/* ─── KEINE DURCHSICHTIGE NAHT ZWISCHEN MAIN- UND SECOND HEADER ───
+   .navbar, .second-navbar und .nav-expand sind (ausser auf Video-Hero-
+   Seiten mit body.transparent-header) VOLL DECKEND – ein backdrop-filter
+   (Blur) hat dort keinerlei sichtbare Wirkung, zwingt den Browser aber,
+   jedes dieser Elemente als eigene, separate Render-Fläche zu
+   compositen. Beim Ein-/Ausblenden der Header-Gruppe (translateY beim
+   Scrollen) landen diese Flächen auf Bruchteil-Pixel-Positionen; an der
+   Kante zwischen zwei Flächen (Main ↔ Second Header) ist dann jede nur
+   teilweise deckend, und der Seiteninhalt dahinter schimmert als
+   feine Linie durch. Ohne backdrop-filter werden alle Teile gemeinsam in
+   die Ebene der .header-group gezeichnet – es gibt keine Kante mehr, an
+   der etwas durchscheinen könnte. Auf Seiten ohne Second Header war das
+   nie sichtbar (es gibt nur eine Fläche); die transparenten Hero-Seiten
+   (index.html) behalten ihren Glas-Blur, da sie ihn tatsächlich nutzen
+   und ihr Header nicht ein-/ausgeblendet wird. */
+@media (min-width: 721px) {
+  body:not(.transparent-header) .navbar,
+  body:not(.transparent-header) .second-navbar,
+  body:not(.transparent-header) .nav-expand {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 /* Linke Seite: Logo (Desktop) bzw. Logo/Zurück-Pfeil (Mobile) */
 .nav-left {
   display: flex;
@@ -117,7 +163,7 @@ body.has-second-header .navbar {
      Zwischenraums zwischen Logo und "Home". Nur Desktop: auf Mobile (siehe
      Media Query unten) wieder auf 0 zurückgesetzt, weil .nav-right dort
      ohnehin ausgeblendet ist (Icons stecken im Mobile-Menü). */
-  padding-right: 24px;
+  padding-right: var(--nav-side-gap);
 }
 
 .logo {
@@ -129,7 +175,7 @@ body.has-second-header .navbar {
   position: relative;
   display: inline-block;
   height: 48px;
-  width: 48px;
+  width: var(--nav-logo-width);
   overflow: hidden;
   vertical-align: middle;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -187,6 +233,7 @@ body.has-second-header .navbar {
   font-weight: var(--nav-font-weight);
   text-transform: uppercase;
   letter-spacing: 1.4px;
+  white-space: nowrap; /* nie zweizeilig ("ÜBER / MICH") – stattdessen früher auf Mobile-Header umschalten (siehe Media Query unten) */
   color: var(--nav-text-idle);
   transition: color 0.25s ease;
 }
@@ -217,17 +264,13 @@ body.has-second-header .navbar {
   transform: translateY(-50%) rotate(180deg);
 }
 
-.nav-item.has-submenu.is-open .nav-caret {
-  transform: rotate(180deg);
-}
-
 /* Rechte Seite: Social Media Icons */
 .nav-right {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 12px;
-  padding-left: 24px;
+  gap: var(--nav-icon-gap);
+  padding-left: var(--nav-side-gap);
 }
 
 /* Kreis-Button bleibt wie gehabt (inkl. Blau/Violett-Verlauf beim
@@ -241,8 +284,8 @@ body.has-second-header .navbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: var(--nav-yt-size);
+  height: var(--nav-yt-size);
   border-radius: 50%;
   position: relative;
   background-color: transparent;
@@ -295,8 +338,8 @@ body.has-second-header .navbar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: var(--nav-search-size);
+  height: var(--nav-search-size);
   padding: 0;
   background: none;
   border: none;
@@ -317,6 +360,83 @@ body.has-second-header .navbar {
    ausgeblendet, hier zusätzlich explizit für Klarheit. */
 .nav-search-toggle--mobile {
   display: none;
+}
+
+/* ─── SPRACHWAHL IM DESKTOP-HEADER ───
+   Zeigt immer die aktuell eingestellte Sprache (DE/FR/EN/IT) als
+   schlichtes Kürzel zwischen AZ-Logo und "Home" – gleiche Schrift,
+   Grösse und Farbe wie die übrigen Nav-Links (gedimmt, bei Hover/
+   geöffnetem Panel weiss). Ein Klick öffnet – wie die Lupe – ein
+   Header-Panel (.nav-expand#langNavExpand), in dem die übrigen Sprachen
+   untereinander stehen. Feste Breite (--nav-lang-width) statt Textbreite,
+   damit die Symmetrie links/rechts (siehe :root) unabhängig vom Kürzel
+   exakt bleibt. Nur auf Desktop: im Mobile-Header (siehe Media Query
+   unten) ausgeblendet – dort bleibt die Sprachwahl im Mobile-Menü. */
+.nav-lang {
+  display: flex;
+  align-items: center;
+  margin-left: var(--nav-lang-gap);
+}
+
+.nav-lang-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--nav-lang-width);
+  height: 26px;
+  padding: 0;
+  /* Dieselbe Box-Optik wie die Sprachbuttons im Footer/Mobile-Menü
+     (.lang-switcher-btn), aber kleiner/dezenter, damit sie nicht wie
+     ein Nav-Link wirkt. */
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--nav-text-idle);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-lang-toggle:hover,
+.nav-lang-toggle:focus-visible,
+.nav-lang-toggle[aria-expanded="true"] {
+  color: var(--nav-text-active);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Auswahl im aufgeklappten Header: ausgeschriebene Sprachnamen in der
+   jeweils eigenen Sprache, gleiche Box-Optik, linksbündig unter dem
+   Kürzel. Nutzt zusätzlich .nav-expand-link für das Einblenden. */
+.nav-lang-option {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 104px;
+  margin: 0 0 8px;
+  padding: 5px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-lang-option:last-child {
+  margin-bottom: 0;
+}
+
+.nav-lang-option:hover,
+.nav-lang-option:focus-visible {
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 /* ─── HEADER-ERWEITERUNG (DESKTOP-UNTERMENÜS) ───
@@ -972,6 +1092,7 @@ body.menu-open {
   font-weight: var(--nav-font-weight);
   text-transform: uppercase;
   letter-spacing: 1.1px;
+  white-space: nowrap;
   color: var(--nav-text-idle);
   background: none;
   border: none;
@@ -1030,6 +1151,23 @@ body.transparent-header .nav-expand {
   border-color: transparent !important;
 }
 
+/* Schliesst ein Panel (Untermenü/Suche/Sprache), fährt das Panel noch 0.4s
+   ein – würde der Hintergrund dabei SOFORT auf transparent springen,
+   schiene währenddessen der Seiteninhalt (z.B. der Hero-Text) durch die
+   noch sichtbare Fläche und es flackerte. Deshalb blendet der Hintergrund
+   hier im Ruhezustand weich aus (gleiche Dauer wie die Höhen-Animation);
+   beim ÖFFNEN (siehe .has-open-panel unten) bleibt er sofort deckend. Die
+   ursprünglichen Transitions der Elemente sind mit aufgeführt. */
+body.transparent-header .navbar {
+  transition: border-color 0.25s ease, background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.transparent-header .second-navbar {
+  transition: opacity 0.2s ease, height 0.25s ease, border-bottom-width 0.25s ease, background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.transparent-header .nav-expand {
+  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Sobald auf einer Video-Hero-Seite ein Submenu/die Suche geöffnet ist
    (.header-group bekommt dafür in header.js die Klasse .has-open-panel,
    siehe showBackdrop/hideBackdrop), muss der komplette Header-/Menübereich
@@ -1043,6 +1181,16 @@ body.transparent-header .header-group.has-open-panel .nav-expand {
   background: var(--header-surface) !important;
 }
 
+body.transparent-header .header-group.has-open-panel .navbar {
+  transition: border-color 0.25s ease;
+}
+body.transparent-header .header-group.has-open-panel .second-navbar {
+  transition: opacity 0.2s ease, height 0.25s ease, border-bottom-width 0.25s ease;
+}
+body.transparent-header .header-group.has-open-panel .nav-expand {
+  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* ─── ABSTANDS-KOMPENSATION FÜR SEITEN MIT SECOND HEADER ───
    Seiten, die <main>/.page-padding nutzen und einen Second Header
    haben, brauchen zusätzlichen Abstand, damit Inhalt nicht unter der
@@ -1053,7 +1201,12 @@ body.has-second-header:not(.transparent-header) .page-padding {
 }
 
 /* ─── RESPONSIVE DESIGN (MOBIL) ─── */
-@media (max-width: 640px) {
+/* Umschaltpunkt Desktop → Mobile-Header: 720px statt 640px, damit der
+   Desktop-Header (Logo + Sprachwahl + Nav-Links + Lupe + YouTube, in der
+   längsten Sprache ca. 660px breit) nie zu eng wird und Links wie
+   "ÜBER MICH" umbrechen müssten – bevor das passiert, wechselt er direkt
+   auf den Mobile-Header. */
+@media (max-width: 720px) {
   .navbar {
     grid-template-columns: 1fr auto auto;
     column-gap: 14px;
@@ -1062,7 +1215,8 @@ body.has-second-header:not(.transparent-header) .page-padding {
   }
 
   .nav-center,
-  .nav-right {
+  .nav-right,
+  .nav-lang {
     display: none;
   }
 

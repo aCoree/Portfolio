@@ -44,6 +44,7 @@ window.SITE_TRANSLATIONS = {
     comingsoon: {
       title: "COMING SOON",
       text: "Fotografien werden bald veröffentlicht.",
+      back: "Zurück",
     },
     index: {
       heroTitleHtml:
@@ -220,6 +221,10 @@ window.SITE_TRANSLATIONS = {
       placeholder: "Bild folgt",
       lightboxClose: "Schließen",
       imageAlt: "Fotografie von Aurelio Zingarello",
+      altWildlife: "Eisvogel – Wildlife-Fotografie von Aurelio Zingarello",
+      altLandschaften: "Landschaftsfotografie von Aurelio Zingarello",
+      altPortrait: "Portraitfotografie von Aurelio Zingarello",
+      altStreet: "Streetfotografie von Aurelio Zingarello",
     },
     projekte: {
       sortBy: "Sortieren nach:",
@@ -319,6 +324,7 @@ window.SITE_TRANSLATIONS = {
     comingsoon: {
       title: "BIENTÔT DISPONIBLE",
       text: "Les photographies seront bientôt publiées.",
+      back: "Retour",
     },
     index: {
       heroTitleHtml:
@@ -493,6 +499,10 @@ window.SITE_TRANSLATIONS = {
       placeholder: "Photo à venir",
       lightboxClose: "Fermer",
       imageAlt: "Photographie d'Aurelio Zingarello",
+      altWildlife: "Martin-pêcheur – photographie animalière d'Aurelio Zingarello",
+      altLandschaften: "Photographie de paysage d'Aurelio Zingarello",
+      altPortrait: "Photographie de portrait d'Aurelio Zingarello",
+      altStreet: "Photographie de rue d'Aurelio Zingarello",
     },
     projekte: {
       sortBy: "Trier par :",
@@ -592,6 +602,7 @@ window.SITE_TRANSLATIONS = {
     comingsoon: {
       title: "COMING SOON",
       text: "Photos will be published soon.",
+      back: "Back",
     },
     index: {
       heroTitleHtml:
@@ -768,6 +779,10 @@ window.SITE_TRANSLATIONS = {
       placeholder: "Photo coming soon",
       lightboxClose: "Close",
       imageAlt: "Photography by Aurelio Zingarello",
+      altWildlife: "Kingfisher – wildlife photography by Aurelio Zingarello",
+      altLandschaften: "Landscape photography by Aurelio Zingarello",
+      altPortrait: "Portrait photography by Aurelio Zingarello",
+      altStreet: "Street photography by Aurelio Zingarello",
     },
     projekte: {
       sortBy: "Sort by:",
@@ -867,6 +882,7 @@ window.SITE_TRANSLATIONS = {
     comingsoon: {
       title: "PRESTO DISPONIBILE",
       text: "Le fotografie saranno pubblicate a breve.",
+      back: "Indietro",
     },
     index: {
       heroTitleHtml:
@@ -1043,6 +1059,10 @@ window.SITE_TRANSLATIONS = {
       placeholder: "Foto in arrivo",
       lightboxClose: "Chiudi",
       imageAlt: "Fotografia di Aurelio Zingarello",
+      altWildlife: "Martin pescatore – fotografia naturalistica di Aurelio Zingarello",
+      altLandschaften: "Fotografia di paesaggio di Aurelio Zingarello",
+      altPortrait: "Fotografia di ritratto di Aurelio Zingarello",
+      altStreet: "Fotografia di strada di Aurelio Zingarello",
     },
     projekte: {
       sortBy: "Ordina per:",

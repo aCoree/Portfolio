@@ -79,25 +79,25 @@ window.FOTO_GALERIE = {
         { src: "fotografie/wildlife/eisvogel/eisvogel-4-lq.jpg", x: 50, y: 50 },
         { src: "fotografie/wildlife/eisvogel/eisvogel-5-lq.jpg", x: 50, y: 50 },
         { src: "fotografie/wildlife/eisvogel/eisvogel-6-lq.jpg", x: 22, y: 50 },
-    
       ],
     },
     {
       title: { de: "Milan", en: "Kite", fr: "Milan", it: "Nibbio" },
       images: [
-        "fotografie/wildlife/milan/milan.jpg", 
-        "fotografie/wildlife/milan/milan-2.jpg"],
+        "fotografie/wildlife/milan/milan-1-lq.jpg",
+        "fotografie/wildlife/milan/milan-2-lq.jpg",
+      ],
     },
     {
       title: { de: "Möwe", en: "Seagull", fr: "Mouette", it: "Gabbiano" },
-      images: x6("fotografie/wildlife/möwe/möwe.jpg"),
+      images: ["fotografie/wildlife/möwe/möwe-1-lq.jpg"],
     },
     {
       title: { de: "Star", en: "Starling", fr: "Étourneau", it: "Storno" },
       images: [
-        "fotografie/wildlife/star/star-feigenbaum.jpg",
-        "fotografie/wildlife/star/star-garten.jpg",
-        "fotografie/wildlife/star/star-birke.jpg",
+        "fotografie/wildlife/star/star-1-lq.jpg",
+        "fotografie/wildlife/star/star-2-lq.jpg",
+        "fotografie/wildlife/star/star-3-lq.jpg",
       ],
     },
     {
@@ -107,7 +107,7 @@ window.FOTO_GALERIE = {
         fr: "Mésange bleue",
         it: "Cinciarella",
       },
-      images: x6("fotografie/blaumeise01.png"),
+      images: ["fotografie/blaumeise01.png"],
     },
     {
       title: {
@@ -116,7 +116,7 @@ window.FOTO_GALERIE = {
         fr: "Mésange charbonnière",
         it: "Cinciallegra",
       },
-      images: x6("fotografie/wildlife/kohlmeise01.png"),
+      images: ["fotografie/wildlife/kohlmeise01.png"],
     },
     {
       title: {
@@ -125,7 +125,7 @@ window.FOTO_GALERIE = {
         fr: "Rougequeue noir",
         it: "Codirosso spazzacamino",
       },
-      images: x6("fotografie/wildlife/hausrotschwanz.png"),
+      images: ["fotografie/wildlife/hausrotschwanz.png"],
     },
     /* ─── weitere Tiere hier einfügen ─── */
   ],
@@ -134,7 +134,7 @@ window.FOTO_GALERIE = {
   landschaften: [
     {
       title: "Landschaft 1",
-      images: x6("fotografie/kirche01.png"),
+      images: ["fotografie/kirche01.png"],
     },
     /* ─── weitere Motive hier einfügen ─── */
   ],
@@ -143,11 +143,11 @@ window.FOTO_GALERIE = {
   portrait: [
     {
       title: "Portrait 1",
-      images: x6("fotografie/foto-shooting-2.png"),
+      images: ["fotografie/foto-shooting-2.png"],
     },
     {
       title: "Portrait 2",
-      images: x6("fotografie/foto-shooting-67.png"),
+      images: ["fotografie/foto-shooting-67.png"],
     },
     /* ─── weitere Motive hier einfügen ─── */
   ],
@@ -156,7 +156,7 @@ window.FOTO_GALERIE = {
   street: [
     {
       title: "Street 1",
-      images: x6("fotografie/foto-shooting-1.png"),
+      images: ["fotografie/foto-shooting-1.png"],
     },
     /* ─── weitere Motive hier einfügen ─── */
   ],
