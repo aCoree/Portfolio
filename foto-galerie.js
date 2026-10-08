@@ -8,6 +8,11 @@
       → pro Motiv eine quadratische Kachel mit Titel. Ein Klick führt auf
         motiv.html?k=wildlife&m=eisvogel.
 
+   1b) DIREKTES MOSAIK (landschaften.html, portrait.html, streetfotografie.html)
+        <div class="photo-mosaic" data-foto-mosaic="landschaften"></div>
+      → zeigt ALLE Fotos der Kategorie (aller Motive aus foto-data.js)
+        direkt im selben Mosaik wie die Motiv-Seite – keine Zwischenseite.
+
    2) MOTIV-SEITE (motiv.html, EINE Seite für alle Motive)
         <div class="photo-mosaic" data-foto-motiv></div>
       → liest k= und m= aus der Adresse, setzt Titel/Zurück-Link und zeigt
@@ -227,6 +232,58 @@
         return plan;
     }
 
+    /* Baut das Mosaik samt Lightbox. items: [{ src, alt, pos }] –
+       identisch für Motiv-Seite und direkte Kategorie-Seiten. */
+    function renderMosaic(host, items) {
+        var lightbox = window.PhotoLightbox
+            ? window.PhotoLightbox.init({ groups: [items.map(function (item) { return { src: item.src, alt: item.alt }; })] })
+            : null;
+
+        function renderNode(node, base) {
+            var el;
+            if (node.kids) {
+                el = document.createElement('div');
+                el.className = 'photo-mosaic-node is-' + node.dir;
+                node.kids.forEach(function (kid) { el.appendChild(renderNode(kid, base)); });
+            } else {
+                var index = base + node.order;
+                var item = items[index];
+                el = document.createElement('button');
+                el.type = 'button';
+                el.className = 'photo-grid-item photo-mosaic-item';
+                var img = document.createElement('img');
+                img.src = item.src;
+                img.style.objectPosition = item.pos;
+                img.alt = item.alt;
+                img.draggable = false;
+                img.loading = 'lazy';
+                el.appendChild(img);
+                if (lightbox) el.addEventListener('click', function () { lightbox.openGroup(0, index); });
+            }
+            el.style.flex = node.grow + ' 1 0px';
+            return el;
+        }
+
+        var mobileQuery = window.matchMedia('(max-width: 640px)');
+
+        function layout() {
+            host.textContent = '';
+            var base = 0;
+            planBlocks(items.length, !mobileQuery.matches).forEach(function (spec) {
+                var el = renderNode(spec, base);
+                el.classList.add('photo-mosaic-block');
+                el.style.flex = '0 0 auto';
+                el.style.aspectRatio = String(spec.aspect);
+                host.appendChild(el);
+                base += countTiles(spec);
+            });
+        }
+
+        layout();
+        if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', layout);
+        else mobileQuery.addListener(layout);
+    }
+
     function initMotif(host) {
         var params = new URLSearchParams(window.location.search);
         var category = params.get('k') || '';
@@ -255,52 +312,25 @@
             if (backLabel) backLabel.textContent = translate('fotografie.cat' + capitalize(category), '');
         }
 
-        var lightbox = window.PhotoLightbox
-            ? window.PhotoLightbox.init({ groups: [images.map(function (src) { return { src: src, alt: alt }; })] })
-            : null;
+        renderMosaic(host, images.map(function (src, index) {
+            return { src: src, alt: alt, pos: focusOf(motif, index) };
+        }));
+    }
 
-        function renderNode(node, base) {
-            var el;
-            if (node.kids) {
-                el = document.createElement('div');
-                el.className = 'photo-mosaic-node is-' + node.dir;
-                node.kids.forEach(function (kid) { el.appendChild(renderNode(kid, base)); });
-            } else {
-                var index = base + node.order;
-                el = document.createElement('button');
-                el.type = 'button';
-                el.className = 'photo-grid-item photo-mosaic-item';
-                var img = document.createElement('img');
-                img.src = images[index];
-                img.style.objectPosition = focusOf(motif, index);
-                img.alt = alt;
-                img.draggable = false;
-                img.loading = 'lazy';
-                el.appendChild(img);
-                if (lightbox) el.addEventListener('click', function () { lightbox.openGroup(0, index); });
-            }
-            el.style.flex = node.grow + ' 1 0px';
-            return el;
-        }
-
-        var mobileQuery = window.matchMedia('(max-width: 640px)');
-
-        function layout() {
-            host.textContent = '';
-            var base = 0;
-            planBlocks(images.length, !mobileQuery.matches).forEach(function (spec) {
-                var el = renderNode(spec, base);
-                el.classList.add('photo-mosaic-block');
-                el.style.flex = '0 0 auto';
-                el.style.aspectRatio = String(spec.aspect);
-                host.appendChild(el);
-                base += countTiles(spec);
+    /* ─── 3) KATEGORIE DIREKT ALS MOSAIK ───
+       Alle Fotos aller Motive der Kategorie, in der Reihenfolge von
+       foto-data.js, im gleichen Mosaik wie auf der Motiv-Seite. */
+    function initCategoryMosaic(host) {
+        var category = host.getAttribute('data-foto-mosaic');
+        var motifs = (window.FOTO_GALERIE && window.FOTO_GALERIE[category]) || [];
+        var alt = altText(translate('fotografie.cat' + capitalize(category), ''));
+        var items = [];
+        motifs.forEach(function (motif) {
+            motifImages(motif).forEach(function (src, index) {
+                items.push({ src: src, alt: alt, pos: focusOf(motif, index) });
             });
-        }
-
-        layout();
-        if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', layout);
-        else mobileQuery.addListener(layout);
+        });
+        renderMosaic(host, items);
     }
 
     function categoryPage(category) {
@@ -314,6 +344,8 @@
         if (categoryGrid) initCategory(categoryGrid);
         var motifHost = document.querySelector('[data-foto-motiv]');
         if (motifHost) initMotif(motifHost);
+        var mosaicHost = document.querySelector('[data-foto-mosaic]');
+        if (mosaicHost) initCategoryMosaic(mosaicHost);
     }
 
     document.addEventListener('DOMContentLoaded', init);

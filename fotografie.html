@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fotografie | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
-    <meta name="description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.); Landschaften, Portrait und Streetfotografie folgen bald.">
+    <meta name="description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften und Portrait.">
     <link rel="canonical" href="https://aureliozingarello.ch/fotografie.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Aurelio Zingarello">
     <meta property="og:locale" content="de_CH">
     <meta property="og:url" content="https://aureliozingarello.ch/fotografie.html">
     <meta property="og:title" content="Fotografie | Aurelio Zingarello">
-    <meta property="og:description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.); Landschaften, Portrait und Streetfotografie folgen bald.">
+    <meta property="og:description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften und Portrait.">
     <meta property="og:image" content="https://aureliozingarello.ch/fotografie/wildlife/eisvogel/eisvogel-2-lq.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
@@ -60,13 +60,6 @@
             box-sizing: border-box;
         }
 
-        /* Seitentitel nutzt die gleiche Anton-Typografie wie z.B. bei
-           "RUN - Ein Kurzfilm" (.project-header h1 aus style.css). */
-        .fotografie-header {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-
         /* ─── KATEGORIE ─── */
         .foto-category {
             margin-bottom: 50px;
@@ -78,8 +71,8 @@
 
         /* ─── COVER-KACHEL: 1 BILD PRO KATEGORIE ───
            Klick auf die ganze Kachel führt auf die eigene Kategorieseite
-           (siehe wildlife.html, landschaften.html, portrait.html,
-           streetfotografie.html). Querformat auf dem
+           (siehe wildlife.html, streetfotografie.html, landschaften.html,
+           portrait.html). Querformat auf dem
            PC, Hochformat auf dem Handy (siehe Mobile-Block) – das Bild
            füllt die Kachel dabei immer komplett und zentriert aus. Nur die
            OBEREN Ecken sind abgerundet, unten läuft die Kachel dank der
@@ -100,7 +93,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
+            object-position: var(--pos-x, 50%) var(--pos-y, 50%);
             display: block;
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             /* Bild blendet nach unten hin sanft aus (statt eines Schattens
@@ -180,12 +173,12 @@
            angepasst. Erst ab 640px (nicht mehr 768px) – bis 641px bleiben
            die Querformat-Kacheln vom PC sichtbar. */
         @media (max-width: 640px) {
-            #fotografie-page {
-                padding: 120px 18px 90px;
+            .foto-cover img {
+                object-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
             }
 
-            .fotografie-header {
-                margin-bottom: 45px;
+            #fotografie-page {
+                padding: 120px 18px 90px;
             }
 
             .foto-category {
@@ -251,17 +244,19 @@
 
     <main id="fotografie-page">
 
-        <div class="fotografie-header project-header">
+        <div class="fotografie-header page-header project-header">
             <h1 class="az-reveal" data-i18n="fotografie.title">Fotografie</h1>
             <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.tagline">Eine Auswahl meiner liebsten
                 Aufnahmen aus verschiedenen Bereichen der Fotografie.</p>
         </div>
+        <div class="page-rule az-reveal" data-az-delay="1"></div>
 
         <!-- ─── WILDLIFE ─── -->
         <section class="foto-category" id="wildlife">
             <a class="foto-cover az-reveal" href="wildlife.html" aria-label="Wildlife">
-                <img src="fotografie/wildlife/eisvogel/eisvogel-2-lq.jpg" data-i18n-attr="alt:fotografie.altWildlife"
-                    alt="Eisvogel – Wildlife-Fotografie von Aurelio Zingarello">
+                <img src="fotografie/wildlife/eisvogel/eisvogel-5-lq.jpg" data-i18n-attr="alt:fotografie.altWildlife"
+                    alt="Eisvogel – Wildlife-Fotografie von Aurelio Zingarello"
+                    style="--pos-x: 50%; --pos-y: 50%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catWildlife">Wildlife</h2>
@@ -276,11 +271,32 @@
             </a>
         </section>
 
+        <!-- ─── STREETFOTOGRAFIE ─── -->
+        <section class="foto-category" id="street">
+            <a class="foto-cover az-reveal" href="streetfotografie.html" aria-label="Streetfotografie">
+                <img src="fotografie/street/kirche-1-hq.jpg"  data-i18n-attr="alt:fotografie.altStreet"
+                    alt="Streetfotografie von Aurelio Zingarello"
+                    style="--pos-x: 50%; --pos-y: 40%;">
+                <div class="foto-cover-overlay">
+                    <div>
+                        <h2 class="foto-cover-title" data-i18n="fotografie.catStreet">Streetfotografie</h2>
+                        <p class="foto-cover-desc" data-i18n="fotografie.descStreet">Spontane Momente mitten aus dem
+                            Alltag.</p>
+                        <span class="foto-cover-btn info-content-link">
+                            <span data-i18n="fotografie.viewButton">Ansehen</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </section>
+
         <!-- ─── LANDSCHAFTEN ─── -->
         <section class="foto-category" id="landschaften">
-            <a class="foto-cover az-reveal" href="comingsoon.html" aria-label="Landschaften">
-                <img src="fotografie/kirche01.png" data-i18n-attr="alt:fotografie.altLandschaften"
-                    alt="Landschaftsfotografie von Aurelio Zingarello">
+            <a class="foto-cover az-reveal" href="landschaften.html" aria-label="Landschaften">
+                <img src="fotografie/landschaften/schiff-weit.jpg" data-i18n-attr="alt:fotografie.altLandschaften"
+                    alt="Landschaftsfotografie von Aurelio Zingarello"
+                    style="--pos-x: 50%; --pos-y: 67%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catLandschaften">Landschaften</h2>
@@ -297,33 +313,15 @@
 
         <!-- ─── PORTRAIT ─── -->
         <section class="foto-category" id="portrait">
-            <a class="foto-cover az-reveal" href="comingsoon.html" aria-label="Portrait">
-                <img src="fotografie/foto-shooting-2.png" data-i18n-attr="alt:fotografie.altPortrait"
-                    alt="Portraitfotografie von Aurelio Zingarello">
+            <a class="foto-cover az-reveal" href="portrait.html" aria-label="Portrait">
+                <img src="fotografie/portrait/portrait-1.png" data-i18n-attr="alt:fotografie.altPortrait"
+                    alt="Portraitfotografie von Aurelio Zingarello"
+                    style="--pos-x: 50%; --pos-y: 50%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catPortrait">Portrait</h2>
                         <p class="foto-cover-desc" data-i18n="fotografie.descPortrait">Menschen und Emotionen im
                             Fokus.</p>
-                        <span class="foto-cover-btn info-content-link">
-                            <span data-i18n="fotografie.viewButton">Ansehen</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </span>
-                    </div>
-                </div>
-            </a>
-        </section>
-
-        <!-- ─── STREETFOTOGRAFIE ─── -->
-        <section class="foto-category" id="street">
-            <a class="foto-cover az-reveal" href="comingsoon.html" aria-label="Streetfotografie">
-                <img src="fotografie/foto-shooting-1.png" data-i18n-attr="alt:fotografie.altStreet"
-                    alt="Streetfotografie von Aurelio Zingarello">
-                <div class="foto-cover-overlay">
-                    <div>
-                        <h2 class="foto-cover-title" data-i18n="fotografie.catStreet">Streetfotografie</h2>
-                        <p class="foto-cover-desc" data-i18n="fotografie.descStreet">Spontane Momente mitten aus dem
-                            Alltag.</p>
                         <span class="foto-cover-btn info-content-link">
                             <span data-i18n="fotografie.viewButton">Ansehen</span>
                             <i class="fa-solid fa-chevron-right"></i>
@@ -346,9 +344,9 @@
         const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
             { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
+            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" },
             { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
-            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" },
-            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" }
+            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" }
         ];
     </script>
 

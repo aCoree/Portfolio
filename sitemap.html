@@ -60,26 +60,14 @@
             margin: 0 auto;
         }
 
-        .sitemap-header {
-            text-align: left;
-            margin-bottom: 28px;
-        }
-
-        .sitemap-header h1 {
-            margin-bottom: 0;
-        }
-
-        .sitemap-rule,
+        /* Seitentitel + Linie: gemeinsame Klassen .page-header / .page-rule (style.css),
+           identisch zu Impressum, Datenschutz und den Fotografie-Seiten. */
         .sitemap-divider {
             height: 1px;
             width: 100%;
             margin: 0;
             border: 0;
             background: rgba(255, 255, 255, 0.16);
-        }
-
-        .sitemap-rule {
-            margin-bottom: 56px;
         }
 
         /* Trennlinie zwischen den Reihen: über alle Spalten */
@@ -159,21 +147,6 @@
             padding: 3px 0;
         }
 
-        .sitemap-soon {
-            display: inline-block;
-            margin-left: 8px;
-            padding: 1px 7px;
-            font-family: "Barlow Condensed", sans-serif;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 5px;
-            vertical-align: 1px;
-        }
-
         .sitemap-ext i {
             font-size: 0.7em;
             margin-left: 6px;
@@ -189,10 +162,6 @@
         @media (max-width: 768px) {
             #sitemap-page {
                 padding: 120px 18px 90px;
-            }
-
-            .sitemap-header {
-                margin-bottom: 45px;
             }
         }
 
@@ -240,10 +209,10 @@
 
     <main id="sitemap-page">
         <div class="sitemap-inner">
-        <div class="sitemap-header project-header">
+        <div class="page-header project-header">
             <h1 class="az-reveal" data-i18n="sitemap.title">Sitemap</h1>
         </div>
-        <div class="sitemap-rule az-reveal" data-az-delay="1" id="sitemapRule"></div>
+        <div class="page-rule az-reveal" data-az-delay="1"></div>
 
         <div class="sitemap-grid az-reveal" data-az-delay="2">
 
@@ -314,9 +283,9 @@
                             <li><a href="motiv.html?k=wildlife&amp;m=hausrotschwanz">Hausrotschwanz</a></li>
                         </ul>
                     </li>
-                    <li><a href="comingsoon.html" class="sitemap-lead"><span data-i18n="fotografie.navLandschaften">Landschaften</span><span class="sitemap-soon" data-i18n="sitemap.soon">bald</span></a></li>
-                    <li><a href="comingsoon.html" class="sitemap-lead"><span data-i18n="fotografie.navPortrait">Portrait</span><span class="sitemap-soon" data-i18n="sitemap.soon">bald</span></a></li>
-                    <li><a href="comingsoon.html" class="sitemap-lead"><span data-i18n="fotografie.navStreet">Streetfotografie</span><span class="sitemap-soon" data-i18n="sitemap.soon">bald</span></a></li>
+                    <li><a href="streetfotografie.html" class="sitemap-lead" data-i18n="fotografie.navStreet">Streetfotografie</a></li>
+                    <li><a href="landschaften.html" class="sitemap-lead" data-i18n="fotografie.navLandschaften">Landschaften</a></li>
+                    <li><a href="portrait.html" class="sitemap-lead" data-i18n="fotografie.navPortrait">Portrait</a></li>
                 </ul>
             </section>
 

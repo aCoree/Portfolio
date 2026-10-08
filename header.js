@@ -325,10 +325,10 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: 'LEGO Hairdresser', href: 'lego.html#lego-video-hairdresser', category: legoVideosLabel },
 
         { label: fotografieLabel, href: 'fotografie.html', category: fotografieLabel },
-        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'fotografie.html', category: fotografieLabel },
-        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'fotografie.html', category: fotografieLabel },
-        { label: t('fotografie.navPortrait', 'Portrait'), href: 'fotografie.html', category: fotografieLabel },
-        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'fotografie.html', category: fotografieLabel },
+        { label: t('fotografie.navWildlife', 'Wildlife'), href: 'wildlife.html', category: fotografieLabel },
+        { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'streetfotografie.html', category: fotografieLabel },
+        { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'landschaften.html', category: fotografieLabel },
+        { label: t('fotografie.navPortrait', 'Portrait'), href: 'portrait.html', category: fotografieLabel },
 
         { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
         { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel },

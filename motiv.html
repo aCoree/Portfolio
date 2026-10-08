@@ -43,22 +43,8 @@
             box-sizing: border-box;
         }
 
-        .foto-sub-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        /* Motiv-Seite: Titel (gleiche Anton-Schrift wie "WILDLIFE" /
-           "FOTOGRAFIE") linksbündig, darüber der Zurück-Link zur Kategorie. */
-        .foto-sub-header {
-            text-align: left;
-            margin-bottom: 40px;
-        }
-
-        .foto-sub-header h1 {
-            margin-bottom: 0;
-        }
-
+        /* Motiv-Seite: Zurück-Link über dem Titel (Titel + Linie wie auf allen Seiten,
+           siehe .page-header / .page-rule in style.css). */
         .foto-motiv-back {
             display: inline-flex;
             align-items: center;
@@ -80,10 +66,6 @@
             #foto-sub-page {
                 padding: 120px 18px 90px;
             }
-
-            .foto-sub-header {
-                margin-bottom: 26px;
-            }
         }
     </style>
 </head>
@@ -94,11 +76,12 @@
     <div id="header-placeholder"></div>
 
     <main id="foto-sub-page">
-        <div class="foto-sub-header project-header">
+        <div class="foto-sub-header page-header project-header">
             <a href="wildlife.html" class="foto-motiv-back az-reveal" id="foto-motiv-back">&#8592; <span
                     data-foto-back-label></span></a>
             <h1 class="az-reveal" data-az-delay="1" id="foto-motiv-title"></h1>
         </div>
+        <div class="page-rule az-reveal" data-az-delay="1"></div>
 
         <!-- Titel, Zurück-Link und Raster werden von foto-galerie.js aus foto-data.js
              aufgebaut (Adresse: motiv.html?k=<kategorie>&m=<motiv>). Diese Seite
@@ -134,9 +117,9 @@
         const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
             { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
+            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" },
             { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
-            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" },
-            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" }
+            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" }
         ];
     </script>
 

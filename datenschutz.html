@@ -17,6 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="az-reveal.css">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Inter
@@ -57,7 +58,10 @@
 
     <!-- ─── INHALT DATENSCHUTZ ─── -->
     <main class="legal-content">
-        <h1 data-i18n="footer.datenschutz">Datenschutzerklärung</h1>
+        <div class="page-header project-header">
+            <h1 class="az-reveal" data-i18n="footer.datenschutz">Datenschutzerklärung</h1>
+        </div>
+        <div class="page-rule az-reveal" data-az-delay="1"></div>
 
         <h2 data-i18n="datenschutz.h1">1. Datenschutz auf einen Blick</h2>
         <p data-i18n="datenschutz.p1">Gestützt auf Artikel 13 der Schweizerischen Bundesverfassung und die datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst.</p>
@@ -109,5 +113,6 @@
     <script src="translations.js"></script>
     <script src="i18n.js"></script>
     <script src="header.js"></script>
+    <script src="az-reveal.js"></script>
 </body>
 </html>

@@ -4,13 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Diese Kategorie ist noch nicht veröffentlicht: Besucher werden direkt auf
-         die Coming-Soon-Seite geleitet. Zum Freischalten diesen Block entfernen
-         (und in fotografie.html den Link der Kategorie wieder auf portrait.html setzen). -->
-    <meta name="robots" content="noindex, follow">
-    <meta http-equiv="refresh" content="0; url=comingsoon.html">
-    <script>window.location.replace('comingsoon.html');</script>
     <title>Portrait | Aurelio Zingarello</title>
+    <!-- SEO-BEGIN -->
+    <meta name="description" content="Portraitfotografie von Aurelio Zingarello: Menschen und Emotionen im Fokus.">
+    <link rel="canonical" href="https://aureliozingarello.ch/portrait.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aurelio Zingarello">
+    <meta property="og:locale" content="de_CH">
+    <meta property="og:url" content="https://aureliozingarello.ch/portrait.html">
+    <meta property="og:title" content="Portrait | Aurelio Zingarello">
+    <meta property="og:description" content="Portraitfotografie von Aurelio Zingarello: Menschen und Emotionen im Fokus.">
+    <meta property="og:image" content="https://aureliozingarello.ch/fotografie/foto-shooting-2.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- SEO-END -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,39 +55,86 @@
             box-sizing: border-box;
         }
 
-        .foto-sub-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
         @media (max-width: 768px) {
             #foto-sub-page {
                 padding: 120px 18px 90px;
-            }
-
-            .foto-sub-header {
-                margin-bottom: 30px;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- SEO-NAV-BEGIN -->
+    <noscript>
+        <!-- Statische Navigation für Besucher/Crawler ohne JavaScript (die normale Navigation baut header.js auf). -->
+        <nav aria-label="Navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projekte.html">Alle Projekte</a></li>
+            <li><a href="run.html">RUN – Kurzfilm</a></li>
+            <li><a href="bts.html">Behind the Scenes</a></li>
+            <li><a href="colorgrading.html">Color Grading</a></li>
+            <li><a href="musik.html">Klaviervideos</a></li>
+            <li><a href="drone.html">Drohnenvideos (DJI Air 3S)</a></li>
+            <li><a href="urbnvibe.html">URBNVIBE</a></li>
+            <li><a href="lego.html">LEGO FAMILY STUDIO</a></li>
+            <li><a href="fotografie.html">Fotografie</a></li>
+            <li><a href="wildlife.html">Wildlife-Fotografie</a></li>
+            <li><a href="streetfotografie.html">Streetfotografie</a></li>
+            <li><a href="landschaften.html">Landschaften</a></li>
+            <li><a href="portrait.html">Portrait</a></li>
+            <li><a href="about.html">Über mich</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+        </nav>
+    </noscript>
+    <!-- SEO-NAV-END -->
+
+
+
 
     <!-- PLATZHALTER FÜR HEADER & MOBILE MENÜ -->
     <div id="header-placeholder"></div>
 
     <main id="foto-sub-page">
-        <div class="foto-sub-header project-header">
+        <div class="foto-sub-header page-header project-header">
             <h1 class="az-reveal" data-i18n="fotografie.catPortrait">Portrait</h1>
-            <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.descPortrait">Menschen und Emotionen
-                im Fokus.</p>
+            <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.descPortrait">Menschen und Emotionen im Fokus.</p>
         </div>
+        <div class="page-rule az-reveal" data-az-delay="1"></div>
 
-        <!-- Raster wird automatisch aus foto-data.js aufgebaut (eine Kachel pro Motiv).
-             Neue Fotos/Motive bitte dort eintragen, nicht hier. -->
-        <div class="photo-grid az-reveal" data-az-delay="2" data-foto-category="portrait"></div>
+        <!-- Mosaik wird automatisch aus foto-data.js aufgebaut (alle Fotos der Kategorie,
+             gleiches Raster wie auf den Motiv-Seiten). Neue Fotos bitte dort eintragen, nicht hier. -->
+        <div class="photo-mosaic az-reveal" data-az-delay="2" data-foto-mosaic="portrait"></div>
+        <!-- SEO-GALLERY-BEGIN -->
+        <noscript>
+        <!-- Statische Bildliste für Crawler ohne JavaScript. Die sichtbare Galerie baut foto-galerie.js aus foto-data.js auf – neue Fotos bitte hier ebenfalls ergänzen. -->
+        <ul>
+            <li><figure><img src="fotografie/foto-shooting-2.png" alt="Portrait – Fotografie von Aurelio Zingarello" loading="lazy"><figcaption>Portrait</figcaption></figure></li>
+            <li><figure><img src="fotografie/foto-shooting-67.png" alt="Portrait – Fotografie von Aurelio Zingarello" loading="lazy"><figcaption>Portrait</figcaption></figure></li>
+        </ul>
+        </noscript>
+        <!-- SEO-GALLERY-END -->
     </main>
+
+    <!-- ─── GROSSANSICHT (LIGHTBOX) ─── -->
+    <div id="photo-lightbox" class="photo-lightbox">
+        <button class="lightbox-nav-btn lightbox-close-btn" id="lightbox-close" data-i18n-attr="aria-label:bts.close"
+            aria-label="Schließen">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button class="lightbox-nav-btn lightbox-prev-btn" id="lightbox-prev" data-i18n-attr="aria-label:bts.prevImage"
+            aria-label="Vorheriges Bild">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="photo-lightbox-content"></div>
+        <button class="lightbox-nav-btn lightbox-next-btn" id="lightbox-next" data-i18n-attr="aria-label:bts.nextImage"
+            aria-label="Nächstes Bild">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
 
     <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
     <script src="translations.js"></script>
@@ -94,13 +147,14 @@
         const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
             { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
+            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" },
             { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
-            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" },
-            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" }
+            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" }
         ];
     </script>
 
     <script src="header.js"></script>
+    <script src="photo-lightbox.js"></script>
     <script src="foto-data.js"></script>
     <script src="foto-galerie.js"></script>
     <script src="az-reveal.js"></script>

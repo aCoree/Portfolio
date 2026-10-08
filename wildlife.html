@@ -55,18 +55,9 @@
             box-sizing: border-box;
         }
 
-        .foto-sub-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
         @media (max-width: 768px) {
             #foto-sub-page {
                 padding: 120px 18px 90px;
-            }
-
-            .foto-sub-header {
-                margin-bottom: 30px;
             }
         }
     </style>
@@ -105,11 +96,12 @@
     <div id="header-placeholder"></div>
 
     <main id="foto-sub-page">
-        <div class="foto-sub-header project-header">
+        <div class="foto-sub-header page-header project-header">
             <h1 class="az-reveal" data-i18n="fotografie.catWildlife">Wildlife</h1>
             <p class="tagline az-reveal" data-az-delay="1" data-i18n="fotografie.descWildlife">Tiere in freier
                 Wildbahn, eingefangen im entscheidenden Moment.</p>
         </div>
+        <div class="page-rule az-reveal" data-az-delay="1"></div>
 
         <!-- Raster wird automatisch aus foto-data.js aufgebaut (eine Kachel pro Motiv).
              Neue Fotos/Motive bitte dort eintragen, nicht hier. -->
@@ -149,9 +141,9 @@
         const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
         window.secondHeaderItems = [
             { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
+            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" },
             { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
-            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" },
-            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" }
+            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" }
         ];
     </script>
 

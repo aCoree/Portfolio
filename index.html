@@ -153,7 +153,7 @@
             width: 100%;
             height: 100%;
             background-size: cover;
-            background-position: center;
+            background-position: var(--pos-x, 50%) var(--pos-y, 50%);
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
             background-image: var(--bg-desktop);
@@ -381,6 +381,7 @@
 
             .apple-card-bg {
                 background-image: var(--bg-mobile, var(--bg-desktop)) !important;
+                background-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
             }
 
             .apple-card-overlay {
@@ -595,7 +596,7 @@
 
                     <div class="apple-card" onclick="window.location.href='run.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-run.png'); --bg-mobile: url('cards/card-small-run.png');">
+                            style="--bg-desktop: url('cards/card-big-run.png'); --bg-mobile: url('cards/card-small-run.png'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -611,7 +612,7 @@
 
                     <div class="apple-card" onclick="window.location.href='fotografie.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-fotografie.png'); --bg-mobile: url('cards/card-small-fotografie.png');">
+                            style="--bg-desktop: url('cards/card-big-fotografie.png'); --bg-mobile: url('cards/card-small-fotografie.png'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
                         <div class="apple-card-overlay">
@@ -630,7 +631,7 @@
 
                     <div class="apple-card" onclick="window.location.href='musik.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-musik.png'); --bg-mobile: url('cards/card-small-musik.png');">
+                            style="--bg-desktop: url('cards/card-big-musik.png'); --bg-mobile: url('cards/card-small-musik.png'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -648,7 +649,7 @@
 
                     <div class="apple-card" onclick="window.location.href='lego.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-lego.png'); --bg-mobile: url('cards/card-small-lego.png');">
+                            style="--bg-desktop: url('cards/card-big-lego.png'); --bg-mobile: url('cards/card-small-lego.png'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -665,7 +666,7 @@
 
                     <div class="apple-card" onclick="window.location.href='drone.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-drone.png'); --bg-mobile: url('cards/card-small-drone.png');">
+                            style="--bg-desktop: url('cards/card-big-drone.png'); --bg-mobile: url('cards/card-small-drone.png'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">

@@ -68,6 +68,19 @@ body:not(.has-hero) main,
   padding-top: var(--nav-height);
 }
 
+/* ─── BILD-AUSSCHNITT (GILT FÜR ALLE KACHELN/BILDER IN DIVS) ───
+   Jedes Bild, das eine Kachel/einen Rahmen per "cover" füllt, lässt sich
+   direkt am Element verschieben – damit das Motiv nicht abgeschnitten wird,
+   wenn es nicht mittig sitzt. Einfach inline am Bild/Div setzen, z.B.
+       style="--pos-x: 30%; --pos-y: 20%;"
+   --pos-x: 0% = linker Rand sichtbar … 50% = Mitte (Standard) … 100% = rechts
+   --pos-y: 0% = oberer Rand sichtbar … 50% = Mitte (Standard) … 100% = unten
+   Optional nur fürs Handy (anderes Format): --pos-x-m / --pos-y-m
+   (fehlen sie, gelten --pos-x / --pos-y auch dort).
+   Wirkt bei: Karten auf index.html (.apple-card-bg), Poster auf projekte.html
+   (.poster-img-wrapper), Kacheln auf fotografie.html (.foto-cover img),
+   Foto-Raster/BTS (.photo-grid-item img), Über-mich-Bild (.about-bg img). */
+
 /* ─── HERO SECTION ─── */
 .hero {
   position: relative;
@@ -262,7 +275,7 @@ body:not(.has-hero) main,
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: var(--pos-x, 50%) var(--pos-y, 50%);
   display: block;
 }
 
@@ -567,6 +580,42 @@ select {
   letter-spacing: 0.5px;
 }
 
+/* ─── EINHEITLICHER SEITENKOPF (Titel links + Trennlinie) ───
+   Gilt für Sitemap, Impressum, Datenschutz, Fotografie, alle Foto-
+   Kategorien und Motiv-Seiten: gleicher Titel (Anton wie .project-header
+   h1), linksbündig, darunter dieselbe feine Linie – identische Abstände
+   überall. Markup:
+     <div class="page-header project-header"><h1>…</h1></div>
+     <div class="page-rule"></div>                                   */
+.page-header.project-header {
+  text-align: left;
+  margin-bottom: 28px;
+}
+
+.page-header.project-header h1 {
+  margin-bottom: 0;
+  line-height: 1.6;
+  hyphens: manual;
+}
+
+.page-header.project-header .tagline {
+  margin: 12px 0 0;
+}
+
+.page-rule {
+  height: 1px;
+  width: 100%;
+  margin: 0 0 56px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 768px) {
+  .page-header.project-header {
+    margin-bottom: 45px;
+  }
+}
+
 /* Echtes Z-Layout: die beiden Blöcke liegen UNTEREINANDER (nicht
    nebeneinander in Spalten) und sind jeweils zur gegenüberliegenden
    Seite ausgerichtet – links block-linksbündig, rechts block-
@@ -652,23 +701,17 @@ select {
    War bisher auf beiden Seiten fast wortgleich als eigener <style>-Block
    dupliziert (inkl. eines seiteneigenen html/body/img-Resets, der bereits
    durch die allgemeinen Regeln oben abgedeckt ist). */
-.legal-content {
-  max-width: 800px;
+/* Selektor bewusst so spezifisch wie "body:not(.has-hero) main" oben,
+   sonst überschreibt dessen padding-top (nur Header-Höhe) den Seitenabstand. */
+body:not(.has-hero) main.legal-content {
+  max-width: 880px;
   margin: 0 auto;
-  padding: 120px 20px 60px 20px;
+  padding: 150px 40px 130px;
   line-height: 1.7;
   box-sizing: border-box;
   width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  hyphens: auto;
-}
-
-.legal-content h1 {
-  font-size: clamp(1.8rem, 5vw, 2.5rem);
-  margin-bottom: 25px;
-  word-break: break-word;
-  overflow-wrap: break-word;
   hyphens: auto;
 }
 
@@ -697,9 +740,9 @@ select {
   padding-left: 20px;
 }
 
-@media (max-width: 640px) {
-  .legal-content {
-    padding-top: 90px;
+@media (max-width: 768px) {
+  body:not(.has-hero) main.legal-content {
+    padding: 120px 18px 90px;
   }
 }
 
@@ -766,7 +809,7 @@ select {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: var(--pos-x, 50%) var(--pos-y, 50%);
 }
 
 .apple-card-overlay {
@@ -859,7 +902,7 @@ select {
   border-radius: 12px;
   overflow: hidden;
   background-size: cover;
-  background-position: center;
+  background-position: var(--pos-x, 50%) var(--pos-y, 50%);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -1654,7 +1697,7 @@ html:lang(it) .badge-new {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: var(--pos-x, 50%) var(--pos-y, 50%);
     display: block;
     border-radius: 0;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);

@@ -134,7 +134,10 @@ window.FOTO_GALERIE = {
   landschaften: [
     {
       title: "Landschaft 1",
-      images: ["fotografie/kirche01.png"],
+           images: [
+        "fotografie/landschaften/schiff-weit.jpg",
+        "fotografie/landschaften/kirche-1.png",
+      ],
     },
     /* ─── weitere Motive hier einfügen ─── */
   ],
@@ -143,12 +146,11 @@ window.FOTO_GALERIE = {
   portrait: [
     {
       title: "Portrait 1",
-      images: ["fotografie/foto-shooting-2.png"],
-    },
-    {
-      title: "Portrait 2",
-      images: ["fotografie/foto-shooting-67.png"],
-    },
+           images: [
+        "fotografie/portrait/portrait-1.png",
+        
+      ],
+    }
     /* ─── weitere Motive hier einfügen ─── */
   ],
 
@@ -156,7 +158,10 @@ window.FOTO_GALERIE = {
   street: [
     {
       title: "Street 1",
-      images: ["fotografie/foto-shooting-1.png"],
+      images: [
+        "fotografie/street/kirche-1.jpg",
+        "fotografie/street/architektur-1.jpg",
+      ],
     },
     /* ─── weitere Motive hier einfügen ─── */
   ],

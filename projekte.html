@@ -190,7 +190,7 @@
             width: 100%;
             aspect-ratio: 2 / 3; /* Breiteres, moderneres Poster-Format */
             background-size: cover;
-            background-position: center;
+            background-position: var(--pos-x, 50%) var(--pos-y, 50%);
             background-repeat: no-repeat;
             border-radius: 10px;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -335,7 +335,7 @@
 
             <!-- Poster 1: RUN -->
             <a href="run.html" class="poster-card" data-date="2026-06-01" data-views="8000" data-title="RUN">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-run.png');"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-run.png'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">RUN</h3>
                     <span class="dot-separator">·</span>
@@ -345,7 +345,7 @@
 
             <!-- Poster 2: URBNVIBE -->
             <a href="urbnvibe.html" class="poster-card" data-date="2024-06-01" data-views="4000" data-title="URBNVIBE">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-urbnvibe.jpg');"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-urbnvibe.jpg'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">URBNVIBE</h3>
                     <span class="dot-separator">·</span>
@@ -355,7 +355,7 @@
 
             <!-- Poster 3: LEGO FAMILY STUDIO -->
             <a href="lego.html" class="poster-card" data-date="2020-06-01" data-views="7000" data-title="Lego Family Studio">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-lego.png');"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-lego.png'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">LEGO FAMILY STUDIO</h3>
                     <span class="dot-separator">·</span>
@@ -365,7 +365,7 @@
 
             <!-- Poster 4: MUSIK -->
             <a href="musik.html" class="poster-card" data-date="2025-05-01" data-views="6000" data-title="Lego Family Studio 2">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-musik.png');"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-musik.png'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">MUSIK</h3>
                     <span class="dot-separator">·</span>
@@ -375,7 +375,7 @@
 
              <!-- Poster 5:  -->
             <a href="drone.html" class="poster-card" data-date="2024-06-02" data-views="5000" data-title="DJI AIR 3S">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-drone.png');"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-drone.png'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">DJI AIR 3S</h3>
                     <span class="dot-separator">·</span>
@@ -385,7 +385,7 @@
 
             <!-- Poster 6: FOTOGRAFIE -->
             <a href="fotografie.html" class="poster-card" data-date="2026-09-24" data-views="4444" data-title="FOTOGRAFIE">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-fotografie.png');">
+                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-fotografie.png'); --pos-x: 50%; --pos-y: 50%;">
                     <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
                 </div>
                 <div class="poster-info poster-info-single">
