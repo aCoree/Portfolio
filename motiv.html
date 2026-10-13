@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
+    <script src="theme.js?v=1.3"></script>
     <title>Motiv | Aurelio Zingarello</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,9 +19,9 @@
 
     <link rel="manifest" href="/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="style.css?v=1.4">
     <link rel="stylesheet" href="az-reveal.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="header.css?v=1.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -43,31 +45,14 @@
             box-sizing: border-box;
         }
 
-        /* Motiv-Seite: Zurück-Link über dem Titel (Titel + Linie wie auf allen Seiten,
-           siehe .page-header / .page-rule in style.css). */
-        .foto-motiv-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.55);
-            text-decoration: none;
-            font-size: 0.88rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-            transition: color 0.25s ease;
-        }
-
-        .foto-motiv-back:hover {
-            color: #ffffff;
-        }
-
         @media (max-width: 768px) {
             #foto-sub-page {
                 padding: 120px 18px 90px;
             }
         }
     </style>
+    <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
+    <link rel="stylesheet" href="theme.css?v=1.7">
 </head>
 
 <body>

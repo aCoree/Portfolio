@@ -55,7 +55,7 @@
   --nav-icon-gap: 28px;
   --nav-logo-width: 48px;
   --nav-search-size: 30px;
-  --nav-yt-size: 34px;
+  --nav-yt-size: 34px; /* auch Grösse des Hell/Dunkel-Buttons im Footer */
   --nav-lang-width: 30px;
   --nav-lang-gap: calc(
     var(--nav-search-size) + var(--nav-icon-gap) + var(--nav-yt-size) -
@@ -217,6 +217,9 @@ body.has-second-header .navbar {
   display: flex;
   align-items: center;
   gap: 40px;
+  /* Das letzte Wort hat noch den Buchstabenabstand (1.4px) hinter sich –
+     gleicht ihn links aus, damit die sichtbaren Wörter exakt mittig stehen. */
+  padding-left: 1.4px;
 }
 
 .nav-center .nav-item {
@@ -1031,6 +1034,58 @@ body.menu-open {
   margin-top: 0;
 }
 
+/* ─── HELL-/DUNKEL-BUTTON (FOOTER, NEBEN DER SPRACHWAHL) ───
+   Gleiche Box-Optik wie die Sprachbuttons (.lang-switcher-btn), nur mit
+   Icon statt Text: im Dunkel-Modus (Standard) eine Sonne = "zu Hell
+   wechseln", im Hell-Modus ein Mond = "zu Dunkel wechseln". Die Logik
+   steckt in theme.js, die Farben des Hell-Modus in theme.css. */
+.theme-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  /* Rund, gleiche Grösse wie das YouTube-Icon im Header (--nav-yt-size);
+     der seitliche Rand von 7px zentriert den Kreis über dem Logo-Kreis
+     (Logo-Box 48px), damit beide optisch gleich weit vom Rand stehen. */
+  width: var(--nav-yt-size);
+  height: var(--nav-yt-size);
+  margin: 0 7px;
+  padding: 0;
+  font-size: 0.95rem;
+  color: var(--nav-text-idle);
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid var(--nav-text-idle);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  color: var(--nav-text-active);
+  border-color: var(--nav-text-active);
+}
+
+.theme-toggle-icon {
+  line-height: 1;
+}
+
+/* Standard (dunkel): nur die Sonne; im Hell-Modus nur der Mond. */
+.theme-toggle .theme-toggle-icon--moon {
+  display: none;
+}
+
+html[data-theme="light"] .theme-toggle .theme-toggle-icon--sun {
+  display: none;
+}
+
+html[data-theme="light"] .theme-toggle .theme-toggle-icon--moon {
+  display: inline-block;
+}
+
 /* ─── SECOND HEADER (DESKTOP) ───
    Eigene Klassen (second-navbar*), damit dieses Styling niemals
    versehentlich den Main Header (.navbar/.nav-center) beeinflusst.
@@ -1070,6 +1125,7 @@ body.menu-open {
   align-items: center;
   height: 100%;
   gap: 42px;
+  padding-left: 1.1px; /* gleicht den Buchstabenabstand am Ende aus */
 }
 
 /* Wrapper pro Eintrag: gibt der Erweiterung einen stabilen, ganzflächigen

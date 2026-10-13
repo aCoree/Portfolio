@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
+    <script src="theme.js?v=1.3"></script>
     <title>About | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
     <meta name="description" content="Über Aurelio Zingarello: Filmemacher, Fotograf und Mediamatiker aus der Schweiz – Skills, Werdegang, Hobbys und Leidenschaft für Film, Fotografie und kreative Projekte.">
@@ -30,9 +32,9 @@
 
     <link rel="manifest" href="/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="style.css?v=1.4">
     <link rel="stylesheet" href="az-reveal.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="header.css?v=1.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -679,6 +681,8 @@
             transform: rotate(9deg) translateY(5px);
         }
     </style>
+    <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
+    <link rel="stylesheet" href="theme.css?v=1.7">
 </head>
 
 <body>

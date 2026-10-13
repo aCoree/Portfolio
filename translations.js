@@ -39,6 +39,14 @@ window.SITE_TRANSLATIONS = {
     lang: {
       ariaLabel: "Sprache wählen",
     },
+    theme: {
+      toLight: "Zum hellen Design wechseln",
+      warnTitle: "Helles Design",
+      warnText: "Das helle Design kann sehr hell wirken und braucht auf manchen Bildschirmen (z. B. OLED) mehr Akku. Trotzdem wechseln?",
+      cancel: "Abbrechen",
+      confirm: "Wechseln",
+      toDark: "Zum dunklen Design wechseln",
+    },
     common: {
       scroll: "Scrollen",
       watchNow: "Jetzt ansehen",
@@ -334,6 +342,14 @@ window.SITE_TRANSLATIONS = {
     lang: {
       ariaLabel: "Choisir la langue",
     },
+    theme: {
+      toLight: "Passer au thème clair",
+      warnTitle: "Thème clair",
+      warnText: "Le thème clair peut être très lumineux et consomme plus de batterie sur certains écrans (p. ex. OLED). Changer quand même ?",
+      cancel: "Annuler",
+      confirm: "Changer",
+      toDark: "Passer au thème sombre",
+    },
     common: {
       scroll: "Défiler",
       watchNow: "Voir maintenant",
@@ -626,6 +642,14 @@ window.SITE_TRANSLATIONS = {
     },
     lang: {
       ariaLabel: "Choose language",
+    },
+    theme: {
+      toLight: "Switch to light mode",
+      warnTitle: "Light mode",
+      warnText: "The light theme can be very bright and uses more battery on some screens (e.g. OLED). Switch anyway?",
+      cancel: "Cancel",
+      confirm: "Switch",
+      toDark: "Switch to dark mode",
     },
     common: {
       scroll: "Scroll",
@@ -921,6 +945,14 @@ window.SITE_TRANSLATIONS = {
     },
     lang: {
       ariaLabel: "Scegli la lingua",
+    },
+    theme: {
+      toLight: "Passa al tema chiaro",
+      warnTitle: "Tema chiaro",
+      warnText: "Il tema chiaro può essere molto luminoso e consuma più batteria su alcuni schermi (es. OLED). Passare comunque?",
+      cancel: "Annulla",
+      confirm: "Passa",
+      toDark: "Passa al tema scuro",
     },
     common: {
       scroll: "Scorri",

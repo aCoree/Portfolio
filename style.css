@@ -616,6 +616,30 @@ select {
   }
 }
 
+/* ─── ZURÜCK-LINK ÜBER DEM SEITENTITEL (ALLE FOTOGRAFIE-SEITEN) ───
+   "← Fotografie" auf den Kategorieseiten, "← Wildlife" auf den Motiv-Seiten
+   usw. – überall exakt dasselbe Design, nur die Beschriftung/das Ziel
+   wechselt. Steht als erstes Element INNERHALB von .page-header, direkt
+   vor dem <h1>:
+     <a href="fotografie.html" class="foto-motiv-back az-reveal">
+       &#8592; <span data-i18n="fotografie.title">Fotografie</span></a> */
+.foto-motiv-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  font-size: 0.88rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  transition: color 0.25s ease;
+}
+
+.foto-motiv-back:hover {
+  color: #ffffff;
+}
+
 /* Echtes Z-Layout: die beiden Blöcke liegen UNTEREINANDER (nicht
    nebeneinander in Spalten) und sind jeweils zur gegenüberliegenden
    Seite ausgerichtet – links block-linksbündig, rechts block-

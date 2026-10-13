@@ -134,7 +134,11 @@
             updateThumbActive();
         }
 
+        var closeTimer = null;
+
         function open(index) {
+            clearTimeout(closeTimer);
+            closeTimer = null;
             content.classList.remove('is-dragging');
             resetVerticalDragVisual(false);
             updateExtraLargeScale();
@@ -144,9 +148,28 @@
         }
 
         function close() {
+            clearTimeout(closeTimer);
+            closeTimer = null;
             overlay.classList.remove('active');
             document.body.style.overflow = '';
             resetVerticalDragVisual(false);
+        }
+
+        /* Schliessen per Runterwischen: das Bild fährt von seiner aktuellen
+           Position aus komplett nach UNTEN aus dem Bildschirm, der
+           Hintergrund blendet dabei aus. Erst danach wird alles unsichtbar
+           zurückgesetzt – früher wurde der Versatz sofort entfernt, wodurch
+           das Bild beim Loslassen kurz wieder in der Mitte aufblitzte. */
+        function slideClose() {
+            if (!overlay.classList.contains('active') || closeTimer) return;
+            content.style.transition = 'transform 0.28s cubic-bezier(0.4, 0, 1, 1)';
+            content.style.transform = 'translateY(' + (window.innerHeight + 40) + 'px)';
+            overlay.style.transition = 'opacity 0.28s ease';
+            overlay.style.opacity = '0';
+            closeTimer = setTimeout(function () {
+                closeTimer = null;
+                close();
+            }, 290);
         }
 
         function navigate(direction) {
@@ -208,8 +231,15 @@
            content wird beim Runterziehen live mitgezogen und der
            Hintergrund blendet dabei aus; über einer Mindest-Distanz
            schliesst es beim Loslassen, sonst schnappt es zurück. */
+        var lastDragDy = 0, lastDragT = 0, dragVelocity = 0;
+
         function applyVerticalDragVisual(dy) {
+            if (closeTimer) return;
             var clamped = Math.max(0, dy);
+            var now = performance.now();
+            if (lastDragT) dragVelocity = (clamped - lastDragDy) / Math.max(1, now - lastDragT);
+            lastDragDy = clamped;
+            lastDragT = now;
             content.style.transition = 'none';
             content.style.transform = clamped ? 'translateY(' + clamped + 'px)' : '';
             overlay.style.transition = 'none';
@@ -221,15 +251,55 @@
             overlay.style.transition = animate ? 'opacity 0.25s ease' : '';
             content.style.transform = '';
             overlay.style.opacity = '';
+            lastDragDy = 0;
+            lastDragT = 0;
+            dragVelocity = 0;
         }
 
         function finishVerticalDrag(dy) {
-            if (dy > 110) {
-                close();
+            /* weit genug gezogen ODER kurz, aber schnell nach unten gewischt */
+            if (dy > 110 || (dy > 30 && dragVelocity > 0.6)) {
+                slideClose();
             } else {
                 resetVerticalDragVisual(true);
             }
         }
+
+        /* ─── 2-FINGER-WISCHEN NACH UNTEN (Trackpad, z.B. Mac) ───
+           Das Bild folgt den Fingern live nach unten und fährt bei genug
+           Weg heraus; lässt man vorher los, schnappt es zurück. Horizontales
+           2-Finger-Wischen bleibt unangetastet (blättert nativ). */
+        var wheelAcc = 0, wheelTimer = null;
+
+        function fingerDownSign(e) {
+            var inverted = e.webkitDirectionInvertedFromDevice;
+            if (typeof inverted === 'boolean') return inverted ? -1 : 1;
+            return /Mac|iPhone|iPad/.test(navigator.platform || '') ? -1 : 1;
+        }
+
+        overlay.addEventListener('wheel', function (e) {
+            if (!overlay.classList.contains('active') || e.ctrlKey) return;
+            if (closeTimer) { e.preventDefault(); return; }
+            var ady = Math.abs(e.deltaY), adx = Math.abs(e.deltaX);
+            if (e.deltaMode !== 0 || ady <= adx) return;
+            /* Klassisches Mausrad (feste Rastschritte) schliesst nicht. */
+            if (adx === 0 && ady >= 100 && ady % 100 === 0 && wheelAcc === 0) return;
+
+            e.preventDefault();
+            wheelAcc = Math.max(0, wheelAcc + e.deltaY * fingerDownSign(e));
+            applyVerticalDragVisual(wheelAcc);
+
+            clearTimeout(wheelTimer);
+            if (wheelAcc > 130) {
+                wheelAcc = 0;
+                slideClose();
+                return;
+            }
+            wheelTimer = setTimeout(function () {
+                wheelAcc = 0;
+                if (!closeTimer) resetVerticalDragVisual(true);
+            }, 150);
+        }, { passive: false });
 
         /* ─── KLICKEN & ZIEHEN MIT DER MAUS (horizontal = blättern,
            vertikal nach unten = schliessen) ─── */

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
+    <script src="theme.js?v=1.3"></script>
     <title>Projekte | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
     <meta name="description" content="Alle Projekte von Aurelio Zingarello im Überblick: Kurzfilm RUN, Fotografie, Musik, DJI-Drohnenvideos, URBNVIBE und LEGO FAMILY STUDIO.">
@@ -39,8 +41,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <!-- Stylesheets & Fonts -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="style.css?v=1.4">
+    <link rel="stylesheet" href="header.css?v=1.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Inter
          bereits zentral in Gewicht 400/600/800 – genau das, was
@@ -280,6 +282,8 @@
             }
         }
     </style>
+    <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
+    <link rel="stylesheet" href="theme.css?v=1.7">
 </head>
 <body>
     <!-- SEO-NAV-BEGIN -->

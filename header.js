@@ -68,6 +68,14 @@ document.addEventListener("DOMContentLoaded", function() {
             font-size: 0.9rem;
             color: #888;
         }
+        /* Innenbereich: Spalten und unterer Streifen sind gleich breit – so
+           enden Logo und Hell/Dunkel-Button bündig mit dem Inhalt (links bei
+           "Folge mir", rechts am Ende der E-Mail-Adresse), nicht am Rand. */
+        .site-footer .footer-inner {
+            width: max-content;
+            max-width: 100%;
+            margin: 0 auto;
+        }
         .site-footer .footer-cols {
             display: grid;
             grid-template-columns: repeat(3, max-content);
@@ -116,13 +124,16 @@ document.addEventListener("DOMContentLoaded", function() {
         .site-footer .footer-col a:focus-visible {
             color: #ffffff;
         }
+        /* Unterer Streifen: 3 gleich breite Spalten (1fr auto 1fr) – Logo links,
+           Copyright + rechtliche Links EXAKT in der Mitte der Seite, rechts
+           Sprachwahl + Hell/Dunkel-Button. Logo und Button haben so
+           denselben Abstand zum Rand. */
         .site-footer .footer-bottom {
             margin-top: 56px;
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            justify-content: center;
-            gap: 22px 56px;
+            column-gap: 24px;
         }
         /* Logo: feste Platzbreite, damit das Aufgehen beim Hover (Logo wird
            breiter, siehe header.css .logo:hover .logo-mark) nach links UND rechts
@@ -131,9 +142,24 @@ document.addEventListener("DOMContentLoaded", function() {
             width: var(--nav-logo-width, 48px);
             flex: none;
             justify-content: center;
+            justify-self: start;
         }
         .site-footer .footer-bottom .logo-mark {
             flex: none;
+        }
+        /* Rechte Spalte: Sprachwahl mittig im Platz zwischen Copyright-Block und
+           Button, der Hell/Dunkel-Button ganz rechts. */
+        .site-footer .footer-controls {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            column-gap: 16px;
+        }
+        .site-footer .footer-controls .lang-switcher {
+            justify-self: center;
+        }
+        .site-footer .footer-controls .theme-toggle {
+            justify-self: end;
         }
         .site-footer .footer-meta {
             text-align: center;
@@ -170,15 +196,31 @@ document.addEventListener("DOMContentLoaded", function() {
                 column-gap: 56px;
             }
         }
-        /* Schmalere Fenster: Logo + Sprachbuttons bleiben auf EINER Reihe (nicht mehr
-           ganz unten), Copyright + rechtliche Links darunter. */
-        @media (max-width: 860px) {
-            .site-footer .footer-bottom {
-                gap: 22px 40px;
+        /* Schmalere Fenster / Handy: obere Reihe = Logo links, Sprachbuttons
+           PERFEKT MITTIG, Hell/Dunkel-Button rechts; Copyright + rechtliche
+           Links darunter über die volle Breite. (.footer-controls löst sich
+           dafür mit display:contents auf, seine Kinder liegen direkt im Raster.) */
+        @media (min-width: 861px) {
+            /* Kreis von Logo bzw. Button schliesst genau mit dem Inhalt ab
+               (Logo-Box hat links ~9px Luft um den Kreis). */
+            .site-footer .footer-bottom .logo { margin-left: -9px; }
+            .site-footer .footer-controls .theme-toggle { margin-right: 0; }
+            /* Sprachbuttons am PC etwas kleiner – mehr Luft zu Copyright-Block und Button. */
+            .site-footer .footer-controls .lang-switcher-btn {
+                font-size: 0.68rem;
+                padding: 3px 7px;
             }
-            .site-footer .footer-bottom .logo { order: 1; }
-            .site-footer .footer-bottom .lang-switcher { order: 2; }
-            .site-footer .footer-bottom .footer-meta { order: 3; flex: 0 0 100%; }
+        }
+        @media (max-width: 860px) {
+            .site-footer .footer-inner { width: 100%; }
+            .site-footer .footer-bottom {
+                row-gap: 22px;
+            }
+            .site-footer .footer-controls { display: contents; }
+            .site-footer .footer-bottom .logo { grid-column: 1; grid-row: 1; }
+            .site-footer .footer-controls .lang-switcher { grid-column: 2; grid-row: 1; justify-self: center; }
+            .site-footer .footer-controls .theme-toggle { grid-column: 3; grid-row: 1; justify-self: end; }
+            .site-footer .footer-bottom .footer-meta { grid-column: 1 / -1; grid-row: 2; }
         }
         @media (max-width: 640px) {
             .site-footer {
@@ -190,13 +232,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 row-gap: 32px;
             }
             .site-footer .footer-bottom {
-                justify-content: space-between;
-                gap: 22px 16px;
+                column-gap: 10px;
                 margin-top: 44px;
             }
-            .site-footer .footer-bottom .logo { order: 1; }
-            .site-footer .footer-bottom .lang-switcher { order: 2; }
-            .site-footer .footer-bottom .footer-meta { order: 3; flex: 0 0 100%; }
         }
     `;
     document.head.appendChild(dynamicStyle);
@@ -553,6 +591,22 @@ document.addEventListener("DOMContentLoaded", function() {
         return `<div class="lang-switcher${extraClass ? ' ' + extraClass : ''}" role="group" aria-label="${t('lang.ariaLabel', 'Sprache wählen')}">${buttons}</div>`;
     }
 
+    // ─── 6b. HELL-/DUNKEL-BUTTON (siehe theme.js + theme.css) ───
+    // Kleiner, dezenter Knopf neben der Sprachwahl im Footer. Zeigt das Ziel
+    // an: im Dunkel-Modus eine Sonne ("zu Hell wechseln"), im Hell-Modus
+    // einen Mond. Welches Icon sichtbar ist, entscheidet header.css über
+    // html[data-theme]; die Beschriftung (aria-label/title) pflegt theme.js.
+    function buildThemeToggleHTML() {
+        const toLight = t('theme.toLight', 'Zum hellen Design wechseln');
+        const toDark = t('theme.toDark', 'Zum dunklen Design wechseln');
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const label = isLight ? toDark : toLight;
+        return `<button type="button" class="theme-toggle" data-theme-toggle data-label-light="${toLight}" data-label-dark="${toDark}" aria-label="${label}" title="${label}" aria-pressed="${isLight ? 'true' : 'false'}">
+            <i class="fa-solid fa-sun theme-toggle-icon theme-toggle-icon--sun" aria-hidden="true"></i>
+            <i class="fa-solid fa-moon theme-toggle-icon theme-toggle-icon--moon" aria-hidden="true"></i>
+        </button>`;
+    }
+
     function wireLangSwitchers(root) {
         (root || document).querySelectorAll('.lang-switcher-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -565,6 +619,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const footerHTML = `
     <!-- ─── FOOTER ─── -->
     <footer class="site-footer">
+        <div class="footer-inner">
         <div class="footer-cols">
             <div class="footer-col">
                 <h3>${t('footer.findMe', 'Folge mir')}</h3>
@@ -605,7 +660,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     <a href="sitemap.html">${t('footer.sitemap', 'Sitemap')}</a>
                 </div>
             </div>
-            ${buildLangSwitcherHTML('lang-switcher--footer')}
+            <div class="footer-controls">
+                ${buildLangSwitcherHTML('lang-switcher--footer')}
+                ${buildThemeToggleHTML()}
+            </div>
+        </div>
         </div>
     </footer>
     `;

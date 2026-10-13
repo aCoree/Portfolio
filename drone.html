@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
+    <script src="theme.js?v=1.3"></script>
 
     <title>Drohnen Videos | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
@@ -26,9 +28,9 @@
 
     <link rel="manifest" href="/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="style.css?v=1.4">
     <link rel="stylesheet" href="az-reveal.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="header.css?v=1.5">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -311,6 +313,8 @@
             }
         }
     </style>
+    <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
+    <link rel="stylesheet" href="theme.css?v=1.7">
 </head>
 
 <body>
