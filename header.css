@@ -144,13 +144,14 @@ body.has-second-header .navbar {
    nie sichtbar (es gibt nur eine Fläche); die transparenten Hero-Seiten
    (index.html) behalten ihren Glas-Blur, da sie ihn tatsächlich nutzen
    und ihr Header nicht ein-/ausgeblendet wird. */
-@media (min-width: 721px) {
-  body:not(.transparent-header) .navbar,
-  body:not(.transparent-header) .second-navbar,
-  body:not(.transparent-header) .nav-expand {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
+/* Gilt auch auf Mobile: ein Blur über einer vollständig deckenden Fläche
+   bringt nichts, kostet auf dem iPhone aber GPU-Leistung und lässt Seiten
+   mit Video-Hintergrund (run.html) beim Scrollen flackern. */
+body:not(.transparent-header) .navbar,
+body:not(.transparent-header) .second-navbar,
+body:not(.transparent-header) .nav-expand {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 /* Linke Seite: Logo (Desktop) bzw. Logo/Zurück-Pfeil (Mobile) */
@@ -169,6 +170,14 @@ body.has-second-header .navbar {
 .logo {
   display: flex;
   align-items: center;
+  /* Feste Platzbreite (wie im Footer): beim Hover wird .logo-mark breiter
+     und ragt dank justify-content:center gleichmässig nach links UND rechts
+     über die Box hinaus, statt sich nur nach einer Seite auszudehnen. Die
+     Box selbst bleibt gleich breit – Symmetrie des Headers (links ↔ rechts)
+     und Position von Sprach-Kürzel/Navigation ändern sich dadurch nie. */
+  width: var(--nav-logo-width);
+  flex: none;
+  justify-content: center;
 }
 
 .logo-mark {
@@ -176,6 +185,7 @@ body.has-second-header .navbar {
   display: inline-block;
   height: 48px;
   width: var(--nav-logo-width);
+  flex: none; /* darf in der festen .logo-Box nicht zurückschrumpfen, sonst bleibt der Hover-Effekt aus */
   overflow: hidden;
   vertical-align: middle;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -192,8 +202,10 @@ body.has-second-header .navbar {
   display: block;
 }
 
-.logo:hover .logo-mark {
-  width: 70px;
+@media (hover: hover) and (pointer: fine) {
+  .logo:hover .logo-mark {
+    width: 70px;
+  }
 }
 
 /* Zurück-Pfeil, der auf tieferen Mobile-Menü-Ebenen an die Stelle des Logos
@@ -241,8 +253,10 @@ body.has-second-header .navbar {
   transition: color 0.25s ease;
 }
 
-.nav-center a:hover {
-  color: var(--nav-text-active);
+@media (hover: hover) and (pointer: fine) {
+  .nav-center a:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 /* Absolut positioniert (statt inline mit margin-left) und damit OHNE
@@ -316,16 +330,28 @@ body.has-second-header .navbar {
   transition: opacity 0.3s ease;
 }
 
-.social-icon:hover,
 .social-icon:focus-visible {
   color: var(--nav-text-active);
   border-color: transparent;
   box-shadow: 0 4px 15px rgba(139, 123, 216, 0.2);
 }
 
-.social-icon:hover::after,
+@media (hover: hover) and (pointer: fine) {
+  .social-icon:hover {
+    color: var(--nav-text-active);
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(139, 123, 216, 0.2);
+  }
+}
+
 .social-icon:focus-visible::after {
   opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social-icon:hover::after {
+    opacity: 1;
+  }
 }
 
 /* ─── SUCH-BUTTON (LUPE) IM HEADER ───
@@ -352,10 +378,15 @@ body.has-second-header .navbar {
   transition: color 0.25s ease;
 }
 
-.nav-search-toggle:hover,
 .nav-search-toggle:focus-visible,
 .nav-search-toggle.is-active {
   color: var(--nav-text-active);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-search-toggle:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 /* Nur auf Mobile sichtbar (siehe Media Query) – auf Desktop bereits durch
@@ -406,11 +437,17 @@ body.has-second-header .navbar {
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.nav-lang-toggle:hover,
 .nav-lang-toggle:focus-visible,
 .nav-lang-toggle[aria-expanded="true"] {
   color: var(--nav-text-active);
   border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-lang-toggle:hover {
+    color: var(--nav-text-active);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 /* Auswahl im aufgeklappten Header: ausgeschriebene Sprachnamen in der
@@ -437,9 +474,14 @@ body.has-second-header .navbar {
   margin-bottom: 0;
 }
 
-.nav-lang-option:hover,
 .nav-lang-option:focus-visible {
   border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-lang-option:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 /* ─── HEADER-ERWEITERUNG (DESKTOP-UNTERMENÜS) ───
@@ -509,8 +551,10 @@ body.has-second-header .navbar {
   transform: translateY(0);
 }
 
-.nav-expand-link:hover {
-  color: var(--nav-text-active);
+@media (hover: hover) and (pointer: fine) {
+  .nav-expand-link:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 /* "Alle Projekte" (oder künftige vergleichbare Einträge): hebt sich durch
@@ -596,9 +640,11 @@ body.has-second-header .navbar {
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-.nav-search-clear:hover {
-  color: var(--nav-text-active);
-  background-color: rgba(255, 255, 255, 0.1);
+@media (hover: hover) and (pointer: fine) {
+  .nav-search-clear:hover {
+    color: var(--nav-text-active);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 }
 
 /* Dünne, dezente Trennlinie zwischen Suchfeld und Ergebnissen – ersetzt
@@ -649,9 +695,14 @@ body.has-second-header .navbar {
   border-bottom: none;
 }
 
-.nav-search-result:hover,
 .nav-search-result:focus-visible {
   color: var(--nav-text-active);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-search-result:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 .nav-search-result-label {
@@ -888,9 +939,14 @@ button.mobile-nav-drill {
   cursor: pointer;
 }
 
-.mobile-nav-link:hover,
 .mobile-nav-link:active {
   color: var(--nav-text-active);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mobile-nav-link:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 .mobile-nav-drill i {
@@ -1019,9 +1075,11 @@ body.menu-open {
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.lang-switcher-btn:hover {
-  color: var(--nav-text-active);
-  border-color: rgba(255, 255, 255, 0.4);
+@media (hover: hover) and (pointer: fine) {
+  .lang-switcher-btn:hover {
+    color: var(--nav-text-active);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 .lang-switcher-btn.is-active {
@@ -1063,10 +1121,16 @@ body.menu-open {
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.theme-toggle:hover,
 .theme-toggle:focus-visible {
   color: var(--nav-text-active);
   border-color: var(--nav-text-active);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-toggle:hover {
+    color: var(--nav-text-active);
+    border-color: var(--nav-text-active);
+  }
 }
 
 .theme-toggle-icon {
@@ -1156,8 +1220,10 @@ html[data-theme="light"] .theme-toggle .theme-toggle-icon--moon {
   transition: color 0.25s ease;
 }
 
-.second-navbar-link:hover {
-  color: var(--nav-text-active);
+@media (hover: hover) and (pointer: fine) {
+  .second-navbar-link:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 .second-navbar-caret {

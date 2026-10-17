@@ -191,18 +191,20 @@ body:not(.has-hero) main,
   content: none !important;
 }
 
-.btn:hover {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-  backdrop-filter: blur(0px) !important;
-  -webkit-backdrop-filter: blur(0px) !important;
-  color: #000000 !important;
-  border-color: #ffffff !important;
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    backdrop-filter: blur(0px) !important;
+    -webkit-backdrop-filter: blur(0px) !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
 
-  transform: none !important;
-  box-shadow: none !important;
-  filter: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
 }
 
 .btn:active {
@@ -432,18 +434,20 @@ select {
 }
 
 /* ─── HOVER: Rein weiß, keine Bewegung ─── */
-.contact-form button:hover,
-.contact-form input[type="submit"]:hover {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-  color: #000000 !important;
-  border-color: #ffffff !important;
+@media (hover: hover) and (pointer: fine) {
+  .contact-form button:hover,
+  .contact-form input[type="submit"]:hover {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
 
-  /* Verhindert jedes Zucken oder Vergrößern */
-  transform: none !important;
-  box-shadow: none !important;
-  filter: none !important;
+    /* Verhindert jedes Zucken oder Vergrößern */
+    transform: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
 }
 
 /* ─── ACTIVE (Klick) ─── */
@@ -555,8 +559,10 @@ select {
   transition: color 0.3s;
 }
 
-.back-btn:hover {
-  color: #ffffff;
+@media (hover: hover) and (pointer: fine) {
+  .back-btn:hover {
+    color: #ffffff;
+  }
 }
 
 .project-header {
@@ -636,8 +642,10 @@ select {
   transition: color 0.25s ease;
 }
 
-.foto-motiv-back:hover {
-  color: #ffffff;
+@media (hover: hover) and (pointer: fine) {
+  .foto-motiv-back:hover {
+    color: #ffffff;
+  }
 }
 
 /* Echtes Z-Layout: die beiden Blöcke liegen UNTEREINANDER (nicht
@@ -684,8 +692,10 @@ select {
   transition: opacity 0.25s ease;
 }
 
-.info-icon:hover {
-  opacity: 0.85;
+@media (hover: hover) and (pointer: fine) {
+  .info-icon:hover {
+    opacity: 0.85;
+  }
 }
 
 .info-content p {
@@ -713,8 +723,10 @@ select {
   transition: border-color 0.25s ease;
 }
 
-.info-content-link:hover {
-  border-color: #ffffff;
+@media (hover: hover) and (pointer: fine) {
+  .info-content-link:hover {
+    border-color: #ffffff;
+  }
 }
 
 .info-content-right .info-content-link {
@@ -807,8 +819,10 @@ body:not(.has-hero) main.legal-content {
     transform 0.2s;
 }
 
-.see-all-link:hover {
-  color: #91ccff;
+@media (hover: hover) and (pointer: fine) {
+  .see-all-link:hover {
+    color: #91ccff;
+  }
 }
 .see-all-link:active {
   transform: scale(0.95);
@@ -878,9 +892,11 @@ body:not(.has-hero) main.legal-content {
     transform 0.2s;
 }
 
-.apple-btn:hover {
-  background-color: #e5e5e5;
-  transform: scale(1.03);
+@media (hover: hover) and (pointer: fine) {
+  .apple-btn:hover {
+    background-color: #e5e5e5;
+    transform: scale(1.03);
+  }
 }
 
 .apple-card-text {
@@ -915,8 +931,10 @@ body:not(.has-hero) main.legal-content {
   transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.poster-card:hover {
-  transform: scale(1.04);
+@media (hover: hover) and (pointer: fine) {
+  .poster-card:hover {
+    transform: scale(1.04);
+  }
 }
 
 .poster-img-wrapper {
@@ -998,9 +1016,11 @@ body:not(.has-hero) main.legal-content {
   backface-visibility: hidden;
 }
 
-.scroll-down-btn:hover {
-  color: #ffffff;
-  transform: translate(-50%, 3px) translateZ(0);
+@media (hover: hover) and (pointer: fine) {
+  .scroll-down-btn:hover {
+    color: #ffffff;
+    transform: translate(-50%, 3px) translateZ(0);
+  }
 }
 
 .scroll-down-btn.fade-out-on-scroll {
@@ -1028,8 +1048,10 @@ body:not(.has-hero) main.legal-content {
   margin: 0;
 }
 
-.scroll-down-btn--inline:hover {
-  transform: translateY(3px);
+@media (hover: hover) and (pointer: fine) {
+  .scroll-down-btn--inline:hover {
+    transform: translateY(3px);
+  }
 }
 
 /* Modifier: Button sitzt fest im Hero-Bereich (position:absolute,
@@ -1045,8 +1067,10 @@ body:not(.has-hero) main.legal-content {
   transform: translateX(-50%);
 }
 
-.scroll-down-btn--hero-absolute:hover {
-  transform: translate(-50%, 3px);
+@media (hover: hover) and (pointer: fine) {
+  .scroll-down-btn--hero-absolute:hover {
+    transform: translate(-50%, 3px);
+  }
 }
 
 .scroll-down-btn i {
@@ -1727,9 +1751,14 @@ html:lang(it) .badge-new {
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.photo-grid-item:hover img,
 .photo-grid-item:focus-visible img {
     transform: scale(1.05);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .photo-grid-item:hover img {
+      transform: scale(1.05);
+  }
 }
 
 /* ─── MOTIV-KACHELN (foto-galerie.js) ───

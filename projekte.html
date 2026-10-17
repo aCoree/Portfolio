@@ -148,10 +148,16 @@
             transition: border-color 0.2s, background-color 0.2s;
         }
 
-        .custom-select:hover,
         .custom-select:focus-visible {
             border-color: rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.12);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .custom-select:hover {
+                border-color: rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.12);
+            }
         }
 
         .custom-select option {
@@ -180,10 +186,16 @@
             box-shadow: none;
         }
 
-        .poster-card:hover, 
         .poster-card:focus-visible {
             text-decoration: none;
             outline: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .poster-card:hover {
+                text-decoration: none;
+                outline: none;
+            }
         }
 
         .poster-img-wrapper {
@@ -199,9 +211,14 @@
             will-change: transform;
         }
 
-        .poster-card:hover .poster-img-wrapper,
         .poster-card:focus-visible .poster-img-wrapper {
             transform: scale(1.03);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .poster-card:hover .poster-img-wrapper {
+                transform: scale(1.03);
+            }
         }
 
         /* ─── TITLE & META (UNTEREINANDER GEGLIEDERT) ─── */
@@ -339,7 +356,7 @@
 
             <!-- Poster 1: RUN -->
             <a href="run.html" class="poster-card" data-date="2026-06-01" data-views="8000" data-title="RUN">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-run.png'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/opt/card-small-run.jpg'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">RUN</h3>
                     <span class="dot-separator">·</span>
@@ -369,7 +386,7 @@
 
             <!-- Poster 4: MUSIK -->
             <a href="musik.html" class="poster-card" data-date="2025-05-01" data-views="6000" data-title="Lego Family Studio 2">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-musik.png'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/opt/card-small-musik.jpg'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">MUSIK</h3>
                     <span class="dot-separator">·</span>
@@ -379,7 +396,7 @@
 
              <!-- Poster 5:  -->
             <a href="drone.html" class="poster-card" data-date="2024-06-02" data-views="5000" data-title="DJI AIR 3S">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-drone.png'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/opt/card-small-drone.jpg'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">DJI AIR 3S</h3>
                     <span class="dot-separator">·</span>
@@ -389,7 +406,7 @@
 
             <!-- Poster 6: FOTOGRAFIE -->
             <a href="fotografie.html" class="poster-card" data-date="2026-09-24" data-views="4444" data-title="FOTOGRAFIE">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-fotografie.png'); --pos-x: 50%; --pos-y: 50%;">
+                <div class="poster-img-wrapper" style="background-image: url('cards/opt/card-small-fotografie.jpg'); --pos-x: 50%; --pos-y: 50%;">
                     <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
                 </div>
                 <div class="poster-info poster-info-single">

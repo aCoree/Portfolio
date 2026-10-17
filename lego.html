@@ -189,12 +189,18 @@
             height: 0 !important;
         }
 
-        body.lego-family-studio .navbar .nav-center a:hover,
         body.lego-family-studio .navbar .nav-center a:focus,
-        body.lego-family-studio .navbar .nav-center a:active,
-        body.lego-family-studio .navbar .nav-center a:visited:hover {
+        body.lego-family-studio .navbar .nav-center a:active {
             color: #E30613 !important;
             opacity: 1 !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .navbar .nav-center a:hover,
+            body.lego-family-studio .navbar .nav-center a:visited:hover {
+                color: #E30613 !important;
+                opacity: 1 !important;
+            }
         }
 
         /* ─── SECOND HEADER (LEGO-Theme) ───
@@ -207,9 +213,14 @@
             text-decoration: none !important;
         }
 
-        body.lego-family-studio .second-navbar-link:hover,
         body.lego-family-studio .second-navbar-link:focus {
             color: #E30613 !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .second-navbar-link:hover {
+                color: #E30613 !important;
+            }
         }
 
         /* ─── HEADER-ERWEITERUNG / UNTERMENÜS (LEGO-Theme) ───
@@ -227,8 +238,10 @@
             color: #000000 !important;
         }
 
-        body.lego-family-studio .nav-expand-link:hover {
-            color: #E30613 !important;
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .nav-expand-link:hover {
+                color: #E30613 !important;
+            }
         }
 
         /* Second-Header-Einträge & Zurück-Pfeil im Mobile-Menü (Drill-down) */
@@ -237,9 +250,11 @@
             color: #000000 !important;
         }
 
-        body.lego-family-studio .mobile-menu .mobile-nav-drill:hover,
-        body.lego-family-studio .mobile-back-arrow:hover {
-            color: #E30613 !important;
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .mobile-menu .mobile-nav-drill:hover,
+            body.lego-family-studio .mobile-back-arrow:hover {
+                color: #E30613 !important;
+            }
         }
 
         body.lego-family-studio .navbar .logo,
@@ -301,16 +316,10 @@
             box-shadow: none !important;
         }
 
-        body.lego-family-studio .navbar .social-icon:hover,
         body.lego-family-studio .navbar .social-icon:focus,
         body.lego-family-studio .navbar .social-icon:active,
-        body.lego-family-studio .navbar .social-icon:visited:hover,
-        body.lego-family-studio .mobile-menu .social-icon:hover,
         body.lego-family-studio .mobile-menu .social-icon:focus,
-        body.lego-family-studio .mobile-menu .social-icon:active,
-        body.lego-family-studio .mobile-menu .social-icon:visited:hover,
-        body.lego-family-studio .navbar a[href*="youtube"]:hover,
-        body.lego-family-studio .navbar a[href*="youtube"]:visited:hover {
+        body.lego-family-studio .mobile-menu .social-icon:active {
             background-color: #E30613 !important;
             background: #E30613 !important;
             border-color: #E30613 !important;
@@ -322,23 +331,44 @@
             transform: none !important;
         }
 
-        body.lego-family-studio .navbar .social-icon:hover i,
-        body.lego-family-studio .navbar .social-icon:hover svg,
-        body.lego-family-studio .navbar .social-icon:hover *,
-        body.lego-family-studio .navbar .social-icon:visited:hover i,
-        body.lego-family-studio .navbar .social-icon:visited:hover svg,
-        body.lego-family-studio .navbar .social-icon:visited:hover *,
-        body.lego-family-studio .mobile-menu .social-icon:hover i,
-        body.lego-family-studio .mobile-menu .social-icon:hover svg,
-        body.lego-family-studio .mobile-menu .social-icon:hover *,
-        body.lego-family-studio .mobile-menu .social-icon:visited:hover i,
-        body.lego-family-studio .mobile-menu .social-icon:visited:hover svg,
-        body.lego-family-studio .mobile-menu .social-icon:visited:hover * {
-            color: #ffffff !important;
-            fill: #ffffff !important;
-            transition: none !important;
-            animation: none !important;
-            filter: none !important;
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .navbar .social-icon:hover,
+            body.lego-family-studio .navbar .social-icon:visited:hover,
+            body.lego-family-studio .mobile-menu .social-icon:hover,
+            body.lego-family-studio .mobile-menu .social-icon:visited:hover,
+            body.lego-family-studio .navbar a[href*="youtube"]:hover,
+            body.lego-family-studio .navbar a[href*="youtube"]:visited:hover {
+                background-color: #E30613 !important;
+                background: #E30613 !important;
+                border-color: #E30613 !important;
+                color: #ffffff !important;
+                box-shadow: none !important;
+                filter: none !important;
+                transition: none !important;
+                animation: none !important;
+                transform: none !important;
+            }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .navbar .social-icon:hover i,
+            body.lego-family-studio .navbar .social-icon:hover svg,
+            body.lego-family-studio .navbar .social-icon:hover *,
+            body.lego-family-studio .navbar .social-icon:visited:hover i,
+            body.lego-family-studio .navbar .social-icon:visited:hover svg,
+            body.lego-family-studio .navbar .social-icon:visited:hover *,
+            body.lego-family-studio .mobile-menu .social-icon:hover i,
+            body.lego-family-studio .mobile-menu .social-icon:hover svg,
+            body.lego-family-studio .mobile-menu .social-icon:hover *,
+            body.lego-family-studio .mobile-menu .social-icon:visited:hover i,
+            body.lego-family-studio .mobile-menu .social-icon:visited:hover svg,
+            body.lego-family-studio .mobile-menu .social-icon:visited:hover * {
+                color: #ffffff !important;
+                fill: #ffffff !important;
+                transition: none !important;
+                animation: none !important;
+                filter: none !important;
+            }
         }
 
         body.lego-family-studio .mobile-menu .social-icon {
@@ -367,11 +397,17 @@
            rote Hover-/Active-Farbe behalten. Das "X" ist derselbe Button
            (nur per CSS-Transform zu einem X gedreht), diese Regel deckt
            also automatisch auch den X-Zustand ab. */
-        body.lego-family-studio .navbar .hamburger:hover span,
         body.lego-family-studio .navbar .hamburger:focus span,
         body.lego-family-studio .navbar .hamburger.open span {
             background-color: #000000 !important;
             background: #000000 !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .navbar .hamburger:hover span {
+                background-color: #000000 !important;
+                background: #000000 !important;
+            }
         }
 
         body.lego-family-studio .mobile-menu {
@@ -395,11 +431,17 @@
             transition: none !important;
         }
 
-        body.lego-family-studio .mobile-menu a:hover,
-        body.lego-family-studio .mobile-menu a:focus,
-        body.lego-family-studio .mobile-menu a:visited:hover {
+        body.lego-family-studio .mobile-menu a:focus {
             color: #E30613 !important;
             transition: none !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .mobile-menu a:hover,
+            body.lego-family-studio .mobile-menu a:visited:hover {
+                color: #E30613 !important;
+                transition: none !important;
+            }
         }
 
         /* Trennlinien im Mobile-Menü (zwischen Main- und Second-Header-
@@ -423,9 +465,11 @@
             border-color: rgba(0, 0, 0, 0.4) !important;
         }
 
-        body.lego-family-studio .lang-switcher--mobile-menu .lang-switcher-btn:hover {
-            color: #000000 !important;
-            border-color: rgba(0, 0, 0, 0.7) !important;
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .lang-switcher--mobile-menu .lang-switcher-btn:hover {
+                color: #000000 !important;
+                border-color: rgba(0, 0, 0, 0.7) !important;
+            }
         }
 
         body.lego-family-studio .lang-switcher--mobile-menu .lang-switcher-btn.is-active {
@@ -444,11 +488,17 @@
            bewusst IMMER schwarz (kein Rot, kein Hover-Hintergrund) – anders
            als die normalen LEGO-Navigationslinks. */
         body.lego-family-studio .nav-search-toggle,
-        body.lego-family-studio .nav-search-toggle:hover,
         body.lego-family-studio .nav-search-toggle:focus-visible,
         body.lego-family-studio .nav-search-toggle.is-active {
             color: #000000 !important;
             background-color: transparent !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .nav-search-toggle:hover {
+                color: #000000 !important;
+                background-color: transparent !important;
+            }
         }
 
         /* Sprachwahl im Desktop-Header: schwarze Box/Schrift, beim Hover/
@@ -460,13 +510,19 @@
             border-color: rgba(0, 0, 0, 0.35) !important;
         }
 
-        body.lego-family-studio .nav-lang-toggle:hover,
         body.lego-family-studio .nav-lang-toggle:focus-visible,
         body.lego-family-studio .nav-lang-toggle[aria-expanded="true"],
-        body.lego-family-studio .nav-lang-option:hover,
         body.lego-family-studio .nav-lang-option:focus-visible {
             color: #E30613 !important;
             border-color: #E30613 !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .nav-lang-toggle:hover,
+            body.lego-family-studio .nav-lang-option:hover {
+                color: #E30613 !important;
+                border-color: #E30613 !important;
+            }
         }
 
         body.lego-family-studio .nav-search-divider {
@@ -483,9 +539,11 @@
             color: rgba(0, 0, 0, 0.55) !important;
         }
 
-        body.lego-family-studio .nav-search-clear:hover {
-            color: #E30613 !important;
-            background-color: rgba(0, 0, 0, 0.08) !important;
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .nav-search-clear:hover {
+                color: #E30613 !important;
+                background-color: rgba(0, 0, 0, 0.08) !important;
+            }
         }
 
         body.lego-family-studio .nav-search-result {
@@ -493,9 +551,14 @@
             border-bottom-color: rgba(0, 0, 0, 0.12) !important;
         }
 
-        body.lego-family-studio .nav-search-result:hover,
         body.lego-family-studio .nav-search-result:focus-visible {
             color: #E30613 !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .nav-search-result:hover {
+                color: #E30613 !important;
+            }
         }
 
         body.lego-family-studio .nav-search-result-category {
@@ -722,12 +785,14 @@
             opacity: 0.8;
         }
 
-        .lego-channel-btn:hover {
-            opacity: 1 !important;
-            background: rgb(234, 51, 35) !important;
-            background-color: rgb(234, 51, 35) !important;
-            border-color: rgb(234, 51, 35) !important;
-            color: #ffffff !important;
+        @media (hover: hover) and (pointer: fine) {
+            .lego-channel-btn:hover {
+                opacity: 1 !important;
+                background: rgb(234, 51, 35) !important;
+                background-color: rgb(234, 51, 35) !important;
+                border-color: rgb(234, 51, 35) !important;
+                color: #ffffff !important;
+            }
         }
 
         .lego-white-wrapper .lego-info-label {
@@ -788,18 +853,26 @@
             color: #ffffff !important;
         }
 
-        body.lego-family-studio .site-footer a:hover,
         body.lego-family-studio .site-footer a:focus,
         body.lego-family-studio .site-footer a:active,
-        body.lego-family-studio .site-footer a:visited:hover,
-        body.lego-family-studio footer a:hover,
         body.lego-family-studio footer a:focus,
-        body.lego-family-studio footer a:active,
-        body.lego-family-studio footer a:visited:hover {
+        body.lego-family-studio footer a:active {
             color: #E30613 !important;
             opacity: 1 !important;
             transition: none !important;
             animation: none !important;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .site-footer a:hover,
+            body.lego-family-studio .site-footer a:visited:hover,
+            body.lego-family-studio footer a:hover,
+            body.lego-family-studio footer a:visited:hover {
+                color: #E30613 !important;
+                opacity: 1 !important;
+                transition: none !important;
+                animation: none !important;
+            }
         }
 
         body.lego-family-studio .site-footer .social-icon,
@@ -837,14 +910,10 @@
             box-shadow: none !important;
         }
 
-        body.lego-family-studio .site-footer .social-icon:hover,
         body.lego-family-studio .site-footer .social-icon:focus,
         body.lego-family-studio .site-footer .social-icon:active,
-        body.lego-family-studio .site-footer .social-icon:visited:hover,
-        body.lego-family-studio footer .social-icon:hover,
         body.lego-family-studio footer .social-icon:focus,
-        body.lego-family-studio footer .social-icon:active,
-        body.lego-family-studio footer .social-icon:visited:hover {
+        body.lego-family-studio footer .social-icon:active {
             background-color: #E30613 !important;
             background: #E30613 !important;
             border-color: #E30613 !important;
@@ -856,17 +925,36 @@
             transform: none !important;
         }
 
-        body.lego-family-studio .site-footer .social-icon:hover i,
-        body.lego-family-studio .site-footer .social-icon:hover svg,
-        body.lego-family-studio .site-footer .social-icon:hover *,
-        body.lego-family-studio .site-footer .social-icon:visited:hover i,
-        body.lego-family-studio .site-footer .social-icon:visited:hover svg,
-        body.lego-family-studio .site-footer .social-icon:visited:hover * {
-            color: #ffffff !important;
-            fill: #ffffff !important;
-            transition: none !important;
-            animation: none !important;
-            filter: none !important;
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .site-footer .social-icon:hover,
+            body.lego-family-studio .site-footer .social-icon:visited:hover,
+            body.lego-family-studio footer .social-icon:hover,
+            body.lego-family-studio footer .social-icon:visited:hover {
+                background-color: #E30613 !important;
+                background: #E30613 !important;
+                border-color: #E30613 !important;
+                color: #ffffff !important;
+                box-shadow: none !important;
+                filter: none !important;
+                transition: none !important;
+                animation: none !important;
+                transform: none !important;
+            }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.lego-family-studio .site-footer .social-icon:hover i,
+            body.lego-family-studio .site-footer .social-icon:hover svg,
+            body.lego-family-studio .site-footer .social-icon:hover *,
+            body.lego-family-studio .site-footer .social-icon:visited:hover i,
+            body.lego-family-studio .site-footer .social-icon:visited:hover svg,
+            body.lego-family-studio .site-footer .social-icon:visited:hover * {
+                color: #ffffff !important;
+                fill: #ffffff !important;
+                transition: none !important;
+                animation: none !important;
+                filter: none !important;
+            }
         }
 
         /* =====================================================

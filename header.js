@@ -120,9 +120,13 @@ document.addEventListener("DOMContentLoaded", function() {
             text-align: center;
             font-size: 0.95rem;
         }
-        .site-footer .footer-col a:hover,
         .site-footer .footer-col a:focus-visible {
             color: #ffffff;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .site-footer .footer-col a:hover {
+                color: #ffffff;
+            }
         }
         /* Unterer Streifen: 3 gleich breite Spalten (1fr auto 1fr) – Logo links,
            Copyright + rechtliche Links EXAKT in der Mitte der Seite, rechts
@@ -180,9 +184,13 @@ document.addEventListener("DOMContentLoaded", function() {
             color: #888;
             transition: color 0.2s ease;
         }
-        .site-footer .footer-legal a:hover,
         .site-footer .footer-legal a:focus-visible {
             color: #ffffff;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .site-footer .footer-legal a:hover {
+                color: #ffffff;
+            }
         }
         /* Schmaler, heller senkrechter Strich statt Mittelpunkt zwischen den rechtlichen Links */
         .site-footer .footer-sep {
@@ -793,14 +801,18 @@ document.addEventListener("DOMContentLoaded", function() {
             const item = itemsArray[Number(trigger.dataset.navIndex)];
             if (!item || !hasChildren(item)) return;
 
-            trigger.addEventListener('mouseenter', () => openFor(trigger, item));
-            trigger.addEventListener('mouseleave', scheduleClose);
+            /* Nur echte Maus (pointerType 'mouse'): Auf Touch-Geräten (iPad,
+               iPhone quer) löst ein Tipp sonst zuerst mouseenter (= Menü
+               öffnet, Klick wird von iOS verschluckt) und erst der zweite
+               Tipp den eigentlichen Link aus. */
+            trigger.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') openFor(trigger, item); });
+            trigger.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') scheduleClose(); });
             trigger.addEventListener('focusin', () => openFor(trigger, item));
             trigger.addEventListener('focusout', scheduleClose);
         });
 
-        expandEl.addEventListener('mouseenter', cancelClose);
-        expandEl.addEventListener('mouseleave', scheduleClose);
+        expandEl.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') cancelClose(); });
+        expandEl.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') scheduleClose(); });
         expandEl.addEventListener('focusin', cancelClose);
         expandEl.addEventListener('focusout', scheduleClose);
     }

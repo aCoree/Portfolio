@@ -44,10 +44,12 @@
         }
 
         /* Hover-Status sicherheitshalber komplett neutralisieren */
-        .info-icons:hover .info-icon,
-        .info-icon:hover {
-            filter: brightness(0) invert(1) !important;
-            opacity: 1 !important;
+        @media (hover: hover) and (pointer: fine) {
+            .info-icons:hover .info-icon,
+            .info-icon:hover {
+                filter: brightness(0) invert(1) !important;
+                opacity: 1 !important;
+            }
         }
 
         /* Verspielte, "unperfekte" Ausrichtung (menschlicher Look) */
@@ -60,14 +62,17 @@
         .info-block-right .info-icon:nth-child(3) { transform: rotate(9deg) translateY(5px) !important; }
 
         /* ─── FULLSCREEN BACKGROUND VIDEO & IMAGE (GPU & MOBILE OPTIMIERT) ─── */
+        /* Höhe 100lvh (grösste Viewport-Höhe) statt top/bottom:0 – auf dem iPhone
+           ändert sich die sichtbare Höhe beim Scrollen, sobald die Adressleiste
+           ein-/ausfährt. Mit bottom:0 wurde das Video dabei laufend neu
+           skaliert/neu gezeichnet (= Flackern). So bleibt die Fläche konstant. */
         .bg-video-container {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            height: 100lvh;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
@@ -101,10 +106,18 @@
             background-size: cover;
             background-position: center;
             z-index: 1;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease, visibility 0s linear 0s;
             opacity: 1;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
+        }
+
+        /* Nach dem Ausblenden komplett aus dem Rendering nehmen, damit das grosse
+           Standbild keine GPU-Ebene mehr belegt, solange das Video läuft. */
+        .bg-image-overlay.is-gone {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0s linear 0.5s;
         }
 
         .bg-image-overlay::after {
@@ -128,7 +141,9 @@
             height: 100%;
             background: #0d0d0d;
             opacity: 0;
-            transition: opacity 0.1s linear;
+            /* Bewusst OHNE transition: der Wert wird bei jedem Scroll-Frame direkt
+               gesetzt. Eine zusätzliche Verzögerung darüber lässt auf dem Handy
+               die Abdunklung nachziehen und flackern. */
             z-index: 2;
             will-change: opacity;
             transform: translateZ(0);
@@ -162,10 +177,12 @@
             visibility: visible;
         }
 
-        .start-trailer-btn:hover {
-            background: #ffffff;
-            color: #0d0d0d;
-            border-color: #ffffff;
+        @media (hover: hover) and (pointer: fine) {
+            .start-trailer-btn:hover {
+                background: #ffffff;
+                color: #0d0d0d;
+                border-color: #ffffff;
+            }
         }
 
         .start-trailer-btn i {
@@ -454,6 +471,73 @@
         const overlay = document.getElementById('videoOverlay');
         let trailerPlaying = false;
 
+        /* ─── STABILE SEITENHÖHE ───
+           window.innerHeight ändert sich auf dem iPhone während des Scrollens
+           (Adressleiste fährt ein/aus). Alle Fade-Berechnungen hängen aber von
+           dieser Höhe ab – dadurch sprang die Abdunklung hin und her. Deshalb
+           wird die Höhe einmal gemessen (100lvh = konstante, grösste Höhe) und
+           nur bei geänderter Breite (Drehen/Fenstergrösse) neu gemessen. */
+        const heightProbe = document.createElement('div');
+        heightProbe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none;';
+        document.body.appendChild(heightProbe);
+        let stableH = heightProbe.offsetHeight || window.innerHeight;
+        let lastW = window.innerWidth;
+        window.addEventListener('resize', () => {
+            if (window.innerWidth !== lastW) {
+                lastW = window.innerWidth;
+                stableH = heightProbe.offsetHeight || window.innerHeight;
+            }
+        });
+
+        /* ─── LAUTSTÄRKE-FADE (AUCH AUF DEM IPHONE) ───
+           iOS Safari ignoriert video.volume komplett (immer 100 %) – deshalb
+           lief der Ton dort bis zum Pausieren bei voller Lautstärke und brach
+           dann abrupt ab. Über die Web Audio API (GainNode) lässt sich die
+           Lautstärke auch auf iOS stufenlos regeln. Wo das nicht geht (z.B.
+           Datei lokal geöffnet, sehr alter Browser), bleibt video.volume. */
+        let audioCtx = null;
+        let gainNode = null;
+        let targetVolume = 1;
+
+        function setupAudioFade() {
+            if (audioCtx || !/^https?:$/.test(location.protocol)) return;
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            try {
+                // Ton auch bei aktivem Stumm-Schalter des iPhones abspielen (wie ein Video)
+                if (navigator.audioSession) navigator.audioSession.type = 'playback';
+                const ctx = new AC();
+                ctx.resume().then(() => {
+                    if (ctx.state !== 'running') { ctx.close(); return; }
+                    const source = ctx.createMediaElementSource(bgVideo);
+                    const gain = ctx.createGain();
+                    gain.gain.value = targetVolume;
+                    source.connect(gain);
+                    gain.connect(ctx.destination);
+                    bgVideo.volume = 1;
+                    audioCtx = ctx;
+                    gainNode = gain;
+                }).catch(() => { });
+            } catch (e) { /* Fallback: video.volume */ }
+        }
+
+        function applyVolume(v) {
+            targetVolume = v;
+            if (gainNode) {
+                // Kurze Glättung gegen knackende Sprünge
+                gainNode.gain.setTargetAtTime(v, audioCtx.currentTime, 0.03);
+            } else if (!bgVideo.muted) {
+                bgVideo.volume = v;
+            }
+        }
+
+        // iOS pausiert den AudioContext z.B. beim App-Wechsel – beim Zurückkehren wieder starten
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && audioCtx && audioCtx.state !== 'running') {
+                audioCtx.resume().catch(() => { });
+            }
+        });
+
         /* Hell-Modus: Solange der Trailer oben läuft, bekommt NUR der Header
            (html.trailer-dark, siehe theme.css) die dunkle Optik – der Rest
            der Seite bleibt die ganze Zeit im gewählten Modus. Dadurch muss
@@ -461,15 +545,17 @@
            (kein Ruckeln), nur der Header blendet weich über. */
         function syncTrailerTheme() {
             if (!trailerPlaying) return;
-            document.documentElement.classList.toggle('trailer-dark', window.scrollY <= window.innerHeight * 0.4);
+            document.documentElement.classList.toggle('trailer-dark', window.scrollY <= stableH * 0.4);
         }
 
         if (startTrailerBtn && bgVideo) {
             startTrailerBtn.addEventListener('click', () => {
                 bgVideo.muted = false;
                 bgVideo.volume = 1;
+                targetVolume = 1;
 
                 bgVideo.play().catch((e) => console.log("Video Play Error:", e));
+                setupAudioFade();
                 bgVideo.classList.add('playing');
                 /* Hell-Modus: Solange der Trailer oben läuft, ist die Seite
                    dunkel (nicht gespeichert); beim Runterscrollen kehrt sie
@@ -477,7 +563,7 @@
                 trailerPlaying = true;
                 syncTrailerTheme();
 
-                bgImageOverlay.style.opacity = 0;
+                bgImageOverlay.classList.add('is-gone');
                 startTrailerBtn.classList.add('fade-out');
 
                 setTimeout(() => {
@@ -489,24 +575,30 @@
             });
         }
 
+        let lastOverlayOpacity = -1;
+
         function updateVolumeAndOverlay() {
-            const scrollY = window.scrollY;
-            const windowH = window.innerHeight;
+            // iOS: bei Überscroll (Gummiband) kann scrollY negativ oder grösser als die Seite sein
+            const scrollY = Math.max(0, window.scrollY);
+            const windowH = stableH;
 
             let fadeProgress = scrollY / (windowH * 0.8);
             if (fadeProgress > 1) fadeProgress = 1;
             if (fadeProgress < 0) fadeProgress = 0;
 
             if (overlay) {
-                overlay.style.opacity = fadeProgress;
+                // nur schreiben, wenn sich der Wert wirklich geändert hat (weniger Neuzeichnen)
+                const rounded = Math.round(fadeProgress * 1000) / 1000;
+                if (rounded !== lastOverlayOpacity) {
+                    lastOverlayOpacity = rounded;
+                    overlay.style.opacity = rounded;
+                }
             }
 
             syncTrailerTheme();
 
-            const targetVolume = 1 - fadeProgress;
-
             if (bgVideo && !bgVideo.muted) {
-                bgVideo.volume = targetVolume;
+                applyVolume(1 - fadeProgress);
             }
 
             if (scrollY > 100) {

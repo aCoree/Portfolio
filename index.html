@@ -136,11 +136,18 @@
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             mask-image: linear-gradient(#fff, #fff);
             position: relative;
+            /* Ruhezustand (nicht mittig): abgedunkelt + leicht verkleinert.
+               Opacity/Scale der Karten nahe der Mitte werden vom Skript
+               DIREKT aus der Scroll-Position berechnet (stufenlos, kein
+               CSS-Übergang) – so folgt die Abdunklung 1:1 dem Finger und
+               kann beim Einrasten/Springen nie hinterherhinken oder flackern. */
             opacity: 0.55;
             transform: scale(0.97) translateZ(0);
             -webkit-transform: scale(0.97) translateZ(0);
-            transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: none;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
             box-sizing: border-box;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
@@ -156,22 +163,14 @@
             height: 100%;
             background-size: cover;
             background-position: var(--pos-x, 50%) var(--pos-y, 50%);
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
             background-image: var(--bg-desktop);
-            transition: background-image 0.3s ease;
             border-radius: inherit !important;
-            will-change: transform;
         }
 
         .apple-card-overlay {
             border-radius: inherit !important;
             position: absolute;
             inset: 0;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
             display: flex;
             align-items: flex-end;
             justify-content: flex-start;
@@ -225,25 +224,17 @@
             display: none !important;
         }
 
-        /* GPU-Kopplung für Text & Button */
+        /* Text & Button liegen bewusst in der Ebene der Karte (kein eigenes
+           will-change/translateZ pro Element): bei 35 Karten (inkl. Klonen
+           für das Endlos-Karussell) wären das sonst über 200 einzelne GPU-
+           Ebenen – auf dem iPhone führt das zu Speicherdruck, Flackern und
+           plötzlich fehlenden Bildern. */
         .apple-card-content,
         .apple-btn,
         .apple-card-text,
         .genre-tag {
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            will-change: transform, opacity;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Aktives mittiges Poster */
-        .apple-card.active {
-            opacity: 1;
-            transform: scale(1) translateZ(0);
-            -webkit-transform: scale(1) translateZ(0);
         }
 
         /* SYMMETRISCHE PFEILE */
@@ -312,6 +303,14 @@
             touch-action: pan-x pan-y;
         }
 
+        /* Während eines unsichtbaren Sprungs (Endlos-Effekt) kurz weder
+           Einrasten noch sanftes Scrollen – wird vom Skript immer wieder
+           entfernt (keine Inline-Styles, die hängen bleiben können). */
+        .apple-slider-track.is-jumping {
+            scroll-snap-type: none;
+            scroll-behavior: auto;
+        }
+
         .apple-slider-track::-webkit-scrollbar {
             display: none;
         }
@@ -347,8 +346,10 @@
             box-sizing: border-box;
         }
 
-        .apple-slider-dots .dot:hover {
-            background-color: rgba(255, 255, 255, 0.6);
+        @media (hover: hover) and (pointer: fine) {
+            .apple-slider-dots .dot:hover {
+                background-color: rgba(255, 255, 255, 0.6);
+            }
         }
 
         .apple-slider-dots .dot.active {
@@ -600,7 +601,7 @@
 
                     <div class="apple-card" onclick="window.location.href='run.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-run.png'); --bg-mobile: url('cards/card-small-run.png'); --pos-x: 50%; --pos-y: 50%;">
+                            style="--bg-desktop: url('cards/opt/card-big-run.jpg'); --bg-mobile: url('cards/opt/card-small-run.jpg'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -616,7 +617,7 @@
 
                     <div class="apple-card" onclick="window.location.href='fotografie.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-fotografie.png'); --bg-mobile: url('cards/card-small-fotografie.png'); --pos-x: 50%; --pos-y: 50%;">
+                            style="--bg-desktop: url('cards/opt/card-big-fotografie.jpg'); --bg-mobile: url('cards/opt/card-small-fotografie.jpg'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
                         <div class="apple-card-overlay">
@@ -635,7 +636,7 @@
 
                     <div class="apple-card" onclick="window.location.href='musik.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-musik.png'); --bg-mobile: url('cards/card-small-musik.png'); --pos-x: 50%; --pos-y: 50%;">
+                            style="--bg-desktop: url('cards/opt/card-big-musik.jpg'); --bg-mobile: url('cards/opt/card-small-musik.jpg'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -670,7 +671,7 @@
 
                     <div class="apple-card" onclick="window.location.href='drone.html';">
                         <div class="apple-card-bg"
-                            style="--bg-desktop: url('cards/card-big-drone.png'); --bg-mobile: url('cards/card-small-drone.png'); --pos-x: 50%; --pos-y: 50%;">
+                            style="--bg-desktop: url('cards/opt/card-big-drone.jpg'); --bg-mobile: url('cards/opt/card-small-drone.jpg'); --pos-x: 50%; --pos-y: 50%;">
                         </div>
                         <div class="apple-card-overlay">
                             <div class="apple-card-content">
@@ -780,8 +781,8 @@
 
         // ─── PERFEKTES, FLÜSSIGES ENDLOS-KARUSSELL ───
         document.addEventListener('DOMContentLoaded', () => {
-            const container = document.querySelector('.apple-slider-container');
             const track = document.getElementById('sliderTrack');
+            if (!track) return;
             const origCards = Array.from(track.querySelectorAll('.apple-card'));
             const dotsContainer = document.getElementById('sliderDots');
             const prevBtn = document.getElementById('prevBtn');
@@ -790,120 +791,165 @@
             if (!origCards.length) return;
 
             const totalOrig = origCards.length;
-            const numCloneSets = 3; // 3 Sets davor, 3 Sets danach für absolut nahtloses & unendliches Swipen auf Mobile
-            const startOffset = totalOrig * numCloneSets; // Index 12 ist die erste echte Karte
+            const numCloneSets = 3; // 3 Sets davor, 3 Sets danach für nahtloses, endloses Swipen
+            const startOffset = totalOrig * numCloneSets; // Index der ersten echten Karte
 
-            // Indikator-Punkte generieren
-            if (dotsContainer) {
-                dotsContainer.innerHTML = '';
-                origCards.forEach((_, idx) => {
-                    const dot = document.createElement('span');
-                    dot.className = 'dot' + (idx === 0 ? ' active' : '');
-                    dot.addEventListener('click', () => {
-                        goTo(idx + startOffset, true);
-                    });
-                    dotsContainer.appendChild(dot);
-                });
-            }
-
-            const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
-
-            // Erstelle Klone (3 Sets davor, 3 Sets danach)
-            const clonesBefore = [];
-            const clonesAfter = [];
-
-            for (let s = 0; s < numCloneSets; s++) {
-                origCards.forEach(card => clonesBefore.push(card.cloneNode(true)));
-                origCards.forEach(card => clonesAfter.push(card.cloneNode(true)));
-            }
-
+            // Klone (3 Sets davor, 3 Sets danach)
             const firstRealCard = origCards[0];
-            clonesBefore.forEach(clone => track.insertBefore(clone, firstRealCard));
-            clonesAfter.forEach(clone => track.appendChild(clone));
-
+            for (let s = 0; s < numCloneSets; s++) {
+                origCards.forEach(card => track.insertBefore(card.cloneNode(true), firstRealCard));
+                origCards.forEach(card => track.appendChild(card.cloneNode(true)));
+            }
             const allCards = Array.from(track.querySelectorAll('.apple-card'));
+            const lastIdx = allCards.length - 1;
 
-            let currentIndex = startOffset;
+            /* ─── LAYOUT-MESSWERTE ───
+               Alle Karten sind gleich breit und haben denselben Abstand. Aus
+               nur zwei Zahlen (Mitte der ersten Karte + Abstand von Karte zu
+               Karte) lässt sich damit zu jeder Scroll-Position der "Karten-
+               Index" berechnen – ohne bei jedem Scroll-Frame Dutzende
+               getBoundingClientRect() abzufragen (das ruckelt auf dem Handy). */
+            let step = 0;
+            let firstCenter = 0;
+            let viewW = 0;
+
+            function measure() {
+                const first = allCards[0];
+                step = (allCards[lastIdx].offsetLeft - first.offsetLeft) / lastIdx;
+                firstCenter = first.offsetLeft - track.offsetLeft + first.offsetWidth / 2;
+                viewW = track.clientWidth;
+            }
+
+            function clampIdx(i) {
+                return Math.max(0, Math.min(lastIdx, i));
+            }
+
+            // Kommazahl: 7.0 = Karte 7 exakt mittig, 7.5 = genau zwischen Karte 7 und 8
+            function getPosition() {
+                return (track.scrollLeft + viewW / 2 - firstCenter) / step;
+            }
+
+            function getClosestCardIndex() {
+                return clampIdx(Math.round(getPosition()));
+            }
 
             function getRealIndex(idx) {
                 return ((idx % totalOrig) + totalOrig) % totalOrig;
             }
 
-            function getNormalizedIndex(idx) {
-                return getRealIndex(idx) + startOffset;
+            // Indikator-Punkte
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                origCards.forEach((_, realIdx) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'dot';
+                    dot.addEventListener('click', () => {
+                        // Kürzesten Weg zum Ziel-Projekt nehmen (nie quer durch alle Klone)
+                        const cur = getClosestCardIndex();
+                        let delta = realIdx - getRealIndex(cur);
+                        if (delta > totalOrig / 2) delta -= totalOrig;
+                        if (delta < -totalOrig / 2) delta += totalOrig;
+                        goTo(cur + delta, true);
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+            }
+            const dots = dotsContainer ? Array.from(dotsContainer.querySelectorAll('.dot')) : [];
+
+            /* ─── STUFENLOSES ABDUNKELN ───
+               Die Helligkeit/Grösse jeder Karte hängt direkt von ihrem Abstand
+               zur Mitte ab (1 = mittig, 0 = eine Kartenbreite weg). Dadurch
+               ist der Übergang immer sauber, folgt dem Finger 1:1 und kann
+               beim Einrasten oder beim unsichtbaren Endlos-Sprung nie
+               "nachblitzen" – anders als ein Ein-/Aus-Wechsel per CSS-Klasse. */
+            let activeCardIdx = -1;
+            let styledLo = -1;
+            let styledHi = -1;
+
+            function styleCard(i, t) {
+                const card = allCards[i];
+                if (t <= 0.001) {
+                    card.style.opacity = '';
+                    card.style.transform = '';
+                } else {
+                    card.style.opacity = (0.55 + 0.45 * t).toFixed(3);
+                    card.style.transform = 'scale(' + (0.97 + 0.03 * t).toFixed(4) + ') translateZ(0)';
+                }
             }
 
-            let activeCardIdx = -1;
-
             function setActiveIndex(idx) {
-                currentIndex = idx;
                 if (idx === activeCardIdx) return;
+                if (activeCardIdx >= 0) allCards[activeCardIdx].classList.remove('active');
                 activeCardIdx = idx;
-
-                allCards.forEach((card, i) => card.classList.toggle('active', i === idx));
-
+                allCards[idx].classList.add('active');
                 const realIndex = getRealIndex(idx);
                 dots.forEach((dot, i) => dot.classList.toggle('active', i === realIndex));
             }
 
-            function getClosestCardIndex() {
-                const trackRect = track.getBoundingClientRect();
-                const centerX = trackRect.left + trackRect.width / 2;
-                let closest = currentIndex;
-                let closestDist = Infinity;
+            let renderFrozen = false;
 
-                allCards.forEach((card, i) => {
-                    const r = card.getBoundingClientRect();
-                    const cardCenter = r.left + r.width / 2;
-                    const dist = Math.abs(cardCenter - centerX);
-                    if (dist < closestDist) {
-                        closestDist = dist;
-                        closest = i;
-                    }
-                });
-
-                return closest;
+            function render() {
+                if (renderFrozen) return;
+                const pos = getPosition();
+                const lo = clampIdx(Math.floor(pos));
+                const hi = clampIdx(Math.ceil(pos));
+                if (styledLo >= 0) {
+                    if (styledLo !== lo && styledLo !== hi) styleCard(styledLo, 0);
+                    if (styledHi !== lo && styledHi !== hi) styleCard(styledHi, 0);
+                }
+                styleCard(lo, 1 - Math.abs(pos - lo));
+                if (hi !== lo) styleCard(hi, 1 - Math.abs(pos - hi));
+                styledLo = lo;
+                styledHi = hi;
+                setActiveIndex(clampIdx(Math.round(pos)));
             }
 
-            function centerCard(idx, smooth) {
-                const card = allCards[idx];
-                if (!card) return;
-                const target = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
-                track.scrollTo({ left: target, behavior: smooth ? 'smooth' : 'instant' });
+            /* ─── UNSICHTBARE SPRÜNGE ───
+               Einrasten (scroll-snap) und sanftes Scrollen werden dafür per
+               CSS-Klasse kurz ausgeschaltet und garantiert wieder eingeschaltet
+               (früher: Inline-Style, der bei zwei schnell aufeinanderfolgenden
+               Sprüngen – z.B. durch die iPhone-Adressleiste – dauerhaft auf
+               "none" hängen bleiben konnte = Einrast-Effekt plötzlich weg). */
+            let jumpToken = 0;
+
+            function silently(fn) {
+                track.classList.add('is-jumping');
+                fn();
+                render();
+                const token = ++jumpToken;
+                const release = () => {
+                    if (token === jumpToken) track.classList.remove('is-jumping');
+                };
+                // rAF (wartet den Frame ab) + Timer als Absicherung, falls rAF pausiert (Hintergrund-Tab)
+                requestAnimationFrame(() => requestAnimationFrame(release));
+                setTimeout(release, 120);
             }
 
-            function jumpInstant(idx) {
-                const card = allCards[idx];
-                if (!card) return;
-                const prevSnap = track.style.scrollSnapType;
-                track.style.scrollSnapType = 'none';
-                centerCard(idx, false);
-                setActiveIndex(idx);
-                requestAnimationFrame(() => {
-                    track.style.scrollSnapType = prevSnap || 'x mandatory';
-                });
+            function scrollLeftFor(idx) {
+                return firstCenter + idx * step - viewW / 2;
             }
+
+            function jumpToIndex(idx) {
+                silently(() => track.scrollTo({ left: scrollLeftFor(clampIdx(idx)), behavior: 'instant' }));
+            }
+
+            let pendingTarget = null;
 
             function goTo(idx, smooth = true) {
-                const card = allCards[idx];
-                if (!card) return;
-                centerCard(idx, smooth);
-                setActiveIndex(idx);
+                idx = clampIdx(idx);
+                pendingTarget = idx;
+                track.scrollTo({ left: scrollLeftFor(idx), behavior: smooth ? 'smooth' : 'instant' });
             }
 
-            function nextSlide() {
-                goTo(currentIndex + 1, true);
-            }
-
-            function prevSlide() {
-                goTo(currentIndex - 1, true);
+            function currentBase() {
+                return pendingTarget !== null ? pendingTarget : getClosestCardIndex();
             }
 
             if (prevBtn) {
                 prevBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    prevSlide();
+                    goTo(currentBase() - 1, true);
                 });
             }
 
@@ -911,51 +957,50 @@
                 nextBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    nextSlide();
+                    goTo(currentBase() + 1, true);
                 });
             }
 
-            /* ─── SWIPE-VERHALTEN (wie die Grossansicht bei den Fotografien) ───
+            /* ─── SWIPE-VERHALTEN ───
                Touch-Swipe und 2-Finger-Trackpad laufen komplett nativ über
                Scroll-Snap (scroll-snap-stop: always = pro Wisch genau EIN
-               Projekt, nie eines überspringen, nie zwischen zwei Karten
-               hängen bleiben). Die Maus wird per Klicken & Ziehen simuliert.
-               Der unsichtbare Sprung zurück in die mittlere Kartengruppe
-               (Endlos-Effekt) passiert NUR, wenn alles komplett zur Ruhe
-               gekommen ist – früher geschah er teils noch mitten im
-               Ausrollen/Einrasten und bremste die Bewegung ruckartig ab. */
-            let scrollSettleTimer = null;
+               Projekt). Die Maus wird per Klicken & Ziehen simuliert.
+               Der Endlos-Effekt (Rücksprung in die mittlere Kartengruppe)
+               passiert NUR, wenn alles komplett zur Ruhe gekommen ist, und
+               verschiebt die Spur um exakt ein Vielfaches der Kartengruppe –
+               identischer Bildschirminhalt, deshalb unsichtbar. */
+            let settleTimer = null;
             let rafPending = false;
             let isUserTouching = false;
             let pointerActive = false;
 
-            function liveUpdateActive() {
-                if (rafPending) return;
-                rafPending = true;
-                requestAnimationFrame(() => {
-                    setActiveIndex(getClosestCardIndex());
-                    rafPending = false;
-                });
-            }
-
             function recenterWhenIdle() {
+                pendingTarget = null;
                 if (isUserTouching || pointerActive) return;
                 const idx = getClosestCardIndex();
-                const normIdx = getNormalizedIndex(idx);
-                if (idx !== normIdx) jumpInstant(normIdx);
+                // Nur eingreifen, wenn weniger als ein Set Reserve bleibt – selten, aber dann sicher
+                if (idx >= startOffset - totalOrig && idx < startOffset + 2 * totalOrig) return;
+                const delta = (getRealIndex(idx) + startOffset) - idx;
+                silently(() => track.scrollTo({ left: track.scrollLeft + delta * step, behavior: 'instant' }));
             }
 
             function scheduleIdle() {
-                if (scrollSettleTimer) clearTimeout(scrollSettleTimer);
-                scrollSettleTimer = setTimeout(recenterWhenIdle, 160);
+                clearTimeout(settleTimer);
+                settleTimer = setTimeout(recenterWhenIdle, 180);
             }
 
             track.addEventListener('scroll', () => {
-                liveUpdateActive();
+                if (!rafPending) {
+                    rafPending = true;
+                    requestAnimationFrame(() => {
+                        rafPending = false;
+                        render();
+                    });
+                }
                 scheduleIdle();
             }, { passive: true });
 
-            track.addEventListener('touchstart', () => { isUserTouching = true; }, { passive: true });
+            track.addEventListener('touchstart', () => { isUserTouching = true; pendingTarget = null; }, { passive: true });
             track.addEventListener('touchend', () => { isUserTouching = false; scheduleIdle(); }, { passive: true });
             track.addEventListener('touchcancel', () => { isUserTouching = false; scheduleIdle(); }, { passive: true });
 
@@ -971,6 +1016,7 @@
             track.addEventListener('pointerdown', (e) => {
                 if (e.pointerType !== 'mouse') return;
                 pointerActive = true;
+                pendingTarget = null;
                 isDragging = false;
                 dragMoved = false;
                 dragStartX = e.clientX;
@@ -996,8 +1042,7 @@
 
                 /* scrollTo(instant) statt .scrollLeft = …: die Spur hat
                    scroll-behavior: smooth, eine direkte Zuweisung würde bei
-                   JEDER Mausbewegung eine neue Glätt-Animation starten
-                   (= Ruckeln/Nachziehen). */
+                   JEDER Mausbewegung eine neue Glätt-Animation starten. */
                 track.scrollTo({ left: dragStartScrollLeft - dx, behavior: 'instant' });
             });
 
@@ -1010,17 +1055,17 @@
                     if (track.releasePointerCapture && activePointerId !== null) {
                         try { track.releasePointerCapture(activePointerId); } catch (err) { }
                     }
-                    /* Immer sauber zur nächsten/vorherigen Karte: ein
-                       kurzer, schneller Zug oder ein längerer Zug geht genau
-                       EINE Karte weiter, sonst zurück zur nächstliegenden. */
+                    /* Immer sauber zur nächsten/vorherigen Karte: ein kurzer,
+                       schneller Zug oder ein längerer Zug geht genau EINE
+                       Karte weiter, sonst zurück zur nächstliegenden. */
                     const dx = (e && typeof e.clientX === 'number') ? e.clientX - dragStartX : 0;
                     const speed = Math.abs(dx) / Math.max(1, performance.now() - dragStartTime);
                     let target = getClosestCardIndex();
                     if (Math.abs(dx) > 60 || (Math.abs(dx) > 20 && speed > 0.4)) {
-                        const step = dx < 0 ? 1 : -1;
-                        if (target === dragStartIndex) target = dragStartIndex + step;
+                        const stepDir = dx < 0 ? 1 : -1;
+                        if (target === dragStartIndex) target = dragStartIndex + stepDir;
                     }
-                    goTo(Math.max(0, Math.min(allCards.length - 1, target)), true);
+                    goTo(target, true);
                 }
 
                 isDragging = false;
@@ -1040,12 +1085,39 @@
                 dragMoved = false;
             }, true);
 
-            // Initiales Setzen auf die erste echte Karte
-            jumpInstant(startOffset);
+            /* ─── GRÖSSENÄNDERUNG ───
+               Nur bei geänderter BREITE neu ausrichten. Auf dem iPhone löst
+               schon das Ein-/Ausfahren der Adressleiste beim Scrollen
+               "resize" aus (nur die Höhe ändert sich) – früher sprang das
+               Karussell dadurch mitten in einer Wischgeste. */
+            let lastInnerWidth = window.innerWidth;
+            let resizeTimer = null;
 
             window.addEventListener('resize', () => {
-                jumpInstant(currentIndex);
+                if (window.innerWidth === lastInnerWidth) return;
+                lastInnerWidth = window.innerWidth;
+                renderFrozen = true; // bis zur Neumessung keine Berechnung mit alten Werten
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const keep = activeCardIdx >= 0 ? activeCardIdx : startOffset;
+                    measure();
+                    renderFrozen = false;
+                    jumpToIndex(keep);
+                }, 120);
             });
+
+            // Zurück-Navigation (Seite aus dem Cache) / fertig geladen: neu ausrichten
+            function realign() {
+                if (isUserTouching || pointerActive) return;
+                measure();
+                jumpToIndex(activeCardIdx >= 0 ? activeCardIdx : startOffset);
+            }
+            window.addEventListener('pageshow', (e) => { if (e.persisted) realign(); });
+            window.addEventListener('load', realign);
+
+            // Initiales Setzen auf die erste echte Karte
+            measure();
+            jumpToIndex(startOffset);
         });
 
         if ('scrollRestoration' in history) {

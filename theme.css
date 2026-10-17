@@ -133,11 +133,18 @@ html.theme-fade *::after {
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.theme-dialog-btn:hover,
 .theme-dialog-btn:focus-visible {
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.45);
   outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-dialog-btn:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.45);
+    outline: none;
+  }
 }
 
 .theme-dialog-btn--primary {
@@ -146,11 +153,18 @@ html.theme-fade *::after {
   border-color: #ffffff;
 }
 
-.theme-dialog-btn--primary:hover,
 .theme-dialog-btn--primary:focus-visible {
   color: #0d0d0d;
   background: #e5e5e5;
   border-color: #e5e5e5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-dialog-btn--primary:hover {
+    color: #0d0d0d;
+    background: #e5e5e5;
+    border-color: #e5e5e5;
+  }
 }
 
 
@@ -237,8 +251,10 @@ html[data-theme="light"] .see-all-link {
   color: #0066cc;
 }
 
-html[data-theme="light"] .see-all-link:hover {
-  color: #004a99;
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .see-all-link:hover {
+    color: #004a99;
+  }
 }
 
 /* ─── Kontaktformular ─── */
@@ -289,14 +305,16 @@ html[data-theme="light"] .contact-form input[type="submit"] {
   color: var(--lt-text) !important;
 }
 
-html[data-theme="light"] .btn:hover,
-html[data-theme="light"] .contact-form button:hover,
-html[data-theme="light"] .contact-form input[type="submit"]:hover {
-  background: #25231f !important;
-  background-color: #25231f !important;
-  background-image: none !important;
-  border-color: #25231f !important;
-  color: #ffffff !important;
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .btn:hover,
+  html[data-theme="light"] .contact-form button:hover,
+  html[data-theme="light"] .contact-form input[type="submit"]:hover {
+    background: #25231f !important;
+    background-color: #25231f !important;
+    background-image: none !important;
+    border-color: #25231f !important;
+    color: #ffffff !important;
+  }
 }
 
 html[data-theme="light"] .btn:active,
@@ -310,8 +328,10 @@ html[data-theme="light"] .scroll-down-btn--inline {
   color: var(--lt-text-3);
 }
 
-html[data-theme="light"] .scroll-down-btn--inline:hover {
-  color: var(--lt-text);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .scroll-down-btn--inline:hover {
+    color: var(--lt-text);
+  }
 }
 
 
@@ -331,16 +351,20 @@ html[data-theme="light"] .foto-motiv-back {
   color: var(--lt-text-3);
 }
 
-html[data-theme="light"] .foto-motiv-back:hover {
-  color: var(--lt-text);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .foto-motiv-back:hover {
+    color: var(--lt-text);
+  }
 }
 
 html[data-theme="light"] .back-btn {
   color: var(--lt-text-3);
 }
 
-html[data-theme="light"] .back-btn:hover {
-  color: var(--lt-text);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .back-btn:hover {
+    color: var(--lt-text);
+  }
 }
 
 html[data-theme="light"] .grading-section {
@@ -356,17 +380,25 @@ html[data-theme="light"] .info-content-link {
   border-bottom-color: var(--lt-line-strong);
 }
 
-html[data-theme="light"] .info-content-link:hover {
-  border-color: var(--lt-text);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .info-content-link:hover {
+    border-color: var(--lt-text);
+  }
 }
 
 /* Die kleinen Icons bei "Das Projekt & die Umsetzung" sind im Dunkel-Modus
    per Filter weiss gefärbt (run.html/about.html) – im Hell-Modus schwarz. */
-html[data-theme="light"] .info-icons .info-icon,
-html[data-theme="light"] .info-icons:hover .info-icon,
-html[data-theme="light"] .info-icon:hover {
+html[data-theme="light"] .info-icons .info-icon {
   filter: brightness(0) !important;
   opacity: 0.8 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .info-icons:hover .info-icon,
+  html[data-theme="light"] .info-icon:hover {
+    filter: brightness(0) !important;
+    opacity: 0.8 !important;
+  }
 }
 
 html[data-theme="light"] .heading-violet {
@@ -413,8 +445,10 @@ html[data-theme="light"] .apple-slider-dots .dot {
   background-color: rgba(37, 35, 31, 0.18);
 }
 
-html[data-theme="light"] .apple-slider-dots .dot:hover {
-  background-color: rgba(37, 35, 31, 0.4);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .apple-slider-dots .dot:hover {
+    background-color: rgba(37, 35, 31, 0.4);
+  }
 }
 
 html[data-theme="light"] .apple-slider-dots .dot.active {
@@ -526,9 +560,14 @@ html[data-theme="light"] .nav-search-toggle--mobile {
   color: var(--hdr-fg);
 }
 
-html[data-theme="light"] .mobile-nav-link:hover,
 html[data-theme="light"] .mobile-nav-link:active {
   color: var(--nav-text-active);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .mobile-nav-link:hover {
+    color: var(--nav-text-active);
+  }
 }
 
 html[data-theme="light"] .hamburger span {
@@ -542,30 +581,44 @@ html[data-theme="light"] .mobile-social .social-icon {
 
 /* YouTube-Icon: beim Hover füllt der Blau/Violett-Verlauf den Kreis – das
    Icon bleibt dann weiss (sonst schwarz auf Verlauf). */
-html[data-theme="light"] .social-icon:hover,
-html[data-theme="light"] .social-icon:focus-visible,
-html[data-theme="light"] .mobile-social .social-icon:hover {
+html[data-theme="light"] .social-icon:focus-visible {
   color: #ffffff;
 }
 
-html[data-theme="light"] .mobile-social .social-icon:hover {
-  border-color: transparent;
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .social-icon:hover,
+  html[data-theme="light"] .mobile-social .social-icon:hover {
+    color: #ffffff;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .mobile-social .social-icon:hover {
+    border-color: transparent;
+  }
 }
 
 html[data-theme="light"] .nav-lang-toggle {
   border-color: var(--hdr-line);
 }
 
-html[data-theme="light"] .nav-lang-toggle:hover,
 html[data-theme="light"] .nav-lang-toggle:focus-visible,
 html[data-theme="light"] .nav-lang-toggle[aria-expanded="true"],
-html[data-theme="light"] .nav-lang-option:hover,
 html[data-theme="light"] .nav-lang-option:focus-visible {
   border-color: var(--hdr-line-strong);
 }
 
-html[data-theme="light"] .nav-search-clear:hover {
-  background-color: var(--hdr-hover-bg);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .nav-lang-toggle:hover,
+  html[data-theme="light"] .nav-lang-option:hover {
+    border-color: var(--hdr-line-strong);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .nav-search-clear:hover {
+    background-color: var(--hdr-hover-bg);
+  }
 }
 
 html[data-theme="light"] .nav-search-divider,
@@ -594,8 +647,10 @@ html[data-theme="light"] .lang-switcher-btn {
   border-color: rgba(37, 35, 31, 0.18);
 }
 
-html[data-theme="light"] .lang-switcher-btn:hover {
-  border-color: rgba(37, 35, 31, 0.45);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .lang-switcher-btn:hover {
+    border-color: rgba(37, 35, 31, 0.45);
+  }
 }
 
 html[data-theme="light"] .lang-switcher-btn.is-active {
@@ -676,11 +731,16 @@ html[data-theme="light"] .site-footer .footer-meta {
   color: var(--lt-text-3);
 }
 
-html[data-theme="light"] .site-footer .footer-col a:hover,
 html[data-theme="light"] .site-footer .footer-col a:focus-visible,
-html[data-theme="light"] .site-footer .footer-legal a:hover,
 html[data-theme="light"] .site-footer .footer-legal a:focus-visible {
   color: var(--lt-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .site-footer .footer-col a:hover,
+  html[data-theme="light"] .site-footer .footer-legal a:hover {
+    color: var(--lt-text);
+  }
 }
 
 html[data-theme="light"] .site-footer .footer-sep {
@@ -729,10 +789,16 @@ html[data-theme="light"] .coming-soon .coming-soon-back {
   border-color: rgba(37, 35, 31, 0.2);
 }
 
-html[data-theme="light"] .coming-soon .coming-soon-back:hover,
 html[data-theme="light"] .coming-soon .coming-soon-back:focus-visible {
   color: var(--lt-text);
   border-color: rgba(37, 35, 31, 0.5);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .coming-soon .coming-soon-back:hover {
+    color: var(--lt-text);
+    border-color: rgba(37, 35, 31, 0.5);
+  }
 }
 
 
@@ -817,10 +883,16 @@ html[data-theme="light"] .custom-select {
   border-color: var(--lt-line);
 }
 
-html[data-theme="light"] .custom-select:hover,
 html[data-theme="light"] .custom-select:focus-visible {
   border-color: rgba(37, 35, 31, 0.3);
   background: rgba(37, 35, 31, 0.08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .custom-select:hover {
+    border-color: rgba(37, 35, 31, 0.3);
+    background: rgba(37, 35, 31, 0.08);
+  }
 }
 
 html[data-theme="light"] .custom-select option {
@@ -841,9 +913,14 @@ html[data-theme="light"] .foto-cover-desc {
   color: var(--lt-text-2);
 }
 
-html[data-theme="light"] .foto-cover:hover .foto-cover-btn,
 html[data-theme="light"] .foto-cover:focus-visible .foto-cover-btn {
   border-color: var(--lt-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .foto-cover:hover .foto-cover-btn {
+    border-color: var(--lt-text);
+  }
 }
 
 /* ─── BEHIND THE SCENES (bts.html) ─── */
@@ -851,8 +928,10 @@ html[data-theme="light"] .bts-back-link {
   color: var(--lt-text-3);
 }
 
-html[data-theme="light"] .bts-back-link:hover {
-  color: var(--lt-text);
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] .bts-back-link:hover {
+    color: var(--lt-text);
+  }
 }
 
 /* ─── COLOR GRADING (run.html, colorgrading.html) ─── */
@@ -1015,11 +1094,13 @@ html[data-theme="light"] .lego-dark-wrapper .lego-info-description {
   color: var(--lt-text-2) !important;
 }
 
-html[data-theme="light"] body.lego-family-studio .lego-channel-btn:hover {
-  background: rgb(234, 51, 35) !important;
-  background-color: rgb(234, 51, 35) !important;
-  border-color: rgb(234, 51, 35) !important;
-  color: #ffffff !important;
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] body.lego-family-studio .lego-channel-btn:hover {
+    background: rgb(234, 51, 35) !important;
+    background-color: rgb(234, 51, 35) !important;
+    border-color: rgb(234, 51, 35) !important;
+    color: #ffffff !important;
+  }
 }
 
 /* LEGO-Footer: im Dunkel-Modus fest dunkel mit weisser Schrift – im
@@ -1050,13 +1131,18 @@ html[data-theme="light"] body.lego-family-studio footer a:visited {
   color: var(--lt-text) !important;
 }
 
-html[data-theme="light"] body.lego-family-studio .site-footer a:hover,
 html[data-theme="light"] body.lego-family-studio .site-footer a:focus,
 html[data-theme="light"] body.lego-family-studio .site-footer a:active,
-html[data-theme="light"] body.lego-family-studio footer a:hover,
 html[data-theme="light"] body.lego-family-studio footer a:focus,
 html[data-theme="light"] body.lego-family-studio footer a:active {
   color: #E30613 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] body.lego-family-studio .site-footer a:hover,
+  html[data-theme="light"] body.lego-family-studio footer a:hover {
+    color: #E30613 !important;
+  }
 }
 
 html[data-theme="light"] body.lego-family-studio .site-footer .footer-sep {
@@ -1076,7 +1162,6 @@ html[data-theme="light"] body.lego-family-studio .site-footer .social-icon * {
   fill: var(--lt-text) !important;
 }
 
-html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:hover,
 html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:focus,
 html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:active {
   background-color: #E30613 !important;
@@ -1085,10 +1170,21 @@ html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:activ
   color: #ffffff !important;
 }
 
-html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:hover i,
-html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:hover * {
-  color: #ffffff !important;
-  fill: #ffffff !important;
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:hover {
+    background-color: #E30613 !important;
+    background: #E30613 !important;
+    border-color: #E30613 !important;
+    color: #ffffff !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:hover i,
+  html[data-theme="light"] body.lego-family-studio .site-footer .social-icon:hover * {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+  }
 }
 
 /* ─── SITEMAP (sitemap.html) ─── */
@@ -1108,9 +1204,14 @@ html[data-theme="light"] #sitemap-page a.sitemap-lead {
   color: var(--lt-text-2);
 }
 
-html[data-theme="light"] #sitemap-page a:hover,
 html[data-theme="light"] #sitemap-page a:focus-visible,
-html[data-theme="light"] #sitemap-page a.sitemap-lead:hover,
 html[data-theme="light"] #sitemap-page a.sitemap-lead:focus-visible {
   color: var(--lt-text);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] #sitemap-page a:hover,
+  html[data-theme="light"] #sitemap-page a.sitemap-lead:hover {
+    color: var(--lt-text);
+  }
 }

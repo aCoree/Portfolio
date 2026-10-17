@@ -121,9 +121,14 @@
                     #000 85%);
         }
 
-        .foto-cover:hover img,
         .foto-cover:focus-visible img {
             transform: scale(1.04);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .foto-cover:hover img {
+                transform: scale(1.04);
+            }
         }
 
         /* Positioniert Titel, Kurzbeschreibung und Button unten in der
@@ -164,9 +169,14 @@
             margin-top: 14px;
         }
 
-        .foto-cover:hover .foto-cover-btn,
         .foto-cover:focus-visible .foto-cover-btn {
             border-color: #ffffff;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .foto-cover:hover .foto-cover-btn {
+                border-color: #ffffff;
+            }
         }
 
         /* ─── MOBILE ───

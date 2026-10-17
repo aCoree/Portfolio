@@ -81,10 +81,16 @@
             transition: color 0.2s ease, border-color 0.2s ease;
         }
 
-        .coming-soon .coming-soon-back:hover,
         .coming-soon .coming-soon-back:focus-visible {
             color: #ffffff;
             border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .coming-soon .coming-soon-back:hover {
+                color: #ffffff;
+                border-color: rgba(255, 255, 255, 0.5);
+            }
         }
     </style>
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->

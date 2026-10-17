@@ -121,9 +121,14 @@
             transition: color 0.2s ease;
         }
 
-        #sitemap-page a:hover,
         #sitemap-page a:focus-visible {
             color: #ffffff;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #sitemap-page a:hover {
+                color: #ffffff;
+            }
         }
 
         /* Hauptseite einer Gruppe etwas heller als ihre Unterpunkte */
@@ -132,9 +137,14 @@
             font-weight: 500;
         }
 
-        #sitemap-page a.sitemap-lead:hover,
         #sitemap-page a.sitemap-lead:focus-visible {
             color: #ffffff;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #sitemap-page a.sitemap-lead:hover {
+                color: #ffffff;
+            }
         }
 
         /* Unterpunkte: kleiner und dunkler, aber bündig mit dem Rest
