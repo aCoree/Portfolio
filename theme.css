@@ -692,7 +692,7 @@ html[data-theme="light"] .navbar {
 }
 
 html[data-theme="light"] .second-navbar {
-  transition: opacity 0.2s ease, height 0.25s ease, border-bottom-width 0.25s ease, background-color 0.45s ease;
+  transition: opacity 0.2s ease, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-bottom-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.45s ease;
 }
 
 html[data-theme="light"].trailer-dark body:not(.menu-open) .header-group {

@@ -40,27 +40,35 @@
   --nav-backdrop-bg: rgba(4, 5, 8, 0.62);
   --nav-backdrop-blur: 18px;
 
-  /* ─── DESKTOP-HEADER: SYMMETRIE LINKS ↔ RECHTS ───
-     Die Navigation (Home … Kontakt) steht dank grid 1fr/auto/1fr exakt in
-     der Mitte. Damit das AZ-Logo links GENAU so weit vom Rand entfernt ist
-     wie das YouTube-Icon rechts, müssen die Breiten der beiden Seiten-
-     gruppen identisch sein:
-       links  = Logo + Abstand + Sprach-Kürzel + Abstand zur Nav
-       rechts = Abstand zur Nav + Lupe + Abstand + YouTube-Icon
-     Der Abstand Logo ↔ Sprach-Kürzel (--nav-lang-gap) wird deshalb NICHT
-     von Hand gesetzt, sondern aus den übrigen Werten berechnet – ändert
-     sich eine Grösse (Lupe, YouTube-Icon, Kürzel-Breite, Gap), bleibt die
-     Symmetrie automatisch exakt erhalten. */
-  --nav-side-gap: 24px;
-  --nav-icon-gap: 28px;
+  /* ─── DESKTOP-HEADER: GLEICHE SICHTBARE ABSTÄNDE LINKS ↔ RECHTS ───
+     Links: [Logo] –A– [Sprach-Box] –B– Home … Kontakt –B– [Lupe] –A– [YouTube]
+     Es gilt immer:
+       • Logo ↔ Sprach-Box  = Lupe ↔ YouTube-Kreis       (--nav-icon-visible-gap)
+       • Sprach-Box ↔ Home  = Kontakt ↔ Lupe             (--nav-nav-gap)
+       • die Navigation steht PERFEKT mittig (grid 1fr/auto/1fr, beide
+         Seiten gleich breit gesetzt – siehe .nav-left/.nav-right).
+     Gemessen wird immer vom äusseren Rand des SICHTBAREN Elements: Logo-
+     KREIS (die zwei dünnen Striche daneben zählen nicht), Rahmen der Sprach-Box
+     (nicht der Text "DE"), Lupen-SYMBOL (nicht ihre grössere, unsichtbare
+     Klickfläche mit je ~7px Luft) und Rahmen des YouTube-Kreises.
+     Folge: Logo (48px) + Sprach-Box (30px) sind breiter als Lupen-Symbol
+     (15px) + YouTube-Kreis (34px) – das AZ-Logo steht dadurch ein Stück näher
+     am Rand als das YouTube-Icon. Gleiche Abstände UND exakt gleicher
+     Randabstand sind bei diesen Elementgrössen nicht gleichzeitig möglich. */
+  --nav-nav-gap: 40px; /* sichtbarer Abstand Sprach-Box/Lupe ↔ Navigation (= Abstand zwischen den Nav-Links) */
+  --nav-icon-gap: 28px; /* Lupen-Klickfläche → YouTube-Icon */
   --nav-logo-width: 48px;
   --nav-search-size: 30px;
+  --nav-search-glyph: 0.95rem; /* Breite des Lupen-Symbols (= font-size von .nav-search-toggle) */
   --nav-yt-size: 34px; /* auch Grösse des Hell/Dunkel-Buttons im Footer */
-  --nav-lang-width: 30px;
-  --nav-lang-gap: calc(
-    var(--nav-search-size) + var(--nav-icon-gap) + var(--nav-yt-size) -
-      var(--nav-logo-width) - var(--nav-lang-width)
-  );
+  --nav-lang-width: 30px; /* Breite der Sprach-Box inkl. Rahmen (nicht des Textes) */
+  --nav-search-pad: calc((var(--nav-search-size) - var(--nav-search-glyph)) / 2);
+  --nav-logo-ink-inset: 9px; /* Luft zwischen Logo-KREIS und Logo-Box (die zwei Striche links/rechts zählen nicht) */
+  /* Sichtbarer Abstand: Lupen-Symbol → YouTube-Kreis, links identisch für
+     Logo-Kreis → Sprach-Box. Die Sprach-Box bleibt dabei stehen (die linke
+     Gruppe ist rechtsbündig), nur das Logo rückt näher heran. */
+  --nav-icon-visible-gap: calc(var(--nav-search-pad) + var(--nav-icon-gap));
+  --nav-lang-gap: calc(var(--nav-icon-visible-gap) - var(--nav-logo-ink-inset));
 }
 
 /* ─── HEADER-GRUPPE (STICKY-WRAPPER FÜR MAIN HEADER + SECOND HEADER) ───
@@ -159,12 +167,11 @@ body:not(.transparent-header) .nav-expand {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* Gleicher Abstand zur zentrierten Navigation wie auf der rechten Seite
-     (siehe .nav-right padding-left), statt eines übertrieben grossen
-     Zwischenraums zwischen Logo und "Home". Nur Desktop: auf Mobile (siehe
+  /* Abstand Sprach-Box ↔ "Home": identisch zu "Kontakt" ↔ Lupe (siehe
+     :root und .nav-right). Nur Desktop: auf Mobile (siehe
      Media Query unten) wieder auf 0 zurückgesetzt, weil .nav-right dort
      ohnehin ausgeblendet ist (Icons stecken im Mobile-Menü). */
-  padding-right: var(--nav-side-gap);
+  padding-right: var(--nav-nav-gap);
 }
 
 .logo {
@@ -287,7 +294,7 @@ body:not(.transparent-header) .nav-expand {
   align-items: center;
   justify-content: flex-start;
   gap: var(--nav-icon-gap);
-  padding-left: var(--nav-side-gap);
+  padding-left: calc(var(--nav-nav-gap) - var(--nav-search-pad));
 }
 
 /* Kreis-Button bleibt wie gehabt (inkl. Blau/Violett-Verlauf beim
@@ -373,7 +380,7 @@ body:not(.transparent-header) .nav-expand {
   background: none;
   border: none;
   color: var(--nav-text-idle);
-  font-size: 0.95rem;
+  font-size: var(--nav-search-glyph);
   cursor: pointer;
   transition: color 0.25s ease;
 }
@@ -525,7 +532,7 @@ body:not(.transparent-header) .nav-expand {
      berechnete Position) sichtbar animieren – dadurch wirkte das Untermenü
      beim allerersten Hover so, als würde es von links hereinfahren, statt
      wie sonst sauber von oben zu expandieren. */
-  transition: padding-top 0.35s ease, padding-bottom 0.35s ease;
+  transition: padding-top 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-expand.is-open .nav-expand-inner {
@@ -755,16 +762,24 @@ body:not(.transparent-header) .nav-expand {
   inset: 0;
   z-index: 950;
   background-color: var(--nav-backdrop-bg);
-  backdrop-filter: blur(var(--nav-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--nav-backdrop-blur));
+  /* Blur startet bei 0 und wächst mit dem Einblenden mit (statt von Anfang an
+     voll da zu sein und nur per opacity zu erscheinen) – so entsteht ein
+     fliessender Übergang von scharf → unscharf statt eines Aufpoppens. */
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    -webkit-backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-backdrop.is-open {
   opacity: 1;
   pointer-events: auto;
+  backdrop-filter: blur(var(--nav-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--nav-backdrop-blur));
 }
 
 /* ─── HAMBURGER & MOBILE MENU ─── */
@@ -1167,7 +1182,7 @@ html[data-theme="light"] .theme-toggle .theme-toggle-icon--moon {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease, height 0.25s ease, border-bottom-width 0.25s ease;
+  transition: opacity 0.2s ease, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-bottom-width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Wird gesetzt, solange ein Main-Header-Untermenü (z.B. "Projekte")
@@ -1284,7 +1299,7 @@ body.transparent-header .navbar {
   transition: border-color 0.25s ease, background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 body.transparent-header .second-navbar {
-  transition: opacity 0.2s ease, height 0.25s ease, border-bottom-width 0.25s ease, background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.2s ease, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-bottom-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 body.transparent-header .nav-expand {
   transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1303,14 +1318,19 @@ body.transparent-header .header-group.has-open-panel .nav-expand {
   background: var(--header-surface) !important;
 }
 
+/* Auch beim ÖFFNEN blendet die Fläche weich von transparent (Glas-Blur) auf
+   die deckende Farbe ein – gleiche Dauer/Kurve wie die Höhen-Animation und
+   das Backdrop (siehe .nav-backdrop), damit alles als EINE Bewegung läuft.
+   Ein sofortiger Sprung auf die deckende Farbe, während das Untermenü erst
+   noch aufgeht, wirkte hart und liess den Blur "springen". */
 body.transparent-header .header-group.has-open-panel .navbar {
-  transition: border-color 0.25s ease;
+  transition: border-color 0.25s ease, background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 body.transparent-header .header-group.has-open-panel .second-navbar {
-  transition: opacity 0.2s ease, height 0.25s ease, border-bottom-width 0.25s ease;
+  transition: opacity 0.2s ease, height 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-bottom-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 body.transparent-header .header-group.has-open-panel .nav-expand {
-  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ─── ABSTANDS-KOMPENSATION FÜR SEITEN MIT SECOND HEADER ───

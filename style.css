@@ -1401,6 +1401,11 @@ body:not(.has-hero) main.legal-content {
     width: var(--s);
     height: var(--s);
     background: linear-gradient(135deg, #2997ff 0 50%, transparent 50% 100%);
+    /* Obere linke Ecke übernimmt IMMER den Radius der Karte (egal welche
+       Grösse/Breakpoint), statt sich auf das overflow:hidden der Karte zu
+       verlassen – der Rand der Karte bleibt dadurch rund, der Aufkleber
+       schliesst bündig mit ihr ab. */
+    border-top-left-radius: inherit;
     filter: drop-shadow(calc(var(--s) * 0.022) calc(var(--s) * 0.022) calc(var(--s) * 0.044) rgba(0, 0, 0, 0.4));
     pointer-events: none;
 }
