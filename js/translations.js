@@ -152,10 +152,13 @@ window.SITE_TRANSLATIONS = {
     },
     bts: {
       back: "Zurück",
+      detailAlt: "Behind the Scenes Detailansicht",
+    },
+    lightbox: {
       close: "Schließen",
       prevImage: "Vorheriges Bild",
       nextImage: "Nächstes Bild",
-      detailAlt: "Behind the Scenes Detailansicht",
+      playVideo: "Video abspielen",
     },
     musik: {
       navIntro: "Leidenschaft am Klavier",
@@ -262,6 +265,7 @@ window.SITE_TRANSLATIONS = {
       genreDrone: "Drohnen Videos",
       genreFotografie: "Fotografie",
       badgeNew: "neu",
+      badgePopular: "beliebt",
     },
     impressum: {
       contactHeading: "Kontaktadresse",
@@ -454,10 +458,13 @@ window.SITE_TRANSLATIONS = {
     },
     bts: {
       back: "Retour",
+      detailAlt: "Vue détaillée du Behind the Scenes",
+    },
+    lightbox: {
       close: "Fermer",
       prevImage: "Image précédente",
       nextImage: "Image suivante",
-      detailAlt: "Vue détaillée du Behind the Scenes",
+      playVideo: "Lire la vidéo",
     },
     musik: {
       navIntro: "Ma passion pour le piano",
@@ -563,6 +570,7 @@ window.SITE_TRANSLATIONS = {
       genreDrone: "Vidéos de drone",
       genreFotografie: "Photographie",
       badgeNew: "nouveau",
+      badgePopular: "populaire",
     },
     impressum: {
       contactHeading: "Adresse de contact",
@@ -757,10 +765,13 @@ window.SITE_TRANSLATIONS = {
     },
     bts: {
       back: "Back",
+      detailAlt: "Behind the Scenes detail view",
+    },
+    lightbox: {
       close: "Close",
       prevImage: "Previous image",
       nextImage: "Next image",
-      detailAlt: "Behind the Scenes detail view",
+      playVideo: "Play video",
     },
     musik: {
       navIntro: "My passion for piano",
@@ -866,6 +877,7 @@ window.SITE_TRANSLATIONS = {
       genreDrone: "Drone videos",
       genreFotografie: "Photography",
       badgeNew: "new",
+      badgePopular: "popular",
     },
     impressum: {
       contactHeading: "Contact address",
@@ -1060,10 +1072,13 @@ window.SITE_TRANSLATIONS = {
     },
     bts: {
       back: "Indietro",
+      detailAlt: "Vista dettagliata del Behind the Scenes",
+    },
+    lightbox: {
       close: "Chiudi",
       prevImage: "Immagine precedente",
       nextImage: "Immagine successiva",
-      detailAlt: "Vista dettagliata del Behind the Scenes",
+      playVideo: "Riproduci video",
     },
     musik: {
       navIntro: "La mia passione per il piano",
@@ -1169,6 +1184,7 @@ window.SITE_TRANSLATIONS = {
       genreDrone: "Video drone",
       genreFotografie: "Fotografia",
       badgeNew: "nuovo",
+      badgePopular: "popolare",
     },
     impressum: {
       contactHeading: "Indirizzo di contatto",

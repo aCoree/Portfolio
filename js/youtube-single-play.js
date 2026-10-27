@@ -5,7 +5,7 @@
    ergänzen (Video-Iframes brauchen "?enablejsapi=1" in ihrer src, sonst
    kann dieses Skript sie nicht per postMessage steuern):
 
-       <script src="youtube-single-play.js"></script>
+       <script src="js/youtube-single-play.js"></script>
 
    Nutzt die offizielle YouTube IFrame Player API: sobald ein Video zu
    spielen beginnt, werden alle anderen auf der Seite automatisch

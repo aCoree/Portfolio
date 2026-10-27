@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
-    <script src="theme.js?v=1.3"></script>
+    <script src="js/theme.js?v=1.3"></script>
 
     <title>URBNVIBE | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
@@ -24,15 +24,15 @@
     <link rel="preload" as="image" href="cards/card-big-urbnvibe.jpg">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
 
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/favicons/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.5">
-    <link rel="stylesheet" href="az-reveal.css">
-    <link rel="stylesheet" href="header.css?v=2.3">
+    <link rel="stylesheet" href="css/az-reveal.css">
+    <link rel="stylesheet" href="css/header.css?v=2.3">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -259,13 +259,14 @@
             border-radius: 12px;
         }
 
-        .urbnvibe-video iframe {
+        .urbnvibe-video img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: 0;
+            object-fit: cover;
+            display: block;
         }
 
         /* Flyer Grid */
@@ -459,8 +460,10 @@
             }
         }
     </style>
+    <!-- Grossansicht (Lightbox): Aussehen zentral in css/lightbox.css -->
+    <link rel="stylesheet" href="css/lightbox.css">
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.8">
 </head>
 
 <body>
@@ -540,8 +543,8 @@
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-flyer-grid">
-                        <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1">
-                        <img src="images/flyer_seite_2.jpg" alt="URBNVIBE Flyer Seite 2">
+                        <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1" data-lightbox="urbnvibe">
+                        <img src="images/flyer_seite_2.jpg" alt="URBNVIBE Flyer Seite 2" data-lightbox="urbnvibe">
                     </div>
                 </div>
 
@@ -571,7 +574,7 @@
                 </div>
                 <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-logo-container">
-                        <img src="images/logo-urbnvibe.jpg" alt="URBNVIBE Logo">
+                        <img src="images/logo-urbnvibe.jpg" alt="URBNVIBE Logo" data-lightbox="urbnvibe">
                     </div>
                 </div>
             </div>
@@ -581,11 +584,13 @@
         <section class="urbnvibe-section" id="awareness-video-section">
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media az-reveal">
-                    <div class="urbnvibe-video">
-                        <iframe src="https://www.youtube.com/embed/4DkL7Umy8iY?enablejsapi=1" title="URBNVIBE Video"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+                    <!-- Vorschaubild + Play-Knopf: Klick öffnet das YouTube-Video in der
+                         Grossansicht (js/lightbox.js). Der Player lädt erst beim Klick. -->
+                    <div class="urbnvibe-video" role="button" tabindex="0" data-lightbox="urbnvibe"
+                        data-lightbox-youtube="4DkL7Umy8iY" data-i18n-attr="aria-label:lightbox.playVideo"
+                        aria-label="Video abspielen">
+                        <img src="images/urbnvibe-awareness-thumb.jpg" alt="URBNVIBE Awareness Video" loading="lazy">
+                        <span class="lightbox-video-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
                     </div>
                 </div>
                 <div class="urbnvibe-info">
@@ -605,9 +610,9 @@
         <!-- SOCIAL MEDIA CREATIVES -->
         <section class="urbnvibe-section creatives-mobile-fix" id="creatives-section">
             <div class="urbnvibe-creatives-grid az-reveal">
-                <div class="urbnvibe-creative"><img src="images/creative-1.png" alt="URBNVIBE Creative 1"></div>
-                <div class="urbnvibe-creative"><img src="images/creative-2.png" alt="URBNVIBE Creative 2"></div>
-                <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3"></div>
+                <div class="urbnvibe-creative"><img src="images/creative-1.png" alt="URBNVIBE Creative 1" data-lightbox="urbnvibe"></div>
+                <div class="urbnvibe-creative"><img src="images/creative-2.png" alt="URBNVIBE Creative 2" data-lightbox="urbnvibe"></div>
+                <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3" data-lightbox="urbnvibe"></div>
             </div>
             <div class="urbnvibe-info urbnvibe-creatives-info">
                 <span class="urbnvibe-info-label az-reveal" data-i18n="urbnvibe.creativesLabel">04 / Social Media</span>
@@ -622,8 +627,8 @@
     </main>
 
     <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
-    <script src="translations.js"></script>
-    <script src="i18n.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/i18n.js"></script>
 
     <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
     <script>
@@ -642,9 +647,9 @@
         ];
     </script>
 
-    <script src="header.js"></script>
-    <script src="az-reveal.js"></script>
-    <script src="youtube-single-play.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/az-reveal.js"></script>
+    <script src="js/lightbox.js"></script>
 
     <!-- ─── SCROLL & OVERLAY LOGIK SKRIPT (PERFORMANCE-OPTIMIERT) ─── -->
     <script>

@@ -13,7 +13,7 @@
      2.  Grundlagen (Hintergrund, Text, Links, Formulare, Buttons)
      3.  Seitenkopf, Zurück-Link, Infoblöcke, rechtliche Seiten
      4.  Karten, Slider, Poster
-     5.  Fotografie: Raster, Kacheln, Grossansicht (Lightbox)
+     5.  Fotografie: Raster, Kacheln (Hell-Modus der Grossansicht: css/lightbox.css)
      6.  Header (+ Startseite: transparenter Header über dem Video)
      7.  Footer + Hell/Dunkel-Button
      8.  Hinweisseiten (404 / Coming Soon)
@@ -508,37 +508,7 @@ html[data-theme="light"] .photo-grid-item {
   background: var(--lt-surface-2);
 }
 
-/* Grossansicht: heller Hintergrund, dunkle Bedienelemente */
-html[data-theme="light"] .photo-lightbox {
-  background-color: rgba(251, 250, 245, 0.97);
-}
-
-html[data-theme="light"] .photo-lightbox-slide img {
-  box-shadow: 0 0 30px rgba(37, 35, 31, 0.22);
-}
-
-html[data-theme="light"] .lightbox-nav-btn {
-  background: rgba(251, 250, 245, 0.82);
-  border-color: rgba(37, 35, 31, 0.2);
-  color: var(--lt-text);
-  box-shadow: 0 6px 20px rgba(37, 35, 31, 0.16);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  html[data-theme="light"] .lightbox-nav-btn:hover {
-    background: rgba(37, 35, 31, 0.08);
-    border-color: rgba(37, 35, 31, 0.4);
-  }
-}
-
-html[data-theme="light"] .lightbox-thumb {
-  border-color: rgba(37, 35, 31, 0.2);
-  background: var(--lt-surface-2);
-}
-
-html[data-theme="light"] .lightbox-thumb.active {
-  border-color: var(--lt-text);
-}
+/* Grossansicht (Lightbox): Hell-Modus liegt in css/lightbox.css */
 
 
 /* ═════════════════════════════════════════════════════════════

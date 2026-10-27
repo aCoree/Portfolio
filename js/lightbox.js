@@ -1,11 +1,42 @@
-/* ─── GEMEINSAME BILD-LIGHTBOX ───
-   Wird von der Fotografie-Galerie (landschaften/portrait/wildlife/
-   streetfotografie) UND von bts.html genutzt.
+/* ─── GEMEINSAME GROSSANSICHT (LIGHTBOX) – BILDER & YOUTUBE-VIDEOS ───
+   EINE Datei für alle Seiten (Fotografie-Kategorien, Behind the Scenes,
+   URBNVIBE, …). Das Aussehen steht in css/lightbox.css. Das Overlay
+   (Schliessen/Pfeile) baut dieses Skript selbst auf – es muss auf den
+   Seiten KEIN Lightbox-HTML mehr stehen.
 
-   Native CSS-Scroll-Snap-Galerie (ein Slide pro Bild, nebeneinander in
-   einem scrollbaren Container) – exakt dasselbe Prinzip wie die
-   Produktbild-Galerie bei Digitec und wie der "Meine Projekte"-Slider
-   auf index.html (.apple-slider-track): Touch-Swipe und der 2-Finger-
+   ▸ NEUE SEITE MIT GROSSANSICHT (3 Schritte):
+     1. In <head> (nach style.css/header.css, vor theme.css):
+            <link rel="stylesheet" href="css/lightbox.css">
+     2. Am Seitenende, nach translations.js/i18n.js:
+            <script src="js/lightbox.js"></script>
+     3. Bei jedem Bild, das gross anklickbar sein soll:
+            <img src="…" alt="…" data-lightbox="meine-galerie">
+        Alle Elemente mit demselben Namen bilden EINE Galerie (blättern,
+        Miniatur-Leiste, Runterwischen zum Schliessen). Optional:
+          data-lightbox-src="grosses-bild.jpg"  → zeigt in der Grossansicht
+                                                   eine andere/grössere Datei
+          data-lightbox-xl                      → Bild auf PC nochmals
+                                                   grösser skalieren
+
+   ▸ YOUTUBE-VIDEO IN DER GROSSANSICHT:
+        <div data-lightbox="meine-galerie" data-lightbox-youtube="VIDEO_ID"
+             role="button" tabindex="0">
+            <img src="vorschaubild.jpg" alt="…">
+            <span class="lightbox-video-play"><i class="fa-solid fa-play"></i></span>
+        </div>
+     Das Vorschaubild (data-lightbox-poster oder das <img> darin) ist das
+     "Bild" des Videos. Der YouTube-Player wird erst nach dem Klick geladen,
+     beim Weiterblättern stoppt das Video automatisch.
+
+   ▸ PER SKRIPT (z.B. foto-galerie.js):
+        var lb = PhotoLightbox.init({ groups: [[{ src, alt }, …], …] });
+        lb.openGroup(gruppenIndex, bildIndex);
+     Einträge: { src, alt }  oder  { youtube: 'VIDEO_ID', poster, alt }.
+
+   Technik: Native CSS-Scroll-Snap-Galerie (ein Slide pro Bild, nebeneinander
+   in einem scrollbaren Container) – exakt dasselbe Prinzip wie die
+   Produktbild-Galerie bei Digitec und wie der "Meine Projekte"-Slider auf
+   index.html (.apple-slider-track): Touch-Swipe und der 2-Finger-
    Trackpad-Swipe laufen komplett nativ über den Browser, dadurch butter-
    weich, immer zuverlässig wiederholbar und ohne eigene Zieh-Physik.
    Nur für die Maus (kein natives horizontales Wischen) wird das Scrollen
@@ -14,14 +45,50 @@
    Zusätzlich: eine Miniatur-Leiste unten zum direkten Springen zwischen
    den Bildern, sowie Runterwischen/-ziehen zum Schliessen (Touch & Maus),
    analog zum Ein-/Ausblenden des Mobile-Menüs (siehe .photo-lightbox in
-   style.css).
-
-   Zwei Modi:
-   - Standard (bts.html): alle Bilder der Seite bilden EINE Galerie.
-   - Gruppen-Modus (Fotografie-Kategorien, siehe foto-galerie.js): pro Motiv
-     (z.B. "Eisvogel") eine eigene Galerie; init() liefert dafür
-     { openGroup(gruppenIndex) } zurück. */
+   css/lightbox.css). */
 (function () {
+    /* Übersetzung über i18n.js (falls geladen), sonst deutscher Fallback. */
+    function t(key, fallback) {
+        try {
+            var value = window.i18n && window.i18n.translate && window.i18n.translate(key);
+            if (value) return value;
+        } catch (err) { /* i18n evtl. noch nicht bereit */ }
+        return fallback;
+    }
+
+    function makeNavButton(className, id, iconClass, i18nKey, fallback) {
+        var btn = document.createElement('button');
+        btn.className = 'lightbox-nav-btn ' + className;
+        btn.id = id;
+        btn.type = 'button';
+        btn.setAttribute('data-i18n-attr', 'aria-label:' + i18nKey);
+        btn.setAttribute('aria-label', t(i18nKey, fallback));
+        var icon = document.createElement('i');
+        icon.className = iconClass;
+        btn.appendChild(icon);
+        return btn;
+    }
+
+    /* Das Overlay (Schliessen, Pfeile, Slide-Container) steht nicht mehr in
+       jeder HTML-Seite, sondern wird hier EINMAL aufgebaut – gibt es auf
+       einer Seite noch ein eigenes #photo-lightbox, wird dieses verwendet. */
+    function ensureOverlay(opts) {
+        var existing = document.getElementById(opts.overlayId);
+        if (existing) return existing;
+
+        var overlay = document.createElement('div');
+        overlay.id = opts.overlayId;
+        overlay.className = 'photo-lightbox';
+        overlay.appendChild(makeNavButton('lightbox-close-btn', opts.closeId, 'fa-solid fa-xmark', 'lightbox.close', 'Schließen'));
+        overlay.appendChild(makeNavButton('lightbox-prev-btn', opts.prevId, 'fa-solid fa-chevron-left', 'lightbox.prevImage', 'Vorheriges Bild'));
+        var content = document.createElement('div');
+        content.className = 'photo-lightbox-content';
+        overlay.appendChild(content);
+        overlay.appendChild(makeNavButton('lightbox-next-btn', opts.nextId, 'fa-solid fa-chevron-right', 'lightbox.nextImage', 'Nächstes Bild'));
+        document.body.appendChild(overlay);
+        return overlay;
+    }
+
     function initPhotoLightbox(options) {
         var opts = Object.assign({
             itemSelector: '.photo-grid .photo-grid-item img',
@@ -32,14 +99,14 @@
             extraLargeIndexes: [],
             extraLargeScale: 1.18,
             extraLargeMinWidth: 900,
-            /* Optional: Gruppen-Modus (siehe foto-galerie.js). Statt aller
+            /* Optional: Gruppen-Modus (siehe js/foto-galerie.js). Statt aller
                Bilder der Seite zeigt die Lightbox dann pro Aufruf von
                openGroup(gruppe) nur die Bilder EINER Gruppe, z.B. alle
                Fotos vom Eisvogel. Format: [[{src, alt}, ...], ...] */
             groups: null
         }, options || {});
 
-        var overlay = document.getElementById(opts.overlayId);
+        var overlay = ensureOverlay(opts);
         var prevBtn = document.getElementById(opts.prevId);
         var nextBtn = document.getElementById(opts.nextId);
         var closeBtn = document.getElementById(opts.closeId);
@@ -57,6 +124,7 @@
         var len = 0;
         var currentIndex = 0;
         var slideImgs = [];
+        var videos = [];
         var thumbs = [];
         var thumbsRow = null;
 
@@ -72,15 +140,21 @@
             if (thumbsRow) { thumbsRow.remove(); thumbsRow = null; }
             thumbs = [];
 
-            slideImgs = list.map(function (entry) {
+            videos = [];
+            slideImgs = list.map(function (entry, idx) {
                 var slide = document.createElement('div');
                 slide.className = 'photo-lightbox-slide';
                 var img = document.createElement('img');
-                img.src = entry.src;
                 img.alt = entry.alt || '';
                 img.draggable = false;
                 img.addEventListener('dragstart', function (e) { e.preventDefault(); });
-                slide.appendChild(img);
+                if (entry.youtube) {
+                    slide.classList.add('is-video');
+                    buildVideoSlide(entry, slide, img, idx);
+                } else {
+                    img.src = entry.src;
+                    slide.appendChild(img);
+                }
                 content.appendChild(slide);
                 return img;
             });
@@ -97,10 +171,16 @@
                     thumb.type = 'button';
                     thumb.className = 'lightbox-thumb';
                     var thumbImg = document.createElement('img');
-                    thumbImg.src = entry.src;
+                    thumbImg.src = entry.youtube ? posterOf(entry) : entry.src;
                     thumbImg.alt = '';
                     thumbImg.draggable = false;
                     thumb.appendChild(thumbImg);
+                    if (entry.youtube) {
+                        var thumbPlay = document.createElement('span');
+                        thumbPlay.className = 'lightbox-thumb-play';
+                        thumbPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
+                        thumb.appendChild(thumbPlay);
+                    }
                     thumb.addEventListener('click', function (e) {
                         e.stopPropagation();
                         goTo(idx, true);
@@ -113,17 +193,72 @@
             updateExtraLargeScale();
         }
 
+        function posterOf(entry) {
+            return entry.poster || ('https://i.ytimg.com/vi/' + entry.youtube + '/hqdefault.jpg');
+        }
+
+        /* Video-Slide: erst nur Vorschaubild + Play-Knopf, der YouTube-
+           Player (iframe) entsteht erst nach dem Klick – so lädt nichts von
+           YouTube, solange niemand das Video startet. */
+        function buildVideoSlide(entry, slide, poster, idx) {
+            var box = document.createElement('div');
+            box.className = 'lightbox-video';
+            poster.className = 'lightbox-video-poster';
+            poster.src = posterOf(entry);
+            var play = document.createElement('button');
+            play.type = 'button';
+            play.className = 'lightbox-video-play';
+            play.setAttribute('data-i18n-attr', 'aria-label:lightbox.playVideo');
+            play.setAttribute('aria-label', t('lightbox.playVideo', 'Video abspielen'));
+            play.innerHTML = '<i class="fa-solid fa-play"></i>';
+            box.appendChild(poster);
+            box.appendChild(play);
+            box.addEventListener('click', function (e) {
+                e.stopPropagation();
+                playVideo(idx);
+            });
+            slide.appendChild(box);
+            videos[idx] = { box: box, id: entry.youtube, title: entry.alt || 'YouTube', iframe: null };
+        }
+
+        function playVideo(idx) {
+            var video = videos[idx];
+            if (!video || video.iframe) return;
+            var iframe = document.createElement('iframe');
+            iframe.className = 'lightbox-video-frame';
+            iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(video.id) + '?autoplay=1&rel=0&playsinline=1';
+            iframe.title = video.title;
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            iframe.setAttribute('allowfullscreen', '');
+            video.box.appendChild(iframe);
+            video.box.classList.add('is-playing');
+            video.iframe = iframe;
+        }
+
+        /* Entfernt den Player wieder (= Video stoppt, Vorschaubild kommt
+           zurück). keepIdx: Slide, der gerade angezeigt wird und weiterläuft. */
+        function stopVideos(keepIdx) {
+            videos.forEach(function (video, idx) {
+                if (!video || !video.iframe || idx === keepIdx) return;
+                video.iframe.remove();
+                video.iframe = null;
+                video.box.classList.remove('is-playing');
+            });
+        }
+
         function updateThumbActive() {
             thumbs.forEach(function (thumb, idx) {
                 thumb.classList.toggle('active', idx === currentIndex);
             });
+            stopVideos(currentIndex);
         }
 
         function updateExtraLargeScale() {
             var active = window.innerWidth >= opts.extraLargeMinWidth;
-            opts.extraLargeIndexes.forEach(function (idx) {
-                var img = slideImgs[idx];
-                if (img) img.style.transform = active ? 'scale(' + opts.extraLargeScale + ')' : '';
+            slideImgs.forEach(function (img, idx) {
+                var entry = imageList[idx];
+                var isXl = opts.extraLargeIndexes.indexOf(idx) !== -1 || (entry && entry.xl);
+                if (isXl && !(entry && entry.youtube)) img.style.transform = active ? 'scale(' + opts.extraLargeScale + ')' : '';
             });
         }
 
@@ -136,7 +271,7 @@
 
         var closeTimer = null;
 
-        function open(index) {
+        function open(index, autoplay) {
             clearTimeout(closeTimer);
             closeTimer = null;
             content.classList.remove('is-dragging');
@@ -145,6 +280,8 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             goTo(index, false);
+            /* Wurde direkt auf ein Video geklickt, startet es sofort. */
+            if (autoplay) playVideo(currentIndex);
         }
 
         function close() {
@@ -153,6 +290,7 @@
             overlay.classList.remove('active');
             document.body.style.overflow = '';
             resetVerticalDragVisual(false);
+            stopVideos(-1);
         }
 
         /* Schliessen per Runterwischen: das Bild fährt von seiner aktuellen
@@ -180,11 +318,11 @@
 
         /* Gruppen-Modus: Galerie der gewählten Gruppe neu aufbauen und
            öffnen. */
-        function openGroup(groupIndex, imageIndex) {
+        function openGroup(groupIndex, imageIndex, autoplay) {
             var list = opts.groups && opts.groups[groupIndex];
             if (!list || !list.length) return;
             buildGallery(list);
-            open(imageIndex || 0);
+            open(imageIndex || 0, autoplay);
         }
 
         items.forEach(function (img, idx) {
@@ -383,7 +521,7 @@
                 dragMoved = false;
                 return;
             }
-            if (e.target.tagName !== 'IMG') close();
+            if (e.target.tagName !== 'IMG' && !e.target.closest('.lightbox-video')) close();
         });
 
         /* ─── RUNTERWISCHEN ZUM SCHLIESSEN AUF TOUCH-GERÄTEN ───
@@ -439,5 +577,71 @@
         return { openGroup: openGroup, close: close };
     }
 
-    window.PhotoLightbox = { init: initPhotoLightbox };
+    /* ─── AUTOMATISCHER START ÜBER data-lightbox ───
+       Jedes Element mit  data-lightbox="name"  ist klickbar; alle mit
+       demselben Namen bilden eine Galerie (Anleitung: ganz oben). */
+    function entryFromElement(el) {
+        var img = el.tagName === 'IMG' ? el : el.querySelector('img');
+        var alt = (img && img.alt) || el.getAttribute('aria-label') || '';
+        var youtube = el.getAttribute('data-lightbox-youtube');
+        if (youtube) {
+            return {
+                youtube: youtube,
+                poster: el.getAttribute('data-lightbox-poster') || (img && img.src) || '',
+                alt: alt
+            };
+        }
+        var src = el.getAttribute('data-lightbox-src') || (img && img.src);
+        if (!src) return null;
+        return { src: src, alt: alt, xl: el.hasAttribute('data-lightbox-xl') };
+    }
+
+    function autoInit() {
+        var elements = Array.prototype.slice.call(document.querySelectorAll('[data-lightbox]'));
+        if (!elements.length) return null;
+
+        var names = [];
+        var groups = [];
+        var bindings = [];
+        elements.forEach(function (el) {
+            var entry = entryFromElement(el);
+            if (!entry) return;
+            var name = el.getAttribute('data-lightbox') || 'default';
+            var groupIndex = names.indexOf(name);
+            if (groupIndex === -1) {
+                groupIndex = names.length;
+                names.push(name);
+                groups.push([]);
+            }
+            groups[groupIndex].push(entry);
+            bindings.push({ el: el, group: groupIndex, index: groups[groupIndex].length - 1, video: !!entry.youtube });
+        });
+
+        var lightbox = initPhotoLightbox({ groups: groups });
+        if (!lightbox) return null;
+
+        bindings.forEach(function (b) {
+            function openThis() { lightbox.openGroup(b.group, b.index, b.video); }
+            b.el.addEventListener('click', openThis);
+            /* Elemente, die keine Links/Buttons sind (z.B. ein <div> mit
+               Video-Vorschau), per Tastatur (Enter/Leertaste) bedienbar. */
+            if (b.el.getAttribute('role') === 'button') {
+                b.el.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openThis();
+                    }
+                });
+            }
+        });
+        return lightbox;
+    }
+
+    window.PhotoLightbox = { init: initPhotoLightbox, auto: autoInit };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', autoInit);
+    } else {
+        autoInit();
+    }
 })();

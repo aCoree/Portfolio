@@ -17,7 +17,7 @@
         <div class="photo-mosaic" data-foto-motiv></div>
       → liest k= und m= aus der Adresse, setzt Titel/Zurück-Link und zeigt
         alle Fotos des Motivs als Mosaik (siehe unten). Ein Klick öffnet die
-        Lightbox (photo-lightbox.js) mit allen Fotos dieses Motivs.
+        Lightbox (js/lightbox.js) mit allen Fotos dieses Motivs.
    ───────────────────────────────────────────────────────────── */
 (function () {
     var MOTIV_PAGE = 'motiv.html';

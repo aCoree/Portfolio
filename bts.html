@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
-    <script src="theme.js?v=1.3"></script>
+    <script src="js/theme.js?v=1.3"></script>
     <title>Behind the Scenes | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
     <meta name="description" content="Behind the Scenes zum Kurzfilm RUN von Aurelio Zingarello: Bilder und Einblicke vom Dreh.">
@@ -24,15 +24,15 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
 
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/favicons/site.webmanifest">
 
     <link rel="stylesheet" href="style.css?v=1.5">
-    <link rel="stylesheet" href="az-reveal.css">
-    <link rel="stylesheet" href="header.css?v=2.3">
+    <link rel="stylesheet" href="css/az-reveal.css">
+    <link rel="stylesheet" href="css/header.css?v=2.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -92,8 +92,10 @@
             }
         }
     </style>
+    <!-- Grossansicht (Lightbox): Aussehen zentral in css/lightbox.css -->
+    <link rel="stylesheet" href="css/lightbox.css">
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.8">
 </head>
 <body>
     <!-- SEO-NAV-BEGIN -->
@@ -135,52 +137,39 @@
 
         <div class="photo-grid az-reveal" data-az-delay="2">
             <div class="photo-grid-item">
-                <img src="bts/bts-1.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 1" loading="lazy">
+                <img src="bts/bts-1.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 1" loading="lazy" data-lightbox="bts">
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-2.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 2" loading="lazy">
+                <img src="bts/bts-2.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 2" loading="lazy" data-lightbox="bts">
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-3.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 3" loading="lazy">
+                <img src="bts/bts-3.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 3" loading="lazy" data-lightbox="bts" data-lightbox-xl>
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-4.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 4" loading="lazy">
+                <img src="bts/bts-4.jpg" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 4" loading="lazy" data-lightbox="bts">
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-5.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 5" loading="lazy">
+                <img src="bts/bts-5.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 5" loading="lazy" data-lightbox="bts">
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-6.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 6" loading="lazy">
+                <img src="bts/bts-6.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 6" loading="lazy" data-lightbox="bts">
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-7.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 7" loading="lazy">
+                <img src="bts/bts-7.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 7" loading="lazy" data-lightbox="bts">
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-8.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 8" loading="lazy">
+                <img src="bts/bts-8.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 8" loading="lazy" data-lightbox="bts" data-lightbox-xl>
             </div>
             <div class="photo-grid-item">
-                <img src="bts/bts-9.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 9" loading="lazy">
+                <img src="bts/bts-9.png" alt="Behind the Scenes vom Dreh des Kurzfilms RUN – Bild 9" loading="lazy" data-lightbox="bts">
             </div>
         </div>
     </main>
 
-    <!-- ─── GROSSANSICHT (LIGHTBOX) ─── -->
-    <div id="photo-lightbox" class="photo-lightbox">
-        <button class="lightbox-nav-btn lightbox-close-btn" id="lightbox-close" data-i18n-attr="aria-label:bts.close" aria-label="Schließen">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <button class="lightbox-nav-btn lightbox-prev-btn" id="lightbox-prev" data-i18n-attr="aria-label:bts.prevImage" aria-label="Vorheriges Bild">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div class="photo-lightbox-content"></div>
-        <button class="lightbox-nav-btn lightbox-next-btn" id="lightbox-next" data-i18n-attr="aria-label:bts.nextImage" aria-label="Nächstes Bild">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
-    </div>
 
-    <script src="translations.js"></script>
+    <script src="js/translations.js"></script>
 
-    <script src="i18n.js"></script>
+    <script src="js/i18n.js"></script>
 
     <!-- ─── SECOND-HEADER-KONFIGURATION (IDENTISCH ZU RUN.HTML – VOLLQUALIFIZIERTE
          LINKS, DAMIT SIE AUCH VON DIESER SEITE AUS FUNKTIONIEREN) ─── -->
@@ -194,20 +183,10 @@
         ];
     </script>
 
-    <script src="header.js"></script>
+    <script src="js/header.js"></script>
 
-    <script src="az-reveal.js"></script>
+    <script src="js/az-reveal.js"></script>
 
-    <script src="photo-lightbox.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            PhotoLightbox.init({
-                itemSelector: '.photo-grid .photo-grid-item img',
-                /* Bild 3 (Index 2, Hochformat) und Bild 8 (Index 7) auf PC
-                   nochmals größer skalieren. */
-                extraLargeIndexes: [2, 7]
-            });
-        });
-    </script>
+    <script src="js/lightbox.js"></script>
 </body>
 </html>
