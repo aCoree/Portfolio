@@ -1449,7 +1449,7 @@ body:not(.has-hero) main.legal-content {
     transform-origin: center;
     color: #fff;
     font-family: "Barlow Condensed", sans-serif;
-    font-size: calc(var(--s) * var(--br, 0.2157) * var(--bf, 1));
+    font-size: calc(var(--s) * var(--br, 0.1928) * var(--bf, 1));
     line-height: 1;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -1464,10 +1464,10 @@ body:not(.has-hero) main.legal-content {
    das LÄNGSTE Wort (beliebt / populaire / popular / popolare) das Dreieck mit
    kleinem Rand ausfüllt; "neu/new/nouveau/nuovo" bekommt dieselbe Grösse, so
    sehen beide Sticker einer Sprache gleich aus. */
-:lang(de) { --br: 0.2157; }
-:lang(en) { --br: 0.1985; }
-:lang(fr) { --br: 0.1688; }
-:lang(it) { --br: 0.1786; }
+:lang(de) { --br: 0.1928; }
+:lang(en) { --br: 0.1773; }
+:lang(fr) { --br: 0.1508; }
+:lang(it) { --br: 0.1596; }
 
 /* ─── LIGHTBOX (GROSSANSICHT) ───
    Liegt komplett in css/lightbox.css (Markup + Logik: js/lightbox.js). */

@@ -860,7 +860,15 @@ body:not(.transparent-header) .nav-expand {
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh;
+  /* Bis zum unteren Rand des SICHTBAREN Bereichs (bottom: 0) statt height:
+     100vh: 100vh ist auf dem Handy die Höhe OHNE Browserleisten (Safari/Chrome
+     blenden Adress- und Navigationsleiste ein und aus). Das Menü war dadurch
+     höher als der sichtbare Bereich, der Browser hielt "ganz unten" für
+     erreicht und die untersten Einträge (YouTube-Icon, Sprachbuttons, letzte
+     Lieder einer langen Liste) lagen hinter den Leisten und waren nicht
+     erreichbar. */
+  bottom: 0;
+  overscroll-behavior: contain;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--header-surface-mobile);
@@ -904,7 +912,10 @@ body:not(.transparent-header) .nav-expand {
   position: relative;
   width: 100%;
   margin: 0;
-  padding: 100px 24px 32px 24px;
+  /* Unten Luft (plus Notch-/Home-Balken-Bereich), damit auch der letzte
+     Eintrag einer langen Liste ganz über die Browserleiste hochgescrollt
+     werden kann. */
+  padding: 100px 24px calc(72px + env(safe-area-inset-bottom, 0px)) 24px;
   display: grid;
   box-sizing: border-box;
 }
@@ -1021,7 +1032,31 @@ button.mobile-nav-drill {
   justify-content: space-between;
   width: 100%;
   gap: 28px;
-  margin-top: 40px;
+  margin-top: 28px;
+}
+
+/* Wird es auf der obersten Ebene unten zu eng (kleine Bildschirme, grosse
+   Browserleisten – header.js: fitMobileSocialRow, mit Reserve, also früh genug),
+   rutschen YouTube-Icon und Sprachbuttons nach RECHTS neben die Hauptlinks
+   (rechtsbündig, untereinander) statt unter die Liste zu fallen. */
+.mobile-menu-panel {
+  position: relative;
+}
+
+.mobile-social-lang-row.is-side {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: auto;
+  margin: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.mobile-social-lang-row.is-side .lang-switcher {
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .mobile-social {
