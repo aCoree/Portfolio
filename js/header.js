@@ -1306,30 +1306,6 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 
-    // Passt die Zeile mit YouTube-Icon + Sprachbuttons (oberste Ebene) unter die
-    // Links? Wenn nicht – oder nur knapp (Reserve, damit es früh genug umschaltet,
-    // nicht erst wenn alles gequetscht ist) –, bekommt sie .is-side und steht
-    // rechtsbündig neben den Hauptlinks (siehe header.css). Gemessen wird immer
-    // im "unten"-Zustand mit Layout-Massen (offsetTop), die von den Einblend-
-    // Animationen (transform) unabhängig sind.
-    const SOCIAL_ROW_RESERVE = 48;
-
-    function fitMobileSocialRow() {
-        if (!mobileMenu || !mobileMenuLevels) return;
-        const panels = mobileMenuLevels.querySelectorAll('.mobile-menu-panel');
-        const panel = panels[panels.length - 1];
-        const row = panel && panel.querySelector('.mobile-social-lang-row');
-        if (!row) return;
-        row.classList.remove('is-side');
-        let bottom = row.offsetHeight;
-        for (let el = row; el && el !== mobileMenu; el = el.offsetParent) bottom += el.offsetTop;
-        if (bottom + SOCIAL_ROW_RESERVE > mobileMenu.clientHeight) row.classList.add('is-side');
-    }
-
-    window.addEventListener('resize', () => {
-        if (mobileMenu && mobileMenu.classList.contains('open')) fitMobileSocialRow();
-    });
-
     // Tauscht das sichtbare Panel in .mobile-menu-levels gegen neuen HTML-
     // Inhalt aus – generischer Mechanismus, den sowohl die Nav-Ebenen
     // (renderMobileLevel) als auch das Mobile-Such-Panel (renderMobile
@@ -1373,7 +1349,6 @@ document.addEventListener("DOMContentLoaded", function() {
             mobileMenuLevels.innerHTML = '';
             mobileMenuLevels.appendChild(newPanel);
             if (attachFn) attachFn(newPanel);
-            fitMobileSocialRow();
             animatePanelRowsIn(newPanel, null);
             return;
         }
@@ -1389,7 +1364,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         mobileMenuLevels.appendChild(newPanel);
         if (attachFn) attachFn(newPanel);
-        fitMobileSocialRow();
         animatePanelRowsIn(newPanel, direction);
         animatePanelOut(oldPanel, direction);
     }

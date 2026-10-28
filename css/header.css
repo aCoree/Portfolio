@@ -1035,29 +1035,6 @@ button.mobile-nav-drill {
   margin-top: 28px;
 }
 
-/* Wird es auf der obersten Ebene unten zu eng (kleine Bildschirme, grosse
-   Browserleisten – header.js: fitMobileSocialRow, mit Reserve, also früh genug),
-   rutschen YouTube-Icon und Sprachbuttons nach RECHTS neben die Hauptlinks
-   (rechtsbündig, untereinander) statt unter die Liste zu fallen. */
-.mobile-menu-panel {
-  position: relative;
-}
-
-.mobile-social-lang-row.is-side {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: auto;
-  margin: 0;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 18px;
-}
-
-.mobile-social-lang-row.is-side .lang-switcher {
-  flex-direction: column;
-  align-items: flex-end;
-}
 
 .mobile-social {
   display: flex;
