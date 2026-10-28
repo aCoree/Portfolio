@@ -1,4 +1,4 @@
-/* ─── GEMEINSAME GROSSANSICHT (LIGHTBOX) – BILDER & YOUTUBE-VIDEOS ───
+/* ─── GEMEINSAME GROSSANSICHT (LIGHTBOX) – BILDER ───
    EINE Datei für alle Seiten (Fotografie-Kategorien, Behind the Scenes,
    URBNVIBE, …). Das Aussehen steht in css/lightbox.css. Das Overlay
    (Schliessen/Pfeile) baut dieses Skript selbst auf – es muss auf den
@@ -18,23 +18,10 @@
           data-lightbox-xl                      → Bild auf PC nochmals
                                                    grösser skalieren
 
-   ▸ YOUTUBE-VIDEO IN DER GROSSANSICHT:
-     Zusätzlich im <head> das Stylesheet des Play-Knopfs einbinden:
-            <link rel="stylesheet" href="css/youtube.css">
-        <div data-lightbox="meine-galerie" data-lightbox-youtube="VIDEO_ID"
-             role="button" tabindex="0">
-            <img src="vorschaubild.jpg" alt="…">
-        </div>
-     Das Vorschaubild (data-lightbox-poster oder das <img> darin) ist das
-     "Bild" des Videos, der Play-Knopf wird automatisch daraufgesetzt (Look:
-     css/youtube.css, wie bei allen YouTube-Videos der Seite). Der
-     YouTube-Player wird erst nach dem Klick geladen, beim Weiterblättern
-     stoppt das Video automatisch.
-
    ▸ PER SKRIPT (z.B. foto-galerie.js):
         var lb = PhotoLightbox.init({ groups: [[{ src, alt }, …], …] });
         lb.openGroup(gruppenIndex, bildIndex);
-     Einträge: { src, alt }  oder  { youtube: 'VIDEO_ID', poster, alt }.
+     Einträge: { src, alt }.
 
    Technik: Native CSS-Scroll-Snap-Galerie (ein Slide pro Bild, nebeneinander
    in einem scrollbaren Container) – exakt dasselbe Prinzip wie die
@@ -127,7 +114,6 @@
         var len = 0;
         var currentIndex = 0;
         var slideImgs = [];
-        var videos = [];
         var thumbs = [];
         var thumbsRow = null;
 
@@ -143,7 +129,6 @@
             if (thumbsRow) { thumbsRow.remove(); thumbsRow = null; }
             thumbs = [];
 
-            videos = [];
             slideImgs = list.map(function (entry, idx) {
                 var slide = document.createElement('div');
                 slide.className = 'photo-lightbox-slide';
@@ -151,13 +136,8 @@
                 img.alt = entry.alt || '';
                 img.draggable = false;
                 img.addEventListener('dragstart', function (e) { e.preventDefault(); });
-                if (entry.youtube) {
-                    slide.classList.add('is-video');
-                    buildVideoSlide(entry, slide, img, idx);
-                } else {
-                    img.src = entry.src;
-                    slide.appendChild(img);
-                }
+                img.src = entry.src;
+                slide.appendChild(img);
                 content.appendChild(slide);
                 return img;
             });
@@ -174,16 +154,10 @@
                     thumb.type = 'button';
                     thumb.className = 'lightbox-thumb';
                     var thumbImg = document.createElement('img');
-                    thumbImg.src = entry.youtube ? posterOf(entry) : entry.src;
+                    thumbImg.src = entry.src;
                     thumbImg.alt = '';
                     thumbImg.draggable = false;
                     thumb.appendChild(thumbImg);
-                    if (entry.youtube) {
-                        var thumbPlay = document.createElement('span');
-                        thumbPlay.className = 'lightbox-thumb-play';
-                        thumbPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
-                        thumb.appendChild(thumbPlay);
-                    }
                     thumb.addEventListener('click', function (e) {
                         e.stopPropagation();
                         goTo(idx, true);
@@ -196,64 +170,10 @@
             updateExtraLargeScale();
         }
 
-        function posterOf(entry) {
-            return entry.poster || ('https://i.ytimg.com/vi/' + entry.youtube + '/hqdefault.jpg');
-        }
-
-        /* Video-Slide: erst nur Vorschaubild + Play-Knopf, der YouTube-
-           Player (iframe) entsteht erst nach dem Klick – so lädt nichts von
-           YouTube, solange niemand das Video startet. */
-        function buildVideoSlide(entry, slide, poster, idx) {
-            var box = document.createElement('div');
-            box.className = 'lightbox-video';
-            poster.className = 'lightbox-video-poster';
-            poster.src = posterOf(entry);
-            var start = document.createElement('button');
-            start.type = 'button';
-            start.className = 'yt-video-start';
-            start.setAttribute('data-i18n-attr', 'aria-label:lightbox.playVideo');
-            start.setAttribute('aria-label', t('lightbox.playVideo', 'Video abspielen'));
-            start.innerHTML = '<span class="yt-play"></span>';
-            box.appendChild(poster);
-            box.appendChild(start);
-            box.addEventListener('click', function (e) {
-                e.stopPropagation();
-                playVideo(idx);
-            });
-            slide.appendChild(box);
-            videos[idx] = { box: box, id: entry.youtube, title: entry.alt || 'YouTube', iframe: null };
-        }
-
-        function playVideo(idx) {
-            var video = videos[idx];
-            if (!video || video.iframe) return;
-            var iframe = document.createElement('iframe');
-            iframe.className = 'lightbox-video-frame';
-            iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(video.id) + '?autoplay=1&rel=0&playsinline=1';
-            iframe.title = video.title;
-            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-            iframe.setAttribute('allowfullscreen', '');
-            video.box.appendChild(iframe);
-            video.box.classList.add('is-playing');
-            video.iframe = iframe;
-        }
-
-        /* Entfernt den Player wieder (= Video stoppt, Vorschaubild kommt
-           zurück). keepIdx: Slide, der gerade angezeigt wird und weiterläuft. */
-        function stopVideos(keepIdx) {
-            videos.forEach(function (video, idx) {
-                if (!video || !video.iframe || idx === keepIdx) return;
-                video.iframe.remove();
-                video.iframe = null;
-                video.box.classList.remove('is-playing');
-            });
-        }
-
         function updateThumbActive() {
             thumbs.forEach(function (thumb, idx) {
                 thumb.classList.toggle('active', idx === currentIndex);
             });
-            stopVideos(currentIndex);
         }
 
         function updateExtraLargeScale() {
@@ -261,7 +181,7 @@
             slideImgs.forEach(function (img, idx) {
                 var entry = imageList[idx];
                 var isXl = opts.extraLargeIndexes.indexOf(idx) !== -1 || (entry && entry.xl);
-                if (isXl && !(entry && entry.youtube)) img.style.transform = active ? 'scale(' + opts.extraLargeScale + ')' : '';
+                if (isXl) img.style.transform = active ? 'scale(' + opts.extraLargeScale + ')' : '';
             });
         }
 
@@ -274,7 +194,7 @@
 
         var closeTimer = null;
 
-        function open(index, autoplay) {
+        function open(index) {
             clearTimeout(closeTimer);
             closeTimer = null;
             content.classList.remove('is-dragging');
@@ -283,8 +203,6 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             goTo(index, false);
-            /* Wurde direkt auf ein Video geklickt, startet es sofort. */
-            if (autoplay) playVideo(currentIndex);
         }
 
         function close() {
@@ -293,7 +211,6 @@
             overlay.classList.remove('active');
             document.body.style.overflow = '';
             resetVerticalDragVisual(false);
-            stopVideos(-1);
         }
 
         /* Schliessen per Runterwischen: das Bild fährt von seiner aktuellen
@@ -321,11 +238,11 @@
 
         /* Gruppen-Modus: Galerie der gewählten Gruppe neu aufbauen und
            öffnen. */
-        function openGroup(groupIndex, imageIndex, autoplay) {
+        function openGroup(groupIndex, imageIndex) {
             var list = opts.groups && opts.groups[groupIndex];
             if (!list || !list.length) return;
             buildGallery(list);
-            open(imageIndex || 0, autoplay);
+            open(imageIndex || 0);
         }
 
         items.forEach(function (img, idx) {
@@ -524,7 +441,7 @@
                 dragMoved = false;
                 return;
             }
-            if (e.target.tagName !== 'IMG' && !e.target.closest('.lightbox-video')) close();
+            if (e.target.tagName !== 'IMG') close();
         });
 
         /* ─── RUNTERWISCHEN ZUM SCHLIESSEN AUF TOUCH-GERÄTEN ───
@@ -586,14 +503,6 @@
     function entryFromElement(el) {
         var img = el.tagName === 'IMG' ? el : el.querySelector('img');
         var alt = (img && img.alt) || el.getAttribute('aria-label') || '';
-        var youtube = el.getAttribute('data-lightbox-youtube');
-        if (youtube) {
-            return {
-                youtube: youtube,
-                poster: el.getAttribute('data-lightbox-poster') || (img && img.src) || '',
-                alt: alt
-            };
-        }
         var src = el.getAttribute('data-lightbox-src') || (img && img.src);
         if (!src) return null;
         return { src: src, alt: alt, xl: el.hasAttribute('data-lightbox-xl') };
@@ -617,23 +526,17 @@
                 groups.push([]);
             }
             groups[groupIndex].push(entry);
-            if (entry.youtube && !el.querySelector('.yt-play')) {
-                var play = document.createElement('span');
-                play.className = 'yt-play';
-                play.setAttribute('aria-hidden', 'true');
-                el.appendChild(play);
-            }
-            bindings.push({ el: el, group: groupIndex, index: groups[groupIndex].length - 1, video: !!entry.youtube });
+            bindings.push({ el: el, group: groupIndex, index: groups[groupIndex].length - 1 });
         });
 
         var lightbox = initPhotoLightbox({ groups: groups });
         if (!lightbox) return null;
 
         bindings.forEach(function (b) {
-            function openThis() { lightbox.openGroup(b.group, b.index, b.video); }
+            function openThis() { lightbox.openGroup(b.group, b.index); }
             b.el.addEventListener('click', openThis);
             /* Elemente, die keine Links/Buttons sind (z.B. ein <div> mit
-               Video-Vorschau), per Tastatur (Enter/Leertaste) bedienbar. */
+               Vorschaubild), per Tastatur (Enter/Leertaste) bedienbar. */
             if (b.el.getAttribute('role') === 'button') {
                 b.el.addEventListener('keydown', function (e) {
                     if (e.key === 'Enter' || e.key === ' ') {

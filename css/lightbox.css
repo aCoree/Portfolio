@@ -3,21 +3,20 @@
    ═════════════════════════════════════════════════════════════
    Gehört zu js/lightbox.js (Markup + Logik). Wer das Aussehen oder einen
    Effekt der Grossansicht ändern will (Hintergrund, Pfeile, Miniaturen,
-   Übergänge, Video-Ansicht, Hell-Modus …), macht das NUR hier – die
+   Übergänge, Hell-Modus …), macht das NUR hier – die
    Änderung gilt automatisch auf ALLEN Seiten mit Grossansicht
    (Fotografie-Kategorien, Behind the Scenes, URBNVIBE, …).
 
    Einbinden (in <head>, nach style.css / header.css, VOR theme.css):
        <link rel="stylesheet" href="css/lightbox.css">
-   Mehr dazu (so wird ein Bild/Video "gross anklickbar") steht ganz oben
+   Mehr dazu (so wird ein Bild "gross anklickbar") steht ganz oben
    in js/lightbox.js.
 
    Inhalt:
      1. Steuerung (Pfeile & Schliessen)
      2. Grossansicht-Overlay, Slides, Miniatur-Leiste
-     3. Video-Slide (YouTube)
-     4. Klickbare Elemente auf der Seite  [data-lightbox]
-     5. Hell-Modus
+     3. Klickbare Elemente auf der Seite  [data-lightbox]
+     4. Hell-Modus
    ═════════════════════════════════════════════════════════════ */
 
 /* ─── 1. LIGHTBOX-STEUERUNG (PFEILE & SCHLIESSEN) ───
@@ -299,101 +298,15 @@
     }
 }
 
-/* ─── 3. VIDEO-SLIDE (YOUTUBE) ───
-   Ein Video ist ein Slide wie ein Bild: zuerst nur das Vorschaubild mit
-   Play-Knopf (kein YouTube-Request, kein Ruckeln beim Blättern), erst
-   nach dem Klick wird der Player geladen (siehe js/lightbox.js). Das
-   Seitenverhältnis ist immer 16:9 und passt sich dem Fenster an. */
-.lightbox-video {
-    position: relative;
-    flex: 0 0 auto;
-    width: min(96vw, calc((100vh - 24px) * 16 / 9));
-    aspect-ratio: 16 / 9;
-    background: #000000;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
-    cursor: pointer;
-}
-
-.photo-lightbox.has-thumbs .lightbox-video {
-    width: min(96vw, calc((100vh - 112px) * 16 / 9));
-}
-
-@media (max-width: 768px) {
-    .lightbox-video {
-        width: 98vw;
-    }
-
-    .photo-lightbox.has-thumbs .lightbox-video {
-        width: min(98vw, calc((100vh - 96px) * 16 / 9));
-    }
-}
-
-.lightbox-video-poster {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-.lightbox-video-frame {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: #000000;
-}
-
-.lightbox-video.is-playing {
-    cursor: default;
-}
-
-.lightbox-video.is-playing .lightbox-video-poster,
-.lightbox-video.is-playing .yt-video-start {
-    display: none;
-}
-
-/* Der Play-Knopf (Glas) und die Start-Fläche über dem Bild stehen in
-   css/youtube.css – gleicher Look wie bei allen YouTube-Videos der Seiten.
-   Seiten mit Video in der Grossansicht binden deshalb beide Stylesheets ein. */
-
-/* Video-Miniatur in der Leiste unten: kleiner Play-Hinweis. */
-.lightbox-thumb-play {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.35);
-    color: #ffffff;
-    font-size: 0.8rem;
-    pointer-events: none;
-}
-
-.lightbox-thumb {
-    position: relative;
-}
-
-/* ─── 4. KLICKBARE ELEMENTE AUF DER SEITE ───
+/* ─── 3. KLICKBARE ELEMENTE AUF DER SEITE ───
    Alles mit data-lightbox="…" öffnet beim Klick die Grossansicht. */
 [data-lightbox] {
     cursor: zoom-in;
 }
 
-[data-lightbox-youtube] {
-    cursor: pointer;
-}
 
-[data-lightbox-youtube]:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 3px;
-}
 
-/* ─── 5. HELL-MODUS ───
+/* ─── 4. HELL-MODUS ───
    (greift nur bei html[data-theme="light"], siehe theme.js / theme.css) */
 /* Grossansicht: heller Hintergrund, dunkle Bedienelemente */
 html[data-theme="light"] .photo-lightbox {
@@ -427,6 +340,3 @@ html[data-theme="light"] .lightbox-thumb.active {
   border-color: var(--lt-text);
 }
 
-html[data-theme="light"] .lightbox-video {
-  box-shadow: 0 0 30px rgba(37, 35, 31, 0.22);
-}

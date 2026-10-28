@@ -26,7 +26,6 @@
     <!-- ZENTRALES STYLESHEET -->
     <link rel="stylesheet" href="style.css?v=1.7">
     <link rel="stylesheet" href="css/az-reveal.css">
-    <link rel="stylesheet" href="css/youtube.css?v=1.1">
     <link rel="stylesheet" href="css/header.css?v=2.7">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -385,7 +384,10 @@
             </div>
 
             <div class="video-wrapper az-reveal">
-                <div class="yt-video" data-youtube="fetBu3gqFOM" data-title="RUN – Kurzfilm" data-title-i18n="run.videoTitle" data-poster="images/yt-fetBu3gqFOM.jpg"></div>
+                <iframe src="https://www.youtube.com/embed/fetBu3gqFOM?enablejsapi=1" title="RUN – Kurzfilm" data-i18n-attr="title:run.videoTitle" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
             </div>
 
             <div class="project-info-grid">
@@ -698,7 +700,7 @@
     <!-- ─── ZENTRALE SKRIPTE ─── -->
     <script src="js/az-reveal.js"></script>
     <script src="js/header.js?v=1.3"></script>
-    <script src="js/youtube.js"></script>
+    <script src="js/youtube-single-play.js"></script>
 </body>
 
 </html>

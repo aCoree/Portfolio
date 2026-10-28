@@ -158,7 +158,6 @@ window.SITE_TRANSLATIONS = {
       close: "Schließen",
       prevImage: "Vorheriges Bild",
       nextImage: "Nächstes Bild",
-      playVideo: "Video abspielen",
     },
     musik: {
       navIntro: "Leidenschaft am Klavier",
@@ -466,7 +465,6 @@ window.SITE_TRANSLATIONS = {
       close: "Fermer",
       prevImage: "Image précédente",
       nextImage: "Image suivante",
-      playVideo: "Lire la vidéo",
     },
     musik: {
       navIntro: "Ma passion pour le piano",
@@ -775,7 +773,6 @@ window.SITE_TRANSLATIONS = {
       close: "Close",
       prevImage: "Previous image",
       nextImage: "Next image",
-      playVideo: "Play video",
     },
     musik: {
       navIntro: "My passion for piano",
@@ -1084,7 +1081,6 @@ window.SITE_TRANSLATIONS = {
       close: "Chiudi",
       prevImage: "Immagine precedente",
       nextImage: "Immagine successiva",
-      playVideo: "Riproduci video",
     },
     musik: {
       navIntro: "La mia passione per il piano",
