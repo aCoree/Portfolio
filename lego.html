@@ -24,9 +24,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="stylesheet" href="style.css?v=1.5">
+    <link rel="stylesheet" href="style.css?v=1.6">
     <link rel="stylesheet" href="css/az-reveal.css">
-    <link rel="stylesheet" href="css/header.css?v=2.3">
+    <link rel="stylesheet" href="css/youtube.css?v=1.1">
+    <link rel="stylesheet" href="css/header.css?v=2.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* =====================================================
@@ -267,6 +268,19 @@
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
+        }
+
+        /* Auf tieferen Mobile-Menü-Ebenen ersetzt der Zurück-Pfeil das Logo und
+           blendet dabei weich mit ihm über (siehe header.css). Die Regeln oben
+           erzwingen Logo und Bild sonst dauerhaft sichtbar und klickbar – hier
+           die Ausnahme für genau diesen Zustand. */
+        body.lego-family-studio.mobile-submenu-open .navbar .nav-left .logo {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        body.lego-family-studio.mobile-submenu-open .navbar .nav-left .logo-mark {
+            pointer-events: none !important;
         }
 
         /* HEADER & MOBILE YOUTUBE ICON */
@@ -1194,10 +1208,7 @@
                     </div>
                     <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/_BS63yIWLSM?enablejsapi=1"
-                                title="LEGO Family Studio - Action Brickfilm"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                            <div class="yt-video" data-youtube="_BS63yIWLSM" data-title="LEGO Family Studio - Action Brickfilm" data-poster="images/yt-_BS63yIWLSM.jpg"></div>
                         </div>
                     </div>
                 </div>
@@ -1209,10 +1220,7 @@
                 <div class="lego-two-column">
                     <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/TY2ys0R0fg0?enablejsapi=1"
-                                title="LEGO Family Studio - Build & Showcase"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                            <div class="yt-video" data-youtube="TY2ys0R0fg0" data-title="LEGO Family Studio - Build &amp; Showcase" data-poster="images/yt-TY2ys0R0fg0.jpg"></div>
                         </div>
                     </div>
                     <div class="lego-info">
@@ -1234,10 +1242,7 @@
                     </div>
                     <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/LbfMY7M3kZc?enablejsapi=1"
-                                title="LEGO Family Studio - Cinematic Short"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                            <div class="yt-video" data-youtube="LbfMY7M3kZc" data-title="LEGO Family Studio - Cinematic Short" data-poster="images/yt-LbfMY7M3kZc.jpg"></div>
                         </div>
                     </div>
                 </div>
@@ -1249,10 +1254,7 @@
                 <div class="lego-two-column">
                     <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/8mfLECHIH8E?enablejsapi=1"
-                                title="LEGO Family Studio - LEGO Street Hole"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                            <div class="yt-video" data-youtube="8mfLECHIH8E" data-title="LEGO Family Studio - LEGO Street Hole" data-poster="images/yt-8mfLECHIH8E.jpg"></div>
                         </div>
                     </div>
                     <div class="lego-info">
@@ -1274,10 +1276,7 @@
                     </div>
                     <div class="lego-media az-reveal">
                         <div class="lego-video">
-                            <iframe src="https://www.youtube.com/embed/xydyoD4sTT4?enablejsapi=1"
-                                title="LEGO Family Studio - LEGO Pirate Ship"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                            <div class="yt-video" data-youtube="xydyoD4sTT4" data-title="LEGO Family Studio - LEGO Pirate Ship" data-poster="images/yt-xydyoD4sTT4.jpg"></div>
                         </div>
                     </div>
                 </div>
@@ -1363,8 +1362,8 @@
     </script>
 
     <!-- ─── ZENTRALE SKRIPTE ─── -->
-    <script src="js/header.js"></script>
-    <script src="js/youtube-single-play.js"></script>
+    <script src="js/header.js?v=1.1"></script>
+    <script src="js/youtube.js"></script>
     <script src="js/az-reveal.js"></script>
 </body>
 

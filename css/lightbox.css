@@ -353,58 +353,13 @@
 }
 
 .lightbox-video.is-playing .lightbox-video-poster,
-.lightbox-video.is-playing .lightbox-video-play {
+.lightbox-video.is-playing .yt-video-start {
     display: none;
 }
 
-/* Play-Knopf (gleicher Look wie die Pfeile). Wird auch direkt auf den
-   Seiten verwendet, wo ein Video als Vorschaubild mit Play-Knopf steht
-   (Elternelement mit position: relative). */
-.lightbox-video-play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translateZ(0);
-    -webkit-transform: translate(-50%, -50%) translateZ(0);
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(15, 15, 15, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    font-size: 1.5rem;
-    padding: 0 0 0 4px; /* optischer Ausgleich: das Play-Dreieck wirkt sonst zu weit links */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-    transition: background 0.25s ease, border-color 0.25s ease;
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    /* Klicks gehen an das Elternelement (Video-Box bzw. [data-lightbox]) –
-       so fängt auch ein unsichtbares, geschlossenes Overlay nie Klicks ab. */
-    pointer-events: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-
-    .lightbox-video:hover .lightbox-video-play,
-    [data-lightbox-youtube]:hover .lightbox-video-play {
-        background: rgba(255, 255, 255, 0.22);
-        border-color: rgba(255, 255, 255, 0.5);
-    }
-}
-
-@media (max-width: 768px) {
-    .lightbox-video-play {
-        width: 56px;
-        height: 56px;
-        font-size: 1.2rem;
-    }
-}
+/* Der Play-Knopf (Glas) und die Start-Fläche über dem Bild stehen in
+   css/youtube.css – gleicher Look wie bei allen YouTube-Videos der Seiten.
+   Seiten mit Video in der Grossansicht binden deshalb beide Stylesheets ein. */
 
 /* Video-Miniatur in der Leiste unten: kleiner Play-Hinweis. */
 .lightbox-thumb-play {

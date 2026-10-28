@@ -69,6 +69,30 @@
      Gruppe ist rechtsbündig), nur das Logo rückt näher heran. */
   --nav-icon-visible-gap: calc(var(--nav-search-pad) + var(--nav-icon-gap));
   --nav-lang-gap: calc(var(--nav-icon-visible-gap) - var(--nav-logo-ink-inset));
+
+  /* ─── MOBILE-MENÜ: BEWEGUNG (nur Handy – am PC ungenutzt) ───
+     Zwei Kurven für ALLE Bewegungen des Mobile-Menüs: Menü-Fläche,
+     Hamburger → X, Logo ↔ Zurück-Pfeil sowie Zeilen und Ebenenwechsel
+     (die zwei Letzten animiert header.js und liest diese Werte hier aus).
+     So wirkt alles wie EINE Bewegung; Gefühl ändern = nur hier.
+       --mm-ease-out:  schneller Start, sehr langes, weiches Ausgleiten
+                       (wie bei iOS-Menüs / apple.com) – für alles, was erscheint.
+       --mm-ease-exit: ebenfalls vorgezogen, aber kürzer – für alles, was das
+                       Bild verlässt: es ist schon weg, wenn das Neue kommt,
+                       alter und neuer Text überlagern sich nicht. */
+  --mm-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --mm-ease-exit: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Die EINE Zeitleiste für Abdunkeln/Aufhellen beim Öffnen und Schliessen:
+     Menü-Fläche (blendet die Seite ab) und Hamburger → X laufen exakt gleich
+     lang und mit derselben Kurve, die Zeilen starten dazu versetzt (header.js).
+     Warum so sanft: Ein "Flash" entsteht nicht durch Helligkeit an sich,
+     sondern durch zu schnelles Umschalten von hell auf dunkel – gemessen an
+     der wahrgenommenen Helligkeit (L*) über eine helle Seite: sofort = 97,
+     schnelles Einblenden = 54–71, früherer Fade = 33, dieser Verlauf = 16. Der
+     Anfang ist bewusst weich, danach gleichmässig. Sanfter/schneller: nur hier. */
+  --mm-dim-duration: 0.5s;
+  --mm-dim-ease: cubic-bezier(0.3, 0, 0.5, 1);
 }
 
 /* ─── HEADER-GRUPPE (STICKY-WRAPPER FÜR MAIN HEADER + SECOND HEADER) ───
@@ -801,9 +825,11 @@ body:not(.transparent-header) .nav-expand {
   height: 2px;
   background-color: #ffffff;
   border-radius: 2px;
+  /* Dieselbe Zeitleiste wie das Abdunkeln der Seite (--mm-dim-* oben): das X
+     ist fertig, wenn die Seite fertig abgedunkelt ist. */
   transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    transform var(--mm-dim-duration) var(--mm-dim-ease),
+    opacity 0.25s ease;
   transform-origin: center;
 }
 
@@ -820,6 +846,14 @@ body:not(.transparent-header) .nav-expand {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Menü-Fläche: blendet die Seite sanft ab bzw. wieder auf (Zeitleiste:
+   --mm-dim-duration / --mm-dim-ease). Die Bewegung gehört allein den Zeilen
+   darin (header.js: animatePanelRowsIn); die Fläche selbst rutscht nicht (der
+   Inhalt bewegte sich sonst doppelt). Der Hintergrund-Blur (wie früher)
+   verwischt die Seite beim Abblenden zu einem weichen Schimmer, statt dass
+   scharfe helle Details (Himmel, Schrift) durch die Fläche scheinen. overflow-x
+   verhindert seitliches Wischen, solange Zeilen beim Ebenenwechsel von der
+   Seite hereinfahren. */
 .mobile-menu {
   display: none;
   position: fixed;
@@ -827,22 +861,19 @@ body:not(.transparent-header) .nav-expand {
   left: 0;
   right: 0;
   height: 100vh;
+  overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--header-surface-mobile);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   z-index: 999;
   opacity: 0;
-  transform: translateY(-10px);
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+  transition: opacity var(--mm-dim-duration) var(--mm-dim-ease);
   pointer-events: none;
 }
 
 .mobile-menu.open {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: all;
 }
 
@@ -885,10 +916,10 @@ body:not(.transparent-header) .nav-expand {
    align-items:flex-start / justify-content:flex-start (Flex-Default für
    Column-Richtung) IMMER oben in dieser Zelle, auch wenn die Zelle wegen
    der jeweils anderen (evtl. höheren) Ebene gestreckt wird. header.js
-   animiert beim Ebenenwechsel ausschliesslich opacity/translateY der
-   einzelnen Zeilen bzw. des austretenden alten Panels – nie die Position
-   oder Breite dieses Rahmens selbst, wodurch eine horizontale oder
-   vertikale Verschiebung strukturell gar nicht mehr möglich ist. */
+   animiert beim Ebenenwechsel ausschliesslich opacity/transform/filter der
+   einzelnen Zeilen bzw. des austretenden alten Panels (gleitet seitlich weg,
+   siehe MOBILE_MOTION) – nie die Position oder Breite dieses Rahmens selbst,
+   die Ruheposition einer Ebene ist dadurch immer exakt dieselbe. */
 .mobile-menu-panel {
   grid-area: 1 / 1;
   width: 100%;
@@ -947,6 +978,18 @@ body:not(.transparent-header) .nav-expand {
   padding-bottom: 14px;
   margin-bottom: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Oberste Ebene (Second-Header-Liste, z.B. "Alle Fotos"): dort trennt die
+   Linie oben (.mobile-second-nav) die Liste bereits vom Main Header – eine
+   zweite Linie wäre zu viel. Der Eintrag setzt sich hier nur durch einen
+   grösseren Abstand zur folgenden Liste ab. In den Untermenüs
+   ("Alle Projekte", "Alle Wildlife Fotos") bleibt die Linie wie gehabt. */
+.mobile-second-nav .mobile-nav-link--emphasize {
+  width: auto;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  border-bottom: 0;
 }
 
 a.mobile-nav-link,
@@ -1381,13 +1424,90 @@ body.has-second-header:not(.transparent-header) .page-padding {
     display: none;
   }
 
-  /* Auf einer tieferen Mobile-Menü-Ebene ersetzt der Zurück-Pfeil das Logo. */
-  body.mobile-submenu-open .nav-left .logo {
-    display: none;
+  /* Auf einer tieferen Mobile-Menü-Ebene ersetzt der Zurück-Pfeil das Logo.
+     Beide liegen exakt übereinander (ein Grid-Feld) und blenden im selben
+     Schwung ineinander über wie Zeilen und Ebenen darunter: beim Hinein-
+     gehen rutscht das Logo leicht nach links weg und der Pfeil kommt von
+     rechts nach, beim Zurückgehen läuft es umgekehrt – gleiche Richtung wie
+     die Ebenen (siehe header.js). Die Ruheposition ist unverändert: Pfeil
+     am linken Rand, vertikal mittig. Ausgeblendete Teile sind per
+     visibility (nach dem Ausblenden) weder klick- noch fokussierbar. */
+  .nav-left {
+    display: grid;
+    align-items: center;
+    justify-items: start;
   }
 
-  body.mobile-submenu-open .nav-left .mobile-back-arrow {
+  .nav-left .logo,
+  .nav-left .mobile-back-arrow {
+    grid-area: 1 / 1;
+  }
+
+  /* Logo kommt zurück (Zustand ohne Untermenü) */
+  .nav-left .logo {
+    transition:
+      opacity 0.45s var(--mm-ease-out) 0.08s,
+      transform 0.6s var(--mm-ease-out) 0.08s,
+      filter 0.45s var(--mm-ease-out) 0.08s;
+  }
+
+  /* Pfeil geht (Zustand ohne Untermenü) */
+  .mobile-back-arrow {
     display: inline-flex;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(12px);
+    filter: blur(4px);
+    transition:
+      opacity 0.2s var(--mm-ease-exit),
+      transform 0.28s var(--mm-ease-exit),
+      filter 0.2s var(--mm-ease-exit),
+      visibility 0s linear 0.28s;
+  }
+
+  /* Logo geht (Untermenü offen) */
+  body.mobile-submenu-open .nav-left .logo {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-12px);
+    filter: blur(4px);
+    transition:
+      opacity 0.2s var(--mm-ease-exit),
+      transform 0.28s var(--mm-ease-exit),
+      filter 0.2s var(--mm-ease-exit),
+      visibility 0s linear 0.28s;
+  }
+
+  /* Hell-Modus über dem Hero-Video (Startseite): Die Header-Symbole wechseln
+     beim Öffnen von Weiss zu Dunkel (siehe theme.css). Würde das sofort
+     passieren, stünden dunkle Symbole noch auf dem dunklen Video und
+     verschwänden kurz. Sie wechseln deshalb erst in der Mitte der Abblendung,
+     wenn Seite und Fläche etwa gleich hell sind (beim Schliessen ebenso). */
+  html[data-theme="light"] .hamburger span {
+    transition:
+      transform var(--mm-dim-duration) var(--mm-dim-ease),
+      opacity 0.25s ease,
+      background-color 0.16s linear 0.14s;
+  }
+
+  html[data-theme="light"] .nav-search-toggle--mobile {
+    transition: color 0.16s linear 0.14s;
+  }
+
+  /* Pfeil kommt (Untermenü offen) */
+  body.mobile-submenu-open .nav-left .mobile-back-arrow {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    filter: none;
+    transition:
+      opacity 0.45s var(--mm-ease-out) 0.08s,
+      transform 0.6s var(--mm-ease-out) 0.08s,
+      filter 0.45s var(--mm-ease-out) 0.08s,
+      visibility 0s linear 0s;
   }
 
   /* Lupe direkt neben dem Hamburger (eigenes Grid-Item, siehe
@@ -1402,5 +1522,20 @@ body.has-second-header:not(.transparent-header) .page-padding {
     padding: 8px;
     color: #ffffff;
     font-size: 1.05rem;
+  }
+}
+
+/* Wer in den System-Einstellungen "Bewegung reduzieren" gewählt hat, bekommt im
+   Mobile-Menü nur weiches Ein-/Ausblenden – ohne Verschieben und Verwischen
+   (die Zeilen im Menü regelt header.js auf dieselbe Weise). */
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .nav-left .logo,
+  .mobile-back-arrow {
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .hamburger span {
+    transition-duration: 0.01ms;
   }
 }

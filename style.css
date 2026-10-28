@@ -1391,13 +1391,15 @@ body:not(.has-hero) main.legal-content {
 .apple-card {
     container-type: inline-size;
 }
-.poster-img-wrapper { --s: 36cqw; }
-/* Querformat-Karten (index.html, PC): Sticker etwas grösser als auf den
-   Poster-Karten, damit er auf den breiten Karten nicht verloren wirkt. */
-.apple-card { --s: 9cqw; }
+/* Grösse des Stickers (Kantenlänge --s) und Schrift-Anteil --bf (1 = Schrift
+   füllt das Dreieck so weit aus, wie es sauber passt). */
+.poster-img-wrapper { --s: 37cqw; --bf: 0.85; }
+/* Querformat-Karten (index.html, PC): Sticker grösser als auf den Poster-
+   Karten, damit er auf den breiten Karten gut lesbar ist. */
+.apple-card { --s: 12cqw; --bf: 1; }
 @media (max-width: 768px) {
-    .poster-img-wrapper { --s: 30cqw; }
-    .apple-card { --s: 26cqw; }
+    .poster-img-wrapper { --s: 31cqw; }
+    .apple-card { --s: 40cqw; }
 }
 
 .poster-img-wrapper:has(.badge-new),
@@ -1430,59 +1432,42 @@ body:not(.has-hero) main.legal-content {
     pointer-events: none;
 }
 
-/* Text sitzt immer exakt mittig auf dem Dreieck: sein Mittelpunkt liegt auf
-   dem Schwerpunkt (0.3·s / 0.3·s), danach wird er um genau diesen Punkt
-   gedreht. Egal wie lang das Wort ist (neu / new / nuovo / nouveau) – es
-   wächst symmetrisch nach beiden Seiten statt einseitig. */
+/* Text sitzt immer exakt mittig auf dem Dreieck: sein Mittelpunkt liegt etwas
+   näher an der langen Kante als der Schwerpunkt (0.32·s), damit die Schrift
+   dort mehr Platz hat, danach wird er um genau diesen Punkt gedreht. Egal wie
+   lang das Wort ist – es wächst symmetrisch nach beiden Seiten.
+   Schrift: Barlow Condensed (schmal, daher bei gleicher Breite deutlich
+   höhere Buchstaben = besser lesbar), fett, mit feinem Schatten für Kontrast
+   auf hellem Orange/Blau und hellen Bildern. */
 .badge-new,
 .badge-popular {
     position: absolute;
-    top: calc(var(--s) * 0.3);
-    left: calc(var(--s) * 0.3);
+    top: calc(var(--s) * 0.32);
+    left: calc(var(--s) * 0.32);
     z-index: 5;
     transform: translate(-50%, -50%) rotate(-45deg);
     transform-origin: center;
     color: #fff;
-    font-size: calc(var(--s) * 0.14);
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: calc(var(--s) * var(--br, 0.2157) * var(--bf, 1));
     line-height: 1;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    text-indent: 0.05em; /* gleicht das nachlaufende letter-spacing aus */
+    letter-spacing: 0.04em;
+    text-indent: 0.04em; /* gleicht das nachlaufende letter-spacing aus */
     text-transform: uppercase;
     text-align: center;
+    text-shadow: 0 calc(var(--s) * 0.01) calc(var(--s) * 0.025) rgba(0, 0, 0, 0.4);
     pointer-events: none;
     white-space: nowrap;
 }
-/* Längere Übersetzungen bekommen eine kleinere Schrift (relativ zu --s),
-   bleiben aber mittig. */
-html:lang(fr) .badge-new {
-    font-size: calc(var(--s) * 0.11);
-    letter-spacing: 0.02em;
-    text-indent: 0.02em;
-}
-html:lang(it) .badge-new {
-    font-size: calc(var(--s) * 0.12);
-    letter-spacing: 0.03em;
-    text-indent: 0.03em;
-}
-/* "beliebt" ist deutlich länger als "neu" – damit das Wort sauber im
-   Dreieck Platz hat, ist die Schrift etwas kleiner (Schriftart, Gewicht
-   und Grossbuchstaben bleiben identisch). */
-.badge-popular {
-    font-size: calc(var(--s) * 0.124);
-    letter-spacing: 0.03em;
-    text-indent: 0.03em;
-}
-html:lang(fr) .badge-popular {
-    font-size: calc(var(--s) * 0.1);
-    letter-spacing: 0.02em;
-    text-indent: 0.02em;
-}
-html:lang(it) .badge-popular {
-    font-size: calc(var(--s) * 0.108);
-    letter-spacing: 0.02em;
-    text-indent: 0.02em;
-}
+/* Die Schriftgrösse (--br, relativ zu --s) ist pro Sprache so gewählt, dass
+   das LÄNGSTE Wort (beliebt / populaire / popular / popolare) das Dreieck mit
+   kleinem Rand ausfüllt; "neu/new/nouveau/nuovo" bekommt dieselbe Grösse, so
+   sehen beide Sticker einer Sprache gleich aus. */
+:lang(de) { --br: 0.2157; }
+:lang(en) { --br: 0.1985; }
+:lang(fr) { --br: 0.1688; }
+:lang(it) { --br: 0.1786; }
 
 /* ─── LIGHTBOX (GROSSANSICHT) ───
    Liegt komplett in css/lightbox.css (Markup + Logik: js/lightbox.js). */

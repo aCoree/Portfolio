@@ -19,14 +19,17 @@
                                                    grösser skalieren
 
    ▸ YOUTUBE-VIDEO IN DER GROSSANSICHT:
+     Zusätzlich im <head> das Stylesheet des Play-Knopfs einbinden:
+            <link rel="stylesheet" href="css/youtube.css">
         <div data-lightbox="meine-galerie" data-lightbox-youtube="VIDEO_ID"
              role="button" tabindex="0">
             <img src="vorschaubild.jpg" alt="…">
-            <span class="lightbox-video-play"><i class="fa-solid fa-play"></i></span>
         </div>
      Das Vorschaubild (data-lightbox-poster oder das <img> darin) ist das
-     "Bild" des Videos. Der YouTube-Player wird erst nach dem Klick geladen,
-     beim Weiterblättern stoppt das Video automatisch.
+     "Bild" des Videos, der Play-Knopf wird automatisch daraufgesetzt (Look:
+     css/youtube.css, wie bei allen YouTube-Videos der Seite). Der
+     YouTube-Player wird erst nach dem Klick geladen, beim Weiterblättern
+     stoppt das Video automatisch.
 
    ▸ PER SKRIPT (z.B. foto-galerie.js):
         var lb = PhotoLightbox.init({ groups: [[{ src, alt }, …], …] });
@@ -205,14 +208,14 @@
             box.className = 'lightbox-video';
             poster.className = 'lightbox-video-poster';
             poster.src = posterOf(entry);
-            var play = document.createElement('button');
-            play.type = 'button';
-            play.className = 'lightbox-video-play';
-            play.setAttribute('data-i18n-attr', 'aria-label:lightbox.playVideo');
-            play.setAttribute('aria-label', t('lightbox.playVideo', 'Video abspielen'));
-            play.innerHTML = '<i class="fa-solid fa-play"></i>';
+            var start = document.createElement('button');
+            start.type = 'button';
+            start.className = 'yt-video-start';
+            start.setAttribute('data-i18n-attr', 'aria-label:lightbox.playVideo');
+            start.setAttribute('aria-label', t('lightbox.playVideo', 'Video abspielen'));
+            start.innerHTML = '<span class="yt-play"></span>';
             box.appendChild(poster);
-            box.appendChild(play);
+            box.appendChild(start);
             box.addEventListener('click', function (e) {
                 e.stopPropagation();
                 playVideo(idx);
@@ -614,6 +617,12 @@
                 groups.push([]);
             }
             groups[groupIndex].push(entry);
+            if (entry.youtube && !el.querySelector('.yt-play')) {
+                var play = document.createElement('span');
+                play.className = 'yt-play';
+                play.setAttribute('aria-hidden', 'true');
+                el.appendChild(play);
+            }
             bindings.push({ el: el, group: groupIndex, index: groups[groupIndex].length - 1, video: !!entry.youtube });
         });
 

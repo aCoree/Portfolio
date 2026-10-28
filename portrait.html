@@ -31,9 +31,9 @@
 
     <link rel="manifest" href="/favicons/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.5">
+    <link rel="stylesheet" href="style.css?v=1.6">
     <link rel="stylesheet" href="css/az-reveal.css">
-    <link rel="stylesheet" href="css/header.css?v=2.3">
+    <link rel="stylesheet" href="css/header.css?v=2.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -131,22 +131,12 @@
     <script src="js/translations.js"></script>
     <script src="js/i18n.js"></script>
 
-    <!-- ─── SECOND-HEADER-KONFIGURATION (IDENTISCH AUF FOTOGRAFIE.HTML UND
-         ALLEN KATEGORIESEITEN – VOLLQUALIFIZIERTE LINKS, DAMIT SIE VON JEDER
-         DIESER SEITEN AUS FUNKTIONIEREN) ─── -->
-    <script>
-        const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
-        window.secondHeaderItems = [
-            { label: tr('fotografie.navWildlife', "Wildlife"), href: "fotografie.html#wildlife" },
-            { label: tr('fotografie.navStreet', "Streetfotografie"), href: "fotografie.html#street" },
-            { label: tr('fotografie.navLandschaften', "Landschaften"), href: "fotografie.html#landschaften" },
-            { label: tr('fotografie.navPortrait', "Portrait"), href: "fotografie.html#portrait" }
-        ];
-    </script>
-
-    <script src="js/header.js"></script>
-    <script src="js/lightbox.js"></script>
+    <!-- ─── SECOND HEADER (Alle Fotos, Wildlife ▾, Street, …): gleich auf allen
+         Fotografie-Seiten, kommt aus js/foto-nav.js (Motive aus foto-data.js) ─── -->
     <script src="js/foto-data.js"></script>
+    <script src="js/foto-nav.js"></script>
+    <script src="js/header.js?v=1.1"></script>
+    <script src="js/lightbox.js"></script>
     <script src="js/foto-galerie.js"></script>
     <script src="js/az-reveal.js"></script>
 </body>

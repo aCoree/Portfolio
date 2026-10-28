@@ -1,7 +1,9 @@
 /* ─────────────────────────────────────────────────────────────
    FOTO-GALERIE.JS – KATEGORIE-RASTER + MOTIV-SEITE
    ─────────────────────────────────────────────────────────────
-   Liest window.FOTO_GALERIE (siehe foto-data.js) und baut zwei Dinge:
+   Liest window.FOTO_GALERIE (siehe foto-data.js) und baut zwei Dinge.
+   Braucht js/foto-nav.js (window.FotoNav) – das ist auf allen Fotografie-
+   Seiten ohnehin für den Header eingebunden:
 
    1) KATEGORIESEITE (wildlife.html, landschaften.html, …)
         <div class="photo-grid" data-foto-category="wildlife"></div>
@@ -18,43 +20,22 @@
       → liest k= und m= aus der Adresse, setzt Titel/Zurück-Link und zeigt
         alle Fotos des Motivs als Mosaik (siehe unten). Ein Klick öffnet die
         Lightbox (js/lightbox.js) mit allen Fotos dieses Motivs.
+
+   FORMAT (hoch/quer): Fotos können in foto-data.js mit  format: 'hoch'  oder
+   format: 'quer'  markiert werden – das Mosaik legt sie dann in Kacheln ihres
+   Formats (Erklärung dort und bei planBlocks unten).
    ───────────────────────────────────────────────────────────── */
 (function () {
-    var MOTIV_PAGE = 'motiv.html';
-
     /* ─── HILFSFUNKTIONEN ─── */
-    function currentLang() {
-        return (window.i18n && window.i18n.getCurrentLanguage && window.i18n.getCurrentLanguage()) || 'de';
-    }
-
     function translate(key, fallback) {
         return (window.i18n && window.i18n.translate && window.i18n.translate(key)) || fallback;
     }
 
-    /* title: 'Eisvogel'  oder  { de: '…', en: '…', fr: '…', it: '…' } */
-    function pickTitle(title) {
-        if (title && typeof title === 'object') {
-            return title[currentLang()] || title.de || title[Object.keys(title)[0]] || '';
-        }
-        return title || '';
-    }
-
-    function slugify(text) {
-        return String(text || '')
-            .toLowerCase()
-            .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
-            .normalize('NFD').replace(/[̀-ͯ]/g, '')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '');
-    }
-
-    /* Eindeutige Kennung eines Motivs (für die Adresse): id, sonst der
-       deutsche Titel. */
-    function motifSlug(motif) {
-        if (motif.id) return slugify(motif.id);
-        var title = motif.title;
-        return slugify(title && typeof title === 'object' ? (title.de || title[Object.keys(title)[0]]) : title);
-    }
+    /* Titel, Adresse eines Motivs und Kategorie-Seiten kommen aus js/foto-nav.js
+       (gleiche Logik wie im Header). */
+    var pickTitle = window.FotoNav.pickTitle;
+    var motifSlug = window.FotoNav.motifSlug;
+    var categoryPage = window.FotoNav.categoryPage;
 
     /* Bild-Eintrag: 'pfad.jpg' (oder { src: 'pfad.jpg' }) */
     function motifImages(motif) {
@@ -72,6 +53,17 @@
         return (entry && typeof entry === 'object')
             ? pct(entry.x) + '% ' + pct(entry.y) + '%'
             : '50% 50%';
+    }
+
+    /* Format eines Eintrags: { src: '…', format: 'hoch' }  oder  format: 'quer'.
+       Liefert 'hoch' / 'quer' – ohne Angabe null (= Form egal, wie bisher
+       automatisch). Zusätzlich verstanden: portrait/landscape (auch p/l, h/q). */
+    function formatOf(motif, index) {
+        var entry = (motif.images || []).filter(function (e) { return e && (typeof e === 'string' || e.src); })[index];
+        var value = (entry && typeof entry === 'object') ? String(entry.format || '').toLowerCase() : '';
+        if (value === 'hoch' || value === 'h' || value === 'portrait' || value === 'p') return 'hoch';
+        if (value === 'quer' || value === 'q' || value === 'landscape' || value === 'l') return 'quer';
+        return null;
     }
 
     function altText(title) {
@@ -129,7 +121,7 @@
 
             var tile = document.createElement('a');
             tile.className = 'photo-grid-item photo-grid-motif';
-            tile.href = MOTIV_PAGE + '?k=' + encodeURIComponent(category) + '&m=' + encodeURIComponent(motifSlug(motif));
+            tile.href = window.FotoNav.motifHref(category, motif);
             if (title) tile.setAttribute('aria-label', title);
 
             var img = document.createElement('img');
@@ -222,13 +214,173 @@
         return node.kids ? node.kids.reduce(function (sum, kid) { return sum + countTiles(kid); }, 0) : 1;
     }
 
-    /* Liste der Blöcke für n Bilder (je 6 = ein voller Block). */
-    function planBlocks(n, desktop) {
-        var full = desktop ? DESKTOP_FULL : MOBILE_FULL;
-        var rest = desktop ? DESKTOP_REST : MOBILE_REST;
+    /* ─── HOCH-/QUERFORMAT: WELCHE FORM HAT JEDE KACHEL? ───
+       Jeder Block hat feste Kachelformen (z.B. links hoch, rechts quer). Aus
+       dem Seitenverhältnis jeder Kachel (Breite/Höhe, berechnet aus den
+       grow-Werten der Kisten) ergibt sich ihre Form: unter 0.95 = 'hoch',
+       über 1.05 = 'quer', dazwischen 'egal'. Index = order der Kachel. */
+    function tileShapes(block) {
+        var shapes = [];
+        (function walk(node, w, h) {
+            if (!node.kids) {
+                var ratio = w / h;
+                shapes[node.order] = ratio < 0.95 ? 'hoch' : (ratio > 1.05 ? 'quer' : 'egal');
+                return;
+            }
+            var total = node.kids.reduce(function (sum, kid) { return sum + kid.grow; }, 0);
+            node.kids.forEach(function (kid) {
+                var share = kid.grow / total;
+                if (node.dir === 'row') walk(kid, w * share, h);
+                else walk(kid, w, h * share);
+            });
+        })(block, block.aspect, 1);
+        return shapes;
+    }
+
+    /* Ordnet die Bilder eines Blocks (6 oder weniger) den Kachelformen zu.
+       formats[i] = 'hoch' | 'quer' | null für Bild i, shapes[k] = Form der
+       Kachel k. Beginnt mit der normalen Reihenfolge und tauscht nur dort, wo
+       ein Bild mit Angabe in der falschen Form liegt, mit dem nächstgelegenen
+       passenden Partner – Bilder ohne Angabe passen überall. Rückgabe:
+       slots[k] = Nummer des Bildes auf Kachel k. */
+    function assignShapes(formats, shapes) {
+        var slots = formats.map(function (_, i) { return i; });
+        function fits(image, slot) {
+            return !formats[image] || shapes[slot] === 'egal' || formats[image] === shapes[slot];
+        }
+        for (var pass = 0; pass < 20; pass++) {
+            var swapped = false;
+            for (var k = 0; k < slots.length; k++) {
+                if (fits(slots[k], k)) continue;
+                var best = -1, bestGain = 0, bestDistance = Infinity;
+                for (var j = 0; j < slots.length; j++) {
+                    if (j === k) continue;
+                    var before = (fits(slots[k], k) ? 1 : 0) + (fits(slots[j], j) ? 1 : 0);
+                    var after = (fits(slots[k], j) ? 1 : 0) + (fits(slots[j], k) ? 1 : 0);
+                    var gain = after - before;
+                    var distance = Math.abs(j - k);
+                    if (gain > bestGain || (gain > 0 && gain === bestGain && distance < bestDistance)) {
+                        best = j; bestGain = gain; bestDistance = distance;
+                    }
+                }
+                if (best >= 0) {
+                    var tmp = slots[k]; slots[k] = slots[best]; slots[best] = tmp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
+        var misfits = 0;
+        slots.forEach(function (image, k) { if (!fits(image, k)) misfits++; });
+        return { slots: slots, misfits: misfits };
+    }
+
+    /* ─── ERSATZ: REIHEN MIT PASSENDER FORM ───
+       Passen die Standard-Blöcke nicht zu den angegebenen Formaten (z.B.
+       zwei Hochformat-Fotos, aber der Block hat nur eine hohe Kachel), wird
+       dieser Block stattdessen aus Reihen gebaut: jedes Foto bekommt eine
+       Kachel in SEINEM Format (hoch oder quer), die Reihen füllen die Breite
+       (Handy: bis 2 Fotos pro Reihe, PC: bis 3). Das Raster bleibt
+       vollständig – nur die Form der Kacheln folgt den Fotos. Reihen sind
+       immer linksbündig (nie mittig). */
+    var ROW_ASPECT = { hoch: 0.72, quer: 1.4 };  /* Breite/Höhe: zwischen 2:3 und 3:4 bzw. 4:3 und 3:2 */
+    /* Eine Reihe wird nie höher als so viele px; sonst wird sie schmaler und
+       beginnt links. Ein Foto allein: 720, mehrere nebeneinander: 920 – so
+       füllen sie die Breite fast immer ganz, ein einzelnes Foto wird nicht riesig. */
+    var ROW_MAX_HEIGHT_SINGLE = 720;
+    var ROW_MAX_HEIGHT_MULTI = 920;
+
+    function rowBlock(group, formats) {
+        var total = 0;
+        var tiles = group.map(function (image, order) {
+            var aspect = ROW_ASPECT[formats[image]] || ROW_ASPECT.quer;
+            total += aspect;
+            return tile(Math.round(aspect * 1000), order);
+        });
+        var spec = block(total, row(1, tiles));
+        spec.maxWidth = Math.round(total * (group.length > 1 ? ROW_MAX_HEIGHT_MULTI : ROW_MAX_HEIGHT_SINGLE));
+        return spec;
+    }
+
+    /* Teilt die Bilder eines Blocks in möglichst wenige, ausgewogene Reihen.
+       Mehrere Bilder teilen sich nur dann eine Reihe, wenn die Reihe dabei
+       hoch genug bleibt (sonst würden Querformate winzig). */
+    function packRows(formats, desktop) {
+        var maxPerRow = desktop ? 3 : 2;
+        var refWidth = desktop ? 1300 : 340;
+        var minHeight = desktop ? 300 : 190;
+        var best = [{ rows: 0, squares: 0, from: -1 }];
+
+        for (var end = 1; end <= formats.length; end++) {
+            for (var size = Math.min(maxPerRow, end); size >= 1; size--) {
+                var start = end - size, sum = 0;
+                for (var i = start; i < end; i++) sum += ROW_ASPECT[formats[i]] || ROW_ASPECT.quer;
+                if (size > 1 && refWidth / sum < minHeight) continue;
+                var candidate = { rows: best[start].rows + 1, squares: best[start].squares + size * size, from: start };
+                var current = best[end];
+                if (!current || candidate.rows < current.rows || (candidate.rows === current.rows && candidate.squares < current.squares)) {
+                    best[end] = candidate;
+                }
+            }
+        }
+
+        var groups = [];
+        for (var at = formats.length; at > 0; at = best[at].from) {
+            var group = [];
+            for (var n = best[at].from; n < at; n++) group.push(n);
+            groups.unshift(group);
+        }
+        return groups;
+    }
+
+    var MOBILE_FULL = [M_GRID4, M_ROW2];
+    var MOBILE_REST = { 1: [M_ROW1], 2: [M_ROW2], 3: [M_GRID3], 4: [M_GRID4], 5: [M_GRID4, M_ROW1] };
+    var DESKTOP_FULL = [D_FULL];
+    var DESKTOP_REST = { 1: [M_ROW1], 2: [M_ROW2], 3: [D_THREE], 4: [D_FOUR], 5: [D_FIVE] };
+
+    /* Standard-Blöcke für n Bilder (je 6 = ein voller Block). */
+    function standardBlocks(n, desktop) {
+        if (n === 6) return desktop ? DESKTOP_FULL : MOBILE_FULL;
+        return (desktop ? DESKTOP_REST : MOBILE_REST)[n] || [];
+    }
+
+    /* Plant das ganze Mosaik. Rückgabe: Liste von { spec, indices } – spec ist
+       ein Block (siehe oben), indices[order] die Nummer des Fotos auf der
+       Kachel mit dieser order.
+       Jeweils 6 Fotos bilden einen Block (der letzte den Rest). Ohne Format-
+       Angaben, oder wenn die Standard-Blöcke zu den Angaben passen (die Fotos
+       werden dabei innerhalb des Blocks passend verteilt), bleibt alles wie
+       gehabt; passen sie nicht, wird nur dieser Block aus Reihen gebaut. */
+    function planBlocks(items, desktop) {
         var plan = [];
-        for (var i = 0; i < Math.floor(n / 6); i++) plan = plan.concat(full);
-        if (n % 6) plan = plan.concat(rest[n % 6]);
+        for (var start = 0; start < items.length; start += 6) {
+            var count = Math.min(6, items.length - start);
+            var formats = items.slice(start, start + count).map(function (item) { return item.format || null; });
+
+            var pieces = standardBlocks(count, desktop);
+            var shapes = [];
+            pieces.forEach(function (piece) { shapes = shapes.concat(tileShapes(piece)); });
+            var result = assignShapes(formats, shapes);
+
+            if (!result.misfits) {
+                var offset = 0;
+                pieces.forEach(function (piece) {
+                    var size = countTiles(piece);
+                    plan.push({
+                        spec: piece,
+                        indices: result.slots.slice(offset, offset + size).map(function (image) { return start + image; })
+                    });
+                    offset += size;
+                });
+            } else {
+                packRows(formats, desktop).forEach(function (group) {
+                    plan.push({
+                        spec: rowBlock(group, formats),
+                        indices: group.map(function (image) { return start + image; })
+                    });
+                });
+            }
+        }
         return plan;
     }
 
@@ -239,14 +391,14 @@
             ? window.PhotoLightbox.init({ groups: [items.map(function (item) { return { src: item.src, alt: item.alt }; })] })
             : null;
 
-        function renderNode(node, base) {
+        function renderNode(node, indices) {
             var el;
             if (node.kids) {
                 el = document.createElement('div');
                 el.className = 'photo-mosaic-node is-' + node.dir;
-                node.kids.forEach(function (kid) { el.appendChild(renderNode(kid, base)); });
+                node.kids.forEach(function (kid) { el.appendChild(renderNode(kid, indices)); });
             } else {
-                var index = base + node.order;
+                var index = indices[node.order];
                 var item = items[index];
                 el = document.createElement('button');
                 el.type = 'button';
@@ -268,14 +420,17 @@
 
         function layout() {
             host.textContent = '';
-            var base = 0;
-            planBlocks(items.length, !mobileQuery.matches).forEach(function (spec) {
-                var el = renderNode(spec, base);
+            planBlocks(items, !mobileQuery.matches).forEach(function (piece) {
+                var el = renderNode(piece.spec, piece.indices);
                 el.classList.add('photo-mosaic-block');
                 el.style.flex = '0 0 auto';
-                el.style.aspectRatio = String(spec.aspect);
+                el.style.aspectRatio = String(piece.spec.aspect);
+                if (piece.spec.maxWidth) {
+                    /* Reihen aus wenigen Fotos nicht riesig ziehen: sie bleiben
+                       schmaler und beginnen LINKS (bündig mit dem Titel). */
+                    el.style.maxWidth = piece.spec.maxWidth + 'px';
+                }
                 host.appendChild(el);
-                base += countTiles(spec);
             });
         }
 
@@ -313,7 +468,7 @@
         }
 
         renderMosaic(host, images.map(function (src, index) {
-            return { src: src, alt: alt, pos: focusOf(motif, index) };
+            return { src: src, alt: alt, pos: focusOf(motif, index), format: formatOf(motif, index) };
         }));
     }
 
@@ -327,14 +482,10 @@
         var items = [];
         motifs.forEach(function (motif) {
             motifImages(motif).forEach(function (src, index) {
-                items.push({ src: src, alt: alt, pos: focusOf(motif, index) });
+                items.push({ src: src, alt: alt, pos: focusOf(motif, index), format: formatOf(motif, index) });
             });
         });
         renderMosaic(host, items);
-    }
-
-    function categoryPage(category) {
-        return { wildlife: 'wildlife.html', landschaften: 'landschaften.html', portrait: 'portrait.html', street: 'streetfotografie.html' }[category] || 'fotografie.html';
     }
 
     function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }

@@ -1182,27 +1182,128 @@ document.addEventListener("DOMContentLoaded", function() {
         wireLangSwitchers(panelEl);
     }
 
-    // Lässt die Zeilen (Links/Drill-Buttons/Social-Icons) eines Panels
-    // einzeln, nacheinander leicht von unten nach oben einblenden – der
-    // "Apple-artige" saubere vertikale Aufbau. Rein index-basiert (kein
-    // Bezug zu Text/Anzahl/Seite), funktioniert dadurch automatisch für
-    // jede aktuelle und künftige Ebene, ohne Sonderfälle.
-    function animatePanelRowsIn(panelEl) {
-        const rows = panelEl.querySelectorAll('.mobile-nav-link, .mobile-nav-drill, .mobile-social-lang-row, .mobile-search-field');
-        rows.forEach((row, index) => {
+    // ─── BEWEGUNG DES MOBILE-MENÜS (AUFBAU + EBENENWECHSEL) ───
+    // Alle Zahlen dieser Animationen stehen hier an EINER Stelle. Die beiden
+    // Kurven kommen aus header.css (--mm-ease-out / --mm-ease-exit) – dieselben
+    // wie bei Menü-Fläche, Hamburger → X und Logo ↔ Zurück-Pfeil, damit alles
+    // wie EINE Bewegung wirkt.
+    //
+    // Ziel: Das Menü soll sich in einem einzigen, weichen Schwung aufbauen,
+    // nicht als sichtbar abgezählte Liste. Dafür: ganz kleiner Zeitversatz
+    // zwischen den Zeilen, kurzer Weg, lange auslaufende Kurve und ein leichtes
+    // Unscharf → Scharf (wie bei iOS) – jede Zeile ist schon lesbar, während
+    // die nächsten noch ankommen.
+    //   rise  = Menü öffnen (Hamburger/Lupe, Wechsel Navigation ↔ Suche):
+    //           die Zeilen steigen leicht von unten auf.
+    //   slide = Ebenenwechsel: die Zeilen gleiten von der Seite herein, aus der
+    //           die neue Ebene kommt (vor = von rechts, zurück = von links);
+    //           die alte Ebene verlässt das Bild kurz davor in Gegenrichtung.
+    // distance in px, duration/stagger/delay in ms (stagger = Versatz pro Zeile,
+    // delay = Start nach dem Beginn des Abdunkelns bzw. dem Abgang der alten Ebene:
+    // beim Öffnen (rise) kommen die Zeilen erst, wenn die Seite schon überwiegend
+    // abgedunkelt ist – Zeitleiste der Fläche siehe --mm-dim-* in header.css).
+    const MOBILE_MOTION = {
+        rise: { distance: 14, duration: 700, stagger: 16, delay: 170, blur: 4 },
+        slide: { distance: 26, duration: 560, stagger: 14, delay: 80, blur: 3 },
+        exit: { distance: 16, duration: 170 },
+        maxStaggeredRows: 12
+    };
+
+    const MOBILE_ROW_SELECTOR = '.mobile-nav-link, .mobile-nav-drill, .mobile-social-lang-row, .mobile-search-field, .mobile-search-divider';
+    const reducedMotionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+    function prefersReducedMotion() {
+        return !!(reducedMotionQuery && reducedMotionQuery.matches);
+    }
+
+    function mobileEase(token, fallback) {
+        const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+        return value || fallback;
+    }
+
+    // Lässt die Zeilen (Links/Drill-Buttons/Social-Icons) eines Panels im
+    // Schwung einblenden (siehe MOBILE_MOTION). Rein index-basiert (kein
+    // Bezug zu Text/Anzahl/Seite), funktioniert dadurch automatisch für jede
+    // aktuelle und künftige Ebene, ohne Sonderfälle. direction: 'forward' |
+    // 'back' (Ebenenwechsel, seitlich), sonst aufsteigend (Menü öffnen).
+    // Wer "Bewegung reduzieren" eingestellt hat, bekommt nur ein kurzes Einblenden.
+    function animatePanelRowsIn(panelEl, direction) {
+        const reduced = prefersReducedMotion();
+        const sideways = direction === 'forward' || direction === 'back';
+        const motion = sideways ? MOBILE_MOTION.slide : MOBILE_MOTION.rise;
+        const easing = mobileEase('--mm-ease-out', 'cubic-bezier(0.22, 1, 0.36, 1)');
+        const from = sideways
+            ? `translateX(${direction === 'back' ? -motion.distance : motion.distance}px)`
+            : `translateY(${motion.distance}px)`;
+
+        panelEl.querySelectorAll(MOBILE_ROW_SELECTOR).forEach((row, index) => {
             row.animate(
-                [
-                    { opacity: 0, transform: 'translateY(8px)' },
-                    { opacity: 1, transform: 'translateY(0)' }
-                ],
+                reduced
+                    ? [{ opacity: 0 }, { opacity: 1 }]
+                    : [
+                        { opacity: 0, transform: from, filter: `blur(${motion.blur}px)` },
+                        { opacity: 1, transform: 'translate(0, 0)', filter: 'blur(0px)' }
+                    ],
                 {
-                    duration: 260,
-                    delay: Math.min(index, 8) * 35,
-                    easing: 'ease',
-                    fill: 'both'
+                    duration: reduced ? 160 : motion.duration,
+                    delay: reduced ? 0 : motion.delay + Math.min(index, MOBILE_MOTION.maxStaggeredRows) * motion.stagger,
+                    easing: reduced ? 'ease-out' : easing,
+                    // Nur VOR dem Start halten: danach gelten wieder die normalen
+                    // Werte (kein dauerhaftes transform/filter auf jeder Zeile).
+                    fill: 'backwards'
                 }
             );
         });
+
+        // Die Trennlinie über der Second-Header-Liste gehört zur Liste, nicht zu
+        // einer Zeile – sie blendet deshalb im selben Schwung ein, statt schon
+        // vorher fertig dazustehen. (Zielfarbe = aktuelle Farbe des jeweiligen
+        // Designs, daher aus dem berechneten Stil gelesen.)
+        if (!reduced) {
+            panelEl.querySelectorAll('.mobile-second-nav').forEach(nav => {
+                nav.animate(
+                    [
+                        { borderTopColor: 'rgba(0, 0, 0, 0)' },
+                        { borderTopColor: getComputedStyle(nav).borderTopColor }
+                    ],
+                    { duration: motion.duration * 0.6, delay: motion.delay, easing: 'ease-out', fill: 'backwards' }
+                );
+            });
+        }
+    }
+
+    // Das alte Panel verlässt das Bild (siehe MOBILE_MOTION): bei einem
+    // Ebenenwechsel seitlich in Gegenrichtung der neuen Ebene (vor = nach links,
+    // zurück = nach rechts), sonst (Navigation ↔ Suche) ein kleines Stück nach
+    // oben. Währenddessen nicht mehr bedienbar, danach aus dem DOM entfernt.
+    function animatePanelOut(panel, direction) {
+        const reduced = prefersReducedMotion();
+        const sideways = direction === 'forward' || direction === 'back';
+        const exit = MOBILE_MOTION.exit;
+        const to = sideways
+            ? `translateX(${direction === 'back' ? exit.distance : -exit.distance}px)`
+            : `translateY(${-exit.distance / 2}px)`;
+
+        panel.style.pointerEvents = 'none';
+        panel.setAttribute('aria-hidden', 'true');
+
+        const animation = panel.animate(
+            reduced
+                ? [{ opacity: 1 }, { opacity: 0 }]
+                : [
+                    { opacity: 1, transform: 'translate(0, 0)' },
+                    { opacity: 0, transform: to }
+                ],
+            {
+                duration: reduced ? 120 : exit.duration,
+                easing: reduced ? 'ease-out' : mobileEase('--mm-ease-exit', 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'),
+                fill: 'forwards'
+            }
+        );
+
+        animation.onfinish = () => {
+            if (panel.parentNode) panel.parentNode.removeChild(panel);
+        };
     }
 
     // Tauscht das sichtbare Panel in .mobile-menu-levels gegen neuen HTML-
@@ -1216,15 +1317,15 @@ document.addEventListener("DOMContentLoaded", function() {
     // Einträgen oder der Höhe der vorherigen Ebene abhängt. Alle Panels
     // liegen zusätzlich per CSS Grid exakt in derselben Zelle übereinander
     // (grid-area: 1/1) statt sich gegenseitig im normalen Fluss zu
-    // verschieben oder ihre Höhe per JS zu verwalten. Dadurch kann weder
-    // eine horizontale Positionsänderung noch eine vertikale Startpunkt-
-    // Verschiebung mehr auftreten – unabhängig davon, welches Panel
-    // (Navigation ODER Suche) gerade angezeigt wird oder wie lang sein
-    // Inhalt ist. instant=true (erstes Öffnen, egal ob per Hamburger oder
-    // Lupe) baut das Panel sofort sauber auf; sonst (Ebenenwechsel bzw.
-    // Wechsel zwischen Navigation/Suche bei bereits offenem Menü) wird
-    // gekreuzblendet.
-    function swapMobilePanel(html, attachFn, instant) {
+    // verschieben oder ihre Höhe per JS zu verwalten. Die Ruheposition einer
+    // Ebene hängt dadurch nie von Inhalt oder JavaScript ab – animiert werden
+    // nur die Zeilen bzw. das austretende alte Panel, ausschliesslich per
+    // transform/opacity/filter (kein Layout). instant=true (erstes Öffnen,
+    // egal ob per Hamburger oder Lupe) baut das Panel sofort auf; sonst
+    // (Ebenenwechsel bzw. Wechsel zwischen Navigation/Suche bei bereits
+    // offenem Menü) verlässt das alte Panel das Bild, während das neue
+    // hereinkommt. direction: siehe animatePanelRowsIn.
+    function swapMobilePanel(html, attachFn, instant, direction) {
         if (!mobileMenuLevels) return;
 
         // Der zuletzt eingefügte Panel ist immer das aktuell sichtbare (jedes
@@ -1237,13 +1338,18 @@ document.addEventListener("DOMContentLoaded", function() {
         newPanel.className = 'mobile-menu-panel';
         newPanel.innerHTML = html;
 
+        // Jede Ebene beginnt ganz oben – sonst läge sie bei einem zuvor
+        // gescrollten Menü teilweise ausserhalb des Bildes und sprang erst
+        // beim Entfernen der alten Ebene an ihren Platz.
+        if (mobileMenu) mobileMenu.scrollTop = 0;
+
         if (!oldPanel || instant) {
             // Erstes Öffnen: kein altes Panel zum Ausblenden, nur die neuen
-            // Zeilen sauber von oben nach unten aufbauen lassen.
+            // Zeilen im Schwung aufbauen lassen.
             mobileMenuLevels.innerHTML = '';
             mobileMenuLevels.appendChild(newPanel);
             if (attachFn) attachFn(newPanel);
-            animatePanelRowsIn(newPanel);
+            animatePanelRowsIn(newPanel, null);
             return;
         }
 
@@ -1258,29 +1364,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         mobileMenuLevels.appendChild(newPanel);
         if (attachFn) attachFn(newPanel);
-        animatePanelRowsIn(newPanel);
-
-        // Altes Panel verlässt die sichtbare Fläche sauber (Fade + leichter
-        // Zug nach oben) – unabhängig davon, ob es sich um einen Ebenen-
-        // wechsel oder einen Wechsel Navigation↔Suche handelt.
-        const oldAnimation = oldPanel.animate(
-            [
-                { opacity: 1, transform: 'translateY(0)' },
-                { opacity: 0, transform: 'translateY(-8px)' }
-            ],
-            { duration: 200, easing: 'ease', fill: 'both' }
-        );
-
-        oldAnimation.onfinish = () => {
-            if (oldPanel.parentNode) oldPanel.parentNode.removeChild(oldPanel);
-        };
+        animatePanelRowsIn(newPanel, direction);
+        animatePanelOut(oldPanel, direction);
     }
 
     // Rendert die aktuell oberste Nav-Ebene. direction ist 'forward'/'back'
     // beim Ebenenwechsel, null beim allerersten Öffnen.
     function renderMobileLevel(direction) {
         const level = navStack[navStack.length - 1];
-        swapMobilePanel(buildLevelHTML(level), panelEl => attachLevelHandlers(level, panelEl), !direction);
+        swapMobilePanel(buildLevelHTML(level), panelEl => attachLevelHandlers(level, panelEl), !direction, direction);
     }
 
     function goForward(children) {
@@ -1364,8 +1456,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // als eigenes, unabhängig positioniertes Element weiterhin normal
     // scrollbar (eigenes overflow-y:auto).
     let lockedScrollY = 0;
+    let bodyLocked = false;
 
     function lockBodyScroll() {
+        if (bodyLocked) return;
+        bodyLocked = true;
         lockedScrollY = window.scrollY;
         document.body.style.position = 'fixed';
         document.body.style.top = `-${lockedScrollY}px`;
@@ -1375,6 +1470,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function unlockBodyScroll() {
+        // Nur entsperren, was wirklich gesperrt wurde (das Sperren läuft beim
+        // Öffnen bewusst erst ein paar Bilder später, siehe openMobileOverlay).
+        if (!bodyLocked) return;
+        bodyLocked = false;
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.left = '';

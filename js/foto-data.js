@@ -29,6 +29,28 @@
      Ausschnitt auch für die Kachel auf der Kategorieseite.
      In der Grossansicht (Lightbox) siehst du immer das ganze Bild.
 
+   ▸ HOCH- ODER QUERFORMAT ANGEBEN (damit das Foto in der passenden Kachel liegt):
+     Das Mosaik hat feste Kachelformen (manche hoch, manche quer). Ohne Angabe
+     landet ein Foto einfach auf dem nächsten freien Platz – ein Hochformat-Foto
+     kann dann in einer Quer-Kachel stecken und stark beschnitten werden. Sag dem
+     Raster deshalb pro Foto, welches Format es hat:
+         { src: 'fotografie/street/kirche-1.jpg', format: 'hoch' }
+         { src: 'fotografie/landschaften/schiff.jpg', format: 'quer' }
+       (format lässt sich mit x / y kombinieren:  { src: '…', format: 'hoch', x: 30 })
+     Das Raster passt sich weiter AUTOMATISCH an die Anzahl der Fotos an
+     (Handy und PC), nur verteilt es sie jetzt nach Format:
+       • Passt die normale Anordnung zu den Angaben, bleibt das Mosaik wie es
+         ist – die Fotos werden dabei innerhalb des Blocks (je 6) so verteilt,
+         dass jedes in einer Kachel seines Formats liegt. Die Reihenfolge kann
+         sich dadurch innerhalb eines Blocks ändern (z.B. stehen Hochformate
+         vorne, wo die hohen Kacheln sind). Die Grossansicht blättert immer in
+         der Reihenfolge, wie du sie hier aufschreibst.
+       • Passt sie nicht (z.B. zwei Hochformat-Fotos, aber der Block hat nur
+         eine hohe Kachel), wird dieser Block aus Reihen gebaut: jedes Foto
+         bekommt eine Kachel in seinem Format, die Reihen füllen die Breite.
+     Fotos OHNE Angabe verhalten sich wie bisher (sie passen überall hin) – du
+     kannst es also bei einzelnen Fotos weglassen oder nur Hochformate markieren.
+
    ▸ WIE DAS MOSAIK ENTSTEHT:
      Die Form jeder Kachel (hoch, quer, schmal, breit …) legt NUR die
      Position in der Liste fest – je 6 Bilder bilden einen Block (Handy:
@@ -159,8 +181,9 @@ window.FOTO_GALERIE = {
     {
       title: "Street 1",
       images: [
-        "fotografie/street/kirche-1.jpg",
-        "fotografie/street/architektur-1.jpg",
+        { src: "fotografie/street/kirche-1.jpg", format: "hoch" },
+        { src: "fotografie/street/architektur-1.jpg", format: "hoch" },
+        { src: "fotografie/street/westside-sonnenaufgang.jpg", format: "hoch" },
       ],
     },
     /* ─── weitere Motive hier einfügen ─── */
