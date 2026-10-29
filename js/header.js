@@ -1195,6 +1195,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // die nächsten noch ankommen.
     //   rise  = Menü öffnen (Hamburger/Lupe, Wechsel Navigation ↔ Suche):
     //           die Zeilen steigen leicht von unten auf.
+    //   open  = nur das allererste Öffnen des Menüs: wie rise, aber knapper
+    //           (passend zu --mm-open-dim-duration in header.css).
     //   slide = Ebenenwechsel: die Zeilen gleiten von der Seite herein, aus der
     //           die neue Ebene kommt (vor = von rechts, zurück = von links);
     //           die alte Ebene verlässt das Bild kurz davor in Gegenrichtung.
@@ -1204,6 +1206,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // abgedunkelt ist – Zeitleiste der Fläche siehe --mm-dim-* in header.css).
     const MOBILE_MOTION = {
         rise: { distance: 14, duration: 700, stagger: 16, delay: 170, blur: 4 },
+        open: { distance: 14, duration: 420, stagger: 10, delay: 90, blur: 4 },
         slide: { distance: 26, duration: 560, stagger: 14, delay: 80, blur: 3 },
         exit: { distance: 16, duration: 170 },
         maxStaggeredRows: 12
@@ -1227,10 +1230,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // aktuelle und künftige Ebene, ohne Sonderfälle. direction: 'forward' |
     // 'back' (Ebenenwechsel, seitlich), sonst aufsteigend (Menü öffnen).
     // Wer "Bewegung reduzieren" eingestellt hat, bekommt nur ein kurzes Einblenden.
-    function animatePanelRowsIn(panelEl, direction) {
+    function animatePanelRowsIn(panelEl, direction, opening) {
         const reduced = prefersReducedMotion();
         const sideways = direction === 'forward' || direction === 'back';
-        const motion = sideways ? MOBILE_MOTION.slide : MOBILE_MOTION.rise;
+        const motion = sideways ? MOBILE_MOTION.slide : (opening ? MOBILE_MOTION.open : MOBILE_MOTION.rise);
         const easing = mobileEase('--mm-ease-out', 'cubic-bezier(0.22, 1, 0.36, 1)');
         const from = sideways
             ? `translateX(${direction === 'back' ? -motion.distance : motion.distance}px)`
@@ -1349,7 +1352,7 @@ document.addEventListener("DOMContentLoaded", function() {
             mobileMenuLevels.innerHTML = '';
             mobileMenuLevels.appendChild(newPanel);
             if (attachFn) attachFn(newPanel);
-            animatePanelRowsIn(newPanel, null);
+            animatePanelRowsIn(newPanel, null, true);
             return;
         }
 

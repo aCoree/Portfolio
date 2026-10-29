@@ -89,10 +89,18 @@
      Warum so sanft: Ein "Flash" entsteht nicht durch Helligkeit an sich,
      sondern durch zu schnelles Umschalten von hell auf dunkel – gemessen an
      der wahrgenommenen Helligkeit (L*) über eine helle Seite: sofort = 97,
-     schnelles Einblenden = 54–71, früherer Fade = 33, dieser Verlauf = 16. Der
+     schnelles Einblenden = 54–71, früherer Fade = 33, dieser Verlauf = 16 (bei 0.5s; bei 0.35s ≈ 23). Der
      Anfang ist bewusst weich, danach gleichmässig. Sanfter/schneller: nur hier. */
-  --mm-dim-duration: 0.5s;
+  --mm-dim-duration: 0.35s; /* gilt nur noch fürs SCHLIESSEN (Öffnen: --mm-open-dim-duration, ganz unten) */
   --mm-dim-ease: cubic-bezier(0.3, 0, 0.5, 1);
+
+  /* Nur das ÖFFNEN (Klick auf Hamburger/Lupe) läuft etwas knapper als das
+     Schliessen und der Rest oben. Gleiche Kurve, nur kürzer: gemessen wie oben
+     ≈ 26 statt 16 (der frühere, als "akzeptabel" empfundene Fade lag bei 33),
+     die Seite blitzt also weiterhin nicht auf. 0.3s ist zugleich die übliche
+     Standard-Dauer für Hamburger → X. Die Zeilen starten dazu
+     passend früher (header.js: MOBILE_MOTION.open). */
+  --mm-open-dim-duration: 0.3s;
 }
 
 /* ─── HEADER-GRUPPE (STICKY-WRAPPER FÜR MAIN HEADER + SECOND HEADER) ───
@@ -829,8 +837,15 @@ body:not(.transparent-header) .nav-expand {
      ist fertig, wenn die Seite fertig abgedunkelt ist. */
   transition:
     transform var(--mm-dim-duration) var(--mm-dim-ease),
-    opacity 0.25s ease;
+    opacity 0.2s ease;
   transform-origin: center;
+}
+
+/* Öffnen: etwas knapper als Schliessen (siehe --mm-open-dim-duration). */
+.hamburger.open span {
+  transition:
+    transform var(--mm-open-dim-duration) var(--mm-dim-ease),
+    opacity 0.15s ease;
 }
 
 .hamburger.open span:nth-child(1) {
@@ -883,6 +898,7 @@ body:not(.transparent-header) .nav-expand {
 .mobile-menu.open {
   opacity: 1;
   pointer-events: all;
+  transition: opacity var(--mm-open-dim-duration) var(--mm-dim-ease);
 }
 
 /* Fester Navigations-Rahmen für ALLE Mobile-Menü-Ebenen: top/left/right
@@ -1500,12 +1516,24 @@ body.has-second-header:not(.transparent-header) .page-padding {
   html[data-theme="light"] .hamburger span {
     transition:
       transform var(--mm-dim-duration) var(--mm-dim-ease),
-      opacity 0.25s ease,
-      background-color 0.16s linear 0.14s;
+      opacity 0.2s ease,
+      background-color 0.11s linear 0.1s;
   }
 
   html[data-theme="light"] .nav-search-toggle--mobile {
-    transition: color 0.16s linear 0.14s;
+    transition: color 0.11s linear 0.1s;
+  }
+
+  /* Öffnen: derselbe Farbwechsel in der Mitte der (kürzeren) Abblendung. */
+  html[data-theme="light"] .hamburger.open span {
+    transition:
+      transform var(--mm-open-dim-duration) var(--mm-dim-ease),
+      opacity 0.15s ease,
+      background-color 0.1s linear 0.08s;
+  }
+
+  html[data-theme="light"] body.menu-open .nav-search-toggle--mobile {
+    transition: color 0.1s linear 0.08s;
   }
 
   /* Pfeil kommt (Untermenü offen) */
@@ -1547,7 +1575,8 @@ body.has-second-header:not(.transparent-header) .page-padding {
     filter: none !important;
   }
 
-  .hamburger span {
+  .hamburger span,
+  .hamburger.open span {
     transition-duration: 0.01ms;
   }
 }

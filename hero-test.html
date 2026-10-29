@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Hero Test</title>
+
+    <!-- Nur die Schriften (Anton, Barlow Condensed) kommen von Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500&display=swap">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0b0b0b;
+            color: #cbc8c8;
+        }
+
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #0b0b0b;
+            padding: 100px 20px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .hero-video.is-ready {
+            opacity: 1;
+        }
+
+        /* ABDUNKELUNG: Wert hinten (0 = gar nicht, 1 = komplett schwarz).
+           Vorher in index.html: 0.45 */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-content h1 {
+            font-family: "Anton", sans-serif;
+            font-size: 4.2rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            line-height: 1.05;
+            color: #fff;
+        }
+
+        .hero-content p {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #cccccc;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #7728f6 0%, #65b5ff 25%, #7728f6 50%, #65b5ff 75%, #7728f6 100%);
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-flow 10s linear infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 200% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Einblend-Animation (wie az-reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal[data-delay="1"] {
+            transition-delay: 0.08s;
+        }
+
+        @media (max-width: 640px) {
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+            <source src="videos/hero-loop-h264.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1 class="reveal">CREATING <span class="gradient-text">VISUAL</span> STORIES</h1>
+            <p class="reveal" data-delay="1">Filmmaker, photographer & media designer from Switzerland
+
+</p>
+        </div>
+    </section>
+
+    <script>
+        const video = document.querySelector('.hero-video');
+        const showVideo = () => video.classList.add('is-ready');
+        video.addEventListener('canplay', showVideo);
+        if (video.readyState >= 3) showVideo();
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        }));
+    </script>
+</body>
+
+</html>
