@@ -159,6 +159,11 @@ body:not(.has-hero) main,
    BUTTON"), damit garantiert jede Seite exakt dieselbe Optik bekommt –
    hier bewusst nicht mehr dupliziert. */
 
+/* ─── PILLEN-BUTTON (.btn) ───
+   Die EINZIGE Button-Definition der Seite (Hell-Modus: theme.css). Genutzt
+   für "Zurück zur Startseite" (404.html), "Nachricht senden" (index.html,
+   Kontaktformular) und "Mehr anzeigen" (Foto-Kategorieseiten, foto-galerie.js).
+   Neuer Button gleicher Optik: einfach class="btn" geben. */
 .btn {
   display: inline-block;
   align-self: center;
@@ -214,6 +219,26 @@ body:not(.has-hero) main,
   background-color: rgba(255, 255, 255, 0.85) !important;
   transform: none !important;
   box-shadow: none !important;
+}
+
+/* Button mit Pfeil (class="btn btn--caret", darin <i class="fa-solid
+   fa-chevron-down btn-caret">): Pfeil wie bei "Projekte" im Header (klein,
+   leicht transparent, dreht sich in 0.25s um 180°). Bei aria-expanded="true"
+   zeigt er nach oben. */
+.btn--caret {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-caret {
+  font-size: 0.6em;
+  opacity: 0.6;
+  transition: transform 0.25s ease;
+}
+
+.btn--caret[aria-expanded="true"] .btn-caret {
+  transform: rotate(180deg);
 }
 
 .section {
@@ -393,72 +418,6 @@ input[type="email"],
 textarea,
 select {
   font-size: 16px !important;
-}
-
-/* ─── APPLE PILL BUTTON (CLEAN RESET) ─── */
-.contact-form button,
-.contact-form input[type="submit"] {
-  /* Layout & Form */
-  align-self: center;
-  padding: 12px 34px;
-  border-radius: 9999px !important;
-  font-family: "Barlow Condensed", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-
-  /* Saubere Basis: Transparent mit Rahmen */
-  background: transparent !important;
-  background-image: none !important;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  color: #ffffff !important;
-
-  /* Alle alten Effekte / Animationen deaktivieren */
-  box-shadow: none !important;
-  transform: none !important;
-  filter: none !important;
-  outline: none !important;
-
-  /* Nur die Farbänderung animieren */
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease !important;
-}
-
-/* Pseudo-Elemente ausschalten (falls vorher ein Glow/Shine-Effekt da war) */
-.contact-form button::before,
-.contact-form button::after,
-.contact-form input[type="submit"]::before,
-.contact-form input[type="submit"]::after {
-  display: none !important;
-  content: none !important;
-}
-
-/* ─── HOVER: Rein weiß, keine Bewegung ─── */
-@media (hover: hover) and (pointer: fine) {
-  .contact-form button:hover,
-  .contact-form input[type="submit"]:hover {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    background-image: none !important;
-    color: #000000 !important;
-    border-color: #ffffff !important;
-
-    /* Verhindert jedes Zucken oder Vergrößern */
-    transform: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-  }
-}
-
-/* ─── ACTIVE (Klick) ─── */
-.contact-form button:active,
-.contact-form input[type="submit"]:active {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  transform: none !important;
-  box-shadow: none !important;
 }
 
 /* ─── KONTAKTFORMULAR: STATUS-MELDUNG ───
@@ -1284,7 +1243,7 @@ body:not(.has-hero) main.legal-content {
 }
 
 /* ==========================================
-   404 ERROR PAGE STYLES (Erzwungener Apple-Button)
+   404 ERROR PAGE STYLES (Button: .btn)
    ========================================== */
 
 .error-page {
@@ -1494,6 +1453,47 @@ body:not(.has-hero) main.legal-content {
     background: #141414;
 }
 
+/* Weitere Kacheln hinter "Mehr anzeigen" (foto-galerie.js): ein zweites
+   Raster in einem zugeklappten Bereich. Höhe 0fr ↔ 1fr animiert sanft auf
+   und zu, ohne die Höhe in JS messen zu müssen; dazu blendet der Bereich
+   ein/aus. Das Padding oben ersetzt den Rasterabstand zur Reihe darüber
+   (liegt im Clip, damit es beim Zuklappen mit verschwindet). */
+.photo-grid-extra {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+        grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.4s ease;
+}
+
+.photo-grid-extra.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.photo-grid-extra-clip {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.photo-grid-extra-tiles {
+    padding-top: 16px;
+}
+
+/* "Mehr/Weniger anzeigen"-Button unter dem Raster (Optik: .btn). */
+.photo-grid-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photo-grid-extra {
+        transition: none;
+    }
+}
+
 .photo-grid-item img {
     width: 100%;
     height: 100%;
@@ -1581,6 +1581,10 @@ body:not(.has-hero) main.legal-content {
     .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 4px;
+    }
+
+    .photo-grid-extra-tiles {
+        padding-top: 4px;
     }
 
     /* 2-Spalten-Raster: Titel etwas kleiner als auf dem PC. */

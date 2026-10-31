@@ -144,7 +144,72 @@
             grid.appendChild(tile);
         });
 
-        keepTitlesFitted(grid);
+        collapseExtraTiles(grid);
+        /* Übergeordnetes Element, damit auch die Titel im zugeklappten Bereich mitgemessen werden. */
+        keepTitlesFitted(grid.parentNode);
+    }
+
+    /* Mehr als VISIBLE_TILES Kacheln: nur die ersten zeigen, der Rest liegt in
+       einem zugeklappten Bereich unter dem Raster. Der Button (.btn mit Pfeil,
+       wie "Projekte ▾" im Header) klappt ihn sanft auf und wieder zu und
+       wechselt dabei zwischen "Mehr anzeigen ▾" und "Weniger anzeigen ▴".
+       Die Animation selbst (grid-template-rows 0fr ↔ 1fr) steht in style.css. */
+    var VISIBLE_TILES = 6;
+
+    function collapseExtraTiles(grid) {
+        var extra = Array.prototype.slice.call(grid.children, VISIBLE_TILES);
+        if (!extra.length) return;
+
+        var panel = document.createElement('div');
+        panel.className = 'photo-grid-extra';
+        panel.id = 'photoGridExtra';
+        panel.setAttribute('inert', '');
+        var clip = document.createElement('div');
+        clip.className = 'photo-grid-extra-clip';
+        var tiles = document.createElement('div');
+        tiles.className = 'photo-grid photo-grid-extra-tiles';
+        extra.forEach(function (tile) {
+            /* Sofort laden (statt lazy), sonst poppt das Bild erst mitten im Aufklappen auf. */
+            var img = tile.querySelector('img');
+            if (img) img.loading = 'eager';
+            tiles.appendChild(tile);
+        });
+        clip.appendChild(tiles);
+        panel.appendChild(clip);
+
+        var label = document.createElement('span');
+        var caret = document.createElement('i');
+        caret.className = 'fa-solid fa-chevron-down btn-caret';
+        caret.setAttribute('aria-hidden', 'true');
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn--caret';
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-controls', panel.id);
+        button.appendChild(label);
+        button.appendChild(caret);
+
+        function setLabel(key, fallback) {
+            label.setAttribute('data-i18n', key);
+            label.textContent = translate(key, fallback);
+        }
+        setLabel('fotografie.showMore', 'Mehr anzeigen');
+
+        var wrap = document.createElement('div');
+        wrap.className = 'photo-grid-more az-reveal';
+        wrap.appendChild(button);
+
+        grid.insertAdjacentElement('afterend', panel);
+        panel.insertAdjacentElement('afterend', wrap);
+
+        button.addEventListener('click', function () {
+            var open = button.getAttribute('aria-expanded') !== 'true';
+            button.setAttribute('aria-expanded', String(open));
+            panel.classList.toggle('is-open', open);
+            if (open) panel.removeAttribute('inert'); else panel.setAttribute('inert', '');
+            if (open) setLabel('fotografie.showLess', 'Weniger anzeigen');
+            else setLabel('fotografie.showMore', 'Mehr anzeigen');
+        });
     }
 
     /* ─── 2) MOTIV-SEITE: MOSAIK ───

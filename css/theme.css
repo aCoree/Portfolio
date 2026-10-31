@@ -294,11 +294,9 @@ html[data-theme="light"] .contact-form-status.is-sending {
   border-color: var(--lt-line-soft);
 }
 
-/* ─── Pillen-Buttons (.btn, Formular-Button): dunkle Linie/Schrift auf Hell,
-       beim Hover dunkel gefüllt – spiegelbildlich zum Dunkel-Modus ─── */
-html[data-theme="light"] .btn,
-html[data-theme="light"] .contact-form button,
-html[data-theme="light"] .contact-form input[type="submit"] {
+/* ─── Pillen-Button (.btn): dunkle Linie/Schrift auf Hell, beim Hover dunkel
+       gefüllt – spiegelbildlich zum Dunkel-Modus ─── */
+html[data-theme="light"] .btn {
   background-color: rgba(37, 35, 31, 0.04) !important;
   background-image: none !important;
   border: 1px solid rgba(37, 35, 31, 0.35) !important;
@@ -306,9 +304,7 @@ html[data-theme="light"] .contact-form input[type="submit"] {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html[data-theme="light"] .btn:hover,
-  html[data-theme="light"] .contact-form button:hover,
-  html[data-theme="light"] .contact-form input[type="submit"]:hover {
+  html[data-theme="light"] .btn:hover {
     background: #25231f !important;
     background-color: #25231f !important;
     background-image: none !important;
@@ -317,9 +313,7 @@ html[data-theme="light"] .contact-form input[type="submit"] {
   }
 }
 
-html[data-theme="light"] .btn:active,
-html[data-theme="light"] .contact-form button:active,
-html[data-theme="light"] .contact-form input[type="submit"]:active {
+html[data-theme="light"] .btn:active {
   background-color: rgba(37, 35, 31, 0.85) !important;
 }
 

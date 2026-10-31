@@ -104,6 +104,14 @@ window.FOTO_GALERIE = {
       ],
     },
     {
+      title: { de: "Star", en: "Starling", fr: "Étourneau", it: "Storno" },
+      images: [
+        "fotografie/wildlife/star/star-1-lq.jpg",
+        "fotografie/wildlife/star/star-2-lq.jpg",
+        "fotografie/wildlife/star/star-3-lq.jpg",
+      ],
+    },
+    {
       title: { de: "Milan", en: "Kite", fr: "Milan", it: "Nibbio" },
       images: [
         "fotografie/wildlife/milan/milan-1-lq.jpg",
@@ -113,14 +121,6 @@ window.FOTO_GALERIE = {
     {
       title: { de: "Möwe", en: "Seagull", fr: "Mouette", it: "Gabbiano" },
       images: ["fotografie/wildlife/möwe/möwe-1-lq.jpg"],
-    },
-    {
-      title: { de: "Star", en: "Starling", fr: "Étourneau", it: "Storno" },
-      images: [
-        "fotografie/wildlife/star/star-1-lq.jpg",
-        "fotografie/wildlife/star/star-2-lq.jpg",
-        "fotografie/wildlife/star/star-3-lq.jpg",
-      ],
     },
     {
       title: {
