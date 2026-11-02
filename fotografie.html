@@ -16,7 +16,7 @@
     <meta property="og:url" content="https://aureliozingarello.ch/fotografie.html">
     <meta property="og:title" content="Fotografie | Aurelio Zingarello">
     <meta property="og:description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften und Portrait.">
-    <meta property="og:image" content="https://aureliozingarello.ch/fotografie/wildlife/eisvogel/eisvogel-2-lq.jpg">
+    <meta property="og:image" content="https://aureliozingarello.ch/fotografie/wildlife/eisvogel/eisvogel-2.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
 
@@ -24,14 +24,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
 
     <link rel="manifest" href="/favicons/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -160,23 +161,14 @@
             max-width: 480px;
         }
 
-        /* Wiederverwendet das "Mehr Einblicke im Behind the Scenes ->"
-           Button-Design von run.html (.info-content-link aus style.css) –
-           hier aber linksbündig (kein .info-content-right-Modifier) statt
-           rechtsbündig. .foto-cover-btn liefert nur noch den Abstand nach
-           oben; hovert man die ganze Kachel, reagiert der Link mit. */
-        .foto-cover-btn {
+        /* "Ansehen"-Button: der Pillen-Button .apple-btn aus style.css (derselbe
+           wie "Jetzt ansehen" auf index.html). Hier nur der Abstand nach oben.
+           pointer-events: auto, weil das Overlay selbst keine Mausereignisse
+           annimmt – so reagiert der Button auf sein eigenes Hover, aber nicht
+           mehr, wenn man nur über das Bild fährt. */
+        .foto-cover .apple-btn {
             margin-top: 14px;
-        }
-
-        .foto-cover:focus-visible .foto-cover-btn {
-            border-color: #ffffff;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            .foto-cover:hover .foto-cover-btn {
-                border-color: #ffffff;
-            }
+            pointer-events: auto;
         }
 
         /* ─── MOBILE ───
@@ -215,13 +207,13 @@
                 max-width: 100%;
             }
 
-            .foto-cover-btn {
+            .foto-cover .apple-btn {
                 margin-top: 10px;
             }
         }
     </style>
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="css/theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.9">
 </head>
 
 <body>
@@ -266,21 +258,23 @@
         </div>
         <div class="page-rule az-reveal" data-az-delay="1"></div>
 
+        <!-- BILDAUSSCHNITT DER TITELBILDER – PC und Handy getrennt (Handy = bis 640px):
+             PC:    --pos-x / --pos-y      (0% = links/oben … 50% = Mitte … 100% = rechts/unten)
+             Handy: --pos-x-m / --pos-y-m  (fehlen sie, gilt der PC-Wert)
+             Steht direkt im style="…" des jeweiligen <img> unten. -->
         <!-- ─── WILDLIFE ─── -->
         <section class="foto-category" id="wildlife">
             <a class="foto-cover az-reveal" href="wildlife.html" aria-label="Wildlife">
-                <img src="fotografie/wildlife/eisvogel/eisvogel-5-lq.jpg" data-i18n-attr="alt:fotografie.altWildlife"
+                <img src="fotografie/wildlife/eisvogel/eisvogel-5.webp" data-i18n-attr="alt:fotografie.altWildlife"
                     alt="Eisvogel – Wildlife-Fotografie von Aurelio Zingarello"
-                    style="--pos-x: 50%; --pos-y: 50%;">
+                    style="/* PC    */ --pos-x: 50%; --pos-y: 60%;
+                           /* Handy */ --pos-x-m: 80%; --pos-y-m: 50%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catWildlife">Wildlife</h2>
                         <p class="foto-cover-desc" data-i18n="fotografie.descWildlife">Tiere in freier Wildbahn,
                             eingefangen im entscheidenden Moment.</p>
-                        <span class="foto-cover-btn info-content-link">
-                            <span data-i18n="fotografie.viewButton">Ansehen</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </span>
+                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
                     </div>
                 </div>
             </a>
@@ -289,18 +283,16 @@
         <!-- ─── STREETFOTOGRAFIE ─── -->
         <section class="foto-category" id="street">
             <a class="foto-cover az-reveal" href="streetfotografie.html" aria-label="Streetfotografie">
-                <img src="fotografie/street/kirche-1-hq.jpg"  data-i18n-attr="alt:fotografie.altStreet"
+                <img loading="lazy" decoding="async" src="fotografie/street/street-3.webp"  data-i18n-attr="alt:fotografie.altStreet"
                     alt="Streetfotografie von Aurelio Zingarello"
-                    style="--pos-x: 50%; --pos-y: 40%;">
+                    style="/* PC    */ --pos-x: 50%; --pos-y: 86%;
+                           /* Handy */ --pos-x-m: 50%; --pos-y-m: 86%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catStreet">Streetfotografie</h2>
                         <p class="foto-cover-desc" data-i18n="fotografie.descStreet">Spontane Momente mitten aus dem
                             Alltag.</p>
-                        <span class="foto-cover-btn info-content-link">
-                            <span data-i18n="fotografie.viewButton">Ansehen</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </span>
+                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
                     </div>
                 </div>
             </a>
@@ -309,18 +301,16 @@
         <!-- ─── LANDSCHAFTEN ─── -->
         <section class="foto-category" id="landschaften">
             <a class="foto-cover az-reveal" href="landschaften.html" aria-label="Landschaften">
-                <img src="fotografie/landschaften/schiff-weit.jpg" data-i18n-attr="alt:fotografie.altLandschaften"
+                <img loading="lazy" decoding="async" src="fotografie/landschaften/landschaft-1.webp" data-i18n-attr="alt:fotografie.altLandschaften"
                     alt="Landschaftsfotografie von Aurelio Zingarello"
-                    style="--pos-x: 50%; --pos-y: 67%;">
+                    style="/* PC    */ --pos-x: 50%; --pos-y: 71%;
+                           /* Handy */ --pos-x-m: 50%; --pos-y-m: 50%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catLandschaften">Landschaften</h2>
                         <p class="foto-cover-desc" data-i18n="fotografie.descLandschaften">Natur und Landschaften in
                             ihrer schönsten Form.</p>
-                        <span class="foto-cover-btn info-content-link">
-                            <span data-i18n="fotografie.viewButton">Ansehen</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </span>
+                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
                     </div>
                 </div>
             </a>
@@ -329,18 +319,16 @@
         <!-- ─── PORTRAIT ─── -->
         <section class="foto-category" id="portrait">
             <a class="foto-cover az-reveal" href="portrait.html" aria-label="Portrait">
-                <img src="fotografie/portrait/portrait-1.png" data-i18n-attr="alt:fotografie.altPortrait"
+                <img loading="lazy" decoding="async" src="fotografie/portrait/portrait-1.webp" data-i18n-attr="alt:fotografie.altPortrait"
                     alt="Portraitfotografie von Aurelio Zingarello"
-                    style="--pos-x: 50%; --pos-y: 50%;">
+                    style="/* PC    */ --pos-x: 50%; --pos-y: 50%;
+                           /* Handy */ --pos-x-m: 12%; --pos-y-m: 50%;">
                 <div class="foto-cover-overlay">
                     <div>
                         <h2 class="foto-cover-title" data-i18n="fotografie.catPortrait">Portrait</h2>
                         <p class="foto-cover-desc" data-i18n="fotografie.descPortrait">Menschen und Emotionen im
                             Fokus.</p>
-                        <span class="foto-cover-btn info-content-link">
-                            <span data-i18n="fotografie.viewButton">Ansehen</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </span>
+                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
                     </div>
                 </div>
             </a>
@@ -354,7 +342,7 @@
 
     <!-- ─── SECOND HEADER (Alle Fotos, Wildlife ▾, Street, …): gleich auf allen
          Fotografie-Seiten, kommt aus js/foto-nav.js (Motive aus foto-data.js) ─── -->
-    <script src="js/foto-data.js"></script>
+    <script src="js/foto-data.js?v=1.1"></script>
     <script src="js/foto-nav.js"></script>
     <script src="js/header.js?v=1.6"></script>
     <script src="js/az-reveal.js"></script>

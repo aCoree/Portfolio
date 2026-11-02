@@ -17,20 +17,21 @@
     <meta property="og:url" content="https://aureliozingarello.ch/musik.html">
     <meta property="og:title" content="Klaviervideos | Aurelio Zingarello">
     <meta property="og:description" content="Klaviervideos von Aurelio Zingarello: Film- und Soundtrack-Stücke wie The Force Theme, Interstellar, Pirates of the Caribbean, Avengers Main Theme und Bohemian Rhapsody.">
-    <meta property="og:image" content="https://aureliozingarello.ch/cards/card-big-musik.png">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/big/musik.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
 
-    <link rel="preload" as="image" href="cards/card-big-musik.png" media="(min-width: 641px)">
-    <link rel="preload" as="image" href="cards/card-small-musik.png" media="(max-width: 640px)">
+    <link rel="preload" as="image" href="cards/big/musik.webp" media="(min-width: 641px)">
+    <link rel="preload" as="image" href="cards/small/musik.webp" media="(max-width: 640px)">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
 
     <link rel="manifest" href="/favicons/site.webmanifest">
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -86,18 +87,19 @@
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
             background-size: cover;
-            background-position: center;
+            background-position: var(--pos-x, 50%) var(--pos-y, 50%);
             z-index: 1;
             transition: opacity 0.5s ease;
             opacity: 1;
             /* Desktop Bild (ab 641px) */
-            background-image: url('cards/card-big-musik.png');
+            background-image: url('cards/big/musik.webp');
         }
 
         /* Mobile Bild (bis 640px) */
         @media (max-width: 640px) {
             .bg-image-overlay {
-                background-image: url('cards/card-small-musik.png');
+                background-image: url('cards/small/musik.webp');
+                background-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
             }
         }
 
@@ -602,7 +604,7 @@
         }
     </style>
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="css/theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.9">
 </head>
 
 <body>

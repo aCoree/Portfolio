@@ -15,7 +15,7 @@
     <meta property="og:url" content="https://aureliozingarello.ch/projekte.html">
     <meta property="og:title" content="Aurelio Zingarello | Projekte">
     <meta property="og:description" content="Alle Projekte von Aurelio Zingarello im Überblick: Kurzfilm RUN, Fotografie, Musik, DJI-Drohnenvideos, URBNVIBE und LEGO FAMILY STUDIO.">
-    <meta property="og:image" content="https://aureliozingarello.ch/cards/card-big-run.png">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/big/run.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
 
@@ -36,12 +36,13 @@
     </script>
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
 
     <!-- Stylesheets & Fonts -->
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Kein eigener Google-Fonts-Import mehr nötig: style.css lädt Inter
@@ -211,6 +212,13 @@
             will-change: transform;
         }
 
+        /* Handy: eigener Ausschnitt (--pos-x-m / --pos-y-m, sonst gilt der PC-Wert) */
+        @media (max-width: 768px) {
+            .poster-img-wrapper {
+                background-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
+            }
+        }
+
         .poster-card:focus-visible .poster-img-wrapper {
             transform: scale(1.03);
         }
@@ -300,7 +308,7 @@
         }
     </style>
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="css/theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.9">
 </head>
 <body>
     <!-- SEO-NAV-BEGIN -->
@@ -356,7 +364,7 @@
 
             <!-- Poster 1: RUN -->
             <a href="run.html" class="poster-card" data-date="2026-06-01" data-views="8000" data-title="RUN">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-run.png'); --pos-x: 50%; --pos-y: 50%;">
+                <div class="poster-img-wrapper" style="background-image: url('cards/small/run.webp'); --pos-x: 50%; --pos-y: 50%;">
                     <span class="badge-popular" data-i18n="projekte.badgePopular">beliebt</span>
                 </div>
                 <div class="poster-info poster-info-single">
@@ -368,7 +376,7 @@
 
             <!-- Poster 2: URBNVIBE -->
             <a href="urbnvibe.html" class="poster-card" data-date="2024-06-01" data-views="4000" data-title="URBNVIBE">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-urbnvibe.jpg'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/small/urbnvibe.webp'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">URBNVIBE</h3>
                     <span class="dot-separator">·</span>
@@ -378,7 +386,7 @@
 
             <!-- Poster 3: LEGO FAMILY STUDIO -->
             <a href="lego.html" class="poster-card" data-date="2020-06-01" data-views="7000" data-title="Lego Family Studio">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-lego.png'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/small/lego.webp'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">LEGO FAMILY STUDIO</h3>
                     <span class="dot-separator">·</span>
@@ -388,7 +396,7 @@
 
             <!-- Poster 4: MUSIK -->
             <a href="musik.html" class="poster-card" data-date="2025-05-01" data-views="6000" data-title="Lego Family Studio 2">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-musik.png'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/small/musik.webp'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">MUSIK</h3>
                     <span class="dot-separator">·</span>
@@ -398,7 +406,7 @@
 
              <!-- Poster 5:  -->
             <a href="drone.html" class="poster-card" data-date="2024-06-02" data-views="5000" data-title="DJI AIR 3S">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-drone.png'); --pos-x: 50%; --pos-y: 50%;"></div>
+                <div class="poster-img-wrapper" style="background-image: url('cards/small/drone.webp'); --pos-x: 50%; --pos-y: 50%;"></div>
                 <div class="poster-info poster-info-single">
                     <h3 class="poster-title">DJI AIR 3S</h3>
                     <span class="dot-separator">·</span>
@@ -408,7 +416,7 @@
 
             <!-- Poster 6: FOTOGRAFIE -->
             <a href="fotografie.html" class="poster-card" data-date="2026-09-24" data-views="4444" data-title="FOTOGRAFIE">
-                <div class="poster-img-wrapper" style="background-image: url('cards/card-small-fotografie.jpg'); --pos-x: 50%; --pos-y: 50%;">
+                <div class="poster-img-wrapper" style="background-image: url('cards/small/fotografie.webp'); --pos-x: 50%; --pos-y: 50%;">
                     <span class="badge-new" data-i18n="projekte.badgeNew">neu</span>
                 </div>
                 <div class="poster-info poster-info-single">

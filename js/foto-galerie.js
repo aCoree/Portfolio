@@ -44,15 +44,23 @@
         }).filter(Boolean);
     }
 
-    /* Bildausschnitt eines Eintrags: { src: '…', x: 30, y: 20 }.
-       x: 0 = Bild ganz links ausrichten, 100 = ganz rechts (Standard 50 = Mitte)
-       y: 0 = ganz oben, 100 = ganz unten (Standard 50 = Mitte) */
+    /* Bildausschnitt eines Eintrags: { src: '…', x: 30, y: 20, xm: 50, ym: 70 }.
+       PC:    x / y   (0 = ganz links/oben, 100 = ganz rechts/unten, Standard 50 = Mitte)
+       Handy: xm / ym (fehlt einer, gilt der PC-Wert) */
     function focusOf(motif, index) {
         var entry = (motif.images || []).filter(function (e) { return e && (typeof e === 'string' || e.src); })[index];
-        var pct = function (v) { return (typeof v === 'number' && isFinite(v)) ? Math.max(0, Math.min(100, v)) : 50; };
-        return (entry && typeof entry === 'object')
-            ? pct(entry.x) + '% ' + pct(entry.y) + '%'
-            : '50% 50%';
+        var pct = function (v, fallback) { return (typeof v === 'number' && isFinite(v)) ? Math.max(0, Math.min(100, v)) : fallback; };
+        var e = (entry && typeof entry === 'object') ? entry : {};
+        return { x: pct(e.x, 50), y: pct(e.y, 50), xm: pct(e.xm, null), ym: pct(e.ym, null) };
+    }
+
+    /* Schreibt den Ausschnitt als CSS-Variablen ans Bild – die Umschaltung
+       zwischen PC und Handy macht style.css (--pos-x/-y und --pos-x-m/-y-m). */
+    function applyFocus(img, focus) {
+        img.style.setProperty('--pos-x', focus.x + '%');
+        img.style.setProperty('--pos-y', focus.y + '%');
+        if (focus.xm !== null) img.style.setProperty('--pos-x-m', focus.xm + '%');
+        if (focus.ym !== null) img.style.setProperty('--pos-y-m', focus.ym + '%');
     }
 
     /* Format eines Eintrags: { src: '…', format: 'hoch' }  oder  format: 'quer'.
@@ -126,7 +134,7 @@
 
             var img = document.createElement('img');
             img.src = images[0];
-            img.style.objectPosition = focusOf(motif, 0);
+            applyFocus(img, focusOf(motif, 0));
             img.alt = alt;
             img.loading = 'lazy';
             tile.appendChild(img);
@@ -470,7 +478,7 @@
                 el.className = 'photo-grid-item photo-mosaic-item';
                 var img = document.createElement('img');
                 img.src = item.src;
-                img.style.objectPosition = item.pos;
+                applyFocus(img, item.pos);
                 img.alt = item.alt;
                 img.draggable = false;
                 img.loading = 'lazy';

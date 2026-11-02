@@ -16,11 +16,19 @@
     <meta property="og:url" content="https://aureliozingarello.ch/colorgrading.html">
     <meta property="og:title" content="Color Grading | Aurelio Zingarello">
     <meta property="og:description" content="Color Grading Vorher/Nachher: Vergleich von Fotografien, dem Kurzfilm RUN und Drohnenvideos von Aurelio Zingarello.">
-    <meta property="og:image" content="https://aureliozingarello.ch/images/run-banner.jpg">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/big/run.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
 
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
+
+    <link rel="manifest" href="/favicons/site.webmanifest">
+
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -96,6 +104,25 @@
         .grading-slider img.grading-before {
             z-index: 2;
             clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
+        }
+
+        /* Platzhalter statt Bildern (Drohnen Videos, solange colorgradings/drone leer ist):
+           zwei Grautöne, damit der Slider-Strich trotzdem sichtbar bleibt. */
+        .grading-slider .grading-placeholder {
+            grid-area: 1 / 1;
+            width: 100%;
+            height: 100%;
+            background: #4a4a4a;
+        }
+
+        .grading-slider .grading-placeholder.grading-before {
+            z-index: 2;
+            background: #2e2e2e;
+            clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
+        }
+
+        .grading-example-thumb--placeholder {
+            background-color: #4a4a4a;
         }
 
         .grading-handle {
@@ -196,7 +223,7 @@
         }
     </style>
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="css/theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.9">
 </head>
 
 <body>
@@ -248,9 +275,9 @@
                         <span class="grading-label-top" data-i18n="run.gradingAfter">NACHHER</span>
                     </div>
                     <div class="grading-slider" id="gradingSlider-fotografie">
-                        <img src="colorgradings/run-grading-after.jpg" class="grading-after"
+                        <img src="colorgradings/fotografie/eisvogel-nachher.webp" class="grading-after"
                             data-i18n-attr="alt:colorgrading.afterAlt" alt="Nachher – Color Grading">
-                        <img src="colorgradings/run-grading-before.jpg" class="grading-before"
+                        <img src="colorgradings/fotografie/eisvogel-vorher.webp" class="grading-before"
                             data-i18n-attr="alt:colorgrading.beforeAlt" alt="Vorher – ungegradetes Footage">
                         <div class="grading-handle" id="gradingHandle-fotografie">
                             <i class="fa-solid fa-arrows-left-right"></i>
@@ -269,9 +296,9 @@
                         <span class="grading-label-top" data-i18n="run.gradingAfter">NACHHER</span>
                     </div>
                     <div class="grading-slider" id="gradingSlider-run">
-                        <img src="colorgradings/run-grading-after.jpg" class="grading-after"
+                        <img src="colorgradings/run/run-1-after.webp" class="grading-after"
                             data-i18n-attr="alt:colorgrading.afterAlt" alt="Nachher – Color Grading">
-                        <img src="colorgradings/run-grading-before.jpg" class="grading-before"
+                        <img src="colorgradings/run/run-1-before.webp" class="grading-before"
                             data-i18n-attr="alt:colorgrading.beforeAlt" alt="Vorher – ungegradetes Footage">
                         <div class="grading-handle" id="gradingHandle-run">
                             <i class="fa-solid fa-arrows-left-right"></i>
@@ -290,10 +317,8 @@
                         <span class="grading-label-top" data-i18n="run.gradingAfter">NACHHER</span>
                     </div>
                     <div class="grading-slider" id="gradingSlider-drohne">
-                        <img src="colorgradings/run-grading-after.jpg" class="grading-after"
-                            data-i18n-attr="alt:colorgrading.afterAlt" alt="Nachher – Color Grading">
-                        <img src="colorgradings/run-grading-before.jpg" class="grading-before"
-                            data-i18n-attr="alt:colorgrading.beforeAlt" alt="Vorher – ungegradetes Footage">
+                        <div class="grading-placeholder grading-after" aria-hidden="true"></div>
+                        <div class="grading-placeholder grading-before" aria-hidden="true"></div>
                         <div class="grading-handle" id="gradingHandle-drohne">
                             <i class="fa-solid fa-arrows-left-right"></i>
                         </div>
@@ -314,9 +339,12 @@
     <!-- ─── COLOR GRADING SLIDER SCRIPT ───
          Gleiche Zieh-Logik wie in run.html (.grading-slider/.grading-handle),
          hier nur verallgemeinert, damit sie für alle 3 Projekt-Slider auf
-         dieser Seite wiederverwendet werden kann. Bilder fehlen aktuell noch
-         für Fotografie & Drohnen Videos -> alle 3 Projekte nutzen vorerst
-         überall dieselben RUN-Platzhalterbilder. -->
+         dieser Seite wiederverwendet werden kann. Für die Drohnen Videos gibt
+         es noch keine Bilder (Ordner colorgradings/drone ist leer) -> dort
+         zeigt die Seite graue Platzhalter. Sobald Bilder da sind, einfach
+         bei 'drohne' { before: '…', after: '…', pos: 39 } eintragen und im
+         HTML die beiden .grading-placeholder-Divs durch <img>-Tags ersetzen
+         (wie bei Fotografie/RUN). -->
     <script>
         const tr = (key, fallback) => (window.i18n && window.i18n.translate(key)) || fallback;
 
@@ -327,25 +355,25 @@
             {
                 id: 'fotografie',
                 examples: [
-                    { before: 'colorgradings/eisvogel-vorher.jpg', after: 'colorgradings/eisvogel-nachher.jpg', pos: 50 },
-                    { before: 'colorgradings/star-vorher.jpg', after: 'colorgradings/star-nachher.jpg', pos: 30 },
-                    { before: 'colorgradings/milan-vorher.jpg', after: 'colorgradings/milan-nachher.jpg', pos: 47 }
+                    { before: 'colorgradings/fotografie/eisvogel-vorher.webp', after: 'colorgradings/fotografie/eisvogel-nachher.webp', pos: 50 },
+                    { before: 'colorgradings/fotografie/star-vorher.webp', after: 'colorgradings/fotografie/star-nachher.webp', pos: 30 },
+                    { before: 'colorgradings/fotografie/milan-vorher.webp', after: 'colorgradings/fotografie/milan-nachher.webp', pos: 47 }
                 ]
             },
             {
                 id: 'run',
                 examples: [
-                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 },
-                    { before: 'colorgradings/run-grading-before-2.jpg', after: 'colorgradings/run-grading-after-2.jpg', pos: 55 },
-                    { before: 'colorgradings/run-grading-before-3.jpg', after: 'colorgradings/run-grading-after-3.jpg', pos: 32 }
+                    { before: 'colorgradings/run/run-1-before.webp', after: 'colorgradings/run/run-1-after.webp', pos: 39 },
+                    { before: 'colorgradings/run/run-2-before.webp', after: 'colorgradings/run/run-2-after.webp', pos: 55 },
+                    { before: 'colorgradings/run/run-3-before.webp', after: 'colorgradings/run/run-3-after.webp', pos: 32 }
                 ]
             },
             {
                 id: 'drohne',
                 examples: [
-                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 },
-                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 },
-                    { before: 'colorgradings/run-grading-before.jpg', after: 'colorgradings/run-grading-after.jpg', pos: 39 }
+                    { before: null, after: null, pos: 39 },
+                    { before: null, after: null, pos: 39 },
+                    { before: null, after: null, pos: 39 }
                 ]
             }
         ];
@@ -393,8 +421,10 @@
                 const afterImg = slider.querySelector('.grading-after');
                 const { setPercent } = initGradingSlider(slider, handle);
                 const first = project.examples[0];
-                beforeImg.src = first.before;
-                afterImg.src = first.after;
+                if (first.before && first.after) {
+                    beforeImg.src = first.before;
+                    afterImg.src = first.after;
+                }
                 setPercent(first.pos);
 
                 const examplesContainer = document.querySelector('.grading-examples[data-examples-for="' + project.id + '"]');
@@ -404,12 +434,18 @@
                     const thumb = document.createElement('button');
                     thumb.type = 'button';
                     thumb.className = 'grading-example-thumb' + (index === 0 ? ' active' : '');
-                    thumb.style.backgroundImage = "url('" + example.after + "')";
+                    if (example.after) {
+                        thumb.style.backgroundImage = "url('" + example.after + "')";
+                    } else {
+                        thumb.classList.add('grading-example-thumb--placeholder');
+                    }
                     thumb.setAttribute('aria-label', tr('colorgrading.exampleLabel', 'Beispiel') + ' ' + (index + 1));
 
                     thumb.addEventListener('click', () => {
-                        beforeImg.src = example.before;
-                        afterImg.src = example.after;
+                        if (example.before && example.after) {
+                            beforeImg.src = example.before;
+                            afterImg.src = example.after;
+                        }
                         setPercent(example.pos);
                         examplesContainer.querySelectorAll('.grading-example-thumb').forEach((btn) => btn.classList.remove('active'));
                         thumb.classList.add('active');

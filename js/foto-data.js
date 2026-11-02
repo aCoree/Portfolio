@@ -13,20 +13,28 @@
    ▸ NEUES FOTO ZU EINEM BESTEHENDEN MOTIV (z.B. noch ein Eisvogel):
      Bild-Datei in den Ordner "fotografie/" legen und den Pfad einfach
      in die "images"-Liste des Motivs eintragen, z.B.
-         images: ['fotografie/eisvogel.jpg', 'fotografie/eisvogel-2.jpg']
+         images: ['fotografie/wildlife/eisvogel/eisvogel-1.webp', 'fotografie/wildlife/eisvogel/eisvogel-2.webp']
      Das erste Bild der Liste ist das Titelbild der Kachel.
 
    ▸ BILDAUSSCHNITT PRO FOTO (x / y):
      Statt nur dem Pfad kannst du bei jedem Foto angeben, welcher Teil in
      der Kachel sichtbar bleibt (wichtig bei Rule of Thirds, wenn das Motiv
      nicht in der Mitte ist):
-         { src: 'fotografie/wildlife/eisvogel/eisvogel.jpg', x: 30, y: 20 }
+         { src: 'fotografie/wildlife/eisvogel/eisvogel-1.webp', x: 30, y: 20 }
        x: 0 = ganz links, 50 = Mitte (Standard), 100 = ganz rechts
        y: 0 = ganz oben,  50 = Mitte (Standard), 100 = ganz unten
      Kleineres x  → Kachel zeigt mehr vom linken Bildteil,
      grösseres x  → mehr vom rechten Teil. Bei y gleich mit oben/unten.
      Beide Angaben sind optional. Beim ERSTEN Foto eines Motivs gilt der
      Ausschnitt auch für die Kachel auf der Kategorieseite.
+
+     ▸ HANDY ANDERS ALS PC: xm / ym
+     Auf dem Handy (bis 640px) sind die Kacheln anders geformt als auf dem PC –
+     ein Ausschnitt, der am PC passt, kann dort schlecht sitzen. Deshalb gibt es
+     dieselben Angaben fürs Handy:
+         { src: '…', x: 30, y: 20,  xm: 50, ym: 70 }
+       x / y   = PC       xm / ym = Handy (fehlt eins, gilt der PC-Wert)
+     So stellst du beide unabhängig voneinander ein.
      In der Grossansicht (Lightbox) siehst du immer das ganze Bild.
 
    ▸ HOCH- ODER QUERFORMAT ANGEBEN (damit das Foto in der passenden Kachel liegt):
@@ -34,8 +42,8 @@
      landet ein Foto einfach auf dem nächsten freien Platz – ein Hochformat-Foto
      kann dann in einer Quer-Kachel stecken und stark beschnitten werden. Sag dem
      Raster deshalb pro Foto, welches Format es hat:
-         { src: 'fotografie/street/kirche-1.jpg', format: 'hoch' }
-         { src: 'fotografie/landschaften/schiff.jpg', format: 'quer' }
+         { src: 'fotografie/street/street-2.webp', format: 'hoch' }
+         { src: 'fotografie/landschaften/landschaft-4.webp', format: 'quer' }
        (format lässt sich mit x / y kombinieren:  { src: '…', format: 'hoch', x: 30 })
      Das Raster passt sich weiter AUTOMATISCH an die Anzahl der Fotos an
      (Handy und PC), nur verteilt es sie jetzt nach Format:
@@ -95,32 +103,37 @@ window.FOTO_GALERIE = {
         it: "Martin pescatore",
       },
       images: [
-        { src: "fotografie/wildlife/eisvogel/eisvogel-1-lq.jpg", x: 50, y: 50 },
-        { src: "fotografie/wildlife/eisvogel/eisvogel-2-lq.jpg", x: 50, y: 50 },
-        { src: "fotografie/wildlife/eisvogel/eisvogel-3-lq.jpg", x: 50, y: 50 },
-        { src: "fotografie/wildlife/eisvogel/eisvogel-4-lq.jpg", x: 50, y: 50 },
-        { src: "fotografie/wildlife/eisvogel/eisvogel-5-lq.jpg", x: 50, y: 50 },
-        { src: "fotografie/wildlife/eisvogel/eisvogel-6-lq.jpg", x: 22, y: 50 },
+        { src: "fotografie/wildlife/eisvogel/eisvogel-1.webp", x: 50, y: 50 },
+        { src: "fotografie/wildlife/eisvogel/eisvogel-2.webp", x: 50, y: 50 },
+        { src: "fotografie/wildlife/eisvogel/eisvogel-3.webp", x: 50, y: 50 },
+        { src: "fotografie/wildlife/eisvogel/eisvogel-4.webp", x: 50, y: 50 },
+        { src: "fotografie/wildlife/eisvogel/eisvogel-5.webp", x: 50, y: 50 },
+        { src: "fotografie/wildlife/eisvogel/eisvogel-6.webp", x: 22, y: 50 },
       ],
     },
     {
       title: { de: "Star", en: "Starling", fr: "Étourneau", it: "Storno" },
       images: [
-        "fotografie/wildlife/star/star-1-lq.jpg",
-        "fotografie/wildlife/star/star-2-lq.jpg",
-        "fotografie/wildlife/star/star-3-lq.jpg",
+        "fotografie/wildlife/star/star-1.webp",
+        "fotografie/wildlife/star/star-2.webp",
+        "fotografie/wildlife/star/star-3.webp",
       ],
     },
     {
       title: { de: "Milan", en: "Kite", fr: "Milan", it: "Nibbio" },
       images: [
-        "fotografie/wildlife/milan/milan-1-lq.jpg",
-        "fotografie/wildlife/milan/milan-2-lq.jpg",
+        "fotografie/wildlife/milan/milan-1.webp",
+        "fotografie/wildlife/milan/milan-2.webp",
+        "fotografie/wildlife/milan/milan-3.webp",
       ],
     },
     {
       title: { de: "Möwe", en: "Seagull", fr: "Mouette", it: "Gabbiano" },
-      images: ["fotografie/wildlife/möwe/möwe-1-lq.jpg"],
+      images: [
+        "fotografie/wildlife/moewe/moewe-1.webp",
+        "fotografie/wildlife/moewe/moewe-2.webp",
+        "fotografie/wildlife/moewe/moewe-3.webp",
+      ],
     },
     {
       title: {
@@ -129,7 +142,7 @@ window.FOTO_GALERIE = {
         fr: "Mésange bleue",
         it: "Cinciarella",
       },
-      images: ["fotografie/blaumeise01.png"],
+      images: ["fotografie/wildlife/meise/blaumeise-1.webp"],
     },
     {
       title: {
@@ -138,7 +151,7 @@ window.FOTO_GALERIE = {
         fr: "Mésange charbonnière",
         it: "Cinciallegra",
       },
-      images: ["fotografie/wildlife/kohlmeise01.png"],
+      images: ["fotografie/wildlife/meise/kohlmeise-1.webp"],
     },
     {
       title: {
@@ -147,7 +160,7 @@ window.FOTO_GALERIE = {
         fr: "Rougequeue noir",
         it: "Codirosso spazzacamino",
       },
-      images: ["fotografie/wildlife/hausrotschwanz.png"],
+      images: ["fotografie/wildlife/hausrotschwanz-1.webp"],
     },
     /* ─── weitere Tiere hier einfügen ─── */
   ],
@@ -156,9 +169,12 @@ window.FOTO_GALERIE = {
   landschaften: [
     {
       title: "Landschaft 1",
-           images: [
-        "fotografie/landschaften/schiff-weit.jpg",
-        "fotografie/landschaften/kirche-1.png",
+      images: [
+        "fotografie/landschaften/landschaft-1.webp",
+        "fotografie/landschaften/landschaft-2.webp",
+        "fotografie/landschaften/landschaft-3.webp",
+        "fotografie/landschaften/landschaft-4.webp",
+        "fotografie/landschaften/landschaft-5.webp",
       ],
     },
     /* ─── weitere Motive hier einfügen ─── */
@@ -168,11 +184,11 @@ window.FOTO_GALERIE = {
   portrait: [
     {
       title: "Portrait 1",
-           images: [
-        "fotografie/portrait/portrait-1.png",
-        
+      images: [
+        "fotografie/portrait/portrait-1.webp",
+        "fotografie/portrait/portrait-2.webp",
       ],
-    }
+    },
     /* ─── weitere Motive hier einfügen ─── */
   ],
 
@@ -181,9 +197,9 @@ window.FOTO_GALERIE = {
     {
       title: "Street 1",
       images: [
-        { src: "fotografie/street/kirche-1.jpg", format: "hoch" },
-        { src: "fotografie/street/architektur-1.jpg", format: "hoch" },
-        { src: "fotografie/street/westside-sonnenaufgang.jpg", format: "hoch" },
+        { src: "fotografie/street/street-1.webp", format: "hoch" },
+        { src: "fotografie/street/street-2.webp", format: "hoch" },
+        { src: "fotografie/street/street-3.webp", format: "hoch" },
       ],
     },
     /* ─── weitere Motive hier einfügen ─── */

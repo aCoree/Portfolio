@@ -17,20 +17,22 @@
     <meta property="og:url" content="https://aureliozingarello.ch/urbnvibe.html">
     <meta property="og:title" content="URBNVIBE – Projekte | Aurelio Zingarello">
     <meta property="og:description" content="URBNVIBE – Projekte von Aurelio Zingarello: Flyer-Design, Logo-Design, Awareness-Video und Social-Media-Creatives.">
-    <meta property="og:image" content="https://aureliozingarello.ch/cards/card-big-urbnvibe.jpg">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/big/urbnvibe.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
 
-    <link rel="preload" as="image" href="cards/card-big-urbnvibe.jpg">
+    <link rel="preload" as="image" href="cards/big/urbnvibe.webp" media="(min-width: 645px)" fetchpriority="high">
+    <link rel="preload" as="image" href="cards/small/urbnvibe.webp" media="(max-width: 644px)" fetchpriority="high">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
 
     <link rel="manifest" href="/favicons/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
 
@@ -80,6 +82,14 @@
             transition: opacity 0.5s ease;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
+        }
+
+        /* Handy-Ausschnitt des Hero-Bildes (--pos-x-m/--pos-y-m am .bg-video-container);
+           schaltet bei 644px um, genau wie das <source> im <picture>. */
+        @media (max-width: 644px) {
+            .bg-video {
+                object-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
+            }
         }
 
         /* Abdunkelungs-Overlay beim Scrollen (GPU-beschleunigt) */
@@ -462,7 +472,7 @@
     <!-- Grossansicht (Lightbox): Aussehen zentral in css/lightbox.css -->
     <link rel="stylesheet" href="css/lightbox.css">
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="css/theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.9">
 </head>
 
 <body>
@@ -499,8 +509,8 @@
     <!-- ─── FULLSCREEN HINTERGRUND BILD (URBNVIBE HERO) ─── -->
     <div class="bg-video-container">
         <picture class="urbnvibe-hero-picture">
-            <source media="(max-width: 644px)" srcset="cards/card-small-urbnvibe.jpg">
-            <img src="cards/card-big-urbnvibe.jpg" alt="URBNVIBE Hero Image" class="bg-video">
+            <source media="(max-width: 644px)" srcset="cards/small/urbnvibe.webp">
+            <img src="cards/big/urbnvibe.webp" alt="URBNVIBE Hero Image" class="bg-video" fetchpriority="high" decoding="async">
         </picture>
         <!-- Schwarzes Overlay beim Scrollen -->
         <div id="videoOverlay" class="bg-video-overlay"></div>
@@ -542,8 +552,8 @@
             <div class="urbnvibe-two-column">
                 <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-flyer-grid">
-                        <img src="images/flyer_seite_1.jpg" alt="URBNVIBE Flyer Seite 1" data-lightbox="urbnvibe">
-                        <img src="images/flyer_seite_2.jpg" alt="URBNVIBE Flyer Seite 2" data-lightbox="urbnvibe">
+                        <img src="images/urbnvibe/flyer-s1.webp" alt="URBNVIBE Flyer Seite 1" data-lightbox="urbnvibe">
+                        <img src="images/urbnvibe/flyer-s2.webp" alt="URBNVIBE Flyer Seite 2" data-lightbox="urbnvibe">
                     </div>
                 </div>
 
@@ -573,7 +583,7 @@
                 </div>
                 <div class="urbnvibe-media az-reveal">
                     <div class="urbnvibe-logo-container">
-                        <img src="images/logo-urbnvibe.jpg" alt="URBNVIBE Logo" data-lightbox="urbnvibe">
+                        <img src="images/urbnvibe/logo-urbnvibe.webp" alt="URBNVIBE Logo" data-lightbox="urbnvibe">
                     </div>
                 </div>
             </div>
@@ -607,9 +617,9 @@
         <!-- SOCIAL MEDIA CREATIVES -->
         <section class="urbnvibe-section creatives-mobile-fix" id="creatives-section">
             <div class="urbnvibe-creatives-grid az-reveal">
-                <div class="urbnvibe-creative"><img src="images/creative-1.png" alt="URBNVIBE Creative 1" data-lightbox="urbnvibe"></div>
-                <div class="urbnvibe-creative"><img src="images/creative-2.png" alt="URBNVIBE Creative 2" data-lightbox="urbnvibe"></div>
-                <div class="urbnvibe-creative"><img src="images/creative-3.png" alt="URBNVIBE Creative 3" data-lightbox="urbnvibe"></div>
+                <div class="urbnvibe-creative"><img src="images/urbnvibe/creative-1.webp" alt="URBNVIBE Creative 1" data-lightbox="urbnvibe"></div>
+                <div class="urbnvibe-creative"><img src="images/urbnvibe/creative-2.webp" alt="URBNVIBE Creative 2" data-lightbox="urbnvibe"></div>
+                <div class="urbnvibe-creative"><img src="images/urbnvibe/creative-3.webp" alt="URBNVIBE Creative 3" data-lightbox="urbnvibe"></div>
             </div>
             <div class="urbnvibe-info urbnvibe-creatives-info">
                 <span class="urbnvibe-info-label az-reveal" data-i18n="urbnvibe.creativesLabel">04 / Social Media</span>

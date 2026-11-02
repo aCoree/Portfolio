@@ -16,15 +16,24 @@
     <meta property="og:url" content="https://aureliozingarello.ch/run.html">
     <meta property="og:title" content="RUN – Kurzfilm | Aurelio Zingarello">
     <meta property="og:description" content="RUN – ein cinematischer Action-Kurzfilm im Seeland der Schweiz von Aurelio Zingarello: Trailer, ganzer Film, Behind the Scenes und Color Grading.">
-    <meta property="og:image" content="https://aureliozingarello.ch/images/run-banner.jpg">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/big/run.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
+
+    <link rel="manifest" href="/favicons/site.webmanifest">
+
     <!-- PRELOAD FÜR DAS SMALL-TRAILER VIDEO -->
+    <link rel="preload" as="image" href="colorgradings/run/run-1-after.webp" fetchpriority="high">
     <link rel="preload" href="videos/run-trailer-small.mp4" as="video" type="video/mp4">
 
     <!-- ZENTRALES STYLESHEET -->
-    <link rel="stylesheet" href="style.css?v=1.9">
+    <link rel="stylesheet" href="style.css?v=2.2">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -102,14 +111,20 @@
             bottom: 0;
             width: 100%;
             height: 100%;
-            background-image: url('colorgradings/run-grading-after.jpg');
+            background-image: url('colorgradings/run/run-1-after.webp');
             background-size: cover;
-            background-position: center;
+            background-position: var(--pos-x, 50%) var(--pos-y, 50%);
             z-index: 1;
             transition: opacity 0.5s ease, visibility 0s linear 0s;
             opacity: 1;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
+        }
+
+        @media (max-width: 640px) {
+            .bg-image-overlay {
+                background-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
+            }
         }
 
         /* Nach dem Ausblenden komplett aus dem Rendering nehmen, damit das grosse
@@ -318,7 +333,7 @@
         }
     </style>
     <!-- Hell-Modus (greift nur bei html[data-theme="light"], siehe theme.css) -->
-    <link rel="stylesheet" href="css/theme.css?v=1.8">
+    <link rel="stylesheet" href="css/theme.css?v=1.9">
 </head>
 
 <body>
@@ -420,7 +435,7 @@
                             kühle und kontrastreiche Stimmung herausarbeiten, die den Look des Films ausmacht.
                         </p>
                         <div class="az-reveal" data-az-delay="3">
-                            <a href="bts.html" class="info-content-link">
+                            <a href="bts.html" class="see-all-link">
                                 <span data-i18n="run.btsLinkText">Mehr Einblicke im Behind the Scenes</span>
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
@@ -435,7 +450,7 @@
                     Vom flachen Apple Log zum fertigen Grade – ein Beispiel aus RUN.
                 </p>
                 <p class="az-reveal" data-az-delay="2" style="text-align: center; margin: 0 0 30px;">
-                    <a href="colorgrading.html" class="info-content-link">
+                    <a href="colorgrading.html" class="see-all-link">
                         <span data-i18n="run.gradingCta">Alle Color Gradings ansehen</span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </a>
@@ -448,9 +463,9 @@
                     </div>
 
                     <div class="grading-slider" id="gradingSlider">
-                        <img src="colorgradings/run-grading-after.jpg" alt="Nachher – Color Grading aus RUN" data-i18n-attr="alt:run.gradingAfterAlt"
+                        <img src="colorgradings/run/run-1-after.webp" alt="Nachher – Color Grading aus RUN" data-i18n-attr="alt:run.gradingAfterAlt"
                             class="grading-after">
-                        <img src="colorgradings/run-grading-before.jpg" alt="Vorher – ungegradetes Footage aus RUN" data-i18n-attr="alt:run.gradingBeforeAlt"
+                        <img src="colorgradings/run/run-1-before.webp" alt="Vorher – ungegradetes Footage aus RUN" data-i18n-attr="alt:run.gradingBeforeAlt"
                             class="grading-before">
 
                         <div class="grading-handle" id="gradingHandle">

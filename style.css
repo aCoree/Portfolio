@@ -68,21 +68,54 @@ body:not(.has-hero) main,
   padding-top: var(--nav-height);
 }
 
-/* ─── BILD-AUSSCHNITT (GILT FÜR ALLE KACHELN/BILDER IN DIVS) ───
+/* ─── BILD-AUSSCHNITT: PC UND HANDY GETRENNT EINSTELLEN ───
    Jedes Bild, das eine Kachel/einen Rahmen per "cover" füllt, lässt sich
    direkt am Element verschieben – damit das Motiv nicht abgeschnitten wird,
-   wenn es nicht mittig sitzt. Einfach inline am Bild/Div setzen, z.B.
-       style="--pos-x: 30%; --pos-y: 20%;"
+   wenn es nicht mittig sitzt. Einfach inline am Bild/Div (bei Hintergrund-
+   Bildern am Rahmen, bei Videos am <video>) setzen, z.B.
+       style="--pos-x: 30%; --pos-y: 20%; --pos-x-m: 50%; --pos-y-m: 70%;"
+
+   PC:     --pos-x / --pos-y      (+ --zoom)
+   Handy:  --pos-x-m / --pos-y-m  (+ --zoom-m)
    --pos-x: 0% = linker Rand sichtbar … 50% = Mitte (Standard) … 100% = rechts
    --pos-y: 0% = oberer Rand sichtbar … 50% = Mitte (Standard) … 100% = unten
-   Optional nur fürs Handy (anderes Format): --pos-x-m / --pos-y-m
-   (fehlen sie, gelten --pos-x / --pos-y auch dort).
-   Nur index.html (.apple-card-bg, PC): --bg-size, z.B. "105% auto" – zoomt
-   das Bild leicht ein (zusammen mit --pos-x: 100% wird links Rand
-   abgeschnitten), falls das Bild an einer Kante einen störenden Streifen hat.
-   Wirkt bei: Karten auf index.html (.apple-card-bg), Poster auf projekte.html
-   (.poster-img-wrapper), Kacheln auf fotografie.html (.foto-cover img),
-   Foto-Raster/BTS (.photo-grid-item img), Über-mich-Bild (.about-bg img). */
+   --zoom / --zoom-m: 1 = Standard, 1.1 = 10% näher ran (nie unter 1).
+   Fehlt ein Handy-Wert, gilt der PC-Wert auch auf dem Handy – man muss also
+   nur das einstellen, was auf dem Handy anders aussehen soll.
+
+   "Handy" heisst: ab dem Breakpoint, an dem die Seite auf ihr Handy-Layout
+   bzw. das Hochformat-Bild umschaltet:
+     index.html Karten (.apple-card-bg img) ............ bis 768px
+     index.html Hero-Video (.hero-video) ................ bis 768px
+     Über-mich-Bild (.about-bg img) ..................... bis 818px
+     projekte.html Poster (.poster-img-wrapper) ......... bis 768px
+     fotografie.html Titelbilder (.foto-cover img) ...... bis 640px
+     Foto-Kacheln/Mosaik (foto-data.js: x/y + xm/ym) .... bis 640px
+     BTS-Raster (.photo-grid-item img) .................. bis 640px
+     Hero-Bilder/-Videos (.bg-video, urbnvibe) .......... bis 640px (urbnvibe 644px)
+     Standbild Trailer (.bg-image-overlay, run/musik) ... bis 640px
+     Color-Grading-Slider (.grading-slider img) ......... bis 640px
+     Equipment (.media-card-visual > img) ............... bis 640px
+     URBNVIBE Flyer/Logo/Creatives ...................... bis 640px */
+.media-card-visual > img,
+.bg-video,
+.grading-slider img,
+.urbnvibe-flyer-grid img,
+.urbnvibe-logo-container img,
+.urbnvibe-creative img {
+  object-position: var(--pos-x, 50%) var(--pos-y, 50%);
+}
+
+@media (max-width: 640px) {
+  .media-card-visual > img,
+  .bg-video,
+  .grading-slider img,
+  .urbnvibe-flyer-grid img,
+  .urbnvibe-logo-container img,
+  .urbnvibe-creative img {
+    object-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
+  }
+}
 
 /* ─── HERO SECTION ─── */
 .hero {
@@ -95,10 +128,6 @@ body:not(.has-hero) main,
   text-align: center;
   overflow: hidden;
   background-color: #0d0d0d;
-  background-image: url("assets/hero-bg.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   padding: 0 20px;
 }
 
@@ -306,6 +335,8 @@ body:not(.has-hero) main,
   height: 100%;
   object-fit: cover;
   object-position: var(--pos-x, 50%) var(--pos-y, 50%);
+  transform: scale(max(var(--zoom, 1), 1));
+  transform-origin: var(--pos-x, 50%) var(--pos-y, 50%);
   display: block;
 }
 
@@ -356,20 +387,19 @@ body:not(.has-hero) main,
   justify-content: flex-start;
 }
 
-/* ─── ÜBER MICH – Bild unter dem Text (≤ 818px, wie in index.html/about.html) ─── */
+/* ─── ÜBER MICH – Bild unter dem Text (≤ 818px, wie in index.html/about.html) ───
+   Position/Zoom fürs Handy kommen aus --pos-x-m / --pos-y-m / --zoom-m, die
+   direkt am .about-bg-Element stehen. object-fit: cover + overflow: hidden +
+   zoom >= 1 sorgen dafür, dass der Rahmen immer komplett gefüllt ist. */
 @media (max-width: 818px) {
-  /* Bild unter dem Text: Position/Zoom kommen aus den Variablen
-     --about-img-x/-y/-zoom, die in index.html bzw. about.html gesetzt
-     werden. object-fit: cover + overflow: hidden + zoom >= 1 sorgen dafür,
-     dass der Rahmen immer komplett gefüllt ist. */
   .about-bg {
     overflow: hidden;
   }
 
   .about-bg img {
-    object-position: var(--about-img-x, 50%) var(--about-img-y, 50%);
-    transform: scale(max(var(--about-img-zoom, 1), 1));
-    transform-origin: var(--about-img-x, 50%) var(--about-img-y, 50%);
+    object-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
+    transform: scale(max(var(--zoom-m, 1), 1));
+    transform-origin: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
   }
 }
 
@@ -673,28 +703,6 @@ select {
   text-align: right;
 }
 
-.info-content-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: #ffffff;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  transition: border-color 0.25s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .info-content-link:hover {
-    border-color: #ffffff;
-  }
-}
-
-.info-content-right .info-content-link {
-  justify-content: flex-end;
-}
-
 /* ─── RECHTLICHE SEITEN (IMPRESSUM & DATENSCHUTZ) ───
    War bisher auf beiden Seiten fast wortgleich als eigener <style>-Block
    dupliziert (inkl. eines seiteneigenen html/body/img-Resets, der bereits
@@ -835,29 +843,51 @@ body:not(.has-hero) main.legal-content {
   width: 100%;
 }
 
+/* ─── PILLEN-BUTTON ("Jetzt ansehen" auf index.html, "Ansehen" auf
+   fotografie.html) ───
+   Der einzige Button-Stil dieser Art – wird überall mit class="apple-btn"
+   verwendet (<a> oder <span> innerhalb eines Links). Hover gilt nur für den
+   Button selbst, nicht wenn man über die Karte/das Bild fährt. */
 .apple-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background-color: #ffffff;
   color: #000000;
-  padding: 12px 24px;
-  border-radius: 30px;
+  padding: 10px 20px;
+  border-radius: 100px;
   font-family: "Barlow Condensed", sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-decoration: none;
+  white-space: nowrap;
   flex-shrink: 0;
   transition:
-    background-color 0.2s,
-    transform 0.2s;
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .apple-btn:hover {
     background-color: #e5e5e5;
     transform: scale(1.03);
+  }
+}
+
+@media (max-width: 768px) {
+  .apple-btn {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 417px) {
+  .apple-btn {
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    gap: 5px;
   }
 }
 
@@ -1182,7 +1212,7 @@ body:not(.has-hero) main.legal-content {
      display:flex (statt inline-flex) + margin-right:auto macht ihn zur
      Blockbox am linken Rand – text-align der Elternspalte (rechts)
      betrifft nur Inline-Inhalt und hätte sonst keine Wirkung. */
-  .info-content-right .info-content-link {
+  .info-content-right .see-all-link {
     display: flex;
     width: fit-content;
     margin-left: 0;
@@ -1211,11 +1241,6 @@ body:not(.has-hero) main.legal-content {
     align-items: center !important;
     text-align: center;
     gap: 8px !important;
-  }
-
-  .apple-btn {
-    padding: 8px 18px !important;
-    font-size: 0.85rem !important;
   }
 
   .apple-card-text {
@@ -1504,6 +1529,23 @@ body:not(.has-hero) main.legal-content {
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ─── COPYRIGHT-ZEILE AUS DEN KACHELN ZOOMEN ───
+   Alle Fotos tragen unten links "© Aurelio Zingarello" im Bild. Zu sehen
+   sein soll sie nur in der Grossansicht (Lightbox). In den Kacheln wird das
+   Bild deshalb leicht eingezoomt (oben verankert), sodass der untere Rand
+   mit der Zeile ausserhalb der Kachel liegt – overflow: hidden schneidet ihn
+   ab. So braucht jedes Foto nur EINE Datei. Die Zeile liegt in den untersten
+   ~5% des Bildes; mit 1.08 werden unten ~7% abgeschnitten. Stärker oder
+   schwächer: --foto-crop-zoom (z.B. 1.1). Gilt für: Motiv-Kacheln (wildlife),
+   Mosaik (motiv/landschaften/portrait/street) und die Titelbilder auf
+   fotografie.html. Nicht für BTS/Color Grading (dort steht keine Zeile). */
+.photo-grid-motif img,
+.photo-mosaic-item img,
+.foto-cover img {
+    scale: var(--foto-crop-zoom, 1.08);
+    translate: 0 calc((var(--foto-crop-zoom, 1.08) - 1) * 50%);
+}
+
 .photo-grid-item:focus-visible img {
     transform: scale(1.05);
 }
@@ -1641,7 +1683,15 @@ body:not(.has-hero) main.legal-content {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: var(--pos-x, 50%) var(--pos-y, 50%);
+}
+
+/* Handy: eigener Ausschnitt (xm/ym in foto-data.js bzw. --pos-x-m/--pos-y-m) */
+@media (max-width: 640px) {
+    .photo-grid-item img,
+    .photo-mosaic-item img {
+        object-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
+    }
 }
 
 @media (max-width: 640px) {

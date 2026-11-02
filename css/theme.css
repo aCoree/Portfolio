@@ -369,17 +369,6 @@ html[data-theme="light"] .info-content p {
   color: var(--lt-text-2);
 }
 
-html[data-theme="light"] .info-content-link {
-  color: var(--lt-text);
-  border-bottom-color: var(--lt-line-strong);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  html[data-theme="light"] .info-content-link:hover {
-    border-color: var(--lt-text);
-  }
-}
-
 /* Die kleinen Icons bei "Das Projekt & die Umsetzung" sind im Dunkel-Modus
    per Filter weiss gefärbt (run.html/about.html) – im Hell-Modus schwarz. */
 html[data-theme="light"] .info-icons .info-icon {
@@ -877,13 +866,16 @@ html[data-theme="light"] .foto-cover-desc {
   color: var(--lt-text-2);
 }
 
-html[data-theme="light"] .foto-cover:focus-visible .foto-cover-btn {
-  border-color: var(--lt-text);
+/* Der "Ansehen"-Button liegt hier auf dem hellen Seitenhintergrund, nicht auf
+   einem dunklen Bild wie bei den Karten auf index.html → dunkle Pille. */
+html[data-theme="light"] .foto-cover .apple-btn {
+  background-color: var(--lt-text);
+  color: var(--lt-bg);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html[data-theme="light"] .foto-cover:hover .foto-cover-btn {
-    border-color: var(--lt-text);
+  html[data-theme="light"] .foto-cover .apple-btn:hover {
+    background-color: var(--lt-text-2);
   }
 }
 
