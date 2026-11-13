@@ -8,9 +8,12 @@
    1) KATEGORIESEITE (wildlife.html, landschaften.html, …)
         <div class="photo-grid" data-foto-category="wildlife"></div>
       → pro Motiv eine quadratische Kachel mit Titel. Ein Klick führt auf
-        motiv.html?k=wildlife&m=eisvogel.
+        motiv.html?k=wildlife&m=eisvogel. Tiere mit nur EINEM Foto bekommen
+        keine Kachel: Ein Button unter dem Raster führt auf die Sammel-Seite
+        motiv.html?k=wildlife&m=weitere-tiere (siehe foto-nav.js, splitMotifs).
 
-   1b) DIREKTES MOSAIK (landschaften.html, portrait.html, streetfotografie.html)
+   1b) DIREKTES MOSAIK (landschaften.html, portrait.html, streetfotografie.html,
+       weitere.html)
         <div class="photo-mosaic" data-foto-mosaic="landschaften"></div>
       → zeigt ALLE Fotos der Kategorie (aller Motive aus foto-data.js)
         direkt im selben Mosaik wie die Motiv-Seite – keine Zwischenseite.
@@ -117,10 +120,10 @@
     /* ─── 1) KATEGORIESEITE ─── */
     function initCategory(grid) {
         var category = grid.getAttribute('data-foto-category');
-        var motifs = (window.FOTO_GALERIE && window.FOTO_GALERIE[category]) || [];
+        var split = window.FotoNav.splitMotifs(category);
 
         grid.textContent = '';
-        motifs.forEach(function (motif) {
+        split.tiles.forEach(function (motif) {
             var images = motifImages(motif);
             if (!images.length) return;
 
@@ -152,72 +155,31 @@
             grid.appendChild(tile);
         });
 
-        collapseExtraTiles(grid);
-        /* Übergeordnetes Element, damit auch die Titel im zugeklappten Bereich mitgemessen werden. */
-        keepTitlesFitted(grid.parentNode);
+        if (split.collection) addCollectionLink(grid, category, split.collection);
+        keepTitlesFitted(grid);
     }
 
-    /* Mehr als VISIBLE_TILES Kacheln: nur die ersten zeigen, der Rest liegt in
-       einem zugeklappten Bereich unter dem Raster. Der Button (.btn mit Pfeil,
-       wie "Projekte ▾" im Header) klappt ihn sanft auf und wieder zu und
-       wechselt dabei zwischen "Mehr anzeigen ▾" und "Weniger anzeigen ▴".
-       Die Animation selbst (grid-template-rows 0fr ↔ 1fr) steht in style.css. */
-    var VISIBLE_TILES = 6;
-
-    function collapseExtraTiles(grid) {
-        var extra = Array.prototype.slice.call(grid.children, VISIBLE_TILES);
-        if (!extra.length) return;
-
-        var panel = document.createElement('div');
-        panel.className = 'photo-grid-extra';
-        panel.id = 'photoGridExtra';
-        panel.setAttribute('inert', '');
-        var clip = document.createElement('div');
-        clip.className = 'photo-grid-extra-clip';
-        var tiles = document.createElement('div');
-        tiles.className = 'photo-grid photo-grid-extra-tiles';
-        extra.forEach(function (tile) {
-            /* Sofort laden (statt lazy), sonst poppt das Bild erst mitten im Aufklappen auf. */
-            var img = tile.querySelector('img');
-            if (img) img.loading = 'eager';
-            tiles.appendChild(tile);
-        });
-        clip.appendChild(tiles);
-        panel.appendChild(clip);
+    /* Tiere mit nur EINEM Foto haben keine eigene Kachel (siehe foto-nav.js,
+       splitMotifs). Unter dem Raster führt ein Button (.btn mit Pfeil) auf die
+       Sammel-Seite mit all diesen Fotos ('Weitere Tiere ansehen'). */
+    function addCollectionLink(grid, category, collection) {
+        var link = document.createElement('a');
+        link.className = 'btn btn--caret';
+        link.href = window.FotoNav.motifHref(category, collection);
 
         var label = document.createElement('span');
+        label.setAttribute('data-i18n', 'fotografie.moreAnimalsButton');
+        label.textContent = translate('fotografie.moreAnimalsButton', 'Weitere Tiere ansehen');
         var caret = document.createElement('i');
-        caret.className = 'fa-solid fa-chevron-down btn-caret';
+        caret.className = 'fa-solid fa-chevron-right btn-caret';
         caret.setAttribute('aria-hidden', 'true');
-        var button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'btn btn--caret';
-        button.setAttribute('aria-expanded', 'false');
-        button.setAttribute('aria-controls', panel.id);
-        button.appendChild(label);
-        button.appendChild(caret);
-
-        function setLabel(key, fallback) {
-            label.setAttribute('data-i18n', key);
-            label.textContent = translate(key, fallback);
-        }
-        setLabel('fotografie.showMore', 'Mehr anzeigen');
+        link.appendChild(label);
+        link.appendChild(caret);
 
         var wrap = document.createElement('div');
         wrap.className = 'photo-grid-more az-reveal';
-        wrap.appendChild(button);
-
-        grid.insertAdjacentElement('afterend', panel);
-        panel.insertAdjacentElement('afterend', wrap);
-
-        button.addEventListener('click', function () {
-            var open = button.getAttribute('aria-expanded') !== 'true';
-            button.setAttribute('aria-expanded', String(open));
-            panel.classList.toggle('is-open', open);
-            if (open) panel.removeAttribute('inert'); else panel.setAttribute('inert', '');
-            if (open) setLabel('fotografie.showLess', 'Weniger anzeigen');
-            else setLabel('fotografie.showMore', 'Mehr anzeigen');
-        });
+        wrap.appendChild(link);
+        grid.insertAdjacentElement('afterend', wrap);
     }
 
     /* ─── 2) MOTIV-SEITE: MOSAIK ───
@@ -517,17 +479,23 @@
         var category = params.get('k') || '';
         var slug = params.get('m') || '';
         var motifs = (window.FOTO_GALERIE && window.FOTO_GALERIE[category]) || [];
-        var motif = motifs.filter(function (m) { return motifSlug(m) === slug; })[0];
+        var split = window.FotoNav.splitMotifs(category);
+        var bySlug = function (m) { return motifSlug(m) === slug; };
+        var motif = split.tiles.filter(bySlug)[0] ||
+            (split.collection && motifSlug(split.collection) === slug ? split.collection : null);
 
         if (!motif) {
-            /* Unbekannte Adresse → zurück zur Kategorie bzw. Übersicht. */
-            window.location.replace(motifs.length ? categoryPage(category) : 'fotografie.html');
+            /* Einzelfoto-Tier (hat keine eigene Seite mehr, z.B. alter Link
+               motiv.html?k=wildlife&m=blaumeise) → Sammel-Seite. Sonst
+               unbekannte Adresse → zurück zur Kategorie bzw. Übersicht. */
+            var target = split.singles.filter(bySlug)[0]
+                ? window.FotoNav.motifHref(category, split.collection)
+                : (motifs.length ? categoryPage(category) : 'fotografie.html');
+            window.location.replace(target);
             return;
         }
 
         var title = pickTitle(motif.title);
-        var alt = altText(title);
-        var images = motifImages(motif);
 
         var heading = document.getElementById('foto-motiv-title');
         if (heading) heading.textContent = title;
@@ -540,9 +508,15 @@
             if (backLabel) backLabel.textContent = translate('fotografie.cat' + capitalize(category), '');
         }
 
-        renderMosaic(host, images.map(function (src, index) {
-            return { src: src, alt: alt, pos: focusOf(motif, index), format: formatOf(motif, index) };
-        }));
+        /* Sammel-Seite: jedes Foto behält den Namen seines Tiers im Alt-Text. */
+        var items = [];
+        (motif.members || [motif]).forEach(function (member) {
+            var alt = altText(pickTitle(member.title));
+            motifImages(member).forEach(function (src, index) {
+                items.push({ src: src, alt: alt, pos: focusOf(member, index), format: formatOf(member, index) });
+            });
+        });
+        renderMosaic(host, items);
     }
 
     /* ─── 3) KATEGORIE DIREKT ALS MOSAIK ───

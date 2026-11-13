@@ -26,7 +26,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/favicons/favicon-192x192.png">
     <link rel="manifest" href="/favicons/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=2.2">
+    <link rel="stylesheet" href="style.css?v=2.3">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -291,17 +291,17 @@
                              dann automatisch, in der gewählten Sprache). -->
                         <ul class="sitemap-sub" id="sitemapWildlifeMotifs">
                             <li><a href="motiv.html?k=wildlife&amp;m=eisvogel">Eisvogel</a></li>
-                            <li><a href="motiv.html?k=wildlife&amp;m=milan">Milan</a></li>
-                            <li><a href="motiv.html?k=wildlife&amp;m=moewe">Möwe</a></li>
                             <li><a href="motiv.html?k=wildlife&amp;m=star">Star</a></li>
-                            <li><a href="motiv.html?k=wildlife&amp;m=blaumeise">Blaumeise</a></li>
-                            <li><a href="motiv.html?k=wildlife&amp;m=kohlmeise">Kohlmeise</a></li>
-                            <li><a href="motiv.html?k=wildlife&amp;m=hausrotschwanz">Hausrotschwanz</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=milan">Milan</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=graureiher">Graureiher</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=moewe">Möwe</a></li>
+                            <li><a href="motiv.html?k=wildlife&amp;m=weitere-tiere" data-i18n="fotografie.moreAnimals">Weitere Tiere</a></li>
                         </ul>
                     </li>
                     <li><a href="streetfotografie.html" class="sitemap-lead" data-i18n="fotografie.navStreet">Streetfotografie</a></li>
                     <li><a href="landschaften.html" class="sitemap-lead" data-i18n="fotografie.navLandschaften">Landschaften</a></li>
                     <li><a href="portrait.html" class="sitemap-lead" data-i18n="fotografie.navPortrait">Portrait</a></li>
+                    <li><a href="weitere.html" class="sitemap-lead" data-i18n="fotografie.navWeitere">Weitere</a></li>
                 </ul>
             </section>
 
@@ -402,37 +402,29 @@
 
     <!-- Footer wird automatisch durch header.js am Ende des body eingefügt -->
 
-    <script src="js/translations.js"></script>
+    <script src="js/translations.js?v=1.1"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/header.js?v=1.6"></script>
-    <script src="js/foto-data.js?v=1.1"></script>
+    <script src="js/header.js?v=1.7"></script>
+    <script src="js/foto-data.js?v=1.2"></script>
+    <!-- data-no-header: nur die Hilfsfunktionen (Titel/Adressen), kein Second Header -->
+    <script src="js/foto-nav.js?v=1.2" data-no-header></script>
     <script>
-        /* Wildlife-Motive aus foto-data.js (gleiche Titel-/Adress-Logik wie foto-galerie.js) –
-           so bleibt die Sitemap automatisch aktuell. Fehlt die Datei/Kategorie, bleibt die
+        /* Wildlife-Motive aus foto-data.js (gleiche Logik wie Header und wildlife.html:
+           Tiere mit eigener Seite + "Weitere Tiere" für alle mit nur einem Foto) –
+           so bleibt die Sitemap automatisch aktuell. Fehlt etwas, bleibt die
            statische Liste oben stehen. */
         (function () {
             var list = document.getElementById('sitemapWildlifeMotifs');
-            var motifs = window.FOTO_GALERIE && window.FOTO_GALERIE.wildlife;
-            if (!list || !motifs || !motifs.length) return;
-            var lang = (window.i18n && window.i18n.getCurrentLanguage && window.i18n.getCurrentLanguage()) || 'de';
-            function slugify(text) {
-                return String(text || '').toLowerCase()
-                    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
-                    .normalize('NFD').replace(/[̀-ͯ]/g, '')
-                    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-            }
-            function pick(title) {
-                if (title && typeof title === 'object') return title[lang] || title.de || title[Object.keys(title)[0]] || '';
-                return title || '';
-            }
+            if (!list || !window.FotoNav || !window.FOTO_GALERIE) return;
+            var split = window.FotoNav.splitMotifs('wildlife');
+            var motifs = split.collection ? split.tiles.concat([split.collection]) : split.tiles;
+            if (!motifs.length) return;
             list.innerHTML = '';
             motifs.forEach(function (motif) {
-                var de = motif.title && typeof motif.title === 'object' ? (motif.title.de || motif.title[Object.keys(motif.title)[0]]) : motif.title;
-                var slug = slugify(motif.id || de);
                 var li = document.createElement('li');
                 var a = document.createElement('a');
-                a.href = 'motiv.html?k=wildlife&m=' + encodeURIComponent(slug);
-                a.textContent = pick(motif.title);
+                a.href = window.FotoNav.motifHref('wildlife', motif);
+                a.textContent = window.FotoNav.pickTitle(motif.title);
                 li.appendChild(a);
                 list.appendChild(li);
             });

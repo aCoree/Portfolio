@@ -191,7 +191,7 @@ body:not(.has-hero) main,
 /* ─── PILLEN-BUTTON (.btn) ───
    Die EINZIGE Button-Definition der Seite (Hell-Modus: theme.css). Genutzt
    für "Zurück zur Startseite" (404.html), "Nachricht senden" (index.html,
-   Kontaktformular) und "Mehr anzeigen" (Foto-Kategorieseiten, foto-galerie.js).
+   Kontaktformular) und "Weitere Tiere ansehen" (wildlife.html, foto-galerie.js).
    Neuer Button gleicher Optik: einfach class="btn" geben. */
 .btn {
   display: inline-block;
@@ -250,10 +250,10 @@ body:not(.has-hero) main,
   box-shadow: none !important;
 }
 
-/* Button mit Pfeil (class="btn btn--caret", darin <i class="fa-solid
-   fa-chevron-down btn-caret">): Pfeil wie bei "Projekte" im Header (klein,
-   leicht transparent, dreht sich in 0.25s um 180°). Bei aria-expanded="true"
-   zeigt er nach oben. */
+/* Button mit Pfeil (class="btn btn--caret", darin z.B. <i class="fa-solid
+   fa-chevron-right btn-caret">): Pfeil wie bei "Projekte" im Header (klein,
+   leicht transparent). Bei einem Auf-/Zuklapp-Button (fa-chevron-down +
+   aria-expanded="true") dreht er sich in 0.25s um 180°. */
 .btn--caret {
   display: inline-flex;
   align-items: center;
@@ -1478,45 +1478,12 @@ body:not(.has-hero) main.legal-content {
     background: #141414;
 }
 
-/* Weitere Kacheln hinter "Mehr anzeigen" (foto-galerie.js): ein zweites
-   Raster in einem zugeklappten Bereich. Höhe 0fr ↔ 1fr animiert sanft auf
-   und zu, ohne die Höhe in JS messen zu müssen; dazu blendet der Bereich
-   ein/aus. Das Padding oben ersetzt den Rasterabstand zur Reihe darüber
-   (liegt im Clip, damit es beim Zuklappen mit verschwindet). */
-.photo-grid-extra {
-    display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition:
-        grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.4s ease;
-}
-
-.photo-grid-extra.is-open {
-    grid-template-rows: 1fr;
-    opacity: 1;
-}
-
-.photo-grid-extra-clip {
-    min-height: 0;
-    overflow: hidden;
-}
-
-.photo-grid-extra-tiles {
-    padding-top: 16px;
-}
-
-/* "Mehr/Weniger anzeigen"-Button unter dem Raster (Optik: .btn). */
+/* Button unter dem Wildlife-Raster ("Weitere Tiere ansehen", foto-galerie.js,
+   Optik: .btn mit Pfeil). */
 .photo-grid-more {
     display: flex;
     justify-content: center;
     margin-top: 48px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .photo-grid-extra {
-        transition: none;
-    }
 }
 
 .photo-grid-item img {
@@ -1623,10 +1590,6 @@ body:not(.has-hero) main.legal-content {
     .photo-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 4px;
-    }
-
-    .photo-grid-extra-tiles {
-        padding-top: 4px;
     }
 
     /* 2-Spalten-Raster: Titel etwas kleiner als auf dem PC. */

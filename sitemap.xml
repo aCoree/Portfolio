@@ -38,11 +38,11 @@
   </url>
   <url>
     <loc>https://aureliozingarello.ch/fotografie.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://aureliozingarello.ch/wildlife.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <image:image>
       <image:loc>https://aureliozingarello.ch/fotografie/wildlife/eisvogel/eisvogel-1.webp</image:loc>
       <image:title>Eisvogel – Wildlife-Fotografie von Aurelio Zingarello</image:title>
@@ -80,6 +80,18 @@
       <image:title>Milan – Wildlife-Fotografie von Aurelio Zingarello</image:title>
     </image:image>
     <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/wildlife/graureiher/graureiher-1.webp</image:loc>
+      <image:title>Graureiher – Wildlife-Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/wildlife/graureiher/graureiher-2.webp</image:loc>
+      <image:title>Graureiher – Wildlife-Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/wildlife/graureiher/graureiher-3.webp</image:loc>
+      <image:title>Graureiher – Wildlife-Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
+    <image:image>
       <image:loc>https://aureliozingarello.ch/fotografie/wildlife/moewe/moewe-1.webp</image:loc>
       <image:title>Möwe – Wildlife-Fotografie von Aurelio Zingarello</image:title>
     </image:image>
@@ -115,6 +127,10 @@
       <image:loc>https://aureliozingarello.ch/fotografie/wildlife/hausrotschwanz-1.webp</image:loc>
       <image:title>Hausrotschwanz – Wildlife-Fotografie von Aurelio Zingarello</image:title>
     </image:image>
+    <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/wildlife/kraehenscharbe-1.webp</image:loc>
+      <image:title>Krähenscharbe – Wildlife-Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://aureliozingarello.ch/streetfotografie.html</loc>
@@ -134,7 +150,7 @@
   </url>
   <url>
     <loc>https://aureliozingarello.ch/landschaften.html</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <image:image>
       <image:loc>https://aureliozingarello.ch/fotografie/landschaften/landschaft-3.webp</image:loc>
       <image:title>Landschaften – Fotografie von Aurelio Zingarello</image:title>
@@ -151,10 +167,6 @@
       <image:loc>https://aureliozingarello.ch/fotografie/landschaften/landschaft-4.webp</image:loc>
       <image:title>Landschaften – Fotografie von Aurelio Zingarello</image:title>
     </image:image>
-    <image:image>
-      <image:loc>https://aureliozingarello.ch/fotografie/landschaften/landschaft-5.webp</image:loc>
-      <image:title>Landschaften – Fotografie von Aurelio Zingarello</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://aureliozingarello.ch/portrait.html</loc>
@@ -166,6 +178,22 @@
     <image:image>
       <image:loc>https://aureliozingarello.ch/fotografie/portrait/portrait-2.webp</image:loc>
       <image:title>Portrait – Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://aureliozingarello.ch/weitere.html</loc>
+    <lastmod>2026-11-11</lastmod>
+    <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/weitere/schiff-20-10.webp</image:loc>
+      <image:title>Weitere – Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/weitere/flugzeug-1.webp</image:loc>
+      <image:title>Weitere – Fotografie von Aurelio Zingarello</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://aureliozingarello.ch/fotografie/weitere/landschaft-5.webp</image:loc>
+      <image:title>Weitere – Fotografie von Aurelio Zingarello</image:title>
     </image:image>
   </url>
   <url>
@@ -182,6 +210,6 @@
   </url>
   <url>
     <loc>https://aureliozingarello.ch/sitemap.html</loc>
-    <lastmod>2026-10-06</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
 </urlset>

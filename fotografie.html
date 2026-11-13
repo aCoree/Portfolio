@@ -8,14 +8,16 @@
     <script src="js/theme.js?v=1.3"></script>
     <title>Fotografie | Aurelio Zingarello</title>
     <!-- SEO-BEGIN -->
-    <meta name="description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften und Portrait.">
+    <meta name="description"
+        content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Graureiher, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften, Portrait und weitere Motive wie Schiffe und Flugzeuge.">
     <link rel="canonical" href="https://aureliozingarello.ch/fotografie.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="Aurelio Zingarello">
     <meta property="og:locale" content="de_CH">
     <meta property="og:url" content="https://aureliozingarello.ch/fotografie.html">
     <meta property="og:title" content="Fotografie | Aurelio Zingarello">
-    <meta property="og:description" content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften und Portrait.">
+    <meta property="og:description"
+        content="Fotografie von Aurelio Zingarello: Wildlife-Fotografie (Eisvogel, Milan, Graureiher, Möwe, Star, Meisen u.a.), Streetfotografie, Landschaften, Portrait und weitere Motive wie Schiffe und Flugzeuge.">
     <meta property="og:image" content="https://aureliozingarello.ch/fotografie/wildlife/eisvogel/eisvogel-2.webp">
     <meta name="twitter:card" content="summary_large_image">
     <!-- SEO-END -->
@@ -32,7 +34,7 @@
 
     <link rel="manifest" href="/favicons/site.webmanifest">
 
-    <link rel="stylesheet" href="style.css?v=2.2">
+    <link rel="stylesheet" href="style.css?v=2.3">
     <link rel="stylesheet" href="css/az-reveal.css">
     <link rel="stylesheet" href="css/header.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -63,28 +65,34 @@
             box-sizing: border-box;
         }
 
-        /* ─── KATEGORIE ─── */
-        .foto-category {
-            margin-bottom: 50px;
+        /* ─── KATEGORIEN-RASTER ───
+           PC/Tablet: 2 Spalten mit hohen Kacheln (gleiche Form wie auf dem
+           Handy). Die letzte Kategorie ("Weitere") geht über beide Spalten
+           und ist dafür quer, damit das Raster ohne Lücke aufgeht.
+           Handy (bis 640px): alle Kacheln untereinander (Mobile-Block). */
+        .foto-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 24px;
         }
 
-        .foto-category:last-child {
-            margin-bottom: 0;
+        .foto-category--wide {
+            grid-column: 1 / -1;
         }
 
         /* ─── COVER-KACHEL: 1 BILD PRO KATEGORIE ───
            Klick auf die ganze Kachel führt auf die eigene Kategorieseite
            (siehe wildlife.html, streetfotografie.html, landschaften.html,
-           portrait.html). Querformat auf dem
-           PC, Hochformat auf dem Handy (siehe Mobile-Block) – das Bild
-           füllt die Kachel dabei immer komplett und zentriert aus. Nur die
+           portrait.html, weitere.html). Hochformat (4:5) auf PC und Handy,
+           nur die breite Kachel (.foto-category--wide) ist auf dem PC quer –
+           das Bild füllt die Kachel dabei immer komplett und zentriert aus. Nur die
            OBEREN Ecken sind abgerundet, unten läuft die Kachel dank der
            Bild-Ausblendung nahtlos in den dunklen Seitenhintergrund aus. */
         .foto-cover {
             position: relative;
             display: block;
             width: 100%;
-            aspect-ratio: 2.4 / 1;
+            aspect-ratio: 4 / 5;
             border-radius: 14px 14px 0 0;
             overflow: hidden;
             cursor: pointer;
@@ -161,6 +169,10 @@
             max-width: 480px;
         }
 
+        .foto-category--wide .foto-cover {
+            aspect-ratio: 2.4 / 1;
+        }
+
         /* "Ansehen"-Button: der Pillen-Button .apple-btn aus style.css (derselbe
            wie "Jetzt ansehen" auf index.html). Hier nur der Abstand nach oben.
            pointer-events: auto, weil das Overlay selbst keine Mausereignisse
@@ -172,10 +184,10 @@
         }
 
         /* ─── MOBILE ───
-           Bewusst das Gegenteil vom PC: Hochformat statt Querformat, sonst
-           gleicher Ausblend-Effekt/Aufbau, nur Größen/Abstände fürs Handy
-           angepasst. Erst ab 640px (nicht mehr 768px) – bis 641px bleiben
-           die Querformat-Kacheln vom PC sichtbar. */
+           Alle Kacheln untereinander, alle im Hochformat (auch "Weitere"),
+           sonst gleicher Ausblend-Effekt/Aufbau, nur Größen/Abstände fürs
+           Handy angepasst. Erst ab 640px – bis 641px bleibt das 2-Spalten-
+           Raster vom PC sichtbar. */
         @media (max-width: 640px) {
             .foto-cover img {
                 object-position: var(--pos-x-m, var(--pos-x, 50%)) var(--pos-y-m, var(--pos-y, 50%));
@@ -185,11 +197,13 @@
                 padding: 120px 18px 90px;
             }
 
-            .foto-category {
-                margin-bottom: 26px;
+            .foto-categories {
+                grid-template-columns: 1fr;
+                gap: 26px;
             }
 
-            .foto-cover {
+            .foto-cover,
+            .foto-category--wide .foto-cover {
                 aspect-ratio: 4 / 5;
                 border-radius: 10px 10px 0 0;
             }
@@ -221,23 +235,23 @@
     <noscript>
         <!-- Statische Navigation für Besucher/Crawler ohne JavaScript (die normale Navigation baut header.js auf). -->
         <nav aria-label="Navigation">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="projekte.html">Alle Projekte</a></li>
-            <li><a href="run.html">RUN – Kurzfilm</a></li>
-            <li><a href="bts.html">Behind the Scenes</a></li>
-            <li><a href="colorgrading.html">Color Grading</a></li>
-            <li><a href="musik.html">Klaviervideos</a></li>
-            <li><a href="drone.html">Drohnenvideos (DJI Air 3S)</a></li>
-            <li><a href="urbnvibe.html">URBNVIBE</a></li>
-            <li><a href="lego.html">LEGO FAMILY STUDIO</a></li>
-            <li><a href="fotografie.html">Fotografie</a></li>
-            <li><a href="wildlife.html">Wildlife-Fotografie</a></li>
-            <li><a href="about.html">Über mich</a></li>
-            <li><a href="impressum.html">Impressum</a></li>
-            <li><a href="datenschutz.html">Datenschutz</a></li>
-            <li><a href="sitemap.html">Sitemap</a></li>
-        </ul>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projekte.html">Alle Projekte</a></li>
+                <li><a href="run.html">RUN – Kurzfilm</a></li>
+                <li><a href="bts.html">Behind the Scenes</a></li>
+                <li><a href="colorgrading.html">Color Grading</a></li>
+                <li><a href="musik.html">Klaviervideos</a></li>
+                <li><a href="drone.html">Drohnenvideos (DJI Air 3S)</a></li>
+                <li><a href="urbnvibe.html">URBNVIBE</a></li>
+                <li><a href="lego.html">LEGO FAMILY STUDIO</a></li>
+                <li><a href="fotografie.html">Fotografie</a></li>
+                <li><a href="wildlife.html">Wildlife-Fotografie</a></li>
+                <li><a href="about.html">Über mich</a></li>
+                <li><a href="impressum.html">Impressum</a></li>
+                <li><a href="datenschutz.html">Datenschutz</a></li>
+                <li><a href="sitemap.html">Sitemap</a></li>
+            </ul>
         </nav>
     </noscript>
     <!-- SEO-NAV-END -->
@@ -251,7 +265,8 @@
     <main id="fotografie-page">
 
         <div class="fotografie-header page-header project-header">
-            <a href="projekte.html" class="foto-motiv-back az-reveal">&#8592; <span data-i18n="nav.projects">Projekte</span></a>
+            <a href="projekte.html" class="foto-motiv-back az-reveal">&#8592; <span
+                    data-i18n="nav.projects">Projekte</span></a>
             <h1 class="az-reveal" data-az-delay="1" data-i18n="fotografie.title">Fotografie</h1>
             <p class="tagline az-reveal" data-az-delay="2" data-i18n="fotografie.tagline">Eine Auswahl meiner liebsten
                 Aufnahmen aus verschiedenen Bereichen der Fotografie.</p>
@@ -262,89 +277,108 @@
              PC:    --pos-x / --pos-y      (0% = links/oben … 50% = Mitte … 100% = rechts/unten)
              Handy: --pos-x-m / --pos-y-m  (fehlen sie, gilt der PC-Wert)
              Steht direkt im style="…" des jeweiligen <img> unten. -->
-        <!-- ─── WILDLIFE ─── -->
-        <section class="foto-category" id="wildlife">
-            <a class="foto-cover az-reveal" href="wildlife.html" aria-label="Wildlife">
-                <img src="fotografie/wildlife/eisvogel/eisvogel-5.webp" data-i18n-attr="alt:fotografie.altWildlife"
-                    alt="Eisvogel – Wildlife-Fotografie von Aurelio Zingarello"
-                    style="/* PC    */ --pos-x: 50%; --pos-y: 60%;
+        <div class="foto-categories">
+            <!-- ─── WILDLIFE ─── -->
+            <section class="foto-category" id="wildlife">
+                <a class="foto-cover az-reveal" href="wildlife.html" aria-label="Wildlife">
+                    <img src="fotografie/wildlife/eisvogel/eisvogel-5.webp" data-i18n-attr="alt:fotografie.altWildlife"
+                        alt="Eisvogel – Wildlife-Fotografie von Aurelio Zingarello" style="/* PC    */ --pos-x: 80%; --pos-y: 50%;
                            /* Handy */ --pos-x-m: 80%; --pos-y-m: 50%;">
-                <div class="foto-cover-overlay">
-                    <div>
-                        <h2 class="foto-cover-title" data-i18n="fotografie.catWildlife">Wildlife</h2>
-                        <p class="foto-cover-desc" data-i18n="fotografie.descWildlife">Tiere in freier Wildbahn,
-                            eingefangen im entscheidenden Moment.</p>
-                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                    <div class="foto-cover-overlay">
+                        <div>
+                            <h2 class="foto-cover-title" data-i18n="fotografie.catWildlife">Wildlife</h2>
+                            <p class="foto-cover-desc" data-i18n="fotografie.descWildlife">Tiere in freier Wildbahn,
+                                eingefangen im entscheidenden Moment.</p>
+                            <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </section>
+                </a>
+            </section>
 
-        <!-- ─── STREETFOTOGRAFIE ─── -->
-        <section class="foto-category" id="street">
-            <a class="foto-cover az-reveal" href="streetfotografie.html" aria-label="Streetfotografie">
-                <img loading="lazy" decoding="async" src="fotografie/street/street-3.webp"  data-i18n-attr="alt:fotografie.altStreet"
-                    alt="Streetfotografie von Aurelio Zingarello"
-                    style="/* PC    */ --pos-x: 50%; --pos-y: 86%;
+            <!-- ─── STREETFOTOGRAFIE ─── -->
+            <section class="foto-category" id="street">
+                <a class="foto-cover az-reveal" href="streetfotografie.html" aria-label="Streetfotografie">
+                    <img loading="lazy" decoding="async" src="fotografie/street/street-3.webp"
+                        data-i18n-attr="alt:fotografie.altStreet" alt="Streetfotografie von Aurelio Zingarello" style="/* PC    */ --pos-x: 50%; --pos-y: 86%;
                            /* Handy */ --pos-x-m: 50%; --pos-y-m: 86%;">
-                <div class="foto-cover-overlay">
-                    <div>
-                        <h2 class="foto-cover-title" data-i18n="fotografie.catStreet">Streetfotografie</h2>
-                        <p class="foto-cover-desc" data-i18n="fotografie.descStreet">Spontane Momente mitten aus dem
-                            Alltag.</p>
-                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                    <div class="foto-cover-overlay">
+                        <div>
+                            <h2 class="foto-cover-title" data-i18n="fotografie.catStreet">Streetfotografie</h2>
+                            <p class="foto-cover-desc" data-i18n="fotografie.descStreet">Spontane Momente mitten aus dem
+                                Alltag.</p>
+                            <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </section>
+                </a>
+            </section>
 
-        <!-- ─── LANDSCHAFTEN ─── -->
-        <section class="foto-category" id="landschaften">
-            <a class="foto-cover az-reveal" href="landschaften.html" aria-label="Landschaften">
-                <img loading="lazy" decoding="async" src="fotografie/landschaften/landschaft-1.webp" data-i18n-attr="alt:fotografie.altLandschaften"
-                    alt="Landschaftsfotografie von Aurelio Zingarello"
-                    style="/* PC    */ --pos-x: 50%; --pos-y: 71%;
+            <!-- ─── LANDSCHAFTEN ─── -->
+            <section class="foto-category" id="landschaften">
+                <a class="foto-cover az-reveal" href="landschaften.html" aria-label="Landschaften">
+                    <img loading="lazy" decoding="async" src="fotografie/landschaften/landschaft-1.webp"
+                        data-i18n-attr="alt:fotografie.altLandschaften"
+                        alt="Landschaftsfotografie von Aurelio Zingarello" style="/* PC    */ --pos-x: 50%; --pos-y: 50%;
                            /* Handy */ --pos-x-m: 50%; --pos-y-m: 50%;">
-                <div class="foto-cover-overlay">
-                    <div>
-                        <h2 class="foto-cover-title" data-i18n="fotografie.catLandschaften">Landschaften</h2>
-                        <p class="foto-cover-desc" data-i18n="fotografie.descLandschaften">Natur und Landschaften in
-                            ihrer schönsten Form.</p>
-                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                    <div class="foto-cover-overlay">
+                        <div>
+                            <h2 class="foto-cover-title" data-i18n="fotografie.catLandschaften">Landschaften</h2>
+                            <p class="foto-cover-desc" data-i18n="fotografie.descLandschaften">Natur und Landschaften in
+                                ihrer schönsten Form.</p>
+                            <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </section>
+                </a>
+            </section>
 
-        <!-- ─── PORTRAIT ─── -->
-        <section class="foto-category" id="portrait">
-            <a class="foto-cover az-reveal" href="portrait.html" aria-label="Portrait">
-                <img loading="lazy" decoding="async" src="fotografie/portrait/portrait-1.webp" data-i18n-attr="alt:fotografie.altPortrait"
-                    alt="Portraitfotografie von Aurelio Zingarello"
-                    style="/* PC    */ --pos-x: 50%; --pos-y: 50%;
+            <!-- ─── PORTRAIT ─── -->
+            <section class="foto-category" id="portrait">
+                <a class="foto-cover az-reveal" href="portrait.html" aria-label="Portrait">
+                    <img loading="lazy" decoding="async" src="fotografie/portrait/portrait-1.webp"
+                        data-i18n-attr="alt:fotografie.altPortrait" alt="Portraitfotografie von Aurelio Zingarello"
+                        style="/* PC    */ --pos-x: 12%; --pos-y: 50%;
                            /* Handy */ --pos-x-m: 12%; --pos-y-m: 50%;">
-                <div class="foto-cover-overlay">
-                    <div>
-                        <h2 class="foto-cover-title" data-i18n="fotografie.catPortrait">Portrait</h2>
-                        <p class="foto-cover-desc" data-i18n="fotografie.descPortrait">Menschen und Emotionen im
-                            Fokus.</p>
-                        <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                    <div class="foto-cover-overlay">
+                        <div>
+                            <h2 class="foto-cover-title" data-i18n="fotografie.catPortrait">Portrait</h2>
+                            <p class="foto-cover-desc" data-i18n="fotografie.descPortrait">Menschen und Emotionen im
+                                Fokus.</p>
+                            <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </section>
+                </a>
+            </section>
+
+            <!-- ─── WEITERE (PC: breit über beide Spalten, Handy: wie die anderen) ─── -->
+            <section class="foto-category foto-category--wide" id="weitere">
+                <a class="foto-cover az-reveal" href="weitere.html" aria-label="Weitere">
+                    <img loading="lazy" decoding="async" src="fotografie/weitere/schiff-20-10.webp"
+                        data-i18n-attr="alt:fotografie.altWeitere" alt="Weitere Fotografien von Aurelio Zingarello"
+                        style="/* PC    */ --pos-x: 50%; --pos-y: 50%;
+                           /* Handy */ --pos-x-m: 46%; --pos-y-m: 50%;">
+                    <div class="foto-cover-overlay">
+                        <div>
+                            <h2 class="foto-cover-title" data-i18n="fotografie.catWeitere">Weitere</h2>
+                            <p class="foto-cover-desc" data-i18n="fotografie.descWeitere">Besondere Momente, die in
+                                keine
+                                andere Kategorie passen.</p>
+                            <span class="apple-btn" data-i18n="fotografie.viewButton">Ansehen</span>
+                        </div>
+                    </div>
+                </a>
+            </section>
+        </div>
 
     </main>
 
     <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
-    <script src="js/translations.js"></script>
+    <script src="js/translations.js?v=1.1"></script>
     <script src="js/i18n.js"></script>
 
     <!-- ─── SECOND HEADER (Alle Fotos, Wildlife ▾, Street, …): gleich auf allen
          Fotografie-Seiten, kommt aus js/foto-nav.js (Motive aus foto-data.js) ─── -->
-    <script src="js/foto-data.js?v=1.1"></script>
-    <script src="js/foto-nav.js"></script>
-    <script src="js/header.js?v=1.6"></script>
+    <script src="js/foto-data.js?v=1.2"></script>
+    <script src="js/foto-nav.js?v=1.2"></script>
+    <script src="js/header.js?v=1.7"></script>
     <script src="js/az-reveal.js"></script>
 </body>
 

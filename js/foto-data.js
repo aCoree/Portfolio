@@ -75,6 +75,14 @@
      Titel ab (Möwe → motiv.html?k=wildlife&m=moewe). Soll sie sich bei einer
      späteren Titel-Änderung nicht ändern, setze zusätzlich  id: 'moewe'.
 
+   ▸ TIERE MIT NUR EINEM FOTO (nur Wildlife):
+     Ein Motiv mit genau EINEM Foto (z.B. Blaumeise) bekommt keine eigene
+     Kachel. Alle diese Einzelfotos landen zusammen auf der Seite
+     "Weitere Tiere" (motiv.html?k=wildlife&m=weitere-tiere) – dorthin führt
+     der Button unter dem Raster auf wildlife.html und ein Eintrag im Header.
+     Kommt ein zweites Foto dazu, wird automatisch eine eigene Kachel daraus.
+     Einzelfotos also ganz normal als eigenes Motiv eintragen (mit Titel).
+
    ▸ TITEL:
      Entweder ein einfacher Text  title: 'Eisvogel'  (in allen Sprachen
      gleich) oder pro Sprache  title: { de: 'Eisvogel', en: 'Kingfisher',
@@ -128,6 +136,19 @@ window.FOTO_GALERIE = {
       ],
     },
     {
+      title: {
+        de: "Graureiher",
+        en: "Grey heron",
+        fr: "Héron cendré",
+        it: "Airone cenerino",
+      },
+      images: [
+        { src: "fotografie/wildlife/graureiher/graureiher-1.webp", format: "quer" },
+        { src: "fotografie/wildlife/graureiher/graureiher-2.webp", format: "hoch" },
+        { src: "fotografie/wildlife/graureiher/graureiher-3.webp", format: "quer" },
+      ],
+    },
+    {
       title: { de: "Möwe", en: "Seagull", fr: "Mouette", it: "Gabbiano" },
       images: [
         "fotografie/wildlife/moewe/moewe-1.webp",
@@ -142,7 +163,7 @@ window.FOTO_GALERIE = {
         fr: "Mésange bleue",
         it: "Cinciarella",
       },
-      images: ["fotografie/wildlife/meise/blaumeise-1.webp"],
+      images: [{ src: "fotografie/wildlife/meise/blaumeise-1.webp", format: "quer" }],
     },
     {
       title: {
@@ -151,7 +172,7 @@ window.FOTO_GALERIE = {
         fr: "Mésange charbonnière",
         it: "Cinciallegra",
       },
-      images: ["fotografie/wildlife/meise/kohlmeise-1.webp"],
+      images: [{ src: "fotografie/wildlife/meise/kohlmeise-1.webp", format: "quer" }],
     },
     {
       title: {
@@ -160,7 +181,16 @@ window.FOTO_GALERIE = {
         fr: "Rougequeue noir",
         it: "Codirosso spazzacamino",
       },
-      images: ["fotografie/wildlife/hausrotschwanz-1.webp"],
+      images: [{ src: "fotografie/wildlife/hausrotschwanz-1.webp", format: "quer" }],
+    },
+    {
+      title: {
+        de: "Krähenscharbe",
+        en: "European shag",
+        fr: "Cormoran huppé",
+        it: "Marangone dal ciuffo",
+      },
+      images: [{ src: "fotografie/wildlife/kraehenscharbe-1.webp", format: "hoch" }],
     },
     /* ─── weitere Tiere hier einfügen ─── */
   ],
@@ -174,7 +204,6 @@ window.FOTO_GALERIE = {
         "fotografie/landschaften/landschaft-2.webp",
         "fotografie/landschaften/landschaft-3.webp",
         "fotografie/landschaften/landschaft-4.webp",
-        "fotografie/landschaften/landschaft-5.webp",
       ],
     },
     /* ─── weitere Motive hier einfügen ─── */
@@ -190,6 +219,21 @@ window.FOTO_GALERIE = {
       ],
     },
     /* ─── weitere Motive hier einfügen ─── */
+  ],
+
+  /* ─── WEITERE (weitere.html) ───
+     Fotos, die in keine andere Kategorie passen – wie Landschaften/Portrait
+     direkt als Mosaik (ohne Unterseiten). */
+  weitere: [
+    {
+      title: "Weitere",
+      images: [
+        { src: "fotografie/weitere/schiff-20-10.webp", format: "quer" },
+        { src: "fotografie/weitere/flugzeug-1.webp", format: "quer" },
+        { src: "fotografie/weitere/landschaft-5.webp", format: "quer" },
+      ],
+    },
+    /* ─── weitere Fotos hier einfügen ─── */
   ],
 
   /* ─── STREETFOTOGRAFIE (streetfotografie.html) ─── */

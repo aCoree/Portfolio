@@ -376,6 +376,7 @@ document.addEventListener("DOMContentLoaded", function() {
         { label: t('fotografie.navStreet', 'Streetfotografie'), href: 'streetfotografie.html', category: fotografieLabel },
         { label: t('fotografie.navLandschaften', 'Landschaften'), href: 'landschaften.html', category: fotografieLabel },
         { label: t('fotografie.navPortrait', 'Portrait'), href: 'portrait.html', category: fotografieLabel },
+        { label: t('fotografie.navWeitere', 'Weitere'), href: 'weitere.html', category: fotografieLabel, keywords: 'Schiff Segelschiff Flugzeug Getreidefeld' },
 
         { label: t('footer.impressum', 'Impressum'), href: 'impressum.html', category: legalLabel },
         { label: t('footer.datenschutz', 'Datenschutz'), href: 'datenschutz.html', category: legalLabel },
