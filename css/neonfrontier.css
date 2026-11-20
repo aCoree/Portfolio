@@ -61,14 +61,14 @@ body.neon-frontier ::selection { background: var(--nf-cyan); color: #04101a; }
 /* ───────── Scroll-Animation: gemeinsame Regeln ───────── */
 .nf-s { animation-duration: 1s; animation-timing-function: linear; animation-fill-mode: both; animation-play-state: paused; animation-delay: calc(var(--p, 0) * -1s); will-change: transform, opacity; }
 @supports (animation-timeline: view()) {
-  .nf-s { animation-play-state: running; animation-delay: 0s; animation-duration: auto; animation-range: contain 0% contain 100%; }
+  html:not(.nf-fb) .nf-s { animation-play-state: running; animation-delay: 0s; animation-duration: auto; animation-range: contain 0% contain 100%; }
   #boot { view-timeline: --t-boot block; }
   #fahrzeuge { view-timeline: --t-ride block; }
   #arsenal { view-timeline: --t-arsenal block; }
-  #boot .nf-s { animation-timeline: --t-boot; }
-  #fahrzeuge .nf-s { animation-timeline: --t-ride; }
-  #arsenal .nf-s { animation-timeline: --t-arsenal; }
-  .nf-progress i { animation: nfGrow linear both; animation-timeline: scroll(root); }
+  html:not(.nf-fb) #boot .nf-s { animation-timeline: --t-boot; }
+  html:not(.nf-fb) #fahrzeuge .nf-s { animation-timeline: --t-ride; }
+  html:not(.nf-fb) #arsenal .nf-s { animation-timeline: --t-arsenal; }
+  html:not(.nf-fb) .nf-progress i { animation: nfGrow linear both; animation-timeline: scroll(root); }
 }
 
 /* ───────── HUD (ruhig) ───────── */
@@ -327,8 +327,8 @@ body.neon-frontier ::selection { background: var(--nf-cyan); color: #04101a; }
   .nf-behind-grid { grid-template-columns: 1fr; }
   .nf-rail { display: none; }
   .nf-ladder { flex-wrap: wrap; }
-  .nf-rank { flex: 0 0 22%; transform: scale(0.8); }
-  .nf-rank.is-on { transform: scale(1.1); }
+  .nf-rank, .nf-rank.is-reached { flex: 0 0 22%; transform: scale(0.8); }
+  .nf-rank.is-on { transform: scale(1.12); }
   .nf-car { width: 76vw; }
   .nf-nitro { display: none; }
 }

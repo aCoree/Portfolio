@@ -580,11 +580,6 @@ document.addEventListener("DOMContentLoaded", function () {
       category: "NEON FRONTIER",
     },
     {
-      label: t("neonfrontier.navMaking", "Making-of"),
-      href: "neonfrontier.html#making-of",
-      category: "NEON FRONTIER",
-    },
-    {
       label: t("neonfrontier.navRanks", "Ränge"),
       href: "neonfrontier.html#ranks",
       category: "NEON FRONTIER",
