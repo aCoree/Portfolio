@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Hell-/Dunkel-Modus: muss vor den Stylesheets laden (siehe theme.js) -->
+    <script src="js/theme.js?v=1.3"></script>
+    <title>NEON FRONTIER | Aurelio Zingarello</title>
+    <!-- SEO-BEGIN -->
+    <meta name="description" content="NEON FRONTIER – kostenloser 3D-Browser-Shooter von Aurelio Zingarello: Neon-Stadt, Zug, Autos, Waffen, Skins und Ränge. Scroll dich durch eine ganze Runde.">
+    <link rel="canonical" href="https://aureliozingarello.ch/neonfrontier.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Aurelio Zingarello">
+    <meta property="og:locale" content="de_CH">
+    <meta property="og:url" content="https://aureliozingarello.ch/neonfrontier.html">
+    <meta property="og:title" content="NEON FRONTIER – 3D-Browser-Shooter | Aurelio Zingarello">
+    <meta property="og:description" content="Neon-Stadt. Dein Team. Deine Runde. Der kostenlose 3D-Shooter im Browser, erlebt als Scroll-Reise durch eine ganze Runde.">
+    <meta property="og:image" content="https://aureliozingarello.ch/cards/big/neonfrontier.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#060a13">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"NEON FRONTIER","url":"https://neonfrontier.ch","description":"Kostenloser 3D-Multiplayer-Shooter im Browser mit Neon-Stadt, Zug, fahrbaren Autos, Waffen, Gadgets, Skins und Rängen.","genre":["Shooter","Multiplayer"],"gamePlatform":"Web Browser","applicationCategory":"Game","inLanguage":["de","en"],"author":{"@type":"Person","name":"Aurelio Zingarello","url":"https://aureliozingarello.ch/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"CHF"},"image":"https://aureliozingarello.ch/cards/big/neonfrontier.webp"}</script>
+    <!-- SEO-END -->
+
+    <!-- Favicons dieser Seite: NEON-FRONTIER-Look (AZ in Neon-Cyan), Ordner favicons/neonfrontier/ -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/neonfrontier/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/favicons/neonfrontier/favicon.svg">
+    <link rel="icon" href="/favicons/neonfrontier/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicons/neonfrontier/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/neonfrontier/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/neonfrontier/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/neonfrontier/favicon-192x192.png">
+    <link rel="manifest" href="/favicons/neonfrontier/site.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css?v=2.3">
+    <link rel="stylesheet" href="css/header.css?v=3.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/neonfrontier.css?v=1.0">
+</head>
+
+<body class="neon-frontier">
+    <!-- SEO-NAV-BEGIN -->
+    <noscript>
+        <!-- Statische Navigation für Besucher/Crawler ohne JavaScript (die normale Navigation baut header.js auf). -->
+        <nav aria-label="Navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="projekte.html">Alle Projekte</a></li>
+            <li><a href="neonfrontier.html">NEON FRONTIER</a></li>
+            <li><a href="lego.html">LEGO FAMILY STUDIO</a></li>
+            <li><a href="urbnvibe.html">URBNVIBE</a></li>
+            <li><a href="about.html">Über mich</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+            <li><a href="datenschutz.html">Datenschutz</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+        </nav>
+    </noscript>
+    <!-- SEO-NAV-END -->
+
+    <div id="header-placeholder"></div>
+
+    <!-- ─── FESTE EBENEN: Partikel, HUD, Fadenkreuz ─── -->
+    <canvas id="nf-fx" aria-hidden="true"></canvas>
+    <div class="nf-hud" aria-hidden="true">
+        <div class="nf-progress"><i></i></div>
+        <span class="nf-hud-corner tl"></span><span class="nf-hud-corner tr"></span>
+        <span class="nf-hud-corner bl"></span><span class="nf-hud-corner br"></span>
+        <div class="nf-hud-status"><i></i><span data-hud-zone>ZONE 00</span><small data-hud-name></small></div>
+        <div class="nf-hud-clock"><span data-i18n="neonfrontier.hudClock">Rundenzeit</span><b data-hud-clock>00:00</b></div>
+    </div>
+    <ol class="nf-rail" aria-label="Kapitel" data-rail></ol>
+    <div class="nf-cross" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></div>
+
+    <main id="nf">
+
+        <!-- ═════════ 00 · BOOT ═════════ -->
+        <section class="nf-scene nf-hero" id="boot" data-scene="hero" data-hud="hud0" data-accent="#7ee8ff" style="--h:250vh">
+            <div class="nf-stage nf-hero-stage">
+                <div class="nf-moon"></div>
+                <div class="nf-horizon"></div>
+                <div class="nf-city nf-city--far"><canvas data-city="far" data-seed="11"></canvas></div>
+                <div class="nf-city nf-city--mid"><canvas data-city="mid" data-seed="23"></canvas></div>
+                <div class="nf-train"></div>
+                <div class="nf-city nf-city--near"><canvas data-city="near" data-seed="37"></canvas></div>
+                <div class="nf-floor"><div class="nf-floor-plane"></div></div>
+                <div class="nf-vignette"></div>
+                <div class="nf-scan"></div>
+
+                <div class="nf-hero-core">
+                    <p class="nf-kicker" data-i18n="neonfrontier.heroKicker">Ein Projekt von Aurelio Zingarello</p>
+                    <div class="nf-boot" aria-hidden="true">
+                        <div><span>&gt;</span> <span data-i18n="neonfrontier.boot1">FRONTIER-01 initialisiert</span> … OK</div>
+                        <div><span>&gt;</span> <span data-i18n="neonfrontier.boot2">Karte geladen: NEON JUNCTION</span> … OK</div>
+                        <div><span>&gt;</span> <span data-i18n="neonfrontier.boot3">Spieler AZ bereit</span> …</div>
+                    </div>
+                    <h1 class="nf-logo" aria-label="NEON FRONTIER">
+                        <span class="nf-logo-neon" aria-hidden="true">NEON</span>
+                        <span class="nf-logo-main" data-text="FRONTIER" aria-hidden="true">FRONTIER</span>
+                    </h1>
+                    <p class="nf-tag" data-i18n="neonfrontier.heroTag">Neon-Stadt. Dein Team. Deine Runde.</p>
+                    <p class="nf-hero-sub" data-i18n="neonfrontier.heroSub">Ein kostenloser 3D-Shooter, der direkt im Browser läuft. Scroll dich durch eine ganze Runde.</p>
+                    <div class="nf-hero-cta">
+                        <a class="nf-btn" href="https://neonfrontier.ch" target="_blank" rel="noopener"><span data-i18n="neonfrontier.ctaPlay">Jetzt spielen</span> <i class="fa-solid fa-play"></i></a>
+                        <a class="nf-btn nf-btn--ghost" href="#junction"><span data-i18n="neonfrontier.ctaStart">Runde starten</span> <i class="fa-solid fa-chevron-down"></i></a>
+                    </div>
+                </div>
+                <a class="nf-cue" href="#junction"><span data-i18n="common.scroll">Scrollen</span><i></i></a>
+                <div class="nf-flash"></div>
+            </div>
+        </section>
+
+        <!-- ═════════ 01 · NEON JUNCTION ═════════ -->
+        <section class="nf-scene nf-junction" id="junction" data-scene="junction" data-hud="navJunction" data-accent="#7ee8ff" style="--h:560vh">
+            <div class="nf-stage">
+                <div class="nf-jstage">
+                    <div class="nf-jtext">
+                        <p class="nf-kicker" data-i18n="neonfrontier.jLabel">Zone 01 · Die Karte</p>
+                        <h2 class="nf-h2" data-scramble data-i18n-html="neonfrontier.jTitleHtml">Willkommen in <em>Neon Junction</em></h2>
+                        <p class="nf-lead" data-i18n="neonfrontier.jLead">Die Standardkarte: rund 250 × 250 Meter Neon-Stadt, gebaut aus Modellen von Künstlerinnen und Künstlern auf Sketchfab. Und mittendrin fährt ständig ein Zug.</p>
+                        <div class="nf-jstats">
+                            <div class="nf-stat"><b>250 × 250 m</b><span data-i18n="neonfrontier.jStat1">Karte</span></div>
+                            <div class="nf-stat"><b>≈ 2 min</b><span data-i18n="neonfrontier.jStat2">pro Zugrunde</span></div>
+                            <div class="nf-stat"><b>3</b><span data-i18n="neonfrontier.jStat3">Bahnhöfe</span></div>
+                        </div>
+                        <div class="nf-steps" data-steps>
+                            <article class="nf-step" data-focus="300,297,2.2" data-color="#7ee8ff"><p class="nf-kicker" data-i18n="neonfrontier.s1K">Kreuzung & Spire</p><h3>Neon Plaza</h3><p data-i18n="neonfrontier.s1P">Das Herz der Karte: eine Kreuzung mit Neon-Spire, umgeben von einem Strassenring mit Verkehr.</p></article>
+                            <article class="nf-step" data-focus="300,478,2.2" data-color="#ff3da8"><p class="nf-kicker" data-i18n="neonfrontier.s2K">Der Zug</p><h3>Bahnhof Central</h3><p data-i18n="neonfrontier.s2P">Lok, drei Flachwagen, Lok: rund 73 Meter Zug. Er fährt für alle Spieler zur selben Zeit an derselben Stelle, und auf der Ladefläche fährst du einfach mit.</p></article>
+                            <article class="nf-step" data-focus="555,297,2.4" data-color="#4de1ff"><p class="nf-kicker" data-i18n="neonfrontier.s3K">Kai & Container</p><h3>Saltline Harbor</h3><p data-i18n="neonfrontier.s3P">Kai, Container und das Meer im Osten. Der Hafen ist einer von drei Bahnhöfen auf der Strecke.</p></article>
+                            <article class="nf-step" data-focus="185,180,2.4" data-color="#ffd24a"><p class="nf-kicker" data-i18n="neonfrontier.s4K">Kran & Lift</p><h3>Skyline Baustelle</h3><p data-i18n="neonfrontier.s4P">Ein Rohbau mit Kran und Lift: hier geht es hoch hinaus.</p></article>
+                            <article class="nf-step" data-focus="300,45,1.9" data-color="#b45cff"><p class="nf-kicker" data-i18n="neonfrontier.s5K">Hügel & Windräder</p><h3>Windpark Ridge</h3><p data-i18n="neonfrontier.s5P">Ein Hügel im Norden mit fünf Windrädern, die sich nie aufhören zu drehen.</p></article>
+                            <article class="nf-step" data-focus="22,285,2.4" data-color="#4dff8a"><p class="nf-kicker" data-i18n="neonfrontier.s6K">Wald & Bahnhof</p><h3>Whisper Pines</h3><p data-i18n="neonfrontier.s6P">Im Westen liegt der dritte Bahnhof der Strecke, mitten im Wald.</p></article>
+                        </div>
+                        <div class="nf-dots" data-dots><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    </div>
+
+                    <div class="nf-map" aria-hidden="true">
+                        <div class="nf-radar"></div>
+                        <svg viewBox="-30 -10 660 620" xmlns="http://www.w3.org/2000/svg">
+                            <g class="nf-map-cam" data-cam>
+                                <g class="grid" data-grid></g>
+                                <path class="sea" d="M548 150 Q592 215 572 300 Q604 392 556 470 L660 470 L660 150 Z"/>
+                                <path class="sea" style="fill:none" d="M585 190 q10 8 20 0 t20 0 M590 240 q10 8 20 0 t20 0 M586 330 q10 8 20 0 t20 0 M580 410 q10 8 20 0 t20 0"/>
+                                <!-- dekorative Zonen -->
+                                <rect class="zone" x="265" y="140" width="80" height="72" rx="6"/>
+                                <rect class="zone" x="365" y="140" width="98" height="78" rx="6"/>
+                                <rect class="zone" x="130" y="262" width="98" height="88" rx="6"/>
+                                <rect class="zone" x="372" y="262" width="92" height="90" rx="6"/>
+                                <rect class="zone" x="235" y="520" width="130" height="56" rx="6"/>
+                                <!-- Hauptzonen (je ein Schritt) -->
+                                <rect class="zone" data-z="0" x="255" y="250" width="90" height="95" rx="6"/>
+                                <rect class="zone" data-z="1" x="215" y="448" width="170" height="64" rx="6"/>
+                                <rect class="zone" data-z="2" x="518" y="238" width="74" height="122" rx="6"/>
+                                <rect class="zone" data-z="3" x="130" y="140" width="116" height="80" rx="6"/>
+                                <ellipse class="zone" data-z="4" cx="300" cy="46" rx="132" ry="38"/>
+                                <rect class="zone" data-z="5" x="-26" y="214" width="96" height="142" rx="6"/>
+                                <!-- Strassen -->
+                                <rect class="road" x="222" y="228" width="156" height="138" rx="24"/>
+                                <path class="road" d="M300 112 V228 M300 366 V478 M92 297 H222 M378 297 H508"/>
+                                <!-- Bahnring -->
+                                <path class="rail" id="nfRail" d="M120 110 H480 A30 30 0 0 1 510 140 V450 A30 30 0 0 1 480 480 H120 A30 30 0 0 1 90 450 V140 A30 30 0 0 1 120 110 Z"/>
+                                <circle cx="300" cy="480" r="6" fill="#060a13" stroke="#ff3da8" stroke-width="3"/>
+                                <circle cx="510" cy="297" r="6" fill="#060a13" stroke="#ff3da8" stroke-width="3"/>
+                                <circle cx="90" cy="297" r="6" fill="#060a13" stroke="#ff3da8" stroke-width="3"/>
+                                <!-- Windräder -->
+                                <g transform="translate(230 42)"><path class="turb" d="M0 0 L0 -14 M0 0 L12 7 M0 0 L-12 7"/></g>
+                                <g transform="translate(265 36)"><path class="turb" d="M0 0 L0 -14 M0 0 L12 7 M0 0 L-12 7"/></g>
+                                <g transform="translate(300 44)"><path class="turb" d="M0 0 L0 -14 M0 0 L12 7 M0 0 L-12 7"/></g>
+                                <g transform="translate(335 36)"><path class="turb" d="M0 0 L0 -14 M0 0 L12 7 M0 0 L-12 7"/></g>
+                                <g transform="translate(370 42)"><path class="turb" d="M0 0 L0 -14 M0 0 L12 7 M0 0 L-12 7"/></g>
+                                <!-- Bäume -->
+                                <g class="tree" data-trees></g>
+                                <!-- Beschriftungen -->
+                                <text class="zlabel" data-lz="0" x="300" y="302" text-anchor="middle">Neon Plaza</text>
+                                <text class="zlabel" data-lz="1" x="300" y="484" text-anchor="middle">Bahnhof Central</text>
+                                <text class="zlabel" data-lz="2" x="555" y="304" text-anchor="middle">Saltline</text>
+                                <text class="zlabel" data-lz="3" x="188" y="184" text-anchor="middle">Baustelle</text>
+                                <text class="zlabel" data-lz="4" x="300" y="86" text-anchor="middle">Windpark Ridge</text>
+                                <text class="zlabel" data-lz="5" x="22" y="292" text-anchor="middle">Whisper</text>
+                                <text class="zlabel" x="305" y="180" text-anchor="middle" opacity=".5">Nexus Outpost</text>
+                                <text class="zlabel" x="414" y="184" text-anchor="middle" opacity=".5">Container Yard</text>
+                                <text class="zlabel" x="179" y="310" text-anchor="middle" opacity=".5">Maple Park</text>
+                                <text class="zlabel" x="418" y="310" text-anchor="middle" opacity=".5">Depot</text>
+                                <text class="zlabel" x="300" y="552" text-anchor="middle" opacity=".5">Southside</text>
+                                <g class="train" data-train></g>
+                                <circle class="pin" data-pin r="14" cx="300" cy="297"/>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═════════ 02 · FAHRZEUGE ═════════ -->
+        <section class="nf-scene nf-ride" id="fahrzeuge" data-scene="ride" data-hud="navRide" data-accent="#ff3da8" style="--h:340vh">
+            <div class="nf-stage nf-ride-stage">
+                <div class="nf-ride-city"><canvas data-city="far" data-seed="51" data-wide></canvas></div>
+                <div class="nf-ride-city mid"><canvas data-city="mid" data-seed="63" data-wide></canvas></div>
+                <div class="nf-speed"></div>
+                <div class="nf-road"></div>
+                <div class="nf-car" aria-hidden="true">
+                    <svg viewBox="-130 20 640 190" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="nfCarBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2744"/><stop offset="1" stop-color="#0a1020"/></linearGradient>
+                            <linearGradient id="nfFlame" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#7ee8ff"/><stop offset=".7" stop-color="#ff3da8"/><stop offset="1" stop-color="#ff3da8" stop-opacity="0"/></linearGradient>
+                        </defs>
+                        <ellipse cx="260" cy="168" rx="250" ry="9" fill="#7ee8ff" opacity=".45"/>
+                        <path class="flame" d="M34 112 L-120 122 L34 134 Z" fill="url(#nfFlame)"/>
+                        <path d="M30 128 L36 104 Q44 88 66 84 L150 74 Q190 44 252 42 L332 44 Q376 50 402 76 L452 88 Q490 94 496 116 L498 134 L30 134 Z" fill="url(#nfCarBody)" stroke="#7ee8ff" stroke-width="3" stroke-linejoin="round"/>
+                        <path d="M170 74 Q200 52 248 50 L302 50 L306 78 L170 78 Z M314 50 L338 52 Q366 58 384 76 L314 78 Z" fill="#0b1630" stroke="#7ee8ff" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M60 112 H486" stroke="#ff3da8" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+                        <rect x="32" y="100" width="14" height="8" rx="2" fill="#ff3da8"/>
+                        <rect x="486" y="104" width="12" height="9" rx="2" fill="#ffd24a"/>
+                        <g class="wheel"><circle cx="122" cy="136" r="30" fill="#05080f" stroke="#7ee8ff" stroke-width="3"/><circle cx="122" cy="136" r="13" fill="none" stroke="#ff3da8" stroke-width="2"/><path d="M122 106 V166 M92 136 H152 M101 115 L143 157 M143 115 L101 157" stroke="#7ee8ff" stroke-width="2" opacity=".8"/></g>
+                        <g class="wheel"><circle cx="404" cy="136" r="30" fill="#05080f" stroke="#7ee8ff" stroke-width="3"/><circle cx="404" cy="136" r="13" fill="none" stroke="#ff3da8" stroke-width="2"/><path d="M404 106 V166 M374 136 H434 M383 115 L425 157 M425 115 L383 157" stroke="#7ee8ff" stroke-width="2" opacity=".8"/></g>
+                    </svg>
+                </div>
+                <div class="nf-ride-text">
+                    <p class="nf-kicker" data-i18n="neonfrontier.rLabel">Zone 02 · Fahrzeuge</p>
+                    <h2 class="nf-h2" data-scramble data-i18n-html="neonfrontier.rTitleHtml">Steig ein. <em>Gas geben.</em></h2>
+                    <p class="nf-lead" data-i18n="neonfrontier.rLead">Auf den Parkplätzen von Depot und Southside stehen zehn fahrbare Autos. Mit E steigst du ein, deine Teammates fahren mit und schiessen durch die Scheiben.</p>
+                    <div class="nf-ride-chips">
+                        <span class="nf-chip"><kbd>E</kbd> <span data-i18n="neonfrontier.rChipE">Einsteigen</span></span>
+                        <span class="nf-chip"><kbd>Space</kbd> <span data-i18n="neonfrontier.rChipSpace">Handbremse</span></span>
+                        <span class="nf-chip"><kbd>Shift</kbd> <span data-i18n="neonfrontier.rChipShift">Nitro</span></span>
+                    </div>
+                    <p class="nf-lead" style="font-size:18px" data-i18n="neonfrontier.rFact">Dazu fahren sechs Autos im Stadtverkehr. Wer ihnen im Weg steht, bekommt Schaden.</p>
+                </div>
+                <div class="nf-nitro"><span data-i18n="neonfrontier.rNitro">Nitro</span><div><i></i></div></div>
+            </div>
+        </section>
+
+        <!-- ═════════ 03 · ARSENAL ═════════ -->
+        <section class="nf-scene nf-arsenal" id="arsenal" data-scene="arsenal" data-hud="navArsenal" data-accent="#ffd24a" style="--h:420vh">
+            <div class="nf-stage nf-arsenal-stage">
+                <div class="nf-arsenal-head">
+                    <p class="nf-kicker" data-i18n="neonfrontier.aLabel">Zone 03 · Arsenal</p>
+                    <h2 class="nf-h2" data-scramble data-i18n-html="neonfrontier.aTitleHtml">Elf Waffen. <em>Fünf Gadgets.</em></h2>
+                </div>
+                <div class="nf-track" data-track>
+                    <div class="nf-panel nf-card nf-card--big"><div class="nf-in">
+                        <div class="nf-bigstat"><b>11</b><span class="nf-kicker" style="margin:0" data-i18n="neonfrontier.aBig">Waffen</span></div>
+                        <p style="margin-top:14px" data-i18n="neonfrontier.aBigText">Vom Schnellfeuer bis zum Raketenwerfer. Dazu Enterhaken, Jetpack, Teleporter, Drohne und Scanner: du kommst dahin, wo andere nicht hinkommen.</p>
+                    </div></div>
+                    <figure class="nf-panel nf-card nf-card--img" style="margin:0"><div class="nf-in"><img src="images/neonfrontier/shots/waffen_skins_alle.webp" alt="NEON FRONTIER Waffen-Designs" loading="lazy" width="800" height="450"><figcaption data-i18n="neonfrontier.iCap1">Waffen-Designs</figcaption></div></figure>
+                    <div class="nf-panel nf-card" style="--c:#7ee8ff"><div class="nf-in"><i class="ico fa-solid fa-gun"></i><h3 data-i18n="neonfrontier.w1T">Pistolen</h3><p data-i18n="neonfrontier.w1P">Viper, Hand Cannon</p><span class="tag" data-i18n="neonfrontier.wTag">Waffe</span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#ff3da8"><div class="nf-in"><i class="ico fa-solid fa-burst"></i><h3 data-i18n="neonfrontier.w2T">Sturm & SMG</h3><p data-i18n="neonfrontier.w2P">AR-7 Striker, Hornet SMG</p><span class="tag" data-i18n="neonfrontier.wTag">Waffe</span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#ffd24a"><div class="nf-in"><i class="ico fa-solid fa-braille"></i><h3 data-i18n="neonfrontier.w3T">Schrotflinte</h3><p data-i18n="neonfrontier.w3P">Breaker</p><span class="tag" data-i18n="neonfrontier.wTag">Waffe</span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#4dff8a"><div class="nf-in"><i class="ico fa-solid fa-crosshairs"></i><h3 data-i18n="neonfrontier.w4T">Präzision</h3><p data-i18n="neonfrontier.w4P">Marksman DMR, Longshot</p><span class="tag" data-i18n="neonfrontier.wTag">Waffe</span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#b45cff"><div class="nf-in"><i class="ico fa-solid fa-explosion"></i><h3 data-i18n="neonfrontier.w5T">Schwer & Energie</h3><p data-i18n="neonfrontier.w5P">Stormcaller (Raketen), Pulse Rifle, Lancer Laser</p><span class="tag" data-i18n="neonfrontier.wTag">Waffe</span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#ff4d6a"><div class="nf-in"><i class="ico fa-solid fa-khanda"></i><h3 data-i18n="neonfrontier.w6T">Nahkampf</h3><p data-i18n="neonfrontier.w6P">Plasma-Klinge</p><span class="tag" data-i18n="neonfrontier.wTag">Waffe</span></div></div>
+                    <figure class="nf-panel nf-card nf-card--img" style="margin:0"><div class="nf-in"><img src="images/neonfrontier/shots/waffen_in_der_hand.webp" alt="NEON FRONTIER Waffen im Einsatz" loading="lazy" width="800" height="450"><figcaption data-i18n="neonfrontier.iCap2">Im Einsatz</figcaption></div></figure>
+                    <div class="nf-panel nf-card" style="--c:#ffa94d"><div class="nf-in"><i class="ico fa-solid fa-link"></i><h3 data-i18n="neonfrontier.g1T">Enterhaken</h3><p data-i18n="neonfrontier.g1P">Haken auf einen Zielpunkt schiessen und hinziehen.</p><span class="tag"><span data-i18n="neonfrontier.gTag">Gadget</span> · <kbd>F</kbd></span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#ff6b3d"><div class="nf-in"><i class="ico fa-solid fa-rocket"></i><h3 data-i18n="neonfrontier.g2T">Jetpack</h3><p data-i18n="neonfrontier.g2P">Leertaste in der Luft halten. Der Treibstoff lädt am Boden wieder auf.</p><span class="tag"><span data-i18n="neonfrontier.gTag">Gadget</span> · <kbd>Space</kbd></span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#b36bff"><div class="nf-in"><i class="ico fa-solid fa-bullseye"></i><h3 data-i18n="neonfrontier.g3T">Teleporter</h3><p data-i18n="neonfrontier.g3P">Anker setzen, später erneut drücken und zurückteleportieren.</p><span class="tag"><span data-i18n="neonfrontier.gTag">Gadget</span> · <kbd>F</kbd></span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#4dffb8"><div class="nf-in"><i class="ico fa-solid fa-plane-up"></i><h3 data-i18n="neonfrontier.g4T">Kampfdrohne</h3><p data-i18n="neonfrontier.g4P">Beschwört für 20 Sekunden eine Drohne, die Gegner beschiesst.</p><span class="tag"><span data-i18n="neonfrontier.gTag">Gadget</span> · <kbd>F</kbd></span></div></div>
+                    <div class="nf-panel nf-card" style="--c:#4de1ff"><div class="nf-in"><i class="ico fa-solid fa-satellite-dish"></i><h3 data-i18n="neonfrontier.g5T">Scanner</h3><p data-i18n="neonfrontier.g5P">Macht Gegner im Umkreis für 5 Sekunden sichtbar.</p><span class="tag"><span data-i18n="neonfrontier.gTag">Gadget</span> · <kbd>F</kbd></span></div></div>
+                </div>
+                <div class="nf-arsenal-bar"><i></i></div>
+            </div>
+        </section>
+
+        <!-- ═════════ 04 · LOOKS ═════════ -->
+        <section class="nf-scene nf-looks" id="looks" data-scene="looks" data-hud="navLooks" data-accent="#ff3da8" style="--h:620vh">
+            <div class="nf-stage nf-looks-stage">
+                <div class="nf-skinview" data-skins>
+                    <figure class="nf-skin" data-accent="#19e6ff" style="margin:0"><img src="images/neonfrontier/skins/vanguard.webp" alt="Vanguard" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#2de6e6" style="margin:0"><img src="images/neonfrontier/skins/scout.webp" alt="Frontier Operator" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#fff2a8" style="margin:0"><img src="images/neonfrontier/skins/solaris.webp" alt="Solaris" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#ff3d52" style="margin:0"><img src="images/neonfrontier/skins/rogue.webp" alt="Rogue-Bot" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#ff3d9a" style="margin:0"><img src="images/neonfrontier/skins/samurai.webp" alt="Neon Samurai" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#8f4dff" style="margin:0"><img src="images/neonfrontier/skins/void.webp" alt="Void Walker" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#ff8a1a" style="margin:0"><img src="images/neonfrontier/skins/volt.webp" alt="Volt Runner" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#4de9ff" style="margin:0"><img src="images/neonfrontier/skins/icecircuit.webp" alt="Cryo Diver" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#5cffd8" style="margin:0"><img src="images/neonfrontier/skins/aurora.webp" alt="Aurora" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#ff7a1a" style="margin:0"><img src="images/neonfrontier/skins/inferno.webp" alt="Inferno-Lord" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#ff5cf0" style="margin:0"><img src="images/neonfrontier/skins/prismrun.webp" alt="Prism Racer" width="540" height="960" loading="lazy"></figure>
+                    <figure class="nf-skin" data-accent="#7ee8ff" style="margin:0"><img src="images/neonfrontier/skins/holowraith.webp" alt="Holo Wraith" width="540" height="960" loading="lazy"></figure>
+                </div>
+                <div class="nf-skininfo-col">
+                    <p class="nf-kicker" data-i18n="neonfrontier.lLabel">Zone 04 · Looks</p>
+                    <h2 class="nf-h2" data-scramble style="font-size:clamp(24px,3.6vw,50px)!important" data-i18n-html="neonfrontier.lTitleHtml">So siehst du aus. <em>So sehen dich alle.</em></h2>
+                    <p class="nf-lead" style="margin-top:14px!important;font-size:18px" data-i18n="neonfrontier.lLead">17 Skins in fünf Seltenheitsstufen, alle auf einem gemeinsamen NEON-Toon-Grundkörper.</p>
+                    <div class="nf-skininfo" data-sinfo>
+                        <div class="nf-sinfo" style="--rc:#9db0c8"><span class="nf-rar" data-i18n="neonfrontier.rar1">Gewöhnlich</span><h3>Vanguard</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>1</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#4aa8ff"><span class="nf-rar" data-i18n="neonfrontier.rar2">Selten</span><h3>Frontier Operator</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>1</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#b45cff"><span class="nf-rar" data-i18n="neonfrontier.rar3">Episch</span><h3>Solaris</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>8</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#b45cff"><span class="nf-rar" data-i18n="neonfrontier.rar3">Episch</span><h3>Rogue-Bot</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>13</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ffb52e"><span class="nf-rar" data-i18n="neonfrontier.rar4">Legendär</span><h3>Neon Samurai</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>16</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ffb52e"><span class="nf-rar" data-i18n="neonfrontier.rar4">Legendär</span><h3>Void Walker</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>20</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ffb52e"><span class="nf-rar" data-i18n="neonfrontier.rar4">Legendär</span><h3>Volt Runner</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>20</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ffb52e"><span class="nf-rar" data-i18n="neonfrontier.rar4">Legendär</span><h3>Cryo Diver</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>26</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ff4fd8"><span class="nf-rar" data-i18n="neonfrontier.rar5">Mythisch</span><h3>Aurora</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>25</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ff4fd8"><span class="nf-rar" data-i18n="neonfrontier.rar5">Mythisch</span><h3>Inferno-Lord</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>30</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ff4fd8"><span class="nf-rar" data-i18n="neonfrontier.rar5">Mythisch</span><h3>Prism Racer</h3><p class="lvl"><span data-i18n="neonfrontier.lvl">Ab Level</span> <b>38</b></p></div>
+                        <div class="nf-sinfo" style="--rc:#ff4fd8"><span class="nf-rar" data-i18n="neonfrontier.rar5">Mythisch</span><h3>Holo Wraith</h3><p class="lvl"><b data-i18n="neonfrontier.plusOnly">Nur mit Plus</b></p></div>
+                    </div>
+                    <div class="nf-rarities">
+                        <span class="nf-rar" style="--rc:#9db0c8" data-i18n="neonfrontier.rar1">Gewöhnlich</span>
+                        <span class="nf-rar" style="--rc:#4aa8ff" data-i18n="neonfrontier.rar2">Selten</span>
+                        <span class="nf-rar" style="--rc:#b45cff" data-i18n="neonfrontier.rar3">Episch</span>
+                        <span class="nf-rar" style="--rc:#ffb52e" data-i18n="neonfrontier.rar4">Legendär</span>
+                        <span class="nf-rar" style="--rc:#ff4fd8" data-i18n="neonfrontier.rar5">Mythisch</span>
+                    </div>
+                </div>
+                <div class="nf-thumbs" data-thumbs></div>
+            </div>
+        </section>
+
+        <!-- ═════════ 05 · MAKING-OF ═════════ -->
+        <section class="nf-scene nf-forge" id="making-of" data-scene="forge" data-hud="navMaking" data-accent="#4dff8a" style="--h:380vh">
+            <div class="nf-stage nf-forge-stage">
+                <div>
+                    <p class="nf-kicker" data-i18n="neonfrontier.mLabel">Zone 05 · Making-of</p>
+                    <h2 class="nf-h2" data-scramble data-i18n-html="neonfrontier.mTitleHtml">Von der Skizze <em>ins Spiel</em></h2>
+                    <p class="nf-lead" data-i18n="neonfrontier.mLead">Jeder Look beginnt als Konzept, wird in Blender modelliert, auf ein gemeinsames Skelett gesetzt und im Browser mit Toon-Schattierung zum Leuchten gebracht.</p>
+                    <ol class="nf-forge-steps" data-fsteps>
+                        <li><b>01</b><div><h3 data-i18n="neonfrontier.m1T">Konzept</h3><p data-i18n="neonfrontier.m1P">Silhouette, Helm, Farben: das Konzeptblatt für den Vanguard.</p></div></li>
+                        <li><b>02</b><div><h3 data-i18n="neonfrontier.m2T">Blender</h3><p data-i18n="neonfrontier.m2P">Modelliert, auf ein 22-Knochen-Skelett gerigged und animiert.</p></div></li>
+                        <li><b>03</b><div><h3 data-i18n="neonfrontier.m3T">Im Spiel</h3><p data-i18n="neonfrontier.m3P">Three.js-Toon-Shader: drei Schattierungsstufen plus Randlicht.</p></div></li>
+                    </ol>
+                    <div class="nf-stack"><span class="nf-chip">Blender</span><span class="nf-chip">Three.js</span><span class="nf-chip">Node.js</span><span class="nf-chip">WebSockets</span></div>
+                </div>
+                <div class="nf-forge-view">
+                    <div class="nf-panel" style="height:100%"><div class="nf-in" style="padding:0;position:relative;overflow:hidden">
+                        <img class="nf-fimg nf-fimg--1" src="images/neonfrontier/making/konzept.webp" alt="Vanguard Konzeptblatt" width="1100" height="1100" loading="lazy">
+                        <img class="nf-fimg nf-fimg--2" src="images/neonfrontier/making/blender.webp" alt="Vanguard in Blender" width="1500" height="467" loading="lazy">
+                        <img class="nf-fimg nf-fimg--3" src="images/neonfrontier/making/ingame.webp" alt="Vanguard im Spiel" width="800" height="450" loading="lazy">
+                        <span class="nf-fedge"></span>
+                        <span class="nf-fbadge" data-fbadge>01 · Konzept</span>
+                    </div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═════════ 06 · RÄNGE ═════════ -->
+        <section class="nf-scene nf-ranks" id="ranks" data-scene="ranks" data-hud="navRanks" data-accent="#c77dff" style="--h:460vh">
+            <div class="nf-stage nf-ranks-stage">
+                <p class="nf-kicker" data-i18n="neonfrontier.kLabel">Zone 06 · Ränge</p>
+                <h2 class="nf-h2" data-scramble data-i18n-html="neonfrontier.kTitleHtml">Hol dir deinen <em>Rang</em></h2>
+                <p class="nf-lead" data-i18n="neonfrontier.kLead">Ranked läuft von 1 gegen 1 bis 3 gegen 3. Siege bringen Rangpunkte, und jede Season beginnt wieder von vorn.</p>
+                <div class="nf-ladder" data-ladder>
+                    <figure class="nf-rank" style="--i:0;--rc:#8fa6c4;margin:0" data-accent="#8fa6c4"><img src="images/neonfrontier/ranks/unranked.webp" alt="Unranked" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:1;--rc:#cd7f32;margin:0" data-accent="#cd7f32"><img src="images/neonfrontier/ranks/bronze.webp" alt="Bronze" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:2;--rc:#c9d2de;margin:0" data-accent="#c9d2de"><img src="images/neonfrontier/ranks/silver.webp" alt="Silver" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:3;--rc:#ffd25a;margin:0" data-accent="#ffd25a"><img src="images/neonfrontier/ranks/gold.webp" alt="Gold" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:4;--rc:#5ee6ff;margin:0" data-accent="#5ee6ff"><img src="images/neonfrontier/ranks/platinum.webp" alt="Platinum" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:5;--rc:#6ea8ff;margin:0" data-accent="#6ea8ff"><img src="images/neonfrontier/ranks/diamond.webp" alt="Diamond" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:6;--rc:#c77dff;margin:0" data-accent="#c77dff"><img src="images/neonfrontier/ranks/champion.webp" alt="Champion" width="384" height="384" loading="lazy"></figure>
+                    <figure class="nf-rank" style="--i:7;--rc:#ffcf5a;margin:0" data-accent="#ffcf5a"><img src="images/neonfrontier/ranks/legend.webp" alt="Frontier Legend" width="384" height="384" loading="lazy"></figure>
+                </div>
+                <div class="nf-rank-info" data-rinfo>
+                    <div class="nf-rinfo" style="--rc:#8fa6c4"><h3>Unranked</h3><p data-i18n="neonfrontier.kD0">Die ersten fünf Ranked-Matches bewegen deine Wertung besonders stark.</p></div>
+                    <div class="nf-rinfo" style="--rc:#cd7f32"><h3>Bronze</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 0</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD1">Drei Stufen: I, II und III.</span></p></div>
+                    <div class="nf-rinfo" style="--rc:#c9d2de"><h3>Silver</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 300</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD1">Drei Stufen: I, II und III.</span></p></div>
+                    <div class="nf-rinfo" style="--rc:#ffd25a"><h3>Gold</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 600</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD1">Drei Stufen: I, II und III.</span></p></div>
+                    <div class="nf-rinfo" style="--rc:#5ee6ff"><h3>Platinum</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 900</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD1">Drei Stufen: I, II und III.</span></p></div>
+                    <div class="nf-rinfo" style="--rc:#6ea8ff"><h3>Diamond</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 1200</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD1">Drei Stufen: I, II und III.</span></p></div>
+                    <div class="nf-rinfo" style="--rc:#c77dff"><h3>Champion</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 1500</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD2">Ein einziger Rang ohne Stufen.</span></p></div>
+                    <div class="nf-rinfo" style="--rc:#ffcf5a"><h3>Frontier Legend</h3><p><b><span data-i18n="neonfrontier.kFrom">ab</span> 2000</b> <span data-i18n="neonfrontier.kPts">Rangpunkten</span> · <span data-i18n="neonfrontier.kD3">Der höchste Rang.</span></p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═════════ 07 · MODI ═════════ -->
+        <section class="nf-sec nf-modes" id="modi" data-hud="navModes" data-accent="#ffd24a">
+            <div class="nf-wrap">
+                <span class="nf-ghost" aria-hidden="true">07</span>
+                <p class="nf-kicker nf-r" data-i18n="neonfrontier.oLabel">Zone 07 · Modi</p>
+                <h2 class="nf-h2 nf-r" data-d="1" data-scramble data-i18n-html="neonfrontier.oTitleHtml">Allein oder <em>zusammen</em></h2>
+                <p class="nf-lead nf-r" data-d="2" data-i18n="neonfrontier.oLead">Übe gegen Bots, spring in offene Räume mit echten Spielern oder geh in die Rangliste. Freunde landen per Einladungslink direkt in deiner Lobby.</p>
+
+                <div class="nf-pillars">
+                    <div class="nf-panel nf-pillar nf-r" style="--c:#4dff8a" data-d="1"><div class="nf-in"><i class="ico fa-solid fa-robot"></i><h3 data-i18n="neonfrontier.p1T">Gegen Bots</h3><p data-i18n="neonfrontier.p1P">Übe allein in drei Stärken, in jedem Modus und auf jeder Karte.</p></div></div>
+                    <div class="nf-panel nf-pillar nf-r" style="--c:#7ee8ff" data-d="2"><div class="nf-in"><i class="ico fa-solid fa-user-group"></i><h3 data-i18n="neonfrontier.p2T">Multiplayer</h3><p data-i18n="neonfrontier.p2P">Offene Räume mit echten Spielern. Mit einem Einladungslink sind Freunde sofort in deiner Lobby.</p></div></div>
+                    <div class="nf-panel nf-pillar nf-r" style="--c:#ff3da8" data-d="3"><div class="nf-in"><i class="ico fa-solid fa-trophy"></i><h3 data-i18n="neonfrontier.p3T">Ranked</h3><p data-i18n="neonfrontier.p3P">1 gegen 1 bis 3 gegen 3. Siege bringen dich im Rang nach oben.</p></div></div>
+                </div>
+
+                <p class="nf-sublabel nf-r" data-i18n="neonfrontier.modesLabel">Sechs Modi</p>
+                <div class="nf-modegrid">
+                    <div class="nf-panel nf-mode nf-r nf-r--s" data-d="0"><div class="nf-in"><div class="dots"><i></i><i class="b"></i><i class="g"></i><i></i><i class="b"></i></div><h3 data-i18n="neonfrontier.mo1">Free for All</h3></div></div>
+                    <div class="nf-panel nf-mode nf-r nf-r--s" data-d="1"><div class="nf-in"><div class="dots"><i></i><i></i><i></i><u></u><i class="b"></i><i class="b"></i><i class="b"></i></div><h3 data-i18n="neonfrontier.mo2">Team Deathmatch</h3></div></div>
+                    <div class="nf-panel nf-mode nf-r nf-r--s" data-d="2"><div class="nf-in"><div class="dots"><i></i><u></u><i class="b"></i></div><h3 data-i18n="neonfrontier.mo3">1 gegen 1</h3></div></div>
+                    <div class="nf-panel nf-mode nf-r nf-r--s" data-d="3"><div class="nf-in"><div class="dots"><i></i><i></i><u></u><i class="b"></i><i class="b"></i></div><h3 data-i18n="neonfrontier.mo4">2 gegen 2</h3></div></div>
+                    <div class="nf-panel nf-mode nf-r nf-r--s" data-d="4"><div class="nf-in"><div class="dots"><i></i><i></i><i></i><u></u><i class="b"></i><i class="b"></i><i class="b"></i></div><h3 data-i18n="neonfrontier.mo5">3 gegen 3</h3></div></div>
+                    <div class="nf-panel nf-mode nf-r nf-r--s" data-d="5"><div class="nf-in"><div class="dots"><i></i><i></i><u></u><i class="b"></i><i class="b"></i><u></u><i class="g"></i><i class="g"></i></div><h3 data-i18n="neonfrontier.mo6">2 gegen 2 gegen 2</h3></div></div>
+                </div>
+
+                <p class="nf-sublabel nf-r" data-i18n="neonfrontier.mapsLabel">Vier Karten</p>
+                <div class="nf-maps">
+                    <div class="nf-panel nf-r" data-d="0"><div class="nf-in"><h3>Neon Junction</h3><p data-i18n="neonfrontier.mp1P">Die Standardkarte mit Zug und Autos.</p></div></div>
+                    <div class="nf-panel nf-r" data-d="1"><div class="nf-in"><h3>Cyber City</h3><p data-i18n="neonfrontier.mp2P">Eine Neon-Grossstadt mit Wolkenkratzern, Dächern und Solarfeldern.</p></div></div>
+                    <div class="nf-panel nf-r" data-d="2"><div class="nf-in"><h3>Neon Frontier</h3><p data-i18n="neonfrontier.mp3P">Die grosse offene Welt mit Stadt, Wald, Küste und Fort.</p></div></div>
+                    <div class="nf-panel nf-r" data-d="3"><div class="nf-in"><h3>Arena Zero</h3><p data-i18n="neonfrontier.mp4P">Kompakte Arena für Duelle: kurze Wege, klare Linien.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═════════ 08 · HINTER DEM SPIEL ═════════ -->
+        <section class="nf-sec nf-behind" id="hinter-dem-spiel" data-hud="navBehind" data-accent="#ff3da8">
+            <div class="nf-wrap">
+                <span class="nf-ghost" aria-hidden="true">08</span>
+                <p class="nf-kicker nf-r" data-i18n="neonfrontier.bLabel">Zone 08 · Hinter dem Spiel</p>
+                <h2 class="nf-h2 nf-r" data-d="1" data-scramble data-i18n-html="neonfrontier.bTitleHtml">Hinter dem <em>Spiel</em></h2>
+                <p class="nf-lead nf-r" data-d="2" data-i18n="neonfrontier.bLead">NEON FRONTIER ist ein unabhängiges Projekt von Aurelio Zingarello, gebaut für den Browser, ohne Download.</p>
+
+                <div class="nf-timeline" data-timeline>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 01</small><h3 data-i18n="neonfrontier.t1T">Die Idee</h3><p data-i18n="neonfrontier.t1P">Ein Shooter, der ohne Installation im Browser läuft und sich trotzdem wie ein richtiges Spiel anfühlt.</p></div>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 02</small><h3 data-i18n="neonfrontier.t2T">Der Prototyp</h3><p data-i18n="neonfrontier.t2P">Three.js im Browser und ein Node.js-Server mit WebSockets. Der Server prüft Treffer, Bewegung und Schaden.</p></div>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 03</small><h3 data-i18n="neonfrontier.t3T">Die Karte</h3><p data-i18n="neonfrontier.t3P">Neon Junction entsteht aus Modellen von Sketchfab, optimiert mit einer Blender-Pipeline. Dazu kommen der Zug und der Verkehr.</p></div>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 04</small><h3 data-i18n="neonfrontier.t4T">Der Look</h3><p data-i18n="neonfrontier.t4P">Ein einheitlicher NEON-Toon-Grundkörper, darauf 17 Skins, 15 Rückenstücke und Waffen-Designs.</p></div>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 05</small><h3 data-i18n="neonfrontier.t5T">Die Ränge</h3><p data-i18n="neonfrontier.t5P">Die Rang-Embleme sind in Blender gebaut und mit wandernden Lichtreflexen animiert.</p></div>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 06</small><h3 data-i18n="neonfrontier.t6T">Die Welt wächst</h3><p data-i18n="neonfrontier.t6P">Konten, Freunde, Einladungen, Seasons und Erfolge kommen dazu. Kosmetik gibt es gegen FLUX, Vorteile im Kampf nicht.</p></div>
+                    <div class="nf-tl nf-r nf-r--l"><small><span data-i18n="neonfrontier.tlPhase">Phase</span> 07</small><h3 data-i18n="neonfrontier.t7T">Live</h3><p data-i18n="neonfrontier.t7P">Heute läuft NEON FRONTIER kostenlos auf neonfrontier.ch.</p></div>
+                </div>
+
+                <div class="nf-credits">
+                    <div class="nf-panel nf-r" data-d="1"><div class="nf-in">
+                        <span class="nf-kicker" style="margin:0" data-i18n="neonfrontier.cMusicL">Musik</span>
+                        <span class="nf-credit-big">sxiin</span>
+                        <p data-i18n="neonfrontier.cMusicP">Alle Tracks stammen von sxiin.</p>
+                    </div></div>
+                    <div class="nf-panel nf-r" data-d="2"><div class="nf-in">
+                        <span class="nf-kicker" style="margin:0" data-i18n="neonfrontier.cModelsL">3D-Modelle</span>
+                        <p data-i18n="neonfrontier.cModelsP">Künstlerinnen und Künstler auf Sketchfab. Wer was gemacht hat, steht in den Credits.</p>
+                        <a href="https://neonfrontier.ch/credits.html" target="_blank" rel="noopener"><span data-i18n="neonfrontier.cLink">Alle Credits ansehen</span> →</a>
+                    </div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═════════ FINALE ═════════ -->
+        <section class="nf-finale" id="finale" data-hud="hud9" data-accent="#7ee8ff">
+            <div class="nf-wrap">
+                <h2 class="nf-r nf-r--s" data-scramble data-i18n="neonfrontier.fTitle">Noch eine Runde?</h2>
+                <p class="nf-lead nf-r" data-d="2" data-i18n="neonfrontier.fLead">Kostenlos. Im Browser. Ohne Download.</p>
+                <div class="nf-hero-cta nf-r" data-d="3">
+                    <a class="nf-btn" href="https://neonfrontier.ch" target="_blank" rel="noopener"><span data-i18n="neonfrontier.ctaPlay">Jetzt spielen</span> <i class="fa-solid fa-play"></i></a>
+                    <a class="nf-btn nf-btn--ghost" href="projekte.html"><span data-i18n="neonfrontier.fBack">Alle Projekte</span> <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="nf-counters">
+                    <div class="nf-stat nf-r" data-d="1"><b data-count="4">4</b><span data-i18n="neonfrontier.cMaps">Karten</span></div>
+                    <div class="nf-stat nf-r" data-d="2"><b data-count="11">11</b><span data-i18n="neonfrontier.cWeapons">Waffen</span></div>
+                    <div class="nf-stat nf-r" data-d="3"><b data-count="17">17</b><span data-i18n="neonfrontier.cSkins">Skins</span></div>
+                    <div class="nf-stat nf-r" data-d="4"><b data-count="15">15</b><span data-i18n="neonfrontier.cBacks">Rückenstücke</span></div>
+                    <div class="nf-stat nf-r" data-d="5"><b data-count="6">6</b><span data-i18n="neonfrontier.cModes">Modi</span></div>
+                    <div class="nf-stat nf-r" data-d="6"><b data-count="7">7</b><span data-i18n="neonfrontier.cRanks">Ränge</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ─── ÜBERSETZUNGEN (MÜSSEN VOR SECOND-HEADER-KONFIG + HEADER.JS LADEN) ─── -->
+    <script src="js/translations.js?v=1.2"></script>
+    <script src="js/i18n.js"></script>
+
+    <!-- ─── SECOND-HEADER-KONFIGURATION DIESER SEITE ─── -->
+    <script>
+        const tr = (key, fallback) => (window.i18n && window.i18n.translate('neonfrontier.' + key)) || fallback;
+        window.secondHeaderItems = [
+            {
+                label: tr('navRound', "Die Runde"),
+                children: [
+                    { label: tr('navJunction', "Neon Junction"), href: "#junction" },
+                    { label: tr('navRide', "Fahrzeuge"), href: "#fahrzeuge" },
+                    { label: tr('navArsenal', "Arsenal"), href: "#arsenal" },
+                    { label: tr('navLooks', "Looks"), href: "#looks" },
+                    { label: tr('navRanks', "Ränge"), href: "#ranks" },
+                    { label: tr('navModes', "Modi"), href: "#modi" }
+                ]
+            },
+            { label: tr('navMaking', "Making-of"), href: "#making-of" },
+            { label: tr('navBehind', "Hinter dem Spiel"), href: "#hinter-dem-spiel" }
+        ];
+    </script>
+
+    <script src="js/header.js?v=1.8"></script>
+    <script src="js/nf-city.js?v=1.0"></script>
+    <script src="js/neonfrontier.js?v=1.0"></script>
+</body>
+
+</html>
