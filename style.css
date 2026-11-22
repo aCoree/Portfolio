@@ -1553,6 +1553,8 @@ body:not(.has-hero) main.legal-content {
             rgba(0, 0, 0, 0.5) 22%,
             rgba(0, 0, 0, 0.15) 45%,
             transparent 62%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .photo-grid-motif:focus-visible,
@@ -1569,7 +1571,7 @@ body:not(.has-hero) main.legal-content {
     z-index: 1;
     padding: 0 22px 20px;
     font-family: "Barlow Condensed", sans-serif;
-    font-size: clamp(1.7rem, 3vw, 2.6rem);
+    font-size: clamp(1.3rem, 2.2vw, 1.9rem);
     font-weight: 600;
     line-height: 1.05;
     letter-spacing: 1px;
@@ -1577,6 +1579,25 @@ body:not(.has-hero) main.legal-content {
     color: #ffffff;
     white-space: nowrap;
     pointer-events: none;
+    /* Name + Verlauf nur beim Drüberfahren (Maus) bzw. Tastatur-Fokus –
+       auf Touch-Geräten (kein Hover) also nie sichtbar. */
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.photo-grid-motif:focus-visible::after,
+.photo-grid-motif:focus-visible .photo-grid-title {
+    opacity: 1;
+    transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .photo-grid-motif:hover::after,
+    .photo-grid-motif:hover .photo-grid-title {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 /* Titel immer auf EINER Zeile: zu lange Titel verkleinert foto-galerie.js
@@ -1595,7 +1616,7 @@ body:not(.has-hero) main.legal-content {
     /* 2-Spalten-Raster: Titel etwas kleiner als auf dem PC. */
     .photo-grid-title {
         padding: 0 14px 14px;
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
 }
 

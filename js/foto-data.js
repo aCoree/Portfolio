@@ -158,6 +158,24 @@ window.FOTO_GALERIE = {
     },
     {
       title: {
+        de: "Grünfink",
+        en: "Greenfinch",
+        fr: "Verdier d'Europe",
+        it: "Verdone",
+      },
+      images: [{ src: "fotografie/wildlife/gruenfink-1.webp", format: "quer" }],
+    },
+    {
+      title: {
+        de: "Nilgans",
+        en: "Egyptian goose",
+        fr: "Ouette d'Égypte",
+        it: "Oca egiziana",
+      },
+      images: [{ src: "fotografie/wildlife/nilgans-1.webp", format: "hoch" }],
+    },
+    {
+      title: {
         de: "Blaumeise",
         en: "Blue tit",
         fr: "Mésange bleue",
