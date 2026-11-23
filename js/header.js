@@ -138,6 +138,79 @@ document.addEventListener("DOMContentLoaded", function () {
             grid-auto-flow: column;
             column-gap: 40px;
         }
+        /* ─── NEON-FRONTIER-WERBE-BADGE (unten rechts, wegklickbar, pulsiert sanft) ─── */
+        .nf-badge {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 900;
+            display: flex;
+            align-items: center;
+            animation: nf-badge-pulse 2.4s ease-in-out infinite;
+        }
+        .nf-badge a.nf-badge-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 18px 10px;
+            border-radius: 26px;
+            background: rgba(8, 10, 16, 0.92);
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            box-shadow: 0 0 14px rgba(0, 229, 255, 0.25), 0 6px 18px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #fff;
+            text-decoration: none;
+        }
+        .nf-badge .nf-badge-logo { display: block; height: 40px; width: auto; }
+        .nf-badge .nf-badge-new {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            padding: 3px 12px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #00e5ff, #ff3fa4);
+            color: #05070b;
+        }
+        .nf-badge .nf-badge-close {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            background: rgba(8, 10, 16, 0.95);
+            color: #ddd;
+            font-size: 0.7rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .nf-badge:hover { animation-play-state: paused; }
+            .nf-badge:hover a.nf-badge-link { box-shadow: 0 0 22px rgba(0, 229, 255, 0.55), 0 6px 18px rgba(0, 0, 0, 0.4); }
+            .nf-badge .nf-badge-close:hover { color: #fff; border-color: #fff; }
+        }
+        /* 2 s still, dann ein kurzer Schlag (0.4 s gross -> klein), Zyklus 2.4 s */
+        @keyframes nf-badge-pulse {
+            0%, 83.3%, 100% { transform: scale(1); }
+            91.6% { transform: scale(1.1); }
+        }
+        @media (prefers-reduced-motion: reduce) { .nf-badge { animation: none; } }
+        @media (max-width: 768px) {
+            .nf-badge { right: 12px; bottom: 12px; }
+            .nf-badge .nf-badge-logo { height: 32px; }
+        }
+
+        /* NEON FRONTIER: Logo als Link zum Web Game (logo.png) */
+        .site-footer .footer-col a.footer-game-link { padding: 10px 0 4px; }
+        .site-footer .nf-logo { display: block; height: 38px; width: auto; transition: filter 0.25s ease; }
+        @media (hover: hover) and (pointer: fine) {
+            .site-footer a.footer-game-link:hover .nf-logo { filter: brightness(1.2) drop-shadow(0 0 8px rgba(0, 229, 255, 0.45)); }
+        }
         .site-footer .footer-col a i {
             width: 16px;
             text-align: center;
@@ -936,6 +1009,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <ul>
                     <li><a href="https://www.youtube.com/@aureliozingarello" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i>Aurelio Zingarello</a></li>
                     <li><a href="https://www.youtube.com/@legofamilystudio" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i>LEGO FAMILY STUDIO</a></li>
+                    <li><a href="https://neonfrontier.ch" target="_blank" rel="noopener" class="footer-game-link" aria-label="NEON FRONTIER – Web Game spielen"><img class="nf-logo" src="images/neonfrontier/brand/logo.png" alt="NEON FRONTIER" width="600" height="204" loading="lazy"></a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -983,6 +1057,25 @@ document.addEventListener("DOMContentLoaded", function () {
   document.body.insertAdjacentHTML("afterbegin", headerGroupHTML);
   document.body.insertAdjacentHTML("beforeend", footerHTML);
   wireLangSwitchers(document.querySelector(".site-footer"));
+
+  // ─── 8b. NEON-FRONTIER-WERBE-BADGE (alle Seiten ausser neonfrontier.html) ───
+  // Wegklickbar; die Entscheidung merkt sich localStorage 7 Tage lang.
+  (function () {
+    if (isNeonPage) return;
+    const KEY = "nfBadgeClosed";
+    try {
+      const ts = parseInt(localStorage.getItem(KEY) || "0", 10);
+      if (ts && Date.now() - ts < 7 * 24 * 3600 * 1000) return;
+    } catch (e) {}
+    const badge = document.createElement("div");
+    badge.className = "nf-badge";
+    badge.innerHTML = `<a class="nf-badge-link" href="https://neonfrontier.ch" target="_blank" rel="noopener" aria-label="NEON FRONTIER – Web Game spielen"><img class="nf-badge-logo" src="images/neonfrontier/brand/logo.png" alt="NEON FRONTIER" width="600" height="204"><span class="nf-badge-new">${t("footer.nfPlay", "JETZT SPIELEN!")}</span></a><button type="button" class="nf-badge-close" aria-label="${t("footer.nfClose", "Schliessen")}"><i class="fa-solid fa-xmark"></i></button>`;
+    badge.querySelector(".nf-badge-close").addEventListener("click", function () {
+      try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+      badge.remove();
+    });
+    document.body.appendChild(badge);
+  })();
 
   // ─── 9. APPLE-ARTIGER HINTERGRUND-BACKDROP + GEMEINSAME PANEL-VERWALTUNG ───
   // Ein einzelnes, wiederverwendetes Backdrop-Element wird von mehreren

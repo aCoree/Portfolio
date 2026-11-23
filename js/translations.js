@@ -35,6 +35,8 @@ window.SITE_TRANSLATIONS = {
       datenschutz: "Datenschutz",
       sitemap: "Sitemap",
       findMe: "Folge mir",
+      nfPlay: "JETZT SPIELEN!",
+      nfClose: "Schliessen",
     },
     lang: {
       ariaLabel: "Sprache wählen",
@@ -475,6 +477,8 @@ window.SITE_TRANSLATIONS = {
       datenschutz: "Confidentialité",
       sitemap: "Plan du site",
       findMe: "Suivez-moi",
+      nfPlay: "JOUER MAINTENANT !",
+      nfClose: "Fermer",
     },
     lang: {
       ariaLabel: "Choisir la langue",
@@ -913,6 +917,8 @@ window.SITE_TRANSLATIONS = {
       datenschutz: "Privacy policy",
       sitemap: "Sitemap",
       findMe: "Find me",
+      nfPlay: "PLAY NOW!",
+      nfClose: "Close",
     },
     lang: {
       ariaLabel: "Choose language",
@@ -1353,6 +1359,8 @@ window.SITE_TRANSLATIONS = {
       datenschutz: "Privacy",
       sitemap: "Mappa del sito",
       findMe: "Seguimi",
+      nfPlay: "GIOCA ORA!",
+      nfClose: "Chiudi",
     },
     lang: {
       ariaLabel: "Scegli la lingua",
